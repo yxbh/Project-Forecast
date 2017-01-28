@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\ProjectForecast">
+      <UniqueIdentifier>{d6716447-702a-4a7e-b986-17ee1cc33c38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\KEngine">
+      <UniqueIdentifier>{ef4b6b56-4489-4346-b06a-b994d8f548a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\KEngine">
+      <UniqueIdentifier>{4d6b7cd8-d4f2-4e34-b034-61406bf90acc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\KEngine\Common">
+      <UniqueIdentifier>{bf5b1126-d226-4d74-a7d6-dcfe990f4334}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\KEngine\Interface">
+      <UniqueIdentifier>{7c6063c2-880e-4fe2-b12a-6602e2e4b816}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\KEngine\Core">
+      <UniqueIdentifier>{6d359864-dfee-483d-86e1-5b6e820dedf0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\KEngine\UnitTest">
+      <UniqueIdentifier>{508f126e-874f-4299-8654-24055cfff437}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\KEngine\Core">
+      <UniqueIdentifier>{a145bb83-b84d-40c6-9c1a-d094691eec2b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\KEngine\Log">
+      <UniqueIdentifier>{8d11e13c-cb27-4a57-bebb-636647b85e46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\KEngine\Common">
+      <UniqueIdentifier>{16cb9136-7419-4053-9098-72d34ac864e6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\ProjectForecast\main.cpp">
+      <Filter>Source Files\ProjectForecast</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Events.cpp">
+      <Filter>Source Files\KEngine\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\App.cpp">
+      <Filter>Source Files\KEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\EventManagerImpl.cpp">
+      <Filter>Source Files\KEngine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Time.cpp">
+      <Filter>Source Files\KEngine\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Common\Time.cpp">
+      <Filter>Source Files\KEngine\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Delegate.cpp">
+      <Filter>Source Files\KEngine\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EventDelegates.cpp">
+      <Filter>Source Files\KEngine\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EventManager.cpp">
+      <Filter>Source Files\KEngine\UnitTest</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\App.hpp">
+      <Filter>Header Files\KEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IApp.hpp">
+      <Filter>Header Files\KEngine\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEventManagerImpl.hpp">
+      <Filter>Header Files\KEngine\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEvent.hpp">
+      <Filter>Header Files\KEngine\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManager.hpp">
+      <Filter>Header Files\KEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManagerImpl.hpp">
+      <Filter>Header Files\KEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Queues.hpp">
+      <Filter>Header Files\KEngine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\SRDelegate.hpp">
+      <Filter>Header Files\KEngine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Delegate.hpp">
+      <Filter>Header Files\KEngine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\String.hpp">
+      <Filter>Header Files\KEngine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Time.hpp">
+      <Filter>Header Files\KEngine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\macro_common.hpp">
+      <Filter>Header Files\KEngine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Log\Log.hpp">
+      <Filter>Header Files\KEngine\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\StopWatch.hpp">
+      <Filter>Header Files\KEngine\Common</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\KEngine\include\KEngine\Common\Queues.inl">
+      <Filter>Header Files\KEngine\Common</Filter>
+    </None>
+    <None Include="..\..\..\..\KEngine\include\KEngine\Common\Time.inl">
+      <Filter>Header Files\KEngine\Common</Filter>
+    </None>
+  </ItemGroup>
+</Project>
