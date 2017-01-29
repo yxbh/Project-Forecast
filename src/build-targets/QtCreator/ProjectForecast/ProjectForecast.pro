@@ -79,40 +79,6 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Interface/IApp.hpp \
     ../../../KEngine/include/KEngine/Interface/IEvent.hpp \
     ../../../KEngine/include/KEngine/Interface/IEventManagerImpl.hpp \
-    ../../../KEngine/include/KEngine/Log/spdlog/details/async_log_helper.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/details/async_logger_impl.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/details/file_helper.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/details/log_msg.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/details/logger_impl.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/details/mpmc_bounded_q.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/details/null_mutex.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/details/os.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/details/pattern_formatter_impl.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/details/registry.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/details/spdlog_impl.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/fmt/bundled/format.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/fmt/bundled/ostream.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/fmt/bundled/printf.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/fmt/fmt.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/fmt/ostr.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/sinks/android_sink.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/sinks/ansicolor_sink.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/sinks/base_sink.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/sinks/dist_sink.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/sinks/file_sinks.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/sinks/msvc_sink.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/sinks/null_sink.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/sinks/ostream_sink.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/sinks/sink.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/sinks/stdout_sinks.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/sinks/syslog_sink.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/sinks/wincolor_sink.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/async_logger.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/common.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/formatter.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/logger.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/spdlog.h \
-    ../../../KEngine/include/KEngine/Log/spdlog/tweakme.h \
     ../../../KEngine/include/KEngine/Log/Log.hpp \
     ../../../KEngine/include/KEngine/UnitTest/catch.hpp \
     ../../../KEngine/include/KEngine/App.hpp
