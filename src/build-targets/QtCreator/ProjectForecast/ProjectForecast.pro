@@ -13,12 +13,12 @@ DEFINES += RUN_UNIT_TESTS
 #   - RCC_DIR:      resource file(s) output
 #   - UI_DIR:       UI source output
 #
-BUILDDIRWIN32DBG = Build/OPL-Win32-Debug
-BUILDDIRWIN32REL = Build/OPL-Win32-Release
-BUILDDIRUNIXDBG  = Build/OPL-Unix-Debug
-BUILDDIRUNIXREL  = Build/OPL-Unix-Release
-BUILDDIROSXDBG   = Build/OPL-OSX-Debug
-BUILDDIROSXREL   = Build/OPL-OSX-Release
+BUILDDIRWIN32DBG = Build/ProjectForecast-Win32-Debug
+BUILDDIRWIN32REL = Build/ProjectForecast-Win32-Release
+BUILDDIRUNIXDBG  = Build/ProjectForecast-Unix-Debug
+BUILDDIRUNIXREL  = Build/ProjectForecast-Unix-Release
+BUILDDIROSXDBG   = Build/ProjectForecast-OSX-Debug
+BUILDDIROSXREL   = Build/ProjectForecast-OSX-Release
 CONFIG(debug, debug|release) { # Debug build dirs
     win32:      DESTDIR     = $${BUILDDIRWIN32DBG}/
     win32:      OBJECTS_DIR = $${BUILDDIRWIN32DBG}/obj
