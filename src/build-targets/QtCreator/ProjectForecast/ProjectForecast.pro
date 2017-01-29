@@ -1,9 +1,23 @@
 TARGET = ProjectForecast
 TEMPLATE = app
 
-CONFIG += c++14
 
+
+#
+# C++ flags to get C++1z features.
+#
+win32: CONFIG += c++14
+unix:  CONFIG += c++1z
+unix:  QMAKE_CXXFLAGS += -std=c++1z
+#
+
+
+#
+#
+#
 DEFINES += RUN_UNIT_TESTS
+#
+
 
 #
 # Configure release & debug build directories.
