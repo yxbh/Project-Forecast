@@ -2,10 +2,10 @@
 
 #include <spdlog\spdlog.h>
 
-namespace ke = spdlog; // alias the spdlog namespace to make it our own.
-
 namespace ke
 {
+    using namespace spdlog; // alias the spdlog namespace to make it our own.
+
     class Log
     {
     public:
