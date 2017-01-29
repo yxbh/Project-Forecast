@@ -1,7 +1,7 @@
-#include "KEngine\Core\EventManager.hpp"
-#include "KEngine\Interface\IEvent.hpp"
+#include "KEngine/Core/EventManager.hpp"
+#include "KEngine/Interface/IEvent.hpp"
 
-#include "KEngine\UnitTest\catch.hpp"
+#include "KEngine/UnitTest/catch.hpp"
 
 namespace
 {

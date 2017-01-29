@@ -1,7 +1,7 @@
-#include "KEngine\Common\Delegate.hpp"
-#include "KEngine\Interface\IEvent.hpp"
+#include "KEngine/Common/Delegate.hpp"
+#include "KEngine/Interface/IEvent.hpp"
 
-#include "KEngine\UnitTest\catch.hpp"
+#include "KEngine/UnitTest/catch.hpp"
 
 namespace
 {

@@ -20,6 +20,6 @@ int main(int argc, char ** argv)
 #else
 
 #define CATCH_CONFIG_MAIN  // This tells Catch to provide a main() - only do this in one cpp file
-#include "KEngine\UnitTest\catch.hpp"
+#include "KEngine/UnitTest/catch.hpp"
 
 #endif

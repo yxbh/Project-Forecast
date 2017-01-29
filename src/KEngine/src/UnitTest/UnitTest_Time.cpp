@@ -1,6 +1,6 @@
-#include "KEngine\Common\Time.hpp"
+#include "KEngine/Common/Time.hpp"
 
-#include "KEngine\UnitTest\catch.hpp"
+#include "KEngine/UnitTest/catch.hpp"
 
 TEST_CASE("ke::Time Unit Tests")
 {

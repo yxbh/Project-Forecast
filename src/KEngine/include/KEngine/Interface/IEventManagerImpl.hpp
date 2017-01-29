@@ -1,8 +1,8 @@
 #pragma once
 
-#include "KEngine\Common\Delegate.hpp"
-#include "KEngine\Common\Time.hpp"
-#include "KEngine\Interface\IEvent.hpp"
+#include "KEngine/Common/Delegate.hpp"
+#include "KEngine/Common/Time.hpp"
+#include "KEngine/Interface/IEvent.hpp"
 
 namespace ke
 {

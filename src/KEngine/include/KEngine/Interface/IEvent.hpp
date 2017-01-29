@@ -1,8 +1,8 @@
 #pragma once
 
-#include "KEngine\Common\Queues.hpp"
-#include "KEngine\Common\Delegate.hpp"
-#include "KEngine\Common\String.hpp"
+#include "KEngine/Common/Queues.hpp"
+#include "KEngine/Common/Delegate.hpp"
+#include "KEngine/Common/String.hpp"
 
 #include <cstdint>
 #include <memory>
