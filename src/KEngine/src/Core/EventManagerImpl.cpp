@@ -27,7 +27,7 @@ namespace ke::priv
         return true;
     }
 
-    bool EventManagerImpl::deregisterListener(const ke::EventType p_EventType, const ke::EventDelegate & p_EventDelegate)
+    bool EventManagerImpl::deregisterListener(const ke::EventType p_EventType, const ke::EventDelegate & p_Delegate)
     {
         if (m_Listeners.find(p_EventType) == m_Listeners.end())
         {
@@ -37,7 +37,7 @@ namespace ke::priv
         ListenerList & listeners(m_Listeners[p_EventType]);
         for (ListenerList::const_iterator cit(listeners.begin()); cit != listeners.end(); ++cit)
         {
-            if (*cit == p_EventDelegate)
+            if (*cit == p_Delegate)
             {
                 listeners.erase(cit);
                 return true;
