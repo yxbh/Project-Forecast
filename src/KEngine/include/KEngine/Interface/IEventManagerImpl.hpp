@@ -28,7 +28,7 @@ namespace ke::priv
         /// <param name="p_EventType"></param>
         /// <param name="p_Delegate">The event delegate that will be called when an event of the specified is received.</param>
         /// <returns>false if the delegate is already listening to the specified event type.</returns>
-        bool registerListener(const ke::EventType p_EventType, const ke::EventDelegate & p_Delegate);
+        virtual bool registerListener(const ke::EventType p_EventType, const ke::EventDelegate & p_Delegate) = 0;
         
         /// <summary>
         /// Remove all listeners for the specified EventType.
