@@ -314,6 +314,7 @@ namespace generic
         template <class T>
         static void deleter_stub(void* const p)
         {
+            (void)p; // this sliences warning C4100 on VC which is harmless here (generated due to VC limitation. ref: https://msdn.microsoft.com/en-us/library/26kb9fy0.aspx
             static_cast<T*>(p)->~T();
         }
 
