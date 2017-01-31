@@ -7,14 +7,14 @@
 namespace ke
 {
 
-    /**
-    \class Time
-    \brief A class which defines a period of time (i.e. a Time). The value can be negative.
-            The Time can be evalued to abirtary precision (seconds(double), milliseconds(in32) and microseconds(int64).
-
-    The as*() methods may lose precision when returning its value.
-    E.g. a Time object representing 1500 microseconds will return 1 when asMilliseconds() is called.
-    */
+    /// <summary>
+    /// A class which defines a period of time (i.e. a moment of time). The value can be negative.
+    /// </summary>
+    /// 
+    /// The Time can be evalued to abirtary precision (seconds(double), milliseconds(in32) and microseconds(int64).
+    /// 
+    /// The as*() methods may lose precision when returning its value.
+    /// E.g. a Time object representing 1500 microseconds will return 1 when asMilliseconds() is called.
     class Time
     {
     public:
