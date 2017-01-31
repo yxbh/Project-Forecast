@@ -13,15 +13,13 @@ namespace ke
     using EventType = std::uint16_t;
 
 
-    /*
-    \class IEvent
-
-    \brief Interface for creating command/event classes.
-    Each derived class needs to define their own unique static EventType.
-
-    Assignment operators and copy constructors are disabled as user should only use smart pointers to an Event class type.
-    Use the makeCopy() method to make copies of the same event.
-    */
+    /// <summary>
+    /// Interface for creating command/event classes.
+    /// Each derived class needs to define their own unique static EventType.
+    /// </summary>
+    /// 
+    /// Assignment operators and copy constructors are disabled as user should only use smart pointers to an Event class type.
+    /// Use the makeCopy() method to make copies of the same event.
     class IEvent
     {
     public:

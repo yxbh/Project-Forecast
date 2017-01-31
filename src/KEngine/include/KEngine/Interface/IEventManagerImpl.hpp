@@ -22,25 +22,57 @@ namespace ke::priv
     public:
         virtual ~IEventManagerImpl() = 0;
 
-        /**
-        Add an event delegate for the specified event type.
-        @return false if the delegate is already listening to the specified event type.
-        */
+        /// <summary>
+        /// Add an event delegate for the specified event type.
+        /// </summary>
+        /// <param name="p_EventType"></param>
+        /// <param name="p_Delegate">The event delegate that will be called when an event of the specified is received.</param>
+        /// <returns>false if the delegate is already listening to the specified event type.</returns>
         bool registerListener(const ke::EventType p_EventType, const ke::EventDelegate & p_Delegate);
-        /** Remove all listeners for the specified EventType. */
+        
+        /// <summary>
+        /// Remove all listeners for the specified EventType.
+        /// </summary>
+        /// <param name="p_EventType"></param>
+        /// <returns></returns>
         virtual bool deregisterAllListeners(const ke::EventType p_EventType) = 0;
-        /** Deregister a listener/delegate with the given EntityID from a specific event type. */
+        
+        /// <summary>
+        /// Deregister a listener/delegate with the given EntityID from a specific event type.
+        /// </summary>
+        /// <param name="p_Handle"></param>
+        /// <param name="p_CmdType"></param>
+        /// <returns></returns>
         virtual bool deregisterListener(const ke::EventDelegate & p_Handle, const ke::EventType p_CmdType) = 0;
-        /** Add an event into the Event queue. */
+        
+        /// <summary>
+        /// Add an event into the Event queue.
+        /// </summary>
+        /// <param name="p_spNewEvent"></param>
         virtual void queue(ke::EventSptr p_spNewEvent) = 0;
-        /** Call all delegates listening to that event now. Return false if Event is not handled for whatever reason. */
+        
+        /// <summary>
+        /// Call all delegates listening to that event now.
+        /// </summary>
+        /// <param name="p_Event"></param>
+        /// <returns>false if Event is not handled for whatever reason.</returns>
         virtual bool dispatchNow(ke::EventSptr p_Event) = 0;
-        /** Remove first instance of an event of a particular type. If true all event belonging to the type will be removed. Does not remove event from the thread safe queue.*/
+
+        /// <summary>
+        /// Remove first instance of an event of a particular type.
+        /// </summary>
+        /// <param name="p_EventType"></param>
+        /// <param name="p_RemoveAllSame">If true all events of the specified type will be removed. Does not remove event from the thread safe queue.</param>
+        /// <returns></returns>
         virtual bool removeEvent(const EventType p_EventType, const bool p_RemoveAllSame = false) = 0;
 
-        /** Fire off all Commands (With in limit, if one is set), returns EventProcessResult indicating status of event processing. */
-        //virtual EventProcessResult update(const ke::Time p_Duration, const ke::Time p_DurationLimit = Time::Zero) = 0;
+        /// <summary>
+        /// Deliver all events to their registered listeners.
+        /// </summary>
+        /// <param name="p_DurationLimit"></param>
+        /// <returns>EventProcessResult indicating status of event processing.</returns>
         virtual EventProcessResult update(const ke::Time p_DurationLimit = ke::Time::Zero) = 0;
+        //virtual EventProcessResult update(const ke::Time p_Duration, const ke::Time p_DurationLimit = Time::Zero) = 0;
     };
 
     inline IEventManagerImpl::~IEventManagerImpl() {}
