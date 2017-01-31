@@ -18,7 +18,7 @@ namespace ke::priv
 
         virtual bool deregisterAllListeners(const ke::EventType p_EventType) final;
 
-        virtual bool deregisterListener(const ke::EventType p_EventType, const ke::EventDelegate & p_EventDelegate) final;
+        virtual bool deregisterListener(const ke::EventType p_EventType, const ke::EventDelegate & p_Delegate) final;
 
         virtual void queue(ke::EventSptr p_spNewEvent) final;
 
