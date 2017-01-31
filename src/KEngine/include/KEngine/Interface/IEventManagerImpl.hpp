@@ -40,10 +40,10 @@ namespace ke::priv
         /// <summary>
         /// Deregister a listener/delegate with the given EntityID from a specific event type.
         /// </summary>
-        /// <param name="p_Handle"></param>
-        /// <param name="p_CmdType"></param>
+        /// <param name="p_EventType"></param>
+        /// <param name="p_Delegate"></param>
         /// <returns></returns>
-        virtual bool deregisterListener(const ke::EventDelegate & p_Handle, const ke::EventType p_CmdType) = 0;
+        virtual bool deregisterListener(const ke::EventType p_EventType, const ke::EventDelegate & p_Delegate) = 0;
         
         /// <summary>
         /// Add an event into the Event queue.

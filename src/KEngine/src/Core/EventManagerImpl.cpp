@@ -27,7 +27,7 @@ namespace ke::priv
         return true;
     }
 
-    bool EventManagerImpl::deregisterListener(const ke::EventDelegate & p_EventDelegate, const ke::EventType p_EventType)
+    bool EventManagerImpl::deregisterListener(const ke::EventType p_EventType, const ke::EventDelegate & p_EventDelegate)
     {
         if (m_Listeners.find(p_EventType) == m_Listeners.end())
         {
