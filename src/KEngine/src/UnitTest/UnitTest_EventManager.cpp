@@ -24,22 +24,6 @@ namespace
         return;
     }
 
-    class System // TODO: inherit from ISystem interface.
-    {
-    public:
-        void handleEvent(ke::EventSptr event)
-        {
-            ++counter;
-            return;
-        }
-
-        void handleEvent2(ke::EventSptr event)
-        {
-            ++counter;
-            return;
-        }
-    };
-
     class TestEvent : public ke::IEvent
     {
     public:
@@ -81,12 +65,58 @@ namespace
             return std::make_shared<TestEvent2>();
         }
     };
+
+
+    class System // TODO: inherit from ISystem interface.
+    {
+    public:
+        System()
+        {
+            ke::EventManager::instance()->registerListener(TestEvent::EVENT_TYPE, ke::EventDelegate(this, &System::handleEvent));
+            ke::EventManager::registerListener<TestEvent>(this, &System::handleEvent2);
+            ke::EventManager::registerListener<TestEvent>(&::staticFunc);
+        }
+
+        ~System()
+        {
+            ke::EventManager::instance()->deregisterListener(TestEvent::EVENT_TYPE, ke::EventDelegate(this, &System::handleEvent));
+            ke::EventManager::deregisterListener<TestEvent>(this, &System::handleEvent2);
+            ke::EventManager::deregisterListener<TestEvent>(&::staticFunc);
+        }
+
+        void handleEvent(ke::EventSptr event)
+        {
+            ++counter;
+            return;
+        }
+
+        void handleEvent2(ke::EventSptr event)
+        {
+            ++counter;
+            return;
+        }
+    };
 }
 
 TEST_CASE("Event Manager Unit Tests")
 {
     SECTION("")
     {
+        CHECK(counter == 0);
 
+        System system;
+        ke::EventManager::instance()->queue(ke::EventSptr(new TestEvent));
+        ke::EventManager::instance()->update();
+
+        CHECK(counter == 3);
+
+        ke::EventManager::queue(ke::EventSptr(new TestEvent));
+        ke::EventManager::update();
+
+        CHECK(counter == 6);
+
+        ke::EventManager::instance()->dispatchNow(ke::EventSptr(new TestEvent));
+
+        CHECK(counter == 9);
     }
 }
