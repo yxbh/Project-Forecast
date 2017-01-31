@@ -55,7 +55,7 @@ namespace ke::priv
         /// Call all delegates listening to that event now.
         /// </summary>
         /// <param name="p_Event"></param>
-        /// <returns>false if Event is not handled for whatever reason.</returns>
+        /// <returns>false if Event is not handled by a listener.</returns>
         virtual bool dispatchNow(ke::EventSptr p_Event) = 0;
 
         /// <summary>
