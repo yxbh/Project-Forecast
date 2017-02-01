@@ -107,16 +107,17 @@ TEST_CASE("Event Manager Unit Tests")
         System system;
         ke::EventManager::instance()->queue(ke::EventSptr(new TestEvent));
         ke::EventManager::instance()->update();
-
         CHECK(counter == 3);
 
         ke::EventManager::queue(ke::EventSptr(new TestEvent));
         ke::EventManager::update();
-
         CHECK(counter == 6);
 
         ke::EventManager::instance()->dispatchNow(ke::EventSptr(new TestEvent));
 
         CHECK(counter == 9);
+        
+        ke::EventManager::dispatchNow(ke::EventSptr(new TestEvent));
+        CHECK(counter == 12);
     }
 }

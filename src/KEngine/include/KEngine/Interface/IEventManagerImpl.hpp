@@ -38,7 +38,7 @@ namespace ke::priv
         virtual bool deregisterAllListeners(const ke::EventType p_EventType) = 0;
         
         /// <summary>
-        /// Deregister a listener/delegate with the given EntityID from a specific event type.
+        /// Deregister a listener/delegate from the specified event type.
         /// </summary>
         /// <param name="p_EventType"></param>
         /// <param name="p_Delegate"></param>
@@ -52,7 +52,7 @@ namespace ke::priv
         virtual void queue(ke::EventSptr p_spNewEvent) = 0;
         
         /// <summary>
-        /// Call all delegates listening to that event now.
+        /// Call all delegates listening to the given event now.
         /// </summary>
         /// <param name="p_Event"></param>
         /// <returns>false if Event is not handled by a listener.</returns>
