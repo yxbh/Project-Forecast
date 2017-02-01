@@ -300,17 +300,21 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\App.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Delegate.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\macros.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\ScopeFunc.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\StopWatch.hpp" />
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\macro_common.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Queues.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\SRDelegate.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\String.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Time.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManager.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManagerImpl.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SDL2\SDL2Window.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\Window.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IApp.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEventManagerImpl.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IWindow.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Log\Log.hpp" />
   </ItemGroup>
   <ItemGroup>

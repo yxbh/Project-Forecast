@@ -1,6 +1,6 @@
 #pragma once
 
-#include "macro_common.hpp"
+#include "macros.hpp"
 
 #include <cstdint>
 
