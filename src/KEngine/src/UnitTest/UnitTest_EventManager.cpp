@@ -1,3 +1,5 @@
+#if defined(RUN_UNIT_TESTS)
+
 #include "KEngine/Core/EventManager.hpp"
 #include "KEngine/Interface/IEvent.hpp"
 
@@ -121,3 +123,5 @@ TEST_CASE("Event Manager Unit Tests")
         CHECK(counter == 12);
     }
 }
+
+#endif

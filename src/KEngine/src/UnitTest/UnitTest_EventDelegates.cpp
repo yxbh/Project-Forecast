@@ -1,3 +1,5 @@
+#if defined(RUN_UNIT_TESTS)
+
 #include "KEngine/Common/Delegate.hpp"
 #include "KEngine/Interface/IEvent.hpp"
 
@@ -131,3 +133,5 @@ TEST_CASE("Event Delegates Unit Tests")
         CHECK(delegate2 != delegate4);
     }
 }
+
+#endif

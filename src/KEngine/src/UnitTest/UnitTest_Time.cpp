@@ -1,6 +1,9 @@
+#if defined(RUN_UNIT_TESTS)
+
 #include "KEngine/Common/Time.hpp"
 
 #include "KEngine/UnitTest/catch.hpp"
+
 
 TEST_CASE("ke::Time Unit Tests")
 {
@@ -42,3 +45,5 @@ TEST_CASE("ke::Time Unit Tests")
     }
     
 }
+
+#endif

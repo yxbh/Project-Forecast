@@ -1,3 +1,5 @@
+#if defined(RUN_UNIT_TESTS)
+
 #include "KEngine/Common/Delegate.hpp"
 
 #include "KEngine/UnitTest/catch.hpp"
@@ -107,3 +109,5 @@ TEST_CASE("ke::Delegate Unit Tests")
         CHECK(delegate2 != delegate4);
     }
 }
+
+#endif

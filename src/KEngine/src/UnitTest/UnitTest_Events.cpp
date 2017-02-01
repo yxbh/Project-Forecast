@@ -1,3 +1,5 @@
+#if defined(RUN_UNIT_TESTS)
+
 #include "KEngine/Core/EventManager.hpp"
 #include "KEngine/Interface/IEvent.hpp"
 
@@ -35,3 +37,5 @@ TEST_CASE("Events Unit Tests") // TODO: what am i testing here?
 
     TestEvent event;
 }
+
+#endif
