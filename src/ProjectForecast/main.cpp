@@ -13,7 +13,7 @@ int main(int argc, char ** argv)
 
     ke::App app;
     const int result = app.exec();
-    std::this_thread::sleep_for(2s);
+    //std::this_thread::sleep_for(2s);
     return result;
 }
 
