@@ -10,7 +10,7 @@
 namespace ke
 {
 
-    using EventType = std::uint16_t;
+    using EventType = std::uint32_t;
 
 
     /// <summary>
@@ -28,7 +28,7 @@ namespace ke
         using Wptr = std::weak_ptr<IEvent>;
 
         static const EventType INVALID_EVENT = 0;
-        static const EventType TYPE = INVALID_EVENT;
+        static const EventType TYPE = INVALID_EVENT; /// each class inheriting from IEvent is required to redefine this.
 
         IEvent();
         IEvent(IEvent &) = delete;
@@ -38,15 +38,15 @@ namespace ke
 
         virtual ~IEvent();
 
-        virtual ke::EventType getType() = 0;
-        virtual ke::String getName() = 0;
+        virtual ke::EventType getType() const = 0;
+        virtual ke::String getName() const = 0;
 
-        virtual Sptr makeCopy() = 0;
+        virtual Sptr makeCopy() const = 0;
     };
 
     inline IEvent::IEvent() {}
     inline IEvent::~IEvent() {}
-    inline EventType IEvent::getType()
+    inline EventType IEvent::getType() const
     {
         return INVALID_EVENT;
     }

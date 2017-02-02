@@ -29,19 +29,21 @@ namespace
     class TestEvent : public ke::IEvent
     {
     public:
-        static const ke::EventType EVENT_TYPE = 1;
+        static const ke::EventType TYPE = 1;
 
-        virtual ke::EventType  getType() final
+        using IEvent::IEvent;
+
+        virtual ke::EventType getType() const final
         {
-            return EVENT_TYPE;
+            return TYPE;
         }
 
-        virtual ke::String getName() final
+        virtual ke::String getName() const final
         {
             return KE_TEXT("TestEvent");
         }
 
-        virtual ke::EventSptr makeCopy() final
+        virtual ke::EventSptr makeCopy() const final
         {
             return std::make_shared<TestEvent>();
         }
@@ -50,19 +52,19 @@ namespace
     class TestEvent2 : public ke::IEvent
     {
     public:
-        static const ke::EventType EVENT_TYPE = 2;
+        static const ke::EventType TYPE = 2;
 
-        virtual ke::EventType  getType() final
+        virtual ke::EventType getType() const final
         {
-            return EVENT_TYPE;
+            return TYPE;
         }
 
-        virtual ke::String getName() final
+        virtual ke::String getName() const final
         {
             return KE_TEXT("TestEvent2");
         }
 
-        virtual ke::EventSptr makeCopy() final
+        virtual ke::EventSptr makeCopy() const final
         {
             return std::make_shared<TestEvent2>();
         }
@@ -74,14 +76,14 @@ namespace
     public:
         System()
         {
-            ke::EventManager::instance()->registerListener(TestEvent::EVENT_TYPE, ke::EventDelegate(this, &System::handleEvent));
+            ke::EventManager::instance()->registerListener(TestEvent::TYPE, ke::EventDelegate(this, &System::handleEvent));
             ke::EventManager::registerListener<TestEvent>(this, &System::handleEvent2);
             ke::EventManager::registerListener<TestEvent>(&::staticFunc);
         }
 
         ~System()
         {
-            ke::EventManager::instance()->deregisterListener(TestEvent::EVENT_TYPE, ke::EventDelegate(this, &System::handleEvent));
+            ke::EventManager::instance()->deregisterListener(TestEvent::TYPE, ke::EventDelegate(this, &System::handleEvent));
             ke::EventManager::deregisterListener<TestEvent>(this, &System::handleEvent2);
             ke::EventManager::deregisterListener<TestEvent>(&::staticFunc);
         }

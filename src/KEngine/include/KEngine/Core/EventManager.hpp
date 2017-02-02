@@ -38,7 +38,7 @@ namespace ke
         static inline bool registerListener(Listener_T * const instance, ListenerMemFunc_T memFunc)
         {
             assert(instance);
-            return ke::EventManager::instance()->registerListener(Event_T::EVENT_TYPE, ke::EventDelegate(instance, memFunc));
+            return ke::EventManager::instance()->registerListener(Event_T::TYPE, ke::EventDelegate(instance, memFunc));
         }
 
         template <typename Event_T, typename ListenerStaticFunc_T>
@@ -49,7 +49,7 @@ namespace ke
         /// <returns>false if the delegate is already listening to the specified event type.</returns>
         static inline bool registerListener(ListenerStaticFunc_T staticFunc)
         {
-            return ke::EventManager::instance()->registerListener(Event_T::EVENT_TYPE, ke::EventDelegate(staticFunc));
+            return ke::EventManager::instance()->registerListener(Event_T::TYPE, ke::EventDelegate(staticFunc));
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace ke
         template <typename Event_T, typename Listener_T, typename ListenerMemFunc_T>
         static inline bool deregisterListener(Listener_T * const instance, ListenerMemFunc_T memFunc)
         {
-            return ke::EventManager::instance()->deregisterListener(Event_T::EVENT_TYPE, ke::EventDelegate(instance, memFunc));
+            return ke::EventManager::instance()->deregisterListener(Event_T::TYPE, ke::EventDelegate(instance, memFunc));
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace ke
         template <typename Event_T, typename ListenerStaticFunc_T>
         static inline bool deregisterListener(ListenerStaticFunc_T staticFunc)
         {
-            return ke::EventManager::instance()->deregisterListener(Event_T::EVENT_TYPE, ke::EventDelegate(staticFunc));
+            return ke::EventManager::instance()->deregisterListener(Event_T::TYPE, ke::EventDelegate(staticFunc));
         }
 
         /// <summary>

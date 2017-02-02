@@ -47,17 +47,17 @@ namespace
     public:
         static const ke::EventType EVENT_TYPE = 1;
 
-        virtual ke::EventType  getType() final
+        virtual ke::EventType getType() const final
         {
             return EVENT_TYPE;
         }
 
-        virtual ke::String getName() final
+        virtual ke::String getName() const final
         {
             return KE_TEXT("TestEvent");
         }
 
-        virtual ke::EventSptr makeCopy() final
+        virtual ke::EventSptr makeCopy() const final
         {
             return std::make_shared<TestEvent>();
         }

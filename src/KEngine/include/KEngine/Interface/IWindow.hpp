@@ -12,7 +12,12 @@ namespace ke
     class IWindow
     {
     public:
+        IWindow() = default;
+        IWindow(IWindow&) = delete;
+        IWindow(IWindow&&) = delete;
         virtual ~IWindow() = 0;
+        IWindow & operator=(IWindow &) = delete;
+        IWindow & operator=(IWindow &&) = delete;
 
         /// <summary>
         /// Refresh the window surface to display new content.
@@ -23,7 +28,7 @@ namespace ke
         /// Set the window title.
         /// </summary>
         /// <param name="title">Title text</param>
-        virtual void setTitle(ke::String title) = 0;
+        virtual void setTitle(const ke::String & title) = 0;
     };
 
     inline IWindow::~IWindow() {}

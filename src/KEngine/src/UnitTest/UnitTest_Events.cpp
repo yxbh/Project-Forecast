@@ -11,19 +11,19 @@ namespace
     class TestEvent : public ke::IEvent
     {
     public:
-        static const ke::EventType EVENT_TYPE = 1;
+        static const ke::EventType TYPE = 1;
         
-        virtual ke::EventType  getType() final
+        virtual ke::EventType getType() const final
         {
-            return EVENT_TYPE;
+            return TYPE;
         }
 
-        virtual ke::String getName() final
+        virtual ke::String getName() const final
         {
             return KE_TEXT("TestEvent");
         }
 
-        virtual ke::EventSptr makeCopy() final
+        virtual ke::EventSptr makeCopy() const final
         {
             return std::make_shared<TestEvent>();
         }

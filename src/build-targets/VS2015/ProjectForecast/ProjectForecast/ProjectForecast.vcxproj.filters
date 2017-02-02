@@ -49,6 +49,18 @@
     <Filter Include="Header Files\KEngine\Graphics\SDL2">
       <UniqueIdentifier>{77c03364-32ab-41b3-942b-c83d7a9a3763}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\KEngine\Events">
+      <UniqueIdentifier>{868a590c-c6a3-4e0b-b85a-4d71e2e692a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\KEngine\Events\SDL2">
+      <UniqueIdentifier>{452fca54-64f3-4339-bb11-6a6e84ebddb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\KEngine\Graphics">
+      <UniqueIdentifier>{8a20e83b-5242-4c83-8ad6-fc4321569c54}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\KEngine\Graphics\SDL2">
+      <UniqueIdentifier>{c8e6effe-8713-4ab3-be03-4dbb09841084}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\ProjectForecast\main.cpp">
@@ -77,6 +89,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EventManager.cpp">
       <Filter>Source Files\KEngine\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\dump.cpp">
+      <Filter>Source Files\KEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SDL2\SDL2Window.cpp">
+      <Filter>Source Files\KEngine\Graphics\SDL2</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -133,6 +151,24 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\macros.hpp">
       <Filter>Header Files\KEngine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\EventLoopFrameEvent.hpp">
+      <Filter>Header Files\KEngine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\LogicLoopFrameEvent.hpp">
+      <Filter>Header Files\KEngine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\GraphicsLoopFrameEvent.hpp">
+      <Filter>Header Files\KEngine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SDL2\SDL2Event.hpp">
+      <Filter>Header Files\KEngine\Events\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\ISystem.hpp">
+      <Filter>Header Files\KEngine\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\LoopFrameEvent.hpp">
+      <Filter>Header Files\KEngine\Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,8 +1,10 @@
 #pragma once
 
 #include "KEngine/Interface/IWindow.hpp"
+#include "KEngine/Interface/IEvent.hpp"
+#include "KEngine/Log/Log.hpp"
 
-#include <SDL.h>
+#include <SDL_video.h>
 
 namespace ke::sdl2
 {
@@ -10,7 +12,7 @@ namespace ke::sdl2
     class SDL2WindowDeleter
     {
     public:
-        void operator()(SDL_Window * window)
+        inline void operator()(SDL_Window * window)
         {
             SDL_DestroyWindow(window);
         }
@@ -23,36 +25,21 @@ namespace ke::sdl2
     class SDL2Window : public ke::IWindow
     {
     public:
-        static WindowSptr create()
+        static WindowSptr create();
+
+        inline SDL2Window()
         {
-            auto window = std::make_shared<SDL2Window>();
-            window->window = SDL2WindowSptr(SDL_CreateWindow(
-                window->title.c_str(),
-                SDL_WINDOWPOS_UNDEFINED,
-                SDL_WINDOWPOS_UNDEFINED,
-                window->width, window->height,
-                SDL_WINDOW_SHOWN),
-                SDL_DestroyWindow);
 
-            if (nullptr == window)
-            {
-                Log::instance()->critical("SDL window could not be created. Error: {}", SDL_GetError());
-            }
-
-            return window;
         }
+        virtual ~SDL2Window();
 
-        virtual ~SDL2Window() = default;
+        virtual void display() final;
 
-        virtual void display() final
+        virtual void setTitle(const ke::String & title) final;
+
+        virtual void setThreadCurrent() final
         {
-            SDL_UpdateWindowSurface(window.get());
-        }
-
-        virtual void setTitle(ke::String title) final
-        {
-            this->title = title;
-            SDL_SetWindowTitle(this->window.get(), this->title.c_str());
+            //SDL_GL_MakeCurrent
         }
 
         inline SDL_Window * get()
@@ -66,6 +53,8 @@ namespace ke::sdl2
         }
 
     private:
+        void handleGraphicsLoopFrameEvent(ke::EventSptr event);
+
         SDL2WindowSptr window; /// SDL_Window instance managed by smart pointer.
 
         std::size_t width = 1920;
