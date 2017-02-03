@@ -260,3 +260,5 @@ paket-files/
 *.tlog
 *.idb
 *.exe
+Debug-UnitTest/
+Release-UnitTest/
