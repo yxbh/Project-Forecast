@@ -39,7 +39,7 @@ namespace ke::sdl2
         if (window)
         {
             ke::EventManager::deregisterListener<ke::GraphicsLoopFrameEvent>(
-                window.get(), &ke::sdl2::SDL2Window::handleGraphicsLoopFrameEvent);
+                this, &ke::sdl2::SDL2Window::handleGraphicsLoopFrameEvent);
         }
     }
 
