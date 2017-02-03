@@ -107,7 +107,6 @@ namespace ke::priv
     {
         bool has_duraton_limit = p_ExcutionDurationLimit == ke::Time::Zero ? false : true;
 
-        ke::Time elapsed;
         ke::StopWatch stopwatch; stopwatch.restart();
 
         ke::EventSptr moving_event_ptr;
@@ -117,8 +116,7 @@ namespace ke::priv
         ke::EventSptr event_ptr;
         while (!m_EventQueue.empty())
         {
-            elapsed += stopwatch.getElapsed(); stopwatch.restart();
-            if (has_duraton_limit && elapsed >= p_ExcutionDurationLimit) // if elapsed time if duration limit setted.
+            if (has_duraton_limit && stopwatch.getElapsed() >= p_ExcutionDurationLimit) // if elapsed time if duration limit setted.
                 break;
 
             event_ptr = m_EventQueue.front(); m_EventQueue.pop_front();
