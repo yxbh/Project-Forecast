@@ -37,10 +37,7 @@ namespace ke::sdl2
 
         virtual void setTitle(const ke::String & title) final;
 
-        virtual void setThreadCurrent() final
-        {
-            //SDL_GL_MakeCurrent
-        }
+        virtual bool setThreadCurrent() final;
 
         inline SDL_Window * get()
         {
@@ -56,6 +53,7 @@ namespace ke::sdl2
         void handleGraphicsLoopFrameEvent(ke::EventSptr event);
 
         SDL2WindowSptr window; /// SDL_Window instance managed by smart pointer.
+        SDL_GLContext glContext;
 
         std::size_t width = 1920;
         std::size_t height = 1080;

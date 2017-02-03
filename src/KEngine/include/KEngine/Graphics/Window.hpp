@@ -1,4 +1,4 @@
-#pragma
+#pragma once
 
 #include "KEngine/Graphics/SDL2/SDL2Window.hpp"
 

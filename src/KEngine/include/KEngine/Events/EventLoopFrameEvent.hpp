@@ -6,7 +6,7 @@ namespace ke
 {
 
     /// <summary>
-    /// 
+    /// A heart beat event that is sent once every frame in the event loop.
     /// </summary>
     class EventLoopFrameEvent : public ke::LoopFrameEvent
     {

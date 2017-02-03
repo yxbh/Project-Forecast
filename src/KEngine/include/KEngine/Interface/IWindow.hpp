@@ -29,6 +29,8 @@ namespace ke
         /// </summary>
         /// <param name="title">Title text</param>
         virtual void setTitle(const ke::String & title) = 0;
+
+        virtual bool setThreadCurrent() = 0;
     };
 
     inline IWindow::~IWindow() {}

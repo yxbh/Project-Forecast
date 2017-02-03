@@ -1,5 +1,12 @@
 #pragma once
+
 #include "KEngine/Interface/IApp.hpp"
+#include "KEngine/Interface/IEvent.hpp"
+#include "KEngine/Graphics/Window.hpp"
+
+#include <atomic>
+#include <utility>
+#include <thread>
 
 namespace ke
 {
@@ -20,7 +27,28 @@ namespace ke
         virtual int exec() override;
 
     private:
+        void enterEventLoop();
+        void enterLogicLoop();
+
         void initExec();
         void cleanUpExec();
+
+        void handleAppExitRequest(ke::EventSptr);
+
+
+        std::atomic_bool isEventLoopRunning = false;
+        std::atomic_bool isLogicLoopRunning = false;
+        std::atomic_bool isGraphicsLoopRunning = false;
+
+        std::thread logicLoopThread;
+
+        ke::WindowSptr mainWindow;
+    };
+
+    enum ExitCodes : std::int32_t
+    {
+        SUCCESS = 0,
+        FAILURE_WINDOW_CREATION = 1,
+        UNKNOWN = std::numeric_limits<std::int32_t>::max()
     };
 }

@@ -311,6 +311,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Time.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManager.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManagerImpl.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\AppExitRequestedEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\EventLoopFrameEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\GraphicsLoopFrameEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\LogicLoopFrameEvent.hpp" />
