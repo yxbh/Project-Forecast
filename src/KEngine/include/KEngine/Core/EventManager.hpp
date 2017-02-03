@@ -23,7 +23,7 @@ namespace ke
         /// </summary>
         /// <param name="durationLimit"></param>
         /// <returns>EventProcessResult indicating status of event processing.</returns>
-        static inline void update(const ke::Time durationLimit = ke::Time::Zero)
+        static inline void update(const ke::Time & durationLimit = ke::Time::Zero)
         {
             ke::EventManager::instance()->update(durationLimit);
         }
@@ -34,20 +34,23 @@ namespace ke
         /// <param name="instance">A pointer to the listener.</param>
         /// <param name="memFunc">A member function pointer that matches the signature of ke::EventDelegate.</param>
         /// <returns>false if the delegate is already listening to the specified event type.</returns>
-        template <typename Event_T, typename Listener_T, typename ListenerMemFunc_T>
-        static inline bool registerListener(Listener_T * const instance, ListenerMemFunc_T memFunc)
+        template <typename Event_T, typename Listener_T, typename ListenerMemFunc_T,
+					class = typename std::enable_if<std::is_pointer<Listener_T>::value>::type,
+					class = typename std::enable_if<std::is_member_function_pointer<ListenerMemFunc_T>::value>::type>
+        static inline bool registerListener(Listener_T instance, ListenerMemFunc_T memFunc)
         {
             assert(instance);
             return ke::EventManager::instance()->registerListener(Event_T::TYPE, ke::EventDelegate(instance, memFunc));
         }
 
-        template <typename Event_T, typename ListenerStaticFunc_T>
         /// <summary>
         /// Add a static function (can be a static class function) as an event listener for the specified event type.
         /// </summary>
         /// <param name="staticFunc">A static function pointer.</param>
         /// <returns>false if the delegate is already listening to the specified event type.</returns>
-        static inline bool registerListener(ListenerStaticFunc_T staticFunc)
+		template <typename Event_T, typename ListenerStaticFunc_T,
+					class = typename std::enable_if<std::is_function<ListenerStaticFunc_T>::value>::type>
+        static inline bool registerListener(ListenerStaticFunc_T * const staticFunc)
         {
             return ke::EventManager::instance()->registerListener(Event_T::TYPE, ke::EventDelegate(staticFunc));
         }
@@ -58,9 +61,12 @@ namespace ke
         /// <param name="instance">A pointer to the listener.</param>
         /// <param name="memFunc">A member function pointer that matches the signature of ke::EventDelegate.</param>
         /// <returns>true if the function was successful.</returns>
-        template <typename Event_T, typename Listener_T, typename ListenerMemFunc_T>
-        static inline bool deregisterListener(Listener_T * const instance, ListenerMemFunc_T memFunc)
+        template <typename Event_T, typename Listener_T, typename ListenerMemFunc_T,
+					class = typename std::enable_if<std::is_pointer<Listener_T>::value>::type,
+					class = typename std::enable_if<std::is_member_function_pointer<ListenerMemFunc_T>::value>::type>
+        static inline bool deregisterListener(Listener_T instance, ListenerMemFunc_T memFunc)
         {
+            assert(instance);
             return ke::EventManager::instance()->deregisterListener(Event_T::TYPE, ke::EventDelegate(instance, memFunc));
         }
 
@@ -69,8 +75,9 @@ namespace ke
         /// </summary>
         /// <param name="staticFunc">A static function pointer.</param>
         /// <returns>true if the function was successful.</returns>
-        template <typename Event_T, typename ListenerStaticFunc_T>
-        static inline bool deregisterListener(ListenerStaticFunc_T staticFunc)
+        template <typename Event_T, typename ListenerStaticFunc_T,
+					class = typename std::enable_if<std::is_function<ListenerStaticFunc_T>::value>::type>
+        static inline bool deregisterListener(ListenerStaticFunc_T * const staticFunc)
         {
             return ke::EventManager::instance()->deregisterListener(Event_T::TYPE, ke::EventDelegate(staticFunc));
         }
