@@ -36,9 +36,9 @@ namespace ke
         void handleAppExitRequest(ke::EventSptr);
 
 
-        std::atomic_bool isEventLoopRunning = false;
-        std::atomic_bool isLogicLoopRunning = false;
-        std::atomic_bool isGraphicsLoopRunning = false;
+        std::atomic_bool isEventLoopRunning { false };
+        std::atomic_bool isLogicLoopRunning { false };
+        std::atomic_bool isGraphicsLoopRunning { false };
 
         std::thread logicLoopThread;
 

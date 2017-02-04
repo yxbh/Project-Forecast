@@ -1,5 +1,6 @@
 #if defined(RUN_UNIT_TESTS)
 
+#include "KEngine/Common/macros.hpp"
 #include "KEngine/Core/EventManager.hpp"
 #include "KEngine/Interface/IEvent.hpp"
 
@@ -16,12 +17,14 @@ namespace
 
     static void staticFunc(ke::EventSptr event)
     {
+        KE_UNUSED(event);
         ++counter;
         return;
     }
 
     static void staticFunc2(ke::EventSptr event)
     {
+        KE_UNUSED(event);
         ++counter;
         return;
     }
@@ -90,12 +93,14 @@ namespace
 
         void handleEvent(ke::EventSptr event)
         {
+            KE_UNUSED(event);
             ++counter;
             return;
         }
 
         void handleEvent2(ke::EventSptr event)
         {
+            KE_UNUSED(event);
             ++counter;
             return;
         }
