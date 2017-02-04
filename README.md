@@ -8,8 +8,8 @@ The aim of the project is to produce a close recreation of the Risk of Rain game
 A MSVC2015 target is provided under the `src/build-targets/VS2015` directory. The VC solution should compile out of the box.
 
 ### OSX (QtCreator/qmake)
-A QtCreator(QMake) project file is provided under the `src/build-targets/QtCreator/ProjectForecast` directory.  
-Before building, run the \*.dmg files under the `/src/lib/libs-osx` directory and copy the \*.framework files to the `/Library/Frameworks` directory on your OSX machine.  
+A QtCreator(QMake) project file is provided in the repo under the `src/build-targets/QtCreator/ProjectForecast` directory.  
+Before building, run the \*.dmg files under the `src/lib/libs-osx` directory in the repo and copy the \*.framework files to the `/Library/Frameworks` directory on your OSX machine.  
 You should then be able to open .pro file in QtCreator, run qmake and build the project.
 
 ## Unit Tests
