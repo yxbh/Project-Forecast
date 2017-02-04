@@ -1,6 +1,6 @@
 #if !defined(RUN_UNIT_TESTS)
 
-#include "KEngine\App.hpp"
+#include "KEngine/App.hpp"
 
 #include <chrono>
 #include <iostream>
