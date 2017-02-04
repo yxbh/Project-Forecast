@@ -16,12 +16,9 @@ unix:  QMAKE_CXXFLAGS += -std=c++1z
 
 #
 # For unit testing:
-#   create new Build Configuration and add 'CONFIG+=<unittest-variable>' to the qmake additional arguments field.
+#   create new Build Configuration and add 'CONFIG+=run_unit_tests' to the qmake additional arguments field.
 #
-debug_unittest {
-    DEFINES += RUN_UNIT_TESTS
-}
-release_unittest {
+run_unit_tests {
     DEFINES += RUN_UNIT_TESTS
 }
 #
