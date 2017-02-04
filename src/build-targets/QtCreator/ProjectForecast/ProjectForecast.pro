@@ -1,6 +1,8 @@
 TARGET = ProjectForecast
 TEMPLATE = app
 
+CONFIG += console
+
 
 
 #
@@ -13,9 +15,15 @@ unix:  QMAKE_CXXFLAGS += -std=c++1z
 
 
 #
+# For unit testing:
+#   create new Build Configuration and add 'CONFIG+=<unittest-variable>' to the qmake additional arguments field.
 #
-#
-DEFINES += RUN_UNIT_TESTS
+debug_unittest {
+    DEFINES += RUN_UNIT_TESTS
+}
+release_unittest {
+    DEFINES += RUN_UNIT_TESTS
+}
 #
 
 
@@ -82,7 +90,6 @@ INCLUDEPATH += \
 #
 HEADERS += \
     ../../../KEngine/include/KEngine/Common/Delegate.hpp \
-    ../../../KEngine/include/KEngine/Common/macro_common.hpp \
     ../../../KEngine/include/KEngine/Common/Queues.hpp \
     ../../../KEngine/include/KEngine/Common/SRDelegate.hpp \
     ../../../KEngine/include/KEngine/Common/StopWatch.hpp \
@@ -95,13 +102,23 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Interface/IEventManagerImpl.hpp \
     ../../../KEngine/include/KEngine/Log/Log.hpp \
     ../../../KEngine/include/KEngine/UnitTest/catch.hpp \
-    ../../../KEngine/include/KEngine/App.hpp
+    ../../../KEngine/include/KEngine/App.hpp \
+    ../../../KEngine/include/KEngine/Common/macros.hpp \
+    ../../../KEngine/include/KEngine/Common/ScopeFunc.hpp \
+    ../../../KEngine/include/KEngine/Events/SDL2/SDL2Event.hpp \
+    ../../../KEngine/include/KEngine/Events/AppExitRequestedEvent.hpp \
+    ../../../KEngine/include/KEngine/Events/EventLoopFrameEvent.hpp \
+    ../../../KEngine/include/KEngine/Events/GraphicsLoopFrameEvent.hpp \
+    ../../../KEngine/include/KEngine/Events/LogicLoopFrameEvent.hpp \
+    ../../../KEngine/include/KEngine/Events/LoopFrameEvent.hpp \
+    ../../../KEngine/include/KEngine/Graphics/SDL2/SDL2Window.hpp \
+    ../../../KEngine/include/KEngine/Graphics/Window.hpp \
+    ../../../KEngine/include/KEngine/Interface/ISystem.hpp \
+    ../../../KEngine/include/KEngine/Interface/IWindow.hpp
 
 SOURCES += \
     ../../../KEngine/include/KEngine/Common/Queues.inl \
     ../../../KEngine/include/KEngine/Common/Time.inl \
-    ../../../KEngine/include/KEngine/Log/spdlog/fmt/bundled/format.cc \
-    ../../../KEngine/include/KEngine/Log/spdlog/fmt/bundled/ostream.cc \
     ../../../KEngine/src/Common/Time.cpp \
     ../../../KEngine/src/Core/EventManagerImpl.cpp \
     ../../../KEngine/src/UnitTest/UnitTest_Delegate.cpp \
@@ -110,5 +127,17 @@ SOURCES += \
     ../../../KEngine/src/UnitTest/UnitTest_Events.cpp \
     ../../../KEngine/src/UnitTest/UnitTest_Time.cpp \
     ../../../KEngine/src/App.cpp \
-    ../../../ProjectForecast/main.cpp
+    ../../../ProjectForecast/main.cpp \
+    ../../../KEngine/src/Graphics/SDL2/SDL2Window.cpp \
+    ../../../KEngine/src/dump.cpp
+#
+
+#
+# Setup external library dependencies.
+#
+macx {
+    INCLUDEPATH += /Library/Frameworks/SDL2.framework/Headers
+    LIBS += -F/Library/Frameworks
+    LIBS += -framework SDL2
+}
 #
