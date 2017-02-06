@@ -289,10 +289,12 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\KEngine\src\App.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Common\Time.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\Entity.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Core\EventManagerImpl.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\dump.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SDL2\SDL2Window.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Delegate.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EntityAndComponents.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EventDelegates.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EventManager.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Events.cpp" />
@@ -310,6 +312,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\SRDelegate.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\String.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Time.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\Entity.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManager.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManagerImpl.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\AppExitRequestedEvent.hpp" />
@@ -322,6 +325,8 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SDL2\SDL2Window.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\Window.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IApp.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEntity.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEntityComponent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEventManagerImpl.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\ISystem.hpp" />

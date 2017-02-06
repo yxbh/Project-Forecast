@@ -96,6 +96,12 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SDL2\SDL2Window.cpp">
       <Filter>Source Files\KEngine\Graphics\SDL2</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\Entity.cpp">
+      <Filter>Source Files\KEngine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EntityAndComponents.cpp">
+      <Filter>Source Files\KEngine\UnitTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\App.hpp">
@@ -178,6 +184,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\GraphicsLoopSetupFailureEvent.hpp">
       <Filter>Header Files\KEngine\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\Entity.hpp">
+      <Filter>Header Files\KEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEntityComponent.hpp">
+      <Filter>Header Files\KEngine\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEntity.hpp">
+      <Filter>Header Files\KEngine\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
