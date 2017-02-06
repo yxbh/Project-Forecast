@@ -11,11 +11,11 @@ namespace ke::sdl2
         auto window = std::make_shared<SDL2Window>();
         window->window = SDL2WindowSptr(
                             SDL_CreateWindow(
-                                window->title.c_str(),
+                                KE_TEXT("KEngine"),
                                 SDL_WINDOWPOS_UNDEFINED,
                                 SDL_WINDOWPOS_UNDEFINED,
-                                static_cast<int>(window->width),
-                                static_cast<int>(window->height),
+                                1600, // width
+                                900,  // height
                                 SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL
                             ),
                             SDL_DestroyWindow);
@@ -58,10 +58,28 @@ namespace ke::sdl2
         SDL_UpdateWindowSurface(window.get());
     }
 
+    ke::String SDL2Window::getTitle() const
+    {
+        return SDL_GetWindowTitle(this->window.get());
+    }
+
+    std::uint32_t SDL2Window::getWidth() const
+    {
+        int width;
+        SDL_GetWindowSize(this->window.get(), &width, nullptr);
+        return width;
+    }
+
+    std::uint32_t SDL2Window::getHeight() const
+    {
+        int height;
+        SDL_GetWindowSize(this->window.get(), nullptr, &height);
+        return height;
+    }
+
     void SDL2Window::setTitle(const ke::String & p_title)
     {
-        this->title = p_title;
-        SDL_SetWindowTitle(this->window.get(), this->title.c_str());
+        SDL_SetWindowTitle(this->window.get(), p_title.c_str());
     }
 
     bool SDL2Window::setThreadCurrent()
@@ -76,7 +94,7 @@ namespace ke::sdl2
         std::shared_ptr<GraphicsLoopFrameEvent> frameEvent = std::static_pointer_cast<GraphicsLoopFrameEvent>(event);
         if (frameEvent)
         {
-            this->setTitle("ProjectForecast - " + std::to_string(frameEvent->getFrameTimeSpan().asMilliseconds()) + "ms/frame");
+            this->setTitle("KEngine - " + std::to_string(frameEvent->getFrameTimeSpan().asMilliseconds()) + "ms/frame");
         }
     }
     

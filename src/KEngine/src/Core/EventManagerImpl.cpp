@@ -43,6 +43,7 @@ namespace ke::priv
                 return true;
             }
         }
+        Log::instance()->warn("the listener is not registered to listen to event type: {}", p_EventType);
         return false;
     }
 

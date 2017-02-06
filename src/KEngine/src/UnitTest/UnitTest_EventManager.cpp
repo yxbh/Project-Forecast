@@ -48,7 +48,7 @@ namespace
 
         virtual ke::EventSptr makeCopy() const final
         {
-            return std::make_shared<TestEvent>();
+            return ke::makeEvent<TestEvent>();
         }
     };
 
@@ -69,7 +69,7 @@ namespace
 
         virtual ke::EventSptr makeCopy() const final
         {
-            return std::make_shared<TestEvent2>();
+            return ke::makeEvent<TestEvent2>();
         }
     };
 
@@ -128,6 +128,16 @@ TEST_CASE("Event Manager Unit Tests")
         
         ke::EventManager::dispatchNow(ke::EventSptr(new TestEvent));
         CHECK(counter == 12);
+
+        CHECK(ke::EventManager::registerListener<TestEvent2>(&::staticFunc));
+        CHECK(!ke::EventManager::registerListener<TestEvent2>(&::staticFunc));
+        CHECK(ke::EventManager::deregisterListener<TestEvent2>(&::staticFunc));
+        CHECK(!ke::EventManager::deregisterListener<TestEvent2>(&::staticFunc));
+
+        CHECK(ke::EventManager::registerListener<TestEvent2>(&system, &System::handleEvent2));
+        CHECK(!ke::EventManager::registerListener<TestEvent2>(&system, &System::handleEvent2));
+        CHECK(ke::EventManager::deregisterListener<TestEvent2>(&system, &System::handleEvent2));
+        CHECK(!ke::EventManager::deregisterListener<TestEvent2>(&system, &System::handleEvent2));
     }
 }
 

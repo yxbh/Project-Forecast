@@ -302,6 +302,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\App.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Delegate.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\HeartBeatGenerator.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\macros.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\ScopeFunc.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\StopWatch.hpp" />
@@ -314,6 +315,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\AppExitRequestedEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\EventLoopFrameEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\GraphicsLoopFrameEvent.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\GraphicsLoopSetupFailureEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\LogicLoopFrameEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\LoopFrameEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SDL2\SDL2Event.hpp" />

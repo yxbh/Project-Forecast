@@ -29,11 +29,13 @@ namespace ke
     private:
         void enterEventLoop();
         void enterLogicLoop();
+        void enterGraphicsLoop();
 
         void initExec();
         void cleanUpExec();
 
         void handleAppExitRequest(ke::EventSptr);
+        void handleGraphicsLoopSetupFailure(ke::EventSptr);
 
 
         std::atomic_bool isEventLoopRunning { false };
@@ -41,14 +43,19 @@ namespace ke
         std::atomic_bool isGraphicsLoopRunning { false };
 
         std::thread logicLoopThread;
+        std::thread graphicsLoopThread;
 
         ke::WindowSptr mainWindow;
     };
 
+    /// <summary>
+    /// KEngine exit codes.
+    /// </summary>
     enum ExitCodes : std::int32_t
     {
         SUCCESS = 0,
         FAILURE_WINDOW_CREATION = 1,
         UNKNOWN = std::numeric_limits<std::int32_t>::max()
     };
+
 }

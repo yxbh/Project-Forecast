@@ -59,10 +59,21 @@ namespace ke
     using EventQueue = ke::ThreadSafeQueue<EventSptr>;
 
 
-    /*
-    \class EventDelegate
-    \brief The event delegate type.
-    */
+    /// <summary>
+    /// The event delegate type.
+    /// </summary>
     using EventDelegate = ke::Delegate<void(::ke::EventSptr)>;
+
+
+    /// <summary>
+    /// Helper template function for constructing an Event object that's a subclass of ke::IEvent.
+    /// </summary>
+    /// <param name="...args"></param>
+    /// <returns></returns>
+    template <typename Event_T, typename ... Args_T>
+    auto makeEvent(Args_T && ... args ) -> std::shared_ptr<Event_T>
+    {
+        return std::make_shared<Event_T>(std::forward<Args_T>(args)...);
+    }
 
 }

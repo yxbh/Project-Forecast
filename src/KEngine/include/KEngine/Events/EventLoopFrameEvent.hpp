@@ -27,7 +27,7 @@ namespace ke
 
         virtual ke::EventSptr makeCopy() const final
         {
-            return std::make_shared<EventLoopFrameEvent>(this->getFrameTimeSpan());
+            return ke::makeEvent<EventLoopFrameEvent>(this->getFrameTimeSpan());
         }
     };
 

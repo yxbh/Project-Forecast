@@ -64,7 +64,7 @@ namespace
 
         virtual ke::EventSptr makeCopy() const final
         {
-            return std::make_shared<TestEvent>();
+            return ke::makeEvent<TestEvent>();
         }
     };
 }
@@ -73,7 +73,7 @@ TEST_CASE("Event Delegates Unit Tests")
 {
     resetCounter();
 
-    ke::EventSptr event = std::make_shared<TestEvent>();
+    ke::EventSptr event = ke::makeEvent<TestEvent>();
 
     SECTION("static functions")
     {

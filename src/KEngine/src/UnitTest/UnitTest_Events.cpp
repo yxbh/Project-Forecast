@@ -25,7 +25,7 @@ namespace
 
         virtual ke::EventSptr makeCopy() const final
         {
-            return std::make_shared<TestEvent>();
+            return ke::makeEvent<TestEvent>();
         }
     };
 }

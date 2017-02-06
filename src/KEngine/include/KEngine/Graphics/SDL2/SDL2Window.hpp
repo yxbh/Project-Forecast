@@ -35,6 +35,11 @@ namespace ke::sdl2
 
         virtual void display() final;
 
+        virtual ke::String getTitle() const final;
+
+        virtual std::uint32_t getWidth() const final;
+        virtual std::uint32_t getHeight() const final;
+
         virtual void setTitle(const ke::String & title) final;
 
         virtual bool setThreadCurrent() final;
@@ -54,11 +59,7 @@ namespace ke::sdl2
 
         SDL2WindowSptr window; /// SDL_Window instance managed by smart pointer.
         SDL_GLContext glContext;
-
-        std::size_t width = 1920;
-        std::size_t height = 1080;
-
-        ke::String title = KE_TEXT("ProjectForecast");
+        
     };
 
 }

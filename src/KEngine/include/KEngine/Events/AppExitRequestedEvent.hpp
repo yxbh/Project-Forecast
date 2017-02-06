@@ -25,7 +25,7 @@ namespace ke
 
         virtual ke::EventSptr makeCopy() const final
         {
-            return std::make_shared<AppExitRequestedEvent>();
+            return ke::makeEvent<AppExitRequestedEvent>();
         }
 
     private:
