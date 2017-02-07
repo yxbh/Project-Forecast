@@ -24,10 +24,12 @@ namespace ke
     int App::exec()
     {
         this->onBeforeInitialisation();
+
         this->initExec();
         KE_MAKE_SCOPEFUNC([this]() {
             this->cleanUpExec();
         });
+
         this->onPostInitialisation();
 
         auto sdlInitResult = SDL_Init(SDL_INIT_VIDEO);
@@ -49,15 +51,21 @@ namespace ke
             return ke::ExitCodes::FAILURE_WINDOW_CREATION;
         }
 
+        SDL_GL_MakeCurrent(static_cast<SDL_Window*>(this->mainWindow.get()->get()), nullptr); // disable window on this thread so can be made thread current on render thread.
+
+        // enter all the engine loops.
         this->enterLogicLoop();
         this->enterGraphicsLoop();
         this->enterEventLoop();        
 
         this->onBeforeShutdown();
+
         ke::Log::instance()->info("Destroying main window ...");
         this->mainWindow.reset();
+
         ke::Log::instance()->info("Shutting down SDL ...");
         SDL_Quit();
+
         this->onPostShutdown();
         
         return ke::ExitCodes::SUCCESS;

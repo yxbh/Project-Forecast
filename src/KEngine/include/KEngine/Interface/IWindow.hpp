@@ -31,6 +31,12 @@ namespace ke
         virtual void setTitle(const ke::String & title) = 0;
 
         virtual bool setThreadCurrent() = 0;
+
+        /// <summary>
+        /// Get the native handle or underlying window API object.
+        /// </summary>
+        /// <returns></returns>
+        virtual void * get() = 0;
     };
 
     inline IWindow::~IWindow() {}

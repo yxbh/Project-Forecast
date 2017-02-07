@@ -44,15 +44,7 @@ namespace ke::sdl2
 
         virtual bool setThreadCurrent() final;
 
-        inline SDL_Window * get()
-        {
-            return window.get();
-        }
-
-        inline SDL_Surface * getSurface()
-        {
-            return SDL_GetWindowSurface(this->get());
-        }
+        virtual void * get() final;
 
     private:
         void handleGraphicsLoopFrameEvent(ke::EventSptr event);

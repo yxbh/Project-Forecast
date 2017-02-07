@@ -84,9 +84,13 @@ namespace ke::sdl2
 
     bool SDL2Window::setThreadCurrent()
     {
-        SDL_GL_DeleteContext(this->glContext);
-        this->glContext = SDL_GL_CreateContext(this->window.get());
-        return SDL_GL_MakeCurrent(this->window.get(), this->glContext) == 0; // < 0 when error.
+        // reference: https://forums.libsdl.org/viewtopic.php?t=9087&sid=b555253507f22185464b22f5982a97a7
+        return SDL_GL_MakeCurrent(this->window.get(), this->glContext) == 0; /// < 0 when error.
+    }
+
+    void * SDL2Window::get()
+    {
+        return window.get();
     }
 
     void SDL2Window::handleGraphicsLoopFrameEvent(ke::EventSptr event)
