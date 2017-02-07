@@ -2,6 +2,8 @@
 
 #include "KEngine/Interface/IEntity.hpp"
 
+#include <unordered_set>
+
 namespace ke
 {
 
@@ -18,15 +20,37 @@ namespace ke
     /// won't be able to destory themselves either.
     /// 
     /// This class is modeled after GCC(4th ed)'s Actor class, and so the principles are similar.
-    class Entity final : public ke::IEntity
+    class Entity final
     {
         friend class EntityFactory;
 
     public:
+        using TagList = std::unordered_set<ke::String>;
+
+        /// <summary>
+        /// Generate a new ID for uniquely identifying an Entity.
+        /// </summary>
+        /// <returns>a new EntityId.</returns>
+        static ke::EntityId newId();
+
         Entity(const ke::EntityId = INVALID_ENTITY_ID);
+        Entity(const Entity &) = delete;
         Entity(ke::Entity && p_rrEntity);
+        Entity & operator = (const Entity &) = delete;
         Entity & operator=(ke::Entity && p_rrEntity);
         virtual ~Entity(void);
+
+        /// <summary>
+        /// Set the name of the Entity.
+        /// </summary>
+        /// <param name="name"></param>
+        void setName(const ke::String & name);
+
+        /// <summary>
+        /// Add a tag to this Entity.
+        /// </summary>
+        /// <param name="tag"></param>
+        void addTag(const ke::String & tag);
 
         /// <summary>
         /// Adds a componenet. This function must be called when the Entity is passed to say EntityComponent.
@@ -43,25 +67,32 @@ namespace ke
         /// Update all components with elapsed time.
         /// </summary>
         /// <param name="p_ElapsedTime"></param>
-        virtual void updateAll(const ke::Time p_ElapsedTime);
+        void updateAll(const ke::Time & p_ElapsedTime);
 
         /// <summary>
         /// Get the unique EntityID.
         /// </summary>
         /// <returns>the unique EntityID.</returns>
-        virtual ke::EntityId getId(void) const final;
+        ke::EntityId getId(void) const;
 
         /// <summary>
         /// Get the name of the entity.
         /// </summary>
         /// <returns>the name of the entity.</returns>
-        virtual const ke::String & getName(void) const final;
+        const ke::String & getName(void) const;
 
         /// <summary>
         /// Get a reference to the list of tags this Entity has.
         /// </summary>
         /// <returns>a reference to the list of tags this Entity has.</returns>
-        virtual const TagList & getTags(void) const final;
+        const TagList & getTags(void) const;
+
+        /// <summary>
+        /// Check if this Entity has the specified tag.
+        /// </summary>
+        /// <param name="tag">the tag to search.</param>
+        /// <returns>true if the Entity contains the specified tag.</returns>
+        bool hasTag(const ke::String & tag) const;
 
         /// <summary>
         /// Get a component from the entity of the specified type.
@@ -80,9 +111,14 @@ namespace ke
 
     }; // Entity class
 
+    inline void Entity::setName(const ke::String & name) { m_Name = name; }
+    inline void Entity::addTag(const ke::String & tag) { m_Tags.insert(tag); }
+
     inline ke::EntityId Entity::getId(void) const { return m_EntityID; }
     inline const Entity::TagList & Entity::getTags(void) const { return m_Tags; }
-    inline const std::string & Entity::getName(void) const { return m_Name; }
+    inline const ke::String & Entity::getName(void) const { return m_Name; }
+
+    inline bool Entity::hasTag(const ke::String & tag) const { return m_Tags.find(tag) != m_Tags.end(); }
 
 
     template <class ComponentClassType>

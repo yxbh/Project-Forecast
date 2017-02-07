@@ -1,7 +1,7 @@
 #pragma once
 
-#include "KEngine/Common/String.hpp"
 #include "KEngine/Interface/IEntity.hpp"
+#include "KEngine/Common/String.hpp"
 
 namespace ke
 {
@@ -32,9 +32,9 @@ namespace ke
 
         IEntityComponent(EntitySptr p_spEntity);
         IEntityComponent(const IEntityComponent &) = delete;
-        //IEntityComponent(IEntityComponent &&) = delete; //NOTE: default move ctor not supported in VS12
+        IEntityComponent(IEntityComponent &&) = default;
         IEntityComponent & operator=(const IEntityComponent &) = delete;
-        //IEntityComponent & operator=(const IEntityComponent &&) = delete; // NOTE: default move assigment operaot not supported in VS12
+        IEntityComponent & operator=(IEntityComponent &&) = default;
         virtual ~IEntityComponent(void) = 0;
 
         /// <summary>
@@ -85,13 +85,12 @@ namespace ke
         void setOwnerEntity(ke::EntitySptr p_spEntity);
 
     protected:
-        ke::EntitySptr  m_spOwnerEntity;  // owner
-        ke::String      m_Name;
+        ke::EntitySptr m_spOwnerEntity;  // owner
 
     }; // IEntityComponent class
 
     inline IEntityComponent::~IEntityComponent() {}
-    inline const ke::String & IEntityComponent::getName(void) const { return m_Name; }
+    inline const ke::String & IEntityComponent::getName(void) const { return KE_TEXT("IEntityComponent"); }
     inline EntityComponentType IEntityComponent::getType(void) const { return IEntityComponent::TYPE; }
 
     template<typename ComponentT, typename... ArgTs>
