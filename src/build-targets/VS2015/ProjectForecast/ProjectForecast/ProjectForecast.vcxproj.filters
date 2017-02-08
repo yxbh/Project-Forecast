@@ -105,6 +105,9 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Core\StateMachine.cpp">
       <Filter>Source Files\KEngine\Core</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_StateMachine.cpp">
+      <Filter>Source Files\KEngine\UnitTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\App.hpp">
