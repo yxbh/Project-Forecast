@@ -111,7 +111,14 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Graphics/SDL2/SDL2Window.hpp \
     ../../../KEngine/include/KEngine/Graphics/Window.hpp \
     ../../../KEngine/include/KEngine/Interface/ISystem.hpp \
-    ../../../KEngine/include/KEngine/Interface/IWindow.hpp
+    ../../../KEngine/include/KEngine/Interface/IWindow.hpp \
+    ../../../KEngine/include/KEngine/Common/HeartBeatGenerator.hpp \
+    ../../../KEngine/include/KEngine/Core/Entity.hpp \
+    ../../../KEngine/include/KEngine/Core/StateMachine.hpp \
+    ../../../KEngine/include/KEngine/Interface/IEntity.hpp \
+    ../../../KEngine/include/KEngine/Interface/IEntityComponent.hpp \
+    ../../../KEngine/include/KEngine/Interface/IRenderCommand.hpp \
+    ../../../KEngine/include/KEngine/Interface/IStateMachine.hpp
 
 SOURCES += \
     ../../../KEngine/include/KEngine/Common/Queues.inl \
@@ -126,7 +133,11 @@ SOURCES += \
     ../../../KEngine/src/App.cpp \
     ../../../ProjectForecast/main.cpp \
     ../../../KEngine/src/Graphics/SDL2/SDL2Window.cpp \
-    ../../../KEngine/src/dump.cpp
+    ../../../KEngine/src/dump.cpp \
+    ../../../KEngine/src/Core/Entity.cpp \
+    ../../../KEngine/src/Core/StateMachine.cpp \
+    ../../../KEngine/src/UnitTest/UnitTest_EntityAndComponents.cpp \
+    ../../../KEngine/src/UnitTest/UnitTest_StateMachine.cpp
 #
 
 #
