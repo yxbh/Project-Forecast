@@ -7,17 +7,6 @@
 namespace ke
 {
 
-    bool StateMachine::initialise()
-    {
-        // nothing to do.
-        return true;
-    }
-
-    void StateMachine::shutdown()
-    {
-        // nothing to do.
-    }
-
     void StateMachine::update(const ke::Time & elapsedTime)
     {
         assert(this->startState);

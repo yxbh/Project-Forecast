@@ -84,9 +84,6 @@ namespace ke
         IStateMachine(IStateMachine &) = delete;
         IStateMachine & operator = (const IStateMachine &) = delete;
         virtual ~IStateMachine() = 0;
-        
-        virtual bool initialise() = 0;
-        virtual void shutdown() = 0;
 
         /// <summary>
         /// Update the state machine, which will in turn update the current state.

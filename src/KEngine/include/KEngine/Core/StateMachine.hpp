@@ -22,13 +22,6 @@ namespace ke
         virtual ~StateMachine();
 
         /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
-        virtual bool initialise() override;
-        virtual void shutdown() override;
-
-        /// <summary>
         /// Update the state machine, which will in turn update the current state.
         /// When this function is called for the first time the state machine will automatically
         /// start from the start state.

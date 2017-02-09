@@ -108,6 +108,12 @@
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_StateMachine.cpp">
       <Filter>Source Files\KEngine\UnitTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\SystemManager.cpp">
+      <Filter>Source Files\KEngine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\EntityManager.cpp">
+      <Filter>Source Files\KEngine\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\App.hpp">
@@ -207,6 +213,12 @@
       <Filter>Header Files\KEngine\Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\StateMachine.hpp">
+      <Filter>Header Files\KEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\SystemManager.hpp">
+      <Filter>Header Files\KEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EntityManager.hpp">
       <Filter>Header Files\KEngine\Core</Filter>
     </ClInclude>
   </ItemGroup>
