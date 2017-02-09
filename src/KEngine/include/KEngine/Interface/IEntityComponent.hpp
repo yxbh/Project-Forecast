@@ -70,7 +70,7 @@ namespace ke
         /// Get the name of this particular EntityComponent.
         /// </summary>
         /// <returns>the name of this particular EntityComponent.</returns>
-        virtual const ke::String & getName(void) const = 0;
+        virtual ke::String getName(void) const = 0;
 
         /// <summary>
         /// Get a shared pointer to this Component's owner Entity.
@@ -90,7 +90,7 @@ namespace ke
     }; // IEntityComponent class
 
     inline IEntityComponent::~IEntityComponent() {}
-    inline const ke::String & IEntityComponent::getName(void) const { return KE_TEXT("IEntityComponent"); }
+    inline ke::String IEntityComponent::getName(void) const { return KE_TEXT("IEntityComponent"); }
     inline EntityComponentType IEntityComponent::getType(void) const { return IEntityComponent::TYPE; }
 
     template<typename ComponentT, typename... ArgTs>
