@@ -118,7 +118,9 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Interface/IEntity.hpp \
     ../../../KEngine/include/KEngine/Interface/IEntityComponent.hpp \
     ../../../KEngine/include/KEngine/Interface/IRenderCommand.hpp \
-    ../../../KEngine/include/KEngine/Interface/IStateMachine.hpp
+    ../../../KEngine/include/KEngine/Interface/IStateMachine.hpp \
+    ../../../KEngine/include/KEngine/Core/EntityManager.hpp \
+    ../../../KEngine/include/KEngine/Core/SystemManager.hpp
 
 SOURCES += \
     ../../../KEngine/include/KEngine/Common/Queues.inl \
@@ -137,7 +139,9 @@ SOURCES += \
     ../../../KEngine/src/Core/Entity.cpp \
     ../../../KEngine/src/Core/StateMachine.cpp \
     ../../../KEngine/src/UnitTest/UnitTest_EntityAndComponents.cpp \
-    ../../../KEngine/src/UnitTest/UnitTest_StateMachine.cpp
+    ../../../KEngine/src/UnitTest/UnitTest_StateMachine.cpp \
+    ../../../KEngine/src/Core/EntityManager.cpp \
+    ../../../KEngine/src/Core/SystemManager.cpp
 #
 
 #
