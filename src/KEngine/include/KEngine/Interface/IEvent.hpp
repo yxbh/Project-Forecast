@@ -15,11 +15,12 @@ namespace ke
 
     /// <summary>
     /// Interface for creating command/event classes.
-    /// Each derived class needs to define their own unique static EventType.
+    /// Each derived class needs to define their own unique public static EventType variable named TYPE.
     /// </summary>
     /// 
     /// Assignment operators and copy constructors are disabled as user should only use smart pointers to an Event class type.
     /// Use the makeCopy() method to make copies of the same event.
+	///
     class IEvent
     {
     public:
@@ -71,7 +72,7 @@ namespace ke
     /// <param name="...args"></param>
     /// <returns></returns>
     template <typename Event_T, typename ... Args_T>
-    auto makeEvent(Args_T && ... args ) -> std::shared_ptr<Event_T>
+    auto makeEvent(Args_T && ... args ) -> EventSptr
     {
         return std::make_shared<Event_T>(std::forward<Args_T>(args)...);
     }

@@ -11,10 +11,13 @@ namespace ke
     /// <summary>
     /// Default implementation of the ke::IStateMachine interface.
     /// </summary>
+	///
+	/// A state machine is a container of states and it manages the lifecycle of each state and their transition.
+	///
     class StateMachine : public IStateMachine
     {
     public:
-        using StateTransitionMapType = std::unordered_map< StateMachineStateType, std::unordered_map<StateMachineStateExitCode, IState *>>;
+        using StateTransitionMapType = std::unordered_map< StateMachineStateType, std::unordered_map<StateMachineStateExitCodeType, IState *>>;
 
         virtual ~StateMachine();
 
@@ -29,6 +32,7 @@ namespace ke
         /// Update the state machine, which will in turn update the current state.
         /// When this function is called for the first time the state machine will automatically
         /// start from the start state.
+        /// State transitions will also occur here.
         /// </summary>
         /// <param name="elapsedTime">The elapsed time since the last update.</param>
         virtual void update(const ke::Time & elapsedTime = ke::Time::Zero) override;
@@ -64,14 +68,19 @@ namespace ke
         /// <param name="exitStateExitCode">The type of the state that the enter will be mapped to.</param>
         /// <param name="startStateType"></param>
         /// <returns>true if successful. false if no matching state types are found.</returns>
-        virtual bool addStateTransition(StateMachineStateType exitStateType, StateMachineStateExitCode exitStateExitCode, StateMachineStateType startStateType) override;
+        virtual bool addStateTransition(StateMachineStateType exitStateType, StateMachineStateExitCodeType exitStateExitCode, StateMachineStateType startStateType) override;
+
+		virtual IState * getCurrentState() override;
 
     private:
-
         std::unordered_set<StateSptr> states;
-        IState * startState;
-        IState * endState;
-        IState * currentState;
+
+        IState * startState = nullptr;
+        IState * endState = nullptr;
+        IState * currentState = nullptr;
+
+        bool isCurrentStateExitRequested = false;
+        SMStateExitCodeType currentStateExitCode = -1;
 
         StateTransitionMapType stateTransitionMap;
 

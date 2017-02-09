@@ -12,12 +12,15 @@ namespace ke
     using SMStateType = StateMachineStateType;
     static const SMStateType INVALID_STATE_MACHINE_STATE_TYPE = 0;
 
-    using StateMachineStateExitCode = std::uint32_t;
-    using SMStateExitCode = StateMachineStateExitCode;
+    using StateMachineStateExitCodeType = std::int32_t;
+    using SMStateExitCodeType = StateMachineStateExitCodeType;
 
     /// <summary>
     /// Interface for implementing a state machine.
     /// </summary>
+	///
+	/// A state machine is a container of states and it manages the lifecycle of each state and their transition.
+	///
     class IStateMachine
     {
     public:
@@ -26,6 +29,55 @@ namespace ke
         using StateUptr = std::unique_ptr<IStateMachine::IState>;
         using StateSptr = std::shared_ptr<IStateMachine::IState>;
         using StateWptr = std::weak_ptr<IStateMachine::IState>;
+
+        enum class Status
+        {
+            Running,
+            Finished
+        };
+
+        /// <summary>
+        /// Interface for implementing state machine states.
+        /// </summary>
+        ///
+        /// All child class must define a public static TYPE variable of type SMStateType.
+        /// This value must be unique among all IState child classes.
+        ///
+        class IState
+        {
+        public:
+            static const SMStateType TYPE = INVALID_STATE_MACHINE_STATE_TYPE;
+
+            IState(IStateMachine * stateMachine) : stateMachine(stateMachine) { assert(stateMachine); }
+            IState(IState &) = delete;
+            IState & operator = (const IState &) = delete;
+            virtual ~IState() = 0;
+
+            /// <summary>
+            /// This is a lifecycle method called by the owner state machine before entering the state.
+            /// i.e. before update() is called for the first time.
+            /// </summary>
+            virtual void onEnter() = 0;
+
+            /// <summary>
+            /// This is a lifecycle method called by the owner state machine before exiting the state.
+            /// i.e. after update() is called for the last time.
+            /// </summary>
+            virtual void onExit() = 0;
+
+            inline void finish(int stateExitCode) { this->getStateMachine()->finishState(this, stateExitCode); }
+
+            virtual void update(const ke::Time & elapsedTime) = 0;
+
+            virtual SMStateType getType() const = 0;
+            virtual ke::String getName() const = 0;
+
+        protected:
+            IStateMachine * stateMachine = nullptr;
+
+            inline IStateMachine * getStateMachine() { return this->stateMachine; };
+
+        }; // IState class
 
 
         IStateMachine() = default;
@@ -40,6 +92,7 @@ namespace ke
         /// Update the state machine, which will in turn update the current state.
         /// When this function is called for the first time the state machine will automatically
         /// start from the start state.
+        /// State transitions will also occur here.
         /// </summary>
         /// <param name="elapsedTime">The elapsed time since the last update.</param>
         virtual void update(const ke::Time & elapsedTime) = 0;
@@ -69,46 +122,14 @@ namespace ke
         /// <param name="exitStateType">The type of the state that the exit will be mapped from.</param>
         /// <param name="exitStateExitCode">The type of the state that the enter will be mapped to.</param>
         /// <param name="startStateType"></param>
-        virtual bool addStateTransition(StateMachineStateType exitStateType, StateMachineStateExitCode exitStateExitCode, StateMachineStateType startStateType) = 0;
+        virtual bool addStateTransition(StateMachineStateType exitStateType, StateMachineStateExitCodeType exitStateExitCode, StateMachineStateType startStateType) = 0;
 
-        /// <summary>
-        /// Interface for implementing state machine states.
-        /// </summary>
-        class IState
-        {
-        public:
-            static const SMStateType TYPE = INVALID_STATE_MACHINE_STATE_TYPE;
+		virtual IState * getCurrentState() = 0;
 
-            IState(IStateMachine * stateMachine) : stateMachine(stateMachine) { assert(stateMachine); }
-            IState(IState &) = delete;
-            IState & operator = (const IState &) = delete;
-            virtual ~IState() = 0;
+        virtual Status getStatus() const { return this->status; }
 
-            /// <summary>
-            /// This is a lifecycle method called by the owner state machine before entering the state.
-            /// i.e. before update() is called for the first time.
-            /// </summary>
-            virtual void onEnter() = 0;
-
-            /// <summary>
-            /// This is a lifecycle method called by the owner state machine before exiting the state.
-            /// i.e. after update() is called for the last time.
-            /// </summary>
-            virtual void onExit() = 0;
-
-            inline void finish(int stateExitCode) { this->getStateMachine()->finishState(this, stateExitCode); }
-
-            virtual void update(const ke::Time & elapsedTime) = 0;
-
-            virtual SMStateType getType() const = 0;
-            virtual const ke::String & getName() const = 0;
-
-        protected:
-            IStateMachine * stateMachine = nullptr;
-
-            inline IStateMachine * getStateMachine() { return this->stateMachine; };
-
-        }; // IState class
+    protected:
+        Status status = Status::Finished;
 
 
     }; // IStateMachine class
@@ -118,12 +139,22 @@ namespace ke
 
     inline IStateMachine::IState::~IState() {}
     inline SMStateType IStateMachine::IState::getType() const { return IState::TYPE; }
-    inline const ke::String &  IStateMachine::IState::getName() const { return KE_TEXT("ISMState"); }
+    inline ke::String IStateMachine::IState::getName() const { return KE_TEXT("ISMState"); }
 
 
     using IStateMachineUptr = std::unique_ptr<IStateMachine>;
     using IStateMachineSptr = std::shared_ptr<IStateMachine>;
     using IStateMachineWptr = std::weak_ptr<IStateMachine>;
 
-
+	template<typename State_T, typename ... Args_T >
+	auto makeStateMachineState(Args_T && ... args ) -> IStateMachine::StateSptr
+	{
+		return std::make_shared<State_T>(std::forward<Args_T>(args)...);
+	}
 }
+
+#define KE_DEFINE_STATE_MACHINE_STATE_PROPERTIES(CLASS_NAME) \
+public: \
+	virtual ke::SMStateType getType() const override { return CLASS_NAME::TYPE; } \
+	virtual ke::String getName() const override { return KE_TEXT(#CLASS_NAME); } \
+private:
