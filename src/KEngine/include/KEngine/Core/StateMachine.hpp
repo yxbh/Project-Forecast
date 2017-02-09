@@ -38,13 +38,6 @@ namespace ke
         virtual void update(const ke::Time & elapsedTime = ke::Time::Zero) override;
 
         /// <summary>
-        /// Call this from a current state inside the state machine to request exiting the state.
-        /// </summary>
-        /// <param name="stateType"></param>
-        /// <param name="stateExitCode"></param>
-        virtual void finishState(IState * state, int stateExitCode) override;
-
-        /// <summary>
         /// Add a state that neither the start state nor end state to the state machine.
         /// </summary>
         /// <param name="state"></param>
@@ -69,8 +62,20 @@ namespace ke
         /// <param name="startStateType"></param>
         /// <returns>true if successful. false if no matching state types are found.</returns>
         virtual bool addStateTransition(StateMachineStateType exitStateType, StateMachineStateExitCodeType exitStateExitCode, StateMachineStateType startStateType) override;
-
+        
+        /// <summary>
+        /// Get the current running state.
+        /// </summary>
+        /// <returns>nullptr if the state machine is not running or has exited/reset.</returns>
 		virtual IState * getCurrentState() override;
+
+    protected:
+        /// <summary>
+        /// Call this from inside a current state inside the state machine to request exiting the state.
+        /// </summary>
+        /// <param name="state">the state that is requesting exit.</param>
+        /// <param name="stateExitCode">the exit code of the state requesting exit.</param>
+        virtual void finishState(IState * state, int stateExitCode) override;
 
     private:
         std::unordered_set<StateSptr> states;

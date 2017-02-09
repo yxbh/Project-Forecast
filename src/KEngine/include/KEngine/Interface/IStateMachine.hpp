@@ -97,8 +97,6 @@ namespace ke
         /// <param name="elapsedTime">The elapsed time since the last update.</param>
         virtual void update(const ke::Time & elapsedTime) = 0;
 
-        virtual void finishState(IState * state, int stateExitCode) = 0;
-
         /// <summary>
         /// Add a state that neither the start state nor end state to the state machine.
         /// </summary>
@@ -126,9 +124,20 @@ namespace ke
 
 		virtual IState * getCurrentState() = 0;
 
-        virtual Status getStatus() const { return this->status; }
+        /// <summary>
+        /// Get the current running state.
+        /// </summary>
+        /// <returns>nullptr if the state machine is not running or has exited/reset.</returns>
+        Status getStatus() const { return this->status; }
 
     protected:
+        /// <summary>
+        /// Call this from inside a current state inside the state machine to request exiting the state.
+        /// </summary>
+        /// <param name="state">the state that is requesting exit.</param>
+        /// <param name="stateExitCode">the exit code of the state requesting exit.</param>
+        virtual void finishState(IState * state, int stateExitCode) = 0;
+
         Status status = Status::Finished;
 
 
