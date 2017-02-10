@@ -120,7 +120,11 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Interface/IRenderCommand.hpp \
     ../../../KEngine/include/KEngine/Interface/IStateMachine.hpp \
     ../../../KEngine/include/KEngine/Core/EntityManager.hpp \
-    ../../../KEngine/include/KEngine/Core/SystemManager.hpp
+    ../../../KEngine/include/KEngine/Core/SystemManager.hpp \
+    ../../../KEngine/include/KEngine/Graphics/WindowFactory.hpp \
+    ../../../KEngine/include/KEngine/Graphics/SFML/SfmlWindow.hpp \
+    ../../../KEngine/include/KEngine/Events/SFML/SfmlEvent.hpp \
+    ../../../KEngine/include/KEngine/Core/ResourceManager.hpp
 
 SOURCES += \
     ../../../KEngine/include/KEngine/Common/Queues.inl \
@@ -141,7 +145,10 @@ SOURCES += \
     ../../../KEngine/src/UnitTest/UnitTest_EntityAndComponents.cpp \
     ../../../KEngine/src/UnitTest/UnitTest_StateMachine.cpp \
     ../../../KEngine/src/Core/EntityManager.cpp \
-    ../../../KEngine/src/Core/SystemManager.cpp
+    ../../../KEngine/src/Core/SystemManager.cpp \
+    ../../../KEngine/src/Core/ResourceManager.cpp \
+    ../../../KEngine/src/Graphics/SFML/SfmlWindow.cpp \
+    ../../../KEngine/src/Graphics/WindowFactory.cpp
 #
 
 #
