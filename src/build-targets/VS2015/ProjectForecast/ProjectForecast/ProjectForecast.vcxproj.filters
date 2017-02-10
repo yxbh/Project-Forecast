@@ -61,6 +61,15 @@
     <Filter Include="Source Files\KEngine\Graphics\SDL2">
       <UniqueIdentifier>{c8e6effe-8713-4ab3-be03-4dbb09841084}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\KEngine\Graphics\SFML">
+      <UniqueIdentifier>{373b174b-e70b-4c67-b6e4-9ea943ea7dc4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\KEngine\Graphics\SFML">
+      <UniqueIdentifier>{5dd68eb6-3465-4b53-b64d-e968b3005ea7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\KEngine\Events\SFML">
+      <UniqueIdentifier>{c375f036-20c8-47e7-b471-200f90c41954}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\ProjectForecast\main.cpp">
@@ -113,6 +122,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\KEngine\src\Core\EntityManager.cpp">
       <Filter>Source Files\KEngine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\WindowFactory.cpp">
+      <Filter>Source Files\KEngine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\ResourceManager.cpp">
+      <Filter>Source Files\KEngine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SFML\SfmlWindow.cpp">
+      <Filter>Source Files\KEngine\Graphics\SFML</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -220,6 +238,21 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EntityManager.hpp">
       <Filter>Header Files\KEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\WindowFactory.hpp">
+      <Filter>Header Files\KEngine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\ResourceManager.hpp">
+      <Filter>Header Files\KEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\ThreadPool.hpp">
+      <Filter>Header Files\KEngine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\SfmlWindow.hpp">
+      <Filter>Header Files\KEngine\Graphics\SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEvent.hpp">
+      <Filter>Header Files\KEngine\Events\SFML</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

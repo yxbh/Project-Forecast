@@ -2,6 +2,7 @@
 
 #include "KEngine/Interface/IApp.hpp"
 #include "KEngine/Interface/IEvent.hpp"
+#include "KEngine/Core/ResourceManager.hpp"
 #include "KEngine/Graphics/Window.hpp"
 
 #include <atomic>
@@ -37,6 +38,8 @@ namespace ke
         void handleAppExitRequest(ke::EventSptr);
         void handleGraphicsLoopSetupFailure(ke::EventSptr);
 
+        
+        ResourceManagerUptr resourceManager;
 
         std::atomic_bool isEventLoopRunning { false };
         std::atomic_bool isLogicLoopRunning { false };

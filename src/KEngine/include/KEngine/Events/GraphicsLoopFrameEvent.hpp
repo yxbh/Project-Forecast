@@ -10,20 +10,11 @@ namespace ke
     /// </summary>
     class GraphicsLoopFrameEvent : public ke::LoopFrameEvent
     {
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(GraphicsLoopFrameEvent)
     public:
         static const EventType TYPE = 0xE540161D;
 
         using ke::LoopFrameEvent::LoopFrameEvent;
-
-        virtual ke::EventType getType() const final
-        {
-            return TYPE;
-        }
-
-        virtual ke::String getName() const final
-        {
-            return KE_TEXT("GraphicsLoopFrameEvent");
-        }
 
         virtual ke::EventSptr makeCopy() const final
         {

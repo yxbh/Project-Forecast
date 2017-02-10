@@ -2,42 +2,17 @@
 
 #include "KEngine/Core/EventManager.hpp"
 #include "KEngine/Events/GraphicsLoopFrameEvent.hpp"
+#include "KEngine/Log/Log.hpp"
 
 namespace ke::sdl2
 {
 
-    WindowSptr SDL2Window::create()
+    SDL2Window::SDL2Window()
     {
-        auto window = std::make_shared<SDL2Window>();
-        window->window = SDL2WindowSptr(
-                            SDL_CreateWindow(
-                                KE_TEXT("KEngine"),
-                                SDL_WINDOWPOS_UNDEFINED,
-                                SDL_WINDOWPOS_UNDEFINED,
-                                1600, // width
-                                900,  // height
-                                SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL
-                            ),
-                            SDL_DestroyWindow);
-        window->glContext = SDL_GL_CreateContext(window->window.get());
-
-        if (nullptr == window->window)
-        {
-            Log::instance()->critical("SDL window could not be created. Error: {}", SDL_GetError());
-            return nullptr;
-        }
-
-        if (nullptr == window->glContext)
-        {
-            Log::instance()->critical("SDL window context could not be created. Error: {}", SDL_GetError());
-            return nullptr;
-        }
-
         ke::EventManager::registerListener<ke::GraphicsLoopFrameEvent>(
-            window.get(), &ke::sdl2::SDL2Window::handleGraphicsLoopFrameEvent);
-        
-        return window;
+            this, &ke::sdl2::SDL2Window::handleGraphicsLoopFrameEvent);
     }
+
 
     SDL2Window::~SDL2Window()
     {
@@ -82,10 +57,12 @@ namespace ke::sdl2
         SDL_SetWindowTitle(this->window.get(), p_title.c_str());
     }
 
-    bool SDL2Window::setThreadCurrent()
+    bool SDL2Window::setThreadCurrent(bool threadCurrent)
     {
         // reference: https://forums.libsdl.org/viewtopic.php?t=9087&sid=b555253507f22185464b22f5982a97a7
-        return SDL_GL_MakeCurrent(this->window.get(), this->glContext) == 0; /// < 0 when error.
+        return  threadCurrent ?
+                SDL_GL_MakeCurrent(this->window.get(), nullptr) == 0 :
+                SDL_GL_MakeCurrent(this->window.get(), this->glContext) == 0; /// < 0 when error.
     }
 
     void * SDL2Window::get()

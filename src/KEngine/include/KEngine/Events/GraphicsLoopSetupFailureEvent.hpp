@@ -10,20 +10,11 @@ namespace ke
     /// </summary>
     class GraphicsLoopSetupFailureEvent : public ke::IEvent
     {
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(GraphicsLoopSetupFailureEvent)
     public:
         static const EventType TYPE = 0xA5E40CB2;
 
         using ke::IEvent::IEvent;
-
-        virtual ke::EventType getType() const final
-        {
-            return TYPE;
-        }
-
-        virtual ke::String getName() const final
-        {
-            return KE_TEXT("GraphicsLoopSetupFailureEvent");
-        }
 
         virtual ke::EventSptr makeCopy() const final
         {

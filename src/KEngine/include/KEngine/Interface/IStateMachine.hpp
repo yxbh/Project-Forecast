@@ -159,7 +159,13 @@ namespace ke
 	}
 }
 
-#define KE_DEFINE_STATE_MACHINE_STATE_PROPERTIES(CLASS_NAME) \
+
+/// <summary>
+/// Define the following common ke::IStateMachine::IState property member functions based on the class name:
+/// * getType()
+/// * getName()
+/// </summary>
+#define KE_DEFINE_STATE_MACHINE_STATE_COMMON_PROPERTIES(CLASS_NAME) \
 public: \
 	virtual ke::SMStateType getType() const override { return CLASS_NAME::TYPE; } \
 	virtual ke::String getName() const override { return KE_TEXT(#CLASS_NAME); } \

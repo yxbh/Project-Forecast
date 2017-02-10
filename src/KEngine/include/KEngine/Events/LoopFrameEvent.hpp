@@ -11,15 +11,11 @@ namespace ke
     /// </summary>
     class LoopFrameEvent : public ke::IEvent
     {
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(LoopFrameEvent)
     public:
         static const EventType TYPE = 0xC61C500;
 
         LoopFrameEvent(const ke::Time & timespan) : frameTimeSpan(timespan) {}
-
-        virtual ke::EventType getType() const override
-        {
-            return TYPE;
-        }
 
         inline const ke::Time & getFrameTimeSpan() const
         {

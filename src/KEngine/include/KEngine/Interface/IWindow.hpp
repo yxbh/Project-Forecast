@@ -30,7 +30,7 @@ namespace ke
         /// <param name="title">Title text</param>
         virtual void setTitle(const ke::String & title) = 0;
 
-        virtual bool setThreadCurrent() = 0;
+        virtual bool setThreadCurrent(bool threadCurrent) = 0;
 
         /// <summary>
         /// Get the native handle or underlying window API object.

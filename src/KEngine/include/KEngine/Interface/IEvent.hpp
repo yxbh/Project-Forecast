@@ -78,3 +78,15 @@ namespace ke
     }
 
 }
+
+
+/// <summary>
+/// Define the following common IEvent property member functions based on the class name:
+/// * getType()
+/// * getName()
+/// </summary>
+#define KE_DEFINE_EVENT_COMMON_PROPERTIES(CLASS_NAME) \
+public: \
+	virtual ke::EventType getType() const override { return CLASS_NAME::TYPE; } \
+	virtual ke::String getName() const override { return KE_TEXT(#CLASS_NAME); } \
+private:

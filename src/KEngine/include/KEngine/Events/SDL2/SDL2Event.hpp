@@ -12,22 +12,13 @@ namespace ke
     /// </summary>
     class SDL2Event : public ke::IEvent
     {
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(SDL2Event)
     public:
         static const EventType TYPE = 0xE281D216;
 
         SDL2Event(const SDL_Event & event) : sdlEvent(event)
         {
 
-        }
-
-        virtual ke::EventType getType() const final
-        {
-            return TYPE;
-        }
-
-        virtual ke::String getName() const final
-        {
-            return KE_TEXT("SDL2Event");
         }
 
         virtual ke::EventSptr makeCopy() const final

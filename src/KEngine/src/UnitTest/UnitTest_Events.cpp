@@ -10,18 +10,9 @@ namespace
 {
     class TestEvent : public ke::IEvent
     {
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(TestEvent)
     public:
         static const ke::EventType TYPE = 1;
-        
-        virtual ke::EventType getType() const final
-        {
-            return TYPE;
-        }
-
-        virtual ke::String getName() const final
-        {
-            return KE_TEXT("TestEvent");
-        }
 
         virtual ke::EventSptr makeCopy() const final
         {

@@ -1,18 +1,22 @@
 #include "KEngine/App.hpp"
-#include "KEngine/Log/Log.hpp"
+
 #include "KEngine/Common/macros.hpp"
 #include "KEngine/Common/HeartBeatGenerator.hpp"
 #include "KEngine/Common/ScopeFunc.hpp"
 #include "KEngine/Common/StopWatch.hpp"
 #include "KEngine/Common/String.hpp"
 #include "KEngine/Core/EventManager.hpp"
+
 #include "KEngine/Events/AppExitRequestedEvent.hpp"
 #include "KEngine/Events/EventLoopFrameEvent.hpp"
 #include "KEngine/Events/LogicLoopFrameEvent.hpp"
 #include "KEngine/Events/GraphicsLoopFrameEvent.hpp"
 #include "KEngine/Events/GraphicsLoopSetupFailureEvent.hpp"
 #include "KEngine/Events/SDL2/SDL2Event.hpp"
-#include "KEngine/Graphics/Window.hpp"
+
+#include "KEngine/Log/Log.hpp"
+
+#include "KEngine/Graphics/WindowFactory.hpp"
 
 #include <SDL.h>
 
@@ -32,6 +36,7 @@ namespace ke
 
         this->onPostInitialisation();
 
+#if defined(USE_SDL)
         auto sdlInitResult = SDL_Init(SDL_INIT_VIDEO);
         if (sdlInitResult < 0)
         {
@@ -39,19 +44,17 @@ namespace ke
             return sdlInitResult;
         }
         ke::Log::instance()->info("SDL initialisation successful.");
+#endif
 
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
-        SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
-
-        this->mainWindow = ke::Window::create();
+        this->mainWindow = ke::WindowFactory::newWindow();
         if (nullptr == mainWindow)
         {
+#if defined(USE_SDL)
             Log::instance()->critical("SDL window could not be created. Error: {}", SDL_GetError());
+#endif
             return ke::ExitCodes::FAILURE_WINDOW_CREATION;
         }
-
-        SDL_GL_MakeCurrent(static_cast<SDL_Window*>(this->mainWindow.get()->get()), nullptr); // disable window on this thread so can be made thread current on render thread.
+        this->mainWindow->setThreadCurrent(false);// disable window on this thread so can be made thread current on render thread.
 
         // enter all the engine loops.
         this->enterLogicLoop();
@@ -63,8 +66,10 @@ namespace ke
         ke::Log::instance()->info("Destroying main window ...");
         this->mainWindow.reset();
 
+#if defined(USE_SDL)
         ke::Log::instance()->info("Shutting down SDL ...");
         SDL_Quit();
+#endif
 
         this->onPostShutdown();
         
@@ -157,6 +162,8 @@ namespace ke
 
                 ke::EventManager::update();
 
+                this->resourceManager->update();
+
                 if (heartBeat)
                 {
                     ke::Log::instance()->info("Logic loop heart beat");
@@ -179,7 +186,7 @@ namespace ke
     {
         this->graphicsLoopThread = std::thread([this]() {
 
-            if (!this->mainWindow->setThreadCurrent())
+            if (!this->mainWindow->setThreadCurrent(true))
             {
                 Log::instance()->critical("Failure enabling SDL2 window on thread {}. Cannot start graphics loop. SDL2 error: {}",
                     std::hash<std::thread::id>()(std::this_thread::get_id()),
@@ -226,6 +233,8 @@ namespace ke
     void App::initExec()
     {
         spdlog::set_async_mode(1048576); // magic number from spdlog repo.
+
+        this->resourceManager = std::make_unique<ResourceManager>();
     }
 
     void App::cleanUpExec()

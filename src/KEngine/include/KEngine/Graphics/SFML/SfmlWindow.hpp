@@ -3,35 +3,27 @@
 #include "KEngine/Interface/IWindow.hpp"
 #include "KEngine/Interface/IEvent.hpp"
 
-#include <SDL_video.h>
+#include <SFML/Graphics.hpp>
+
+#include <memory>
 
 namespace ke
 {
     class WindowFactory;
 }
 
-namespace ke::sdl2
+namespace ke::sfml
 {
 
-    class SDL2WindowDeleter
-    {
-    public:
-        inline void operator()(SDL_Window * window)
-        {
-            SDL_DestroyWindow(window);
-        }
-    };
+    using SfWindowUptr = std::unique_ptr<sf::RenderWindow>;
+    using SfWindowSptr = std::shared_ptr<sf::RenderWindow>;
+    using SfWindowWptr = std::weak_ptr<sf::RenderWindow>;
 
-    using SDL2CWindowUptr = std::unique_ptr<SDL_Window, SDL2WindowDeleter>;
-    using SDL2CWindowSptr = std::shared_ptr<SDL_Window>;
-    using SDL2CWindowWptr = std::weak_ptr<SDL_Window>;
-
-    class SDL2Window : public ke::IWindow
+    class SfmlWindow : public ke::IWindow
     {
         friend class ke::WindowFactory;
-
     public:
-        virtual ~SDL2Window();
+        virtual ~SfmlWindow();
 
         virtual void display() final;
 
@@ -47,13 +39,12 @@ namespace ke::sdl2
         virtual void * get() final;
 
     private:
-        SDL2Window();
+        SfmlWindow();
 
         void handleGraphicsLoopFrameEvent(ke::EventSptr event);
 
-        SDL2CWindowUptr window; /// SDL_Window instance managed by smart pointer.
-        SDL_GLContext glContext;
-        
+        SfWindowUptr window;
+        ke::String windowTitle;
     };
-
+    
 }

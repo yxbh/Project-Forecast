@@ -1,6 +1,8 @@
 #if !defined(RUN_UNIT_TESTS)
 
+#include "KEngine/Common/macros.hpp"
 #include "KEngine/App.hpp"
+#include "KEngine/Log/Log.hpp"
 
 #include <chrono>
 #include <iostream>
@@ -8,6 +10,9 @@
 
 int main(int argc, char ** argv)
 {
+    KE_UNUSED(argc);
+    KE_UNUSED(argv);
+
     using namespace std::chrono_literals;
     std::cout << u8"hello world" << std::endl;
 

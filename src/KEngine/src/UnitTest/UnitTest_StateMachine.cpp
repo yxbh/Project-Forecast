@@ -36,7 +36,7 @@ namespace
 
 	class TestStartState : public ke::IStateMachine::IState
 	{
-		KE_DEFINE_STATE_MACHINE_STATE_PROPERTIES(TestStartState)
+        KE_DEFINE_STATE_MACHINE_STATE_COMMON_PROPERTIES(TestStartState)
 	public:
 		static const ke::SMStateType TYPE = 1;
 
@@ -67,7 +67,7 @@ namespace
 
     class TestStateA : public ke::IStateMachine::IState
     {
-		KE_DEFINE_STATE_MACHINE_STATE_PROPERTIES(TestStateA)
+        KE_DEFINE_STATE_MACHINE_STATE_COMMON_PROPERTIES(TestStateA)
     public:
 		static const ke::SMStateType TYPE = 2;
 
@@ -92,7 +92,7 @@ namespace
 
 	class TestStateB : public ke::IStateMachine::IState
 	{
-		KE_DEFINE_STATE_MACHINE_STATE_PROPERTIES(TestStateB)
+        KE_DEFINE_STATE_MACHINE_STATE_COMMON_PROPERTIES(TestStateB)
 	public:
 		static const ke::SMStateType TYPE = 3;
 
@@ -113,7 +113,7 @@ namespace
 
 	class TestEndState : public ke::IStateMachine::IState
 	{
-		KE_DEFINE_STATE_MACHINE_STATE_PROPERTIES(TestEndState)
+        KE_DEFINE_STATE_MACHINE_STATE_COMMON_PROPERTIES(TestEndState)
 	public:
 		static const ke::SMStateType TYPE = 4;
 
