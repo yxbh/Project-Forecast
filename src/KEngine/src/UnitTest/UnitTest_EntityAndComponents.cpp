@@ -1,11 +1,19 @@
 #if defined(RUN_UNIT_TESTS)
 
+#include "KEngine/Interface/IEntityComponent.hpp"
 #include "KEngine/Core/Entity.hpp"
 
 #include "KEngine/UnitTest/catch.hpp"
 
 namespace
 {
+
+    class TestComponent : public ke::IEntityComponent
+    {
+        KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(TestComponent)
+    public:
+        static const ke::EntityComponentType TYPE = 0xAE3DEA1D;
+    };
 
 }
 

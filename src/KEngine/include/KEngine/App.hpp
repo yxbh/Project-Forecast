@@ -2,8 +2,8 @@
 
 #include "KEngine/Interface/IApp.hpp"
 #include "KEngine/Interface/IEvent.hpp"
+#include "KEngine/Interface/IWindow.hpp"
 #include "KEngine/Core/ResourceManager.hpp"
-#include "KEngine/Graphics/Window.hpp"
 
 #include <atomic>
 #include <utility>
@@ -11,6 +11,7 @@
 
 namespace ke
 {
+
     /// <summary>
     /// Application class that represents a KEngine application.
     /// Calling exec() begins the execution of the application and the member function does not return until the application exits.

@@ -70,6 +70,9 @@
     <Filter Include="Header Files\KEngine\Events\SFML">
       <UniqueIdentifier>{c375f036-20c8-47e7-b471-200f90c41954}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\KEngine\Common\Libs">
+      <UniqueIdentifier>{f0ded9da-3107-408a-8445-c7d96ed1c8b5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\ProjectForecast\main.cpp">
@@ -132,6 +135,15 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SFML\SfmlWindow.cpp">
       <Filter>Source Files\KEngine\Graphics\SFML</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\EntityFactory.cpp">
+      <Filter>Source Files\KEngine\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EntityFactory.cpp">
+      <Filter>Source Files\KEngine\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\BaseAppLogic.cpp">
+      <Filter>Source Files\KEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\App.hpp">
@@ -153,9 +165,6 @@
       <Filter>Header Files\KEngine\Core</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Queues.hpp">
-      <Filter>Header Files\KEngine\Common</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\SRDelegate.hpp">
       <Filter>Header Files\KEngine\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Delegate.hpp">
@@ -253,6 +262,24 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEvent.hpp">
       <Filter>Header Files\KEngine\Events\SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\json.hpp">
+      <Filter>Header Files\KEngine\Common\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\SRDelegate.hpp">
+      <Filter>Header Files\KEngine\Common\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Json.hpp">
+      <Filter>Header Files\KEngine\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EntityFactory.hpp">
+      <Filter>Header Files\KEngine\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\BaseAppLogic.hpp">
+      <Filter>Header Files\KEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEntityComponentJsonLoader.hpp">
+      <Filter>Header Files\KEngine\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

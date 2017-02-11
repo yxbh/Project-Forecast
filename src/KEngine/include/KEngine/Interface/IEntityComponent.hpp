@@ -39,6 +39,7 @@ namespace ke
 
         /// <summary>
         /// Initalise the component with a JSON config resource file.
+        /// This member function is called by the EntityFactory at the time the component is created.
         /// </summary>
         /// <returns>true on success.</returns>
         virtual bool initialise(void /* TODO: path to ini file? */) = 0;
@@ -53,12 +54,6 @@ namespace ke
         /// </summary>
         /// <param name="p_ElapsedTime"></param>
         virtual void update(const ke::Time p_ElapsedTime) = 0;
-        
-        /// <summary>
-        /// Get the instance ID of this EntityComponent.
-        /// </summary>
-        /// <returns>the instance ID of this EntityComponent.</returns>
-        virtual ke::EntityComponentId getId(void) const = 0;
 
         /// <summary>
         /// Get the type of this particular EntityComponent.
@@ -89,6 +84,7 @@ namespace ke
 
     }; // IEntityComponent class
 
+    inline IEntityComponent::IEntityComponent(EntitySptr p_spEntity) : m_spOwnerEntity(p_spEntity) {}
     inline IEntityComponent::~IEntityComponent() {}
     inline ke::String IEntityComponent::getName(void) const { return KE_TEXT("IEntityComponent"); }
     inline EntityComponentType IEntityComponent::getType(void) const { return IEntityComponent::TYPE; }
@@ -103,3 +99,10 @@ namespace ke
     }
     
 }
+
+#define KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(CLASS_NAME) \
+public: \
+    static constexpr const char * NAME = #CLASS_NAME; \
+	virtual ke::EntityComponentType getType() const override { return CLASS_NAME::TYPE; } \
+	virtual ke::String getName() const override { return CLASS_NAME::NAME; } \
+private:

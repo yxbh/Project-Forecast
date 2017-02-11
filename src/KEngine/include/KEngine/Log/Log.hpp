@@ -5,9 +5,14 @@
 /// <summary>
 /// Reference: https://github.com/gabime/spdlog/wiki
 /// </summary>
-namespace ke
+
+namespace ke::log
 {
     using namespace spdlog; // alias the spdlog namespace to make it our own.
+}
+
+namespace ke
+{
 
     class Log
     {
@@ -18,7 +23,7 @@ namespace ke
         /// <returns>The logger instance.</returns>
         static auto instance() -> auto
         {
-            static auto logger = ke::stdout_color_mt("General"); // logger object is only constructed when this function is called.
+            static auto logger = ke::log::stdout_color_mt("General"); // logger object is only constructed when this function is called.
             return logger.get();
         }
     };
