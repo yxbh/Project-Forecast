@@ -88,7 +88,6 @@ INCLUDEPATH += \
 HEADERS += \
     ../../../KEngine/include/KEngine/Common/Delegate.hpp \
     ../../../KEngine/include/KEngine/Common/Queues.hpp \
-    ../../../KEngine/include/KEngine/Common/SRDelegate.hpp \
     ../../../KEngine/include/KEngine/Common/StopWatch.hpp \
     ../../../KEngine/include/KEngine/Common/String.hpp \
     ../../../KEngine/include/KEngine/Common/Time.hpp \
@@ -124,7 +123,13 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Graphics/WindowFactory.hpp \
     ../../../KEngine/include/KEngine/Graphics/SFML/SfmlWindow.hpp \
     ../../../KEngine/include/KEngine/Events/SFML/SfmlEvent.hpp \
-    ../../../KEngine/include/KEngine/Core/ResourceManager.hpp
+    ../../../KEngine/include/KEngine/Core/ResourceManager.hpp \
+    ../../../KEngine/include/KEngine/Common/Libs/json.hpp \
+    ../../../KEngine/include/KEngine/Common/Libs/SRDelegate.hpp \
+    ../../../KEngine/include/KEngine/Common/Json.hpp \
+    ../../../KEngine/include/KEngine/Common/ThreadPool.hpp \
+    ../../../KEngine/include/KEngine/Core/EntityFactory.hpp \
+    ../../../KEngine/include/KEngine/Interface/IEntityComponentJsonLoader.hpp
 
 SOURCES += \
     ../../../KEngine/include/KEngine/Common/Queues.inl \
@@ -148,7 +153,9 @@ SOURCES += \
     ../../../KEngine/src/Core/SystemManager.cpp \
     ../../../KEngine/src/Core/ResourceManager.cpp \
     ../../../KEngine/src/Graphics/SFML/SfmlWindow.cpp \
-    ../../../KEngine/src/Graphics/WindowFactory.cpp
+    ../../../KEngine/src/Graphics/WindowFactory.cpp \
+    ../../../KEngine/src/UnitTest/UnitTest_EntityFactory.cpp \
+    ../../../KEngine/src/Core/EntityFactory.cpp
 #
 
 #
