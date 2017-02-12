@@ -161,7 +161,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions>USE_SDL;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>KE_DEBUG;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -176,7 +176,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions>RUN_UNIT_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>KE_DEBUG;RUN_UNIT_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -191,7 +191,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions>USE_SDL;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>KE_DEBUG;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -206,7 +206,7 @@
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions>RUN_UNIT_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>KE_DEBUG;RUN_UNIT_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -224,7 +224,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions>USE_SDL;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -262,7 +262,7 @@
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions>USE_SDL;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -302,6 +302,7 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Core\StateMachine.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Core\SystemManager.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\dump.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\RenderSystem.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SDL2\SDL2Window.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SFML\SfmlWindow.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\WindowFactory.cpp" />
@@ -346,6 +347,8 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\LoopFrameEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SDL2\SDL2Event.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEvent.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderCommands\TestRenderCommands.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderSystem.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SDL2\SDL2Window.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\SfmlWindow.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\Window.hpp" />

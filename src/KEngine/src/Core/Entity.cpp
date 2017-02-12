@@ -44,7 +44,6 @@ namespace ke
 
     Entity::~Entity(void)
     {
-        assert(m_ComponentSPMap.empty());
     }
 
     void Entity::addComponent(ke::EntityComponentSptr p_spEntityComponent)

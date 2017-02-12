@@ -4,6 +4,8 @@
 #include "KEngine/Interface/IEvent.hpp"
 #include "KEngine/Interface/IWindow.hpp"
 #include "KEngine/Core/ResourceManager.hpp"
+#include "KEngine/Graphics/RenderSystem.hpp"
+#include "KEngine/BaseAppLogic.hpp"
 
 #include <atomic>
 #include <utility>
@@ -28,6 +30,8 @@ namespace ke
         /// <returns>Application exit code.</returns>
         virtual int exec() override;
 
+        virtual void setLogic(ke::AppLogicUptr && appLogic);
+
     private:
         void enterEventLoop();
         void enterLogicLoop();
@@ -39,8 +43,10 @@ namespace ke
         void handleAppExitRequest(ke::EventSptr);
         void handleGraphicsLoopSetupFailure(ke::EventSptr);
 
-        
-        ResourceManagerUptr resourceManager;
+        ke::AppLogicUptr appLogic;
+        ke::RenderSystemUptr renderSystem;
+
+        ke::ResourceManagerUptr resourceManager;
 
         std::atomic_bool isEventLoopRunning { false };
         std::atomic_bool isLogicLoopRunning { false };

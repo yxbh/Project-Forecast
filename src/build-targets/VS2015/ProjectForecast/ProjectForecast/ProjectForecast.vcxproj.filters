@@ -73,6 +73,9 @@
     <Filter Include="Header Files\KEngine\Common\Libs">
       <UniqueIdentifier>{f0ded9da-3107-408a-8445-c7d96ed1c8b5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\KEngine\Graphics\RenderCommands">
+      <UniqueIdentifier>{c68ccef3-6ec7-4161-9bbf-79a268ad07fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\ProjectForecast\main.cpp">
@@ -143,6 +146,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\KEngine\src\BaseAppLogic.cpp">
       <Filter>Source Files\KEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\RenderSystem.cpp">
+      <Filter>Source Files\KEngine\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -280,6 +286,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEntityComponentJsonLoader.hpp">
       <Filter>Header Files\KEngine\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderCommands\TestRenderCommands.hpp">
+      <Filter>Header Files\KEngine\Graphics\RenderCommands</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderSystem.hpp">
+      <Filter>Header Files\KEngine\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

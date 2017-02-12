@@ -1,17 +1,11 @@
-#pragma once
+#include "KEngine/BaseAppLogic.hpp"
 
 namespace ke
 {
 
-    /// <summary>
-    /// 
-    /// </summary>
-    class BaseAppLogic
+    void BaseAppLogic::update(ke::Time elapsedTime)
     {
-    public:
-        virtual ~BaseAppLogic() = 0;
-    };
 
-    inline BaseAppLogic::~BaseAppLogic() {}
+    }
 
 }

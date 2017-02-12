@@ -2,6 +2,7 @@
 
 #include "KEngine/Common/macros.hpp"
 #include "KEngine/App.hpp"
+#include "KEngine/BaseAppLogic.hpp"
 #include "KEngine/Log/Log.hpp"
 
 #include <chrono>
@@ -17,6 +18,8 @@ int main(int argc, char ** argv)
     std::cout << u8"hello world" << std::endl;
 
     ke::App app;
+    auto appLogic = std::make_unique<ke::BaseAppLogic>();
+    app.setLogic(std::move(appLogic));
     const int result = app.exec();
     ke::Log::instance()->info("Exit code: {}", result);
     //std::this_thread::sleep_for(2s);

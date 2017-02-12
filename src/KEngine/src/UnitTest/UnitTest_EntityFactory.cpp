@@ -1,5 +1,6 @@
 #if defined(RUN_UNIT_TESTS)
 
+#include "KEngine/Core/Entity.hpp"
 #include "KEngine/Core/EntityFactory.hpp"
 #include "KEngine/Log/Log.hpp"
 
@@ -103,6 +104,8 @@ TEST_CASE("ke::EntityFactory Component JSON Loader Unit Tests")
 TEST_CASE("ke::EntityFactory Entity Creation Unit Tests")
 {
     ke::EntityFactory factory;
+    CHECK(factory.registerComponentJsonLoader<TestComponent1Loader1>(TestComponent1::NAME));
+    CHECK(factory.registerComponentJsonLoader<TestComponent2Loader1>(TestComponent2::NAME));
 
     SECTION("Test creating ke::Entity from Entity JSON")
     {
@@ -110,15 +113,16 @@ TEST_CASE("ke::EntityFactory Entity Creation Unit Tests")
         R"(
             {
                 "type" : "entity",
+                "name" : "TestEntity",
                 "components" :
                 [
                     {
                         "type" : "entity_component",
-                        "name" : "TestComponent1"
+                        "type_name" : "TestComponent1"
                     },
                     {
                         "type" : "entity_component",
-                        "name" : "TestComponent2"
+                        "type_name" : "TestComponent2"
                     }
                 ]
             }
@@ -130,10 +134,11 @@ TEST_CASE("ke::EntityFactory Entity Creation Unit Tests")
         ke::log::set_level(logLevel);
 
         auto jsonObj = ke::Json::parse(validEntityJson);
-        auto jsonObjCpy = jsonObj;
-        const ke::Json & jsonObjCpy2(jsonObj);
 
-        //auto entity = factory.createNew(jsonObj);
+        auto entity = factory.createNew(jsonObj);
+
+        CHECK(entity);
+        CHECK(entity->getComponentCount() == 2);
     }
 }
 

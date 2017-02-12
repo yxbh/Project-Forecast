@@ -57,7 +57,7 @@ namespace ke::sfml
 
     void * SfmlWindow::get()
     {
-        return window.get();
+        return this->window.get();
     }
 
     void SfmlWindow::handleGraphicsLoopFrameEvent(ke::EventSptr event)

@@ -88,6 +88,12 @@ namespace ke
         const TagList & getTags(void) const;
 
         /// <summary>
+        /// Get the number of components that are current held by the Entity.
+        /// </summary>
+        /// <returns>a value indidcating the number of compoonents that are held by the Entity.</returns>
+        inline std::size_t getComponentCount(void) const { return m_ComponentSPMap.size(); }
+
+        /// <summary>
         /// Check if this Entity has the specified tag.
         /// </summary>
         /// <param name="tag">the tag to search.</param>

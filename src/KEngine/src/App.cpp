@@ -13,14 +13,23 @@
 #include "KEngine/Events/GraphicsLoopFrameEvent.hpp"
 #include "KEngine/Events/GraphicsLoopSetupFailureEvent.hpp"
 #include "KEngine/Events/SDL2/SDL2Event.hpp"
+#include "KEngine/Events/SFML/SfmlEvent.hpp"
 
 #include "KEngine/Log/Log.hpp"
 
 #include "KEngine/Graphics/WindowFactory.hpp"
 
 #include <SDL.h>
+#include <SFML/Window.hpp>
 
 #include <memory>
+
+namespace
+{
+
+    static const ke::Time LOGIC_UPDATE_FIXED_TIMESPAN = ke::Time::milliseconds(20); // 50fps.
+
+}
 
 namespace ke
 {
@@ -56,6 +65,9 @@ namespace ke
         }
         this->mainWindow->setThreadCurrent(false);// disable window on this thread so can be made thread current on render thread.
 
+        this->renderSystem = std::make_unique<ke::RenderSystem>();
+        this->renderSystem->setWindow(this->mainWindow);
+
         // enter all the engine loops.
         this->enterLogicLoop();
         this->enterGraphicsLoop();
@@ -83,7 +95,6 @@ namespace ke
         this->isEventLoopRunning = true;
         ke::StopWatch stopwatch;
         ke::HeartBeatGenerator heartBeat(ke::Time::milliseconds(5000));
-        SDL_Event event;
         while(this->isEventLoopRunning)
         {
             ke::Time frameTime = stopwatch.getElapsed();
@@ -91,6 +102,8 @@ namespace ke
 
             ke::EventManager::queue(ke::makeEvent<EventLoopFrameEvent>(frameTime));
 
+#if defined(USE_SDL)
+            SDL_Event event;
             while (SDL_PollEvent(&event) != 0)
             {
                 ke::EventManager::queue(ke::makeEvent<SDL2Event>(event));
@@ -100,6 +113,20 @@ namespace ke
                     ke::EventManager::queue(ke::makeEvent<AppExitRequestedEvent>());
                 }
             }
+#elif defined(USE_SFML)
+            sf::Event event;
+            while (static_cast<sf::Window*>(this->mainWindow->get())->pollEvent(event))
+            {
+                ke::EventManager::queue(ke::makeEvent<ke::SfmlEvent>(event));
+                switch (event.type)
+                {
+                case sf::Event::EventType::Closed:
+                    Log::instance()->info("Normal exit requested.");
+                    ke::EventManager::queue(ke::makeEvent<AppExitRequestedEvent>());
+                    break;
+                }
+            }
+#endif
 
             if (heartBeat)
             {
@@ -154,21 +181,37 @@ namespace ke
 
             while(this->isLogicLoopRunning)
             {
-                ke::Time frameTime = stopwatch.getElapsed();
+                cumulativeLoopTime += stopwatch.getElapsed();
                 stopwatch.restart();
-                cumulativeLoopTime += frameTime;
 
-                ke::EventManager::queue(ke::makeEvent<LogicLoopFrameEvent>(frameTime));
+                //
+                // update logic
+                //
+                while (cumulativeLoopTime >= LOGIC_UPDATE_FIXED_TIMESPAN)
+                {
+                    cumulativeLoopTime -= LOGIC_UPDATE_FIXED_TIMESPAN;
 
-                ke::EventManager::update();
+                    ke::EventManager::queue(ke::makeEvent<LogicLoopFrameEvent>(LOGIC_UPDATE_FIXED_TIMESPAN));
+                    ke::EventManager::update();
 
-                this->resourceManager->update();
+                    this->resourceManager->update();
 
+                    this->appLogic->onUpdate(LOGIC_UPDATE_FIXED_TIMESPAN);
+                }
+
+                //
+                // prepare and dispatch render commands
+                //
+                this->renderSystem->prepareRenderCommands();
+                this->renderSystem->dispatchRenderCommands();
+
+                //
+                // debug/diagnostic stuff
+                //
                 if (heartBeat)
                 {
                     ke::Log::instance()->info("Logic loop heart beat");
                 }
-
 
                 using namespace std::chrono_literals;
                 std::this_thread::sleep_for(1ms);
@@ -195,6 +238,8 @@ namespace ke
                 return;
             }
 
+            mainWindow->display();
+
             ke::Log::instance()->info("Entering KEngine render loop.");
 
             ke::StopWatch stopwatch;
@@ -218,9 +263,9 @@ namespace ke
                 // process the oldest render command list from the render commands queue
                 // e.g. culling, ordering, etc...
                 // if queue is empty then interpolate before render.
-
-                mainWindow->display();
-
+                this->renderSystem->processRenderCommands(frameTime);
+                this->renderSystem->render();
+                
                 using namespace std::chrono_literals;
                 std::this_thread::sleep_for(1ms);
             }
@@ -228,6 +273,11 @@ namespace ke
             ke::Log::instance()->info("KEngine render loop exited.");
 
         });
+    }
+
+    void App::setLogic(ke::AppLogicUptr && appLogic)
+    {
+        this->appLogic = std::move(appLogic);
     }
 
     void App::initExec()
