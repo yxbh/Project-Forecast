@@ -25,6 +25,14 @@ run_unit_tests {
 
 
 #
+#
+#
+#DEFINES += USE_SDL
+DEFINES += USE_SFML
+#
+
+
+#
 # Configure release & debug build directories.
 #   - DESTDIR:      binary output
 #   - OBJECTS_DIR:  object files output
@@ -91,71 +99,77 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Common/StopWatch.hpp \
     ../../../KEngine/include/KEngine/Common/String.hpp \
     ../../../KEngine/include/KEngine/Common/Time.hpp \
+    ../../../KEngine/include/KEngine/Common/macros.hpp \
+    ../../../KEngine/include/KEngine/Common/ScopeFunc.hpp \
+    ../../../KEngine/include/KEngine/Common/Libs/json.hpp \
+    ../../../KEngine/include/KEngine/Common/Libs/SRDelegate.hpp \
+    ../../../KEngine/include/KEngine/Common/Json.hpp \
+    ../../../KEngine/include/KEngine/Common/ThreadPool.hpp \
+    ../../../KEngine/include/KEngine/Common/HeartBeatGenerator.hpp \
     ../../../KEngine/include/KEngine/Core/EventManager.hpp \
     ../../../KEngine/include/KEngine/Core/EventManagerImpl.hpp \
+    ../../../KEngine/include/KEngine/Core/Entity.hpp \
+    ../../../KEngine/include/KEngine/Core/StateMachine.hpp \
+    ../../../KEngine/include/KEngine/Core/ResourceManager.hpp \
+    ../../../KEngine/include/KEngine/Core/EntityFactory.hpp \
+    ../../../KEngine/include/KEngine/Core/EntityManager.hpp \
+    ../../../KEngine/include/KEngine/Core/SystemManager.hpp \
     ../../../KEngine/include/KEngine/Interface/IApp.hpp \
     ../../../KEngine/include/KEngine/Interface/IEvent.hpp \
     ../../../KEngine/include/KEngine/Interface/IEventManagerImpl.hpp \
-    ../../../KEngine/include/KEngine/Log/Log.hpp \
-    ../../../KEngine/include/KEngine/UnitTest/catch.hpp \
-    ../../../KEngine/include/KEngine/App.hpp \
-    ../../../KEngine/include/KEngine/Common/macros.hpp \
-    ../../../KEngine/include/KEngine/Common/ScopeFunc.hpp \
+    ../../../KEngine/include/KEngine/Interface/ISystem.hpp \
+    ../../../KEngine/include/KEngine/Interface/IWindow.hpp \
+    ../../../KEngine/include/KEngine/Interface/IEntity.hpp \
+    ../../../KEngine/include/KEngine/Interface/IEntityComponent.hpp \
+    ../../../KEngine/include/KEngine/Interface/IRenderCommand.hpp \
+    ../../../KEngine/include/KEngine/Interface/IStateMachine.hpp \
+    ../../../KEngine/include/KEngine/Interface/IEntityComponentJsonLoader.hpp \
     ../../../KEngine/include/KEngine/Events/SDL2/SDL2Event.hpp \
+    ../../../KEngine/include/KEngine/Events/SFML/SfmlEvent.hpp \
     ../../../KEngine/include/KEngine/Events/AppExitRequestedEvent.hpp \
     ../../../KEngine/include/KEngine/Events/EventLoopFrameEvent.hpp \
     ../../../KEngine/include/KEngine/Events/GraphicsLoopFrameEvent.hpp \
     ../../../KEngine/include/KEngine/Events/LogicLoopFrameEvent.hpp \
     ../../../KEngine/include/KEngine/Events/LoopFrameEvent.hpp \
-    ../../../KEngine/include/KEngine/Graphics/SDL2/SDL2Window.hpp \
-    ../../../KEngine/include/KEngine/Graphics/Window.hpp \
-    ../../../KEngine/include/KEngine/Interface/ISystem.hpp \
-    ../../../KEngine/include/KEngine/Interface/IWindow.hpp \
-    ../../../KEngine/include/KEngine/Common/HeartBeatGenerator.hpp \
-    ../../../KEngine/include/KEngine/Core/Entity.hpp \
-    ../../../KEngine/include/KEngine/Core/StateMachine.hpp \
-    ../../../KEngine/include/KEngine/Interface/IEntity.hpp \
-    ../../../KEngine/include/KEngine/Interface/IEntityComponent.hpp \
-    ../../../KEngine/include/KEngine/Interface/IRenderCommand.hpp \
-    ../../../KEngine/include/KEngine/Interface/IStateMachine.hpp \
-    ../../../KEngine/include/KEngine/Core/EntityManager.hpp \
-    ../../../KEngine/include/KEngine/Core/SystemManager.hpp \
+    ../../../KEngine/include/KEngine/Events/GraphicsLoopSetupFailureEvent.hpp \
     ../../../KEngine/include/KEngine/Graphics/WindowFactory.hpp \
     ../../../KEngine/include/KEngine/Graphics/SFML/SfmlWindow.hpp \
-    ../../../KEngine/include/KEngine/Events/SFML/SfmlEvent.hpp \
-    ../../../KEngine/include/KEngine/Core/ResourceManager.hpp \
-    ../../../KEngine/include/KEngine/Common/Libs/json.hpp \
-    ../../../KEngine/include/KEngine/Common/Libs/SRDelegate.hpp \
-    ../../../KEngine/include/KEngine/Common/Json.hpp \
-    ../../../KEngine/include/KEngine/Common/ThreadPool.hpp \
-    ../../../KEngine/include/KEngine/Core/EntityFactory.hpp \
-    ../../../KEngine/include/KEngine/Interface/IEntityComponentJsonLoader.hpp
+    ../../../KEngine/include/KEngine/Graphics/SDL2/SDL2Window.hpp \
+    ../../../KEngine/include/KEngine/Graphics/RenderCommands/TestRenderCommands.hpp \
+    ../../../KEngine/include/KEngine/Graphics/RenderSystem.hpp \
+    ../../../KEngine/include/KEngine/Graphics/Window.hpp \
+    ../../../KEngine/include/KEngine/Log/Log.hpp \
+    ../../../KEngine/include/KEngine/UnitTest/catch.hpp \
+    ../../../KEngine/include/KEngine/App.hpp \
+    ../../../KEngine/include/KEngine/BaseAppLogic.hpp
 
 SOURCES += \
     ../../../KEngine/include/KEngine/Common/Queues.inl \
     ../../../KEngine/include/KEngine/Common/Time.inl \
     ../../../KEngine/src/Common/Time.cpp \
     ../../../KEngine/src/Core/EventManagerImpl.cpp \
+    ../../../KEngine/src/Core/EntityFactory.cpp \
+    ../../../KEngine/src/Core/Entity.cpp \
+    ../../../KEngine/src/Core/StateMachine.cpp \
+    ../../../KEngine/src/Core/EntityManager.cpp \
+    ../../../KEngine/src/Core/SystemManager.cpp \
+    ../../../KEngine/src/Core/ResourceManager.cpp \
+    ../../../KEngine/src/Graphics/SDL2/SDL2Window.cpp \
+    ../../../KEngine/src/Graphics/SFML/SfmlWindow.cpp \
+    ../../../KEngine/src/Graphics/WindowFactory.cpp \
+    ../../../KEngine/src/Graphics/RenderSystem.cpp \
+    ../../../KEngine/src/App.cpp \
+    ../../../KEngine/src/BaseAppLogic.cpp \
+    ../../../ProjectForecast/main.cpp \
+    ../../../KEngine/src/dump.cpp \
     ../../../KEngine/src/UnitTest/UnitTest_Delegate.cpp \
     ../../../KEngine/src/UnitTest/UnitTest_EventDelegates.cpp \
     ../../../KEngine/src/UnitTest/UnitTest_EventManager.cpp \
     ../../../KEngine/src/UnitTest/UnitTest_Events.cpp \
     ../../../KEngine/src/UnitTest/UnitTest_Time.cpp \
-    ../../../KEngine/src/App.cpp \
-    ../../../ProjectForecast/main.cpp \
-    ../../../KEngine/src/Graphics/SDL2/SDL2Window.cpp \
-    ../../../KEngine/src/dump.cpp \
-    ../../../KEngine/src/Core/Entity.cpp \
-    ../../../KEngine/src/Core/StateMachine.cpp \
     ../../../KEngine/src/UnitTest/UnitTest_EntityAndComponents.cpp \
     ../../../KEngine/src/UnitTest/UnitTest_StateMachine.cpp \
-    ../../../KEngine/src/Core/EntityManager.cpp \
-    ../../../KEngine/src/Core/SystemManager.cpp \
-    ../../../KEngine/src/Core/ResourceManager.cpp \
-    ../../../KEngine/src/Graphics/SFML/SfmlWindow.cpp \
-    ../../../KEngine/src/Graphics/WindowFactory.cpp \
-    ../../../KEngine/src/UnitTest/UnitTest_EntityFactory.cpp \
-    ../../../KEngine/src/Core/EntityFactory.cpp
+    ../../../KEngine/src/UnitTest/UnitTest_EntityFactory.cpp
 #
 
 #
