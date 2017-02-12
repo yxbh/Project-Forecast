@@ -1,8 +1,5 @@
 #include "KEngine/Graphics/SFML/SfmlWindow.hpp"
 
-#include "KEngine/Core/EventManager.hpp"
-#include "KEngine/Events/GraphicsLoopFrameEvent.hpp"
-
 #include <cassert>
 
 namespace ke::sfml
@@ -10,18 +7,11 @@ namespace ke::sfml
 
     SfmlWindow::SfmlWindow()
     {
-        ke::EventManager::registerListener<ke::GraphicsLoopFrameEvent>(
-            this, &ke::sfml::SfmlWindow::handleGraphicsLoopFrameEvent);
     }
 
 
     SfmlWindow::~SfmlWindow()
     {
-        if (window)
-        {
-            ke::EventManager::deregisterListener<ke::GraphicsLoopFrameEvent>(
-                this, &ke::sfml::SfmlWindow::handleGraphicsLoopFrameEvent);
-        }
     }
 
     void SfmlWindow::display()
@@ -58,15 +48,6 @@ namespace ke::sfml
     void * SfmlWindow::get()
     {
         return this->window.get();
-    }
-
-    void SfmlWindow::handleGraphicsLoopFrameEvent(ke::EventSptr event)
-    {
-        std::shared_ptr<GraphicsLoopFrameEvent> frameEvent = std::static_pointer_cast<GraphicsLoopFrameEvent>(event);
-        if (frameEvent)
-        {
-            this->setTitle("KEngine - " + std::to_string(frameEvent->getFrameTimeSpan().asMilliseconds()) + "ms/frame");
-        }
     }
 
 }

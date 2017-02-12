@@ -29,6 +29,17 @@ namespace
 
     static const ke::Time LOGIC_UPDATE_FIXED_TIMESPAN = ke::Time::milliseconds(20); // 50fps.
 
+    static std::shared_ptr<ke::GraphicsLoopFrameEvent> graphicsLoopEventHolder;
+
+    static void graphicsLoopEventHandler(ke::EventSptr event)
+    {
+        std::shared_ptr<ke::GraphicsLoopFrameEvent> frameEvent
+                = std::static_pointer_cast<ke::GraphicsLoopFrameEvent>(event);
+        if (frameEvent)
+        {
+            std::atomic_store(&graphicsLoopEventHolder, frameEvent);
+        }
+    }
 }
 
 namespace ke
@@ -60,6 +71,8 @@ namespace ke
         {
 #if defined(USE_SDL)
             Log::instance()->critical("SDL window could not be created. Error: {}", SDL_GetError());
+#elif defined(USE_SFML)
+            Log::instance()->critical("SFML window could not be created.");
 #endif
             return ke::ExitCodes::FAILURE_WINDOW_CREATION;
         }
@@ -90,6 +103,9 @@ namespace ke
 
     void App::enterEventLoop()
     {
+        ke::EventManager::registerListener<ke::GraphicsLoopFrameEvent>(&::graphicsLoopEventHandler);
+        KE_MAKE_SCOPEFUNC([](){ ke::EventManager::deregisterListener<ke::GraphicsLoopFrameEvent>(&::graphicsLoopEventHandler); });
+
         ke::Log::instance()->info("Entering KEngine event loop.");
 
         this->isEventLoopRunning = true;
@@ -128,6 +144,12 @@ namespace ke
             }
 #endif
 
+            auto graphicsLoopEvent = std::atomic_load_explicit(&graphicsLoopEventHolder, std::memory_order_relaxed);
+            if (graphicsLoopEvent)
+            {
+                this->mainWindow->setTitle("KEngine - " + std::to_string(graphicsLoopEvent->getFrameTimeSpan().asMilliseconds()) + "ms/frame");
+            }
+
             if (heartBeat)
             {
                 ke::Log::instance()->info("Event loop heart beat");
@@ -162,6 +184,9 @@ namespace ke
         {
             ke::Log::instance()->warn("KEngine logic loop thread not joinable.");
         }
+
+        this->mainWindow->setThreadCurrent(true);
+        this->mainWindow.reset();
     }
 
     void App::enterLogicLoop()
@@ -231,9 +256,14 @@ namespace ke
 
             if (!this->mainWindow->setThreadCurrent(true))
             {
+#if defined(USE_SDL)
                 Log::instance()->critical("Failure enabling SDL2 window on thread {}. Cannot start graphics loop. SDL2 error: {}",
                     std::hash<std::thread::id>()(std::this_thread::get_id()),
                     SDL_GetError());
+#elif defined(USE_SFML)
+                Log::instance()->critical("Failure enabling SFML window on thread {}. Cannot start graphics loop.",
+                    std::hash<std::thread::id>()(std::this_thread::get_id()));
+#endif
                 ke::EventManager::dispatchNow(ke::makeEvent<ke::GraphicsLoopSetupFailureEvent>());
                 return;
             }
@@ -265,10 +295,14 @@ namespace ke
                 // if queue is empty then interpolate before render.
                 this->renderSystem->processRenderCommands(frameTime);
                 this->renderSystem->render();
+
+                //this->mainWindow->setTitle("KEngine - " + std::to_string(frameTime.asMilliseconds()) + "ms/frame");
                 
                 using namespace std::chrono_literals;
                 std::this_thread::sleep_for(1ms);
             }
+
+            this->mainWindow->setThreadCurrent(false);
 
             ke::Log::instance()->info("KEngine render loop exited.");
 

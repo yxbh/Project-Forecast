@@ -49,8 +49,6 @@ namespace ke::sdl2
     private:
         SDL2Window();
 
-        void handleGraphicsLoopFrameEvent(ke::EventSptr event);
-
         SDL2CWindowUptr window; /// SDL_Window instance managed by smart pointer.
         SDL_GLContext glContext;
         

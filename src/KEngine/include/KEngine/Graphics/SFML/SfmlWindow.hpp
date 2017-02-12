@@ -5,8 +5,6 @@
 
 #include <SFML/Graphics.hpp>
 
-#include <memory>
-
 namespace ke
 {
     class WindowFactory;
@@ -40,8 +38,6 @@ namespace ke::sfml
 
     private:
         SfmlWindow();
-
-        void handleGraphicsLoopFrameEvent(ke::EventSptr event);
 
         SfWindowUptr window;
         ke::String windowTitle;

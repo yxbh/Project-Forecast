@@ -1,16 +1,10 @@
 #include "KEngine/Graphics/SDL2/SDL2Window.hpp"
 
-#include "KEngine/Core/EventManager.hpp"
-#include "KEngine/Events/GraphicsLoopFrameEvent.hpp"
-#include "KEngine/Log/Log.hpp"
-
 namespace ke::sdl2
 {
 
     SDL2Window::SDL2Window()
     {
-        ke::EventManager::registerListener<ke::GraphicsLoopFrameEvent>(
-            this, &ke::sdl2::SDL2Window::handleGraphicsLoopFrameEvent);
     }
 
 
@@ -19,12 +13,6 @@ namespace ke::sdl2
         if (this->glContext)
         {
             SDL_GL_DeleteContext(this->glContext);
-        }
-
-        if (window)
-        {
-            ke::EventManager::deregisterListener<ke::GraphicsLoopFrameEvent>(
-                this, &ke::sdl2::SDL2Window::handleGraphicsLoopFrameEvent);
         }
     }
 
@@ -68,15 +56,6 @@ namespace ke::sdl2
     void * SDL2Window::get()
     {
         return window.get();
-    }
-
-    void SDL2Window::handleGraphicsLoopFrameEvent(ke::EventSptr event)
-    {
-        std::shared_ptr<GraphicsLoopFrameEvent> frameEvent = std::static_pointer_cast<GraphicsLoopFrameEvent>(event);
-        if (frameEvent)
-        {
-            this->setTitle("KEngine - " + std::to_string(frameEvent->getFrameTimeSpan().asMilliseconds()) + "ms/frame");
-        }
     }
     
 }
