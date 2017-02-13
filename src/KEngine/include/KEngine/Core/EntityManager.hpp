@@ -13,6 +13,8 @@ namespace ke
     class EntityManager final
     {
     public:
+        void update(ke::Time elapsedTime);
+
         inline void addEntity(ke::EntitySptr entity) { this->entityMap.insert({ entity->getId(), entity }); }
         void removeEntity(ke::EntityId entityId);
         ke::EntityWptr findEntityById(ke::EntityId entityId);

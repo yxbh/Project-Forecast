@@ -76,6 +76,12 @@
     <Filter Include="Header Files\KEngine\Graphics\RenderCommands">
       <UniqueIdentifier>{c68ccef3-6ec7-4161-9bbf-79a268ad07fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\KEngine\Views">
+      <UniqueIdentifier>{e4ac3ac2-7186-44d4-9885-132c39ebf0ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\KEngine\Views">
+      <UniqueIdentifier>{785a4da9-460f-4964-b206-f5f9bc078b41}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\ProjectForecast\main.cpp">
@@ -149,6 +155,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\RenderSystem.cpp">
       <Filter>Source Files\KEngine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\Scene.cpp">
+      <Filter>Source Files\KEngine\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Views\HumanView.cpp">
+      <Filter>Source Files\KEngine\Views</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -292,6 +304,21 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderSystem.hpp">
       <Filter>Header Files\KEngine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\ISceneNode.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\Scene.hpp">
+      <Filter>Header Files\KEngine\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IAppView.hpp">
+      <Filter>Header Files\KEngine\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IScene.hpp">
+      <Filter>Header Files\KEngine\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Views\HumanView.hpp">
+      <Filter>Header Files\KEngine\Views</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

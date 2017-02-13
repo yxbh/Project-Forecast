@@ -303,6 +303,7 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Core\SystemManager.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\dump.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\RenderSystem.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\Scene.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SDL2\SDL2Window.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SFML\SfmlWindow.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\WindowFactory.cpp" />
@@ -314,6 +315,7 @@
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Events.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_StateMachine.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Time.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Views\HumanView.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -349,6 +351,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderCommands\TestRenderCommands.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderSystem.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\Scene.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SDL2\SDL2Window.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\SfmlWindow.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\Window.hpp" />
@@ -360,10 +363,14 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEventManagerImpl.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IRenderCommand.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IScene.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\ISceneNode.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IStateMachine.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\ISystem.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IAppView.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IWindow.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Log\Log.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Views\HumanView.hpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\KEngine\include\KEngine\Common\Queues.inl" />

@@ -3,9 +3,9 @@
 namespace ke
 {
 
-    void RenderSystem::prepareRenderCommands()
+    void RenderSystem::prepareRenderCommands(ke::Scene * scene)
     {
-
+        if (!scene) return; // ignore null scenes;
     }
 
     void RenderSystem::dispatchRenderCommands()

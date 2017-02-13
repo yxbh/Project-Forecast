@@ -40,10 +40,24 @@ namespace
             std::atomic_store(&graphicsLoopEventHolder, frameEvent);
         }
     }
+
 }
 
 namespace ke
 {
+    ke::App * App::sGlobalAppInstance = nullptr;
+
+    App::App()
+    {
+        assert(!App::sGlobalAppInstance);
+        App::sGlobalAppInstance = this;
+    }
+
+    App::~App()
+    {
+        assert(App::sGlobalAppInstance);
+        App::sGlobalAppInstance = nullptr;
+    }
 
     int App::exec()
     {
@@ -66,6 +80,7 @@ namespace ke
         ke::Log::instance()->info("SDL initialisation successful.");
 #endif
 
+        Log::instance()->info("Creating application main window ...");
         this->mainWindow = ke::WindowFactory::newWindow();
         if (nullptr == mainWindow)
         {
@@ -227,7 +242,8 @@ namespace ke
                 //
                 // prepare and dispatch render commands
                 //
-                this->renderSystem->prepareRenderCommands();
+                for (auto view : this->appLogic->getViews())
+                    this->renderSystem->prepareRenderCommands(view.get()->getScene());
                 this->renderSystem->dispatchRenderCommands();
 
                 //
@@ -309,9 +325,9 @@ namespace ke
         });
     }
 
-    void App::setLogic(ke::AppLogicUptr && appLogic)
+    void App::setLogic(ke::AppLogicUptr && p_appLogic)
     {
-        this->appLogic = std::move(appLogic);
+        this->appLogic = std::move(p_appLogic);
     }
 
     void App::initExec()

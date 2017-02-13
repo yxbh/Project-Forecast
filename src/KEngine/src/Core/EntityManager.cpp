@@ -4,6 +4,13 @@
 
 namespace ke
 {
+    void EntityManager::update(ke::Time elapsedTime)
+    {
+        for (auto entityIdPair : this->entityMap)
+        {
+            entityIdPair.second->updateAll(elapsedTime);
+        }
+    }
 
     void EntityManager::removeEntity(ke::EntityId entityId)
     {

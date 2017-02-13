@@ -22,6 +22,8 @@ namespace ke
     class App : public ke::priv::IApp
     {
     public:
+        App();
+        virtual ~App();
 
         /// <summary>
         /// Begin KEngine application execution. This begins the lifetime of the application.
@@ -31,6 +33,11 @@ namespace ke
         virtual int exec() override;
 
         virtual void setLogic(ke::AppLogicUptr && appLogic);
+
+        inline static ke::App * instance() { return App::sGlobalAppInstance; }
+
+    protected:
+        static ke::App * sGlobalAppInstance;
 
     private:
         void enterEventLoop();

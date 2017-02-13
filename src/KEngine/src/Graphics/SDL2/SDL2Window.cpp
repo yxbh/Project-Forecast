@@ -55,7 +55,7 @@ namespace ke::sdl2
 
     void * SDL2Window::get()
     {
-        return window.get();
+        return this->window.get();
     }
     
 }

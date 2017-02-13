@@ -3,8 +3,10 @@
 #include "KEngine/Common/Time.hpp"
 #include "KEngine/Core/EntityFactory.hpp"
 #include "KEngine/Core/EntityManager.hpp"
+#include "KEngine/Interface/IAppView.hpp"
 
 #include <memory>
+#include <vector>
 
 namespace ke
 {
@@ -17,6 +19,8 @@ namespace ke
     class BaseAppLogic
     {
     public:
+        using AppViewList = std::vector<ke::AppViewSptr>;
+
         virtual ~BaseAppLogic();
 
         /// <summary>
@@ -30,6 +34,8 @@ namespace ke
         virtual EntityFactory * getEntityFactory() { return &this->entityFactory; }
         virtual EntityManager * getEntityManager() { return &this->entityManager; }
 
+        virtual AppViewList & getViews() { return this->appViews; }
+
     protected:
         /// <summary>
         /// Update logics. Reimplement this to create custom logic updates.
@@ -41,6 +47,8 @@ namespace ke
     protected:
         EntityFactory entityFactory;
         EntityManager entityManager;
+
+        AppViewList appViews;
     };
 
     inline BaseAppLogic::~BaseAppLogic() {}
