@@ -124,6 +124,9 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Interface/IRenderCommand.hpp \
     ../../../KEngine/include/KEngine/Interface/IStateMachine.hpp \
     ../../../KEngine/include/KEngine/Interface/IEntityComponentJsonLoader.hpp \
+    ../../../KEngine/include/KEngine/Interface/IAppView.hpp \
+    ../../../KEngine/include/KEngine/Interface/IScene.hpp \
+    ../../../KEngine/include/KEngine/Interface/ISceneNode.hpp \
     ../../../KEngine/include/KEngine/Events/SDL2/SDL2Event.hpp \
     ../../../KEngine/include/KEngine/Events/SFML/SfmlEvent.hpp \
     ../../../KEngine/include/KEngine/Events/AppExitRequestedEvent.hpp \
@@ -137,11 +140,13 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Graphics/SDL2/SDL2Window.hpp \
     ../../../KEngine/include/KEngine/Graphics/RenderCommands/TestRenderCommands.hpp \
     ../../../KEngine/include/KEngine/Graphics/RenderSystem.hpp \
+    ../../../KEngine/include/KEngine/Graphics/Scene.hpp \
     ../../../KEngine/include/KEngine/Graphics/Window.hpp \
     ../../../KEngine/include/KEngine/Log/Log.hpp \
     ../../../KEngine/include/KEngine/UnitTest/catch.hpp \
     ../../../KEngine/include/KEngine/App.hpp \
-    ../../../KEngine/include/KEngine/BaseAppLogic.hpp
+    ../../../KEngine/include/KEngine/BaseAppLogic.hpp \
+    ../../../KEngine/include/KEngine/Views/HumanView.hpp
 
 SOURCES += \
     ../../../KEngine/include/KEngine/Common/Queues.inl \
@@ -158,6 +163,8 @@ SOURCES += \
     ../../../KEngine/src/Graphics/SFML/SfmlWindow.cpp \
     ../../../KEngine/src/Graphics/WindowFactory.cpp \
     ../../../KEngine/src/Graphics/RenderSystem.cpp \
+    ../../../KEngine/src/Graphics/Scene.cpp \
+    ../../../KEngine/src/Views/HumanView.cpp \
     ../../../KEngine/src/App.cpp \
     ../../../KEngine/src/BaseAppLogic.cpp \
     ../../../ProjectForecast/main.cpp \
