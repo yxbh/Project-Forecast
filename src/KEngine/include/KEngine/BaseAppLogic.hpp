@@ -34,6 +34,8 @@ namespace ke
         virtual EntityFactory * getEntityFactory() { return &this->entityFactory; }
         virtual EntityManager * getEntityManager() { return &this->entityManager; }
 
+        virtual void addView(ke::AppViewSptr view, bool setAsCurrent = false);
+        virtual ke::IAppView * getCurrentView() { return this->currentAppView; }
         virtual AppViewList & getViews() { return this->appViews; }
 
     protected:
@@ -45,10 +47,11 @@ namespace ke
         virtual void update(ke::Time elapsedTime);
 
     protected:
-        EntityFactory entityFactory;
-        EntityManager entityManager;
+        ke::EntityFactory entityFactory;
+        ke::EntityManager entityManager;
 
         AppViewList appViews;
+        ke::IAppView * currentAppView;
     };
 
     inline BaseAppLogic::~BaseAppLogic() {}

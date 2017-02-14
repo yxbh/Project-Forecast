@@ -82,6 +82,15 @@
     <Filter Include="Source Files\KEngine\Views">
       <UniqueIdentifier>{785a4da9-460f-4964-b206-f5f9bc078b41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\ProjectForecast">
+      <UniqueIdentifier>{4aec443f-118d-45e0-ad57-aa67ff2e3d56}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\ProjectForecast\Views">
+      <UniqueIdentifier>{499dc98b-e9d1-4572-a652-d667dc4169d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\ProjectForecast\Views">
+      <UniqueIdentifier>{35207a1e-faf6-4f5c-93bb-85901c29ffd2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\ProjectForecast\main.cpp">
@@ -161,6 +170,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\KEngine\src\Views\HumanView.cpp">
       <Filter>Source Files\KEngine\Views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\ProjectForecastApp.cpp">
+      <Filter>Source Files\ProjectForecast</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Views\HumanView.cpp">
+      <Filter>Source Files\ProjectForecast\Views</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -305,9 +320,6 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderSystem.hpp">
       <Filter>Header Files\KEngine\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\ISceneNode.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\Scene.hpp">
       <Filter>Header Files\KEngine\Graphics</Filter>
     </ClInclude>
@@ -319,6 +331,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Views\HumanView.hpp">
       <Filter>Header Files\KEngine\Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\ISceneNode.hpp">
+      <Filter>Header Files\KEngine\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\ProjectForecastApp.hpp">
+      <Filter>Header Files\ProjectForecast</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Views\HumanView.hpp">
+      <Filter>Header Files\ProjectForecast\Views</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

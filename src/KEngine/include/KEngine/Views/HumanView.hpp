@@ -1,6 +1,7 @@
 #pragma once
 
 #include "KEngine/Interface/IAppView.hpp"
+#include "KEngine/Interface/IEntity.hpp"
 #include "KEngine/Graphics/Scene.hpp"
 
 namespace ke
@@ -20,6 +21,8 @@ namespace ke
 
     private:
         ke::SceneUptr scene;
+
+        ke::EntityId currentEntityId = ke::INVALID_ENTITY_ID;
 
     };
 

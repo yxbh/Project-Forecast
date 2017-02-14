@@ -146,7 +146,9 @@ namespace ke
             }
 #elif defined(USE_SFML)
             sf::Event event;
-            while (static_cast<sf::Window*>(this->mainWindow->get())->pollEvent(event))
+            auto sfWindow = static_cast<sf::Window*>(this->mainWindow->get());
+            assert(sfWindow);
+            while (sfWindow->pollEvent(event))
             {
                 ke::EventManager::queue(ke::makeEvent<ke::SfmlEvent>(event));
                 switch (event.type)
@@ -171,7 +173,7 @@ namespace ke
             }
 
             using namespace std::chrono_literals;
-            std::this_thread::sleep_for(1ms);
+            std::this_thread::sleep_for(500us);
         }
 
         ke::Log::instance()->info("KEngine event loop exited.");
@@ -234,16 +236,25 @@ namespace ke
                     ke::EventManager::queue(ke::makeEvent<LogicLoopFrameEvent>(LOGIC_UPDATE_FIXED_TIMESPAN));
                     ke::EventManager::update();
 
+                    //
                     this->resourceManager->update();
 
+                    // update all views.
+                    for (auto view : this->appLogic->getViews())
+                        view->update(LOGIC_UPDATE_FIXED_TIMESPAN);
+
+                    ke::EventManager::update();
+
+                    // update logic.
                     this->appLogic->onUpdate(LOGIC_UPDATE_FIXED_TIMESPAN);
                 }
 
                 //
                 // prepare and dispatch render commands
                 //
-                for (auto view : this->appLogic->getViews())
-                    this->renderSystem->prepareRenderCommands(view.get()->getScene());
+                //for (auto view : this->appLogic->getViews())
+                //    this->renderSystem->prepareRenderCommands(view.get()->getScene());
+                this->renderSystem->prepareRenderCommands(this->appLogic->getCurrentView()->getScene());
                 this->renderSystem->dispatchRenderCommands();
 
                 //
@@ -255,7 +266,7 @@ namespace ke
                 }
 
                 using namespace std::chrono_literals;
-                std::this_thread::sleep_for(1ms);
+                std::this_thread::sleep_for(500us);
             }
 
             // we only flag event loop for termination here as some logics may still require the event loop to be alive.
@@ -315,7 +326,7 @@ namespace ke
                 //this->mainWindow->setTitle("KEngine - " + std::to_string(frameTime.asMilliseconds()) + "ms/frame");
                 
                 using namespace std::chrono_literals;
-                std::this_thread::sleep_for(1ms);
+                std::this_thread::sleep_for(500us);
             }
 
             this->mainWindow->setThreadCurrent(false);
@@ -333,6 +344,11 @@ namespace ke
     void App::initExec()
     {
         spdlog::set_async_mode(1048576); // magic number from spdlog repo.
+
+        this->createLogicAndViews();
+
+        assert(this->getLogic());
+        assert(this->getLogic()->getCurrentView());
 
         this->resourceManager = std::make_unique<ResourceManager>();
     }

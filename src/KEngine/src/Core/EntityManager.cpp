@@ -25,7 +25,7 @@ namespace ke
         else
         {
 #if defined(KE_DEBUG)
-            ke::Log::instance()->warn("Entity with ID{{}} not found.", entityId);
+            ke::Log::instance()->warn("Entity with ID({}) not found.", entityId);
 #endif
         }
     }

@@ -5,6 +5,8 @@
 #include "KEngine/BaseAppLogic.hpp"
 #include "KEngine/Log/Log.hpp"
 
+#include "ProjectForecastApp.hpp"
+
 #include <chrono>
 #include <iostream>
 #include <thread>
@@ -14,15 +16,11 @@ int main(int argc, char ** argv)
     KE_UNUSED(argc);
     KE_UNUSED(argv);
 
-    using namespace std::chrono_literals;
     std::cout << u8"hello world" << std::endl;
 
-    ke::App app;
-    auto appLogic = std::make_unique<ke::BaseAppLogic>();
-    app.setLogic(std::move(appLogic));
+    pf::ProjectForecastApp app;
     const int result = app.exec();
     ke::Log::instance()->info("Exit code: {}", result);
-    //std::this_thread::sleep_for(2s);
     return result;
 }
 

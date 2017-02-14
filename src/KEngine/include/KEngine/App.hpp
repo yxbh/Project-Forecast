@@ -16,7 +16,9 @@ namespace ke
 
     /// <summary>
     /// Application class that represents a KEngine application.
+    /// Inherit this class to create a custom ke::AppLogic and views to implement a custom application.
     /// Calling exec() begins the execution of the application and the member function does not return until the application exits.
+    /// Call setLogic() to set the logic before calling exec().
     /// Only ever one instance of an application object should be created and it must be done on the main thread where the main() function is called.
     /// </summary>
     class App : public ke::priv::IApp
@@ -33,11 +35,19 @@ namespace ke
         virtual int exec() override;
 
         virtual void setLogic(ke::AppLogicUptr && appLogic);
+        inline ke::BaseAppLogic * getLogic() const { return this->appLogic.get(); };
 
         inline static ke::App * instance() { return App::sGlobalAppInstance; }
 
     protected:
         static ke::App * sGlobalAppInstance;
+
+        /// <summary>
+        /// Implement this to create the logic and views for the application.
+        /// This member function is called during the initilisation process after exec() is called.
+        /// Do not call this yourself.
+        /// </summary>
+        virtual void createLogicAndViews() = 0;
 
     private:
         void enterEventLoop();
