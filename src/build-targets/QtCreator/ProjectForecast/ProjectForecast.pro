@@ -3,6 +3,11 @@ TEMPLATE = app
 
 CONFIG += console
 
+#
+# Generate the object files next to their source to allow objects with the same names.
+#
+CONFIG += object_parallel_to_source
+#
 
 
 #
@@ -146,7 +151,9 @@ HEADERS += \
     ../../../KEngine/include/KEngine/UnitTest/catch.hpp \
     ../../../KEngine/include/KEngine/App.hpp \
     ../../../KEngine/include/KEngine/BaseAppLogic.hpp \
-    ../../../KEngine/include/KEngine/Views/HumanView.hpp
+    ../../../KEngine/include/KEngine/Views/HumanView.hpp \
+    ../../../ProjectForecast/ProjectForecastApp.hpp \
+    ../../../ProjectForecast/Views/HumanView.hpp
 
 SOURCES += \
     ../../../KEngine/include/KEngine/Common/Queues.inl \
@@ -176,7 +183,9 @@ SOURCES += \
     ../../../KEngine/src/UnitTest/UnitTest_Time.cpp \
     ../../../KEngine/src/UnitTest/UnitTest_EntityAndComponents.cpp \
     ../../../KEngine/src/UnitTest/UnitTest_StateMachine.cpp \
-    ../../../KEngine/src/UnitTest/UnitTest_EntityFactory.cpp
+    ../../../KEngine/src/UnitTest/UnitTest_EntityFactory.cpp \
+    ../../../ProjectForecast/ProjectForecastApp.cpp \
+    ../../../ProjectForecast/Views/HumanView.cpp
 #
 
 #
