@@ -238,11 +238,7 @@ namespace ke
 
                     //
                     this->resourceManager->update();
-
-                    // update all views.
-                    for (auto view : this->appLogic->getViews())
-                        view->update(LOGIC_UPDATE_FIXED_TIMESPAN);
-
+                    
                     ke::EventManager::update();
 
                     // update logic.
