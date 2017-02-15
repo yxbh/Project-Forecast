@@ -31,7 +31,7 @@ namespace ke
         /// This function should not be called by you.
         /// </summary>
         /// <param name="elapsedTime"></param>
-        void update(ke::Time elapsedTime) { this->update(elapsedTime); }
+        void update(ke::Time elapsedTime) { this->onUpdate(elapsedTime); }
 
         virtual void addView(ke::AppViewSptr view, bool setAsCurrent = false);
         virtual ke::IAppView * getCurrentView() { return this->currentAppView; }
