@@ -121,7 +121,7 @@ namespace ke
         ke::EventManager::registerListener<ke::GraphicsLoopFrameEvent>(&::graphicsLoopEventHandler);
         KE_MAKE_SCOPEFUNC([](){ ke::EventManager::deregisterListener<ke::GraphicsLoopFrameEvent>(&::graphicsLoopEventHandler); });
 
-        ke::Log::instance()->info("Entering KEngine event loop.");
+        ke::Log::instance()->info("Entering KEngine event loop ...");
 
         this->isEventLoopRunning = true;
         ke::StopWatch stopwatch;
@@ -214,7 +214,7 @@ namespace ke
             ke::EventManager::registerListener<ke::AppExitRequestedEvent>(this, &ke::App::handleAppExitRequest);
             ke::EventManager::registerListener<ke::GraphicsLoopSetupFailureEvent>(this, &ke::App::handleGraphicsLoopSetupFailure);
 
-            ke::Log::instance()->info("Entering KEngine logic loop.");
+            ke::Log::instance()->info("Entering KEngine logic loop ...");
 
             ke::StopWatch stopwatch;
             ke::Time cumulativeLoopTime;
@@ -297,7 +297,7 @@ namespace ke
 
             mainWindow->display();
 
-            ke::Log::instance()->info("Entering KEngine render loop.");
+            ke::Log::instance()->info("Entering KEngine render loop ...");
 
             ke::StopWatch stopwatch;
             ke::Time cumulativeLoopTime;
@@ -360,7 +360,14 @@ namespace ke
 
     void App::handleAppExitRequest(ke::EventSptr)
     {
+        if (isNormalExitRequested)
+        {
+            ke::Log::instance()->info("Already handling app exit request.");
+            return;
+        }
+        isNormalExitRequested = true;
         ke::Log::instance()->info("Handling app exit request.");
+        
         //this->isEventLoopRunning = false;
         this->isLogicLoopRunning = false;
         this->isGraphicsLoopRunning = false;

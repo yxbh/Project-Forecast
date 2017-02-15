@@ -54,7 +54,7 @@ namespace pf
 
         case sf::Event::TextEntered:
         {
-            if (event.text.unicode < 128)
+            if (event.text.unicode < 127 && event.text.unicode > 32) // we only care about printing ASCII characters between 32 and 127.
             {
                 testTextBuffer = testTextBuffer + static_cast<char>(event.text.unicode);
             }

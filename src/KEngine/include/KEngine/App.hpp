@@ -69,6 +69,8 @@ namespace ke
         std::atomic_bool isLogicLoopRunning { false };
         std::atomic_bool isGraphicsLoopRunning { false };
 
+        std::atomic_bool isNormalExitRequested { false };
+
         std::thread logicLoopThread;
         std::thread graphicsLoopThread;
 
