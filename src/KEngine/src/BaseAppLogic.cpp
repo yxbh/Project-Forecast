@@ -6,6 +6,7 @@ namespace ke
     void BaseAppLogic::update(ke::Time elapsedTime)
     {
         // update all the systems
+        this->systemManager.update(elapsedTime);
 
         // update all the entities
         this->entityManager.update(elapsedTime);

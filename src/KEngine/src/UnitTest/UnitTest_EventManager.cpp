@@ -31,10 +31,9 @@ namespace
 
     class TestEvent : public ke::IEvent
     {
-        KE_DEFINE_EVENT_COMMON_PROPERTIES(TestEvent)
-    public:
-        static const ke::EventType TYPE = 1;
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(TestEvent, 1)
 
+    public:
         using IEvent::IEvent;
 
         virtual ke::EventSptr makeCopy() const final
@@ -45,10 +44,9 @@ namespace
 
     class TestEvent2 : public ke::IEvent
     {
-        KE_DEFINE_EVENT_COMMON_PROPERTIES(TestEvent2)
-    public:
-        static const ke::EventType TYPE = 2;
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(TestEvent2, 2)
 
+    public:
         virtual ke::EventSptr makeCopy() const final
         {
             return ke::makeEvent<TestEvent2>();

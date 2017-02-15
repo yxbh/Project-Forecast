@@ -12,10 +12,9 @@ namespace ke
     /// </summary>
     class SfmlEvent : public ke::IEvent
     {
-        KE_DEFINE_EVENT_COMMON_PROPERTIES(SfmlEvent)
-    public:
-        static const EventType TYPE = 0x17D63FB6;
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(SfmlEvent, 0x17D63FB6)
 
+    public:
         SfmlEvent(const sf::Event & event) : sfEvent(event)
         {
 

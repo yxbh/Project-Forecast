@@ -12,7 +12,7 @@ namespace ke
 
     private:
         ke::SceneNodeSptr rootNode;
-
+        ke::SceneNodeSptr cameraNode;
     };
 
 }

@@ -85,6 +85,9 @@
     <Filter Include="KEngine\Source Files\Views">
       <UniqueIdentifier>{785a4da9-460f-4964-b206-f5f9bc078b41}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ProjectForecast\Events">
+      <UniqueIdentifier>{66963ad5-2c76-4ca8-aa2e-5feff7a7c79a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Events.cpp">
@@ -173,6 +176,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\KEngine\src\dump.cpp">
       <Filter>KEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\DebugDrawSystem.cpp">
+      <Filter>ProjectForecast\Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -340,6 +346,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\BaseAppLogic.hpp">
       <Filter>KEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\DebugDrawSystem.hpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Events\RequestDrawDebugDotEvent.hpp">
+      <Filter>ProjectForecast\Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

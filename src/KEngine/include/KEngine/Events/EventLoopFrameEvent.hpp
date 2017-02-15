@@ -10,10 +10,9 @@ namespace ke
     /// </summary>
     class EventLoopFrameEvent : public ke::LoopFrameEvent
     {
-        KE_DEFINE_EVENT_COMMON_PROPERTIES(EventLoopFrameEvent)
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(EventLoopFrameEvent, 0xB058ACFE)
+    
     public:
-        static const EventType TYPE = 0xB058ACFE;
-
         using ke::LoopFrameEvent::LoopFrameEvent;
 
         virtual ke::EventSptr makeCopy() const final

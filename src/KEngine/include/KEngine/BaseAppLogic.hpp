@@ -3,6 +3,7 @@
 #include "KEngine/Common/Time.hpp"
 #include "KEngine/Core/EntityFactory.hpp"
 #include "KEngine/Core/EntityManager.hpp"
+#include "KEngine/Core/SystemManager.hpp"
 #include "KEngine/Interface/IAppView.hpp"
 
 #include <memory>
@@ -31,12 +32,13 @@ namespace ke
         /// <param name="elapsedTime"></param>
         inline void onUpdate(ke::Time elapsedTime) { this->update(elapsedTime); }
 
-        virtual EntityFactory * getEntityFactory() { return &this->entityFactory; }
-        virtual EntityManager * getEntityManager() { return &this->entityManager; }
-
         virtual void addView(ke::AppViewSptr view, bool setAsCurrent = false);
         virtual ke::IAppView * getCurrentView() { return this->currentAppView; }
         virtual AppViewList & getViews() { return this->appViews; }
+
+        inline EntityFactory * getEntityFactory() { return &this->entityFactory; }
+        inline EntityManager * getEntityManager() { return &this->entityManager; }
+        inline SystemManager * getSystemManager() { return &this->systemManager; }
 
     protected:
         /// <summary>
@@ -49,6 +51,7 @@ namespace ke
     protected:
         ke::EntityFactory entityFactory;
         ke::EntityManager entityManager;
+        ke::SystemManager systemManager;
 
         AppViewList appViews;
         ke::IAppView * currentAppView;

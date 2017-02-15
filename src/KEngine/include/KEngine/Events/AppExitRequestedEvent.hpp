@@ -10,16 +10,13 @@ namespace ke
     /// </summary>
     class AppExitRequestedEvent : public ke::IEvent
     {
-        KE_DEFINE_EVENT_COMMON_PROPERTIES(AppExitRequestedEvent)
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(AppExitRequestedEvent, 0xE63141C0)
     public:
-        static const EventType TYPE = 0xE63141C0;
-
         virtual ke::EventSptr makeCopy() const final
         {
             return ke::makeEvent<AppExitRequestedEvent>();
         }
 
-    private:
     };
 
 }

@@ -2,7 +2,6 @@
 
 #include "KEngine/Common/Queues.hpp"
 #include "KEngine/Common/Delegate.hpp"
-#include "KEngine/Common/String.hpp"
 
 #include <cstdint>
 #include <memory>
@@ -40,7 +39,7 @@ namespace ke
         virtual ~IEvent();
 
         virtual ke::EventType getType() const = 0;
-        virtual ke::String getName() const = 0;
+        virtual const char * const getName() const = 0;
 
         virtual Sptr makeCopy() const = 0;
     };
@@ -81,12 +80,12 @@ namespace ke
 
 
 /// <summary>
-/// Define the following common IEvent property member functions based on the class name:
-/// * getType()
-/// * getName()
+/// Define the common IEvent properties.
 /// </summary>
-#define KE_DEFINE_EVENT_COMMON_PROPERTIES(CLASS_NAME) \
+#define KE_DEFINE_EVENT_COMMON_PROPERTIES(CLASS_NAME, EVENT_TYPE_VALUE) \
 public: \
+    static constexpr ke::EventType TYPE = EVENT_TYPE_VALUE; \
+    static constexpr char * const NAME = #CLASS_NAME; \
 	virtual ke::EventType getType() const override { return CLASS_NAME::TYPE; } \
-	virtual ke::String getName() const override { return KE_TEXT(#CLASS_NAME); } \
+	virtual const char * const getName() const override { return #CLASS_NAME; } \
 private:

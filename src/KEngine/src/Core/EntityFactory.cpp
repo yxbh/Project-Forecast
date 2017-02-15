@@ -64,7 +64,7 @@ namespace ke
         }
 
         auto componentsArray = *componentsArrayIt;
-        for (auto entityComponentJsonObj : componentsArray)
+        for (auto & entityComponentJsonObj : componentsArray)
         {
             // validate entity component JSON object type
             auto jsonObjectTypeIt = entityComponentJsonObj.find("type");
