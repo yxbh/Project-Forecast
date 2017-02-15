@@ -3,7 +3,7 @@
 namespace ke
 {
 
-    void BaseAppLogic::update(ke::Time elapsedTime)
+    void BaseAppLogic::onUpdate(ke::Time elapsedTime)
     {
         // update all the systems
         this->systemManager.update(elapsedTime);

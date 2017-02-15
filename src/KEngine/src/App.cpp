@@ -246,7 +246,7 @@ namespace ke
                     ke::EventManager::update();
 
                     // update logic.
-                    this->appLogic->onUpdate(LOGIC_UPDATE_FIXED_TIMESPAN);
+                    this->appLogic->update(LOGIC_UPDATE_FIXED_TIMESPAN);
                 }
 
                 //

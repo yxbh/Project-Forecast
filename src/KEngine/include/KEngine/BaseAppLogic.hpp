@@ -28,9 +28,10 @@ namespace ke
         /// Called by the application layer. This is a lifecycle memmber functions that
         /// runs all on going logics based on the given elasped time so far.
         /// This function is non-virtual and should not be reimplemented.
+        /// This function should not be called by you.
         /// </summary>
         /// <param name="elapsedTime"></param>
-        inline void onUpdate(ke::Time elapsedTime) { this->update(elapsedTime); }
+        void update(ke::Time elapsedTime) { this->update(elapsedTime); }
 
         virtual void addView(ke::AppViewSptr view, bool setAsCurrent = false);
         virtual ke::IAppView * getCurrentView() { return this->currentAppView; }
@@ -43,10 +44,10 @@ namespace ke
     protected:
         /// <summary>
         /// Update logics. Reimplement this to create custom logic updates.
-        /// This member function is called onUpdate() from the KEngine application layer. 
+        /// This member function is called by update() from the KEngine application layer. 
         /// </summary>
         /// <param name="elapsedTime"></param>
-        virtual void update(ke::Time elapsedTime);
+        virtual void onUpdate(ke::Time elapsedTime);
 
     protected:
         ke::EntityFactory entityFactory;
