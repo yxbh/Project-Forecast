@@ -11,6 +11,7 @@ namespace ke
     class AppExitRequestedEvent : public ke::IEvent
     {
         KE_DEFINE_EVENT_COMMON_PROPERTIES(AppExitRequestedEvent, 0xE63141C0)
+
     public:
         virtual ke::EventSptr makeCopy() const final
         {

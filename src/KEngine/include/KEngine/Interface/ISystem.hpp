@@ -26,7 +26,7 @@ namespace ke
         virtual void update(ke::Time elapsedTime) = 0;
 
         virtual ke::SystemType getType() const = 0;
-        virtual const char * const getName() const = 0;
+        virtual const char * getName() const = 0;
     };
 
     inline ISystem::~ISystem() {}
@@ -43,7 +43,7 @@ namespace ke
 #define KE_DEFINE_SYSTEM_COMMON_PROPERTIES(CLASS_NAME, SYSTEM_TYPE_VALUE) \
 public: \
     static constexpr ke::SystemType TYPE = SYSTEM_TYPE_VALUE; \
-    static constexpr char * const NAME = #CLASS_NAME; \
+    static constexpr const char * const NAME = #CLASS_NAME; \
 	virtual ke::SystemType getType() const override { return CLASS_NAME::TYPE; } \
-	virtual const char * const getName() const override { return #CLASS_NAME; } \
+    virtual const char * getName() const override { return CLASS_NAME::NAME; } \
 private:

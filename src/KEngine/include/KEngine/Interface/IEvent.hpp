@@ -39,7 +39,7 @@ namespace ke
         virtual ~IEvent();
 
         virtual ke::EventType getType() const = 0;
-        virtual const char * const getName() const = 0;
+        virtual const char * getName() const = 0;
 
         virtual Sptr makeCopy() const = 0;
     };
@@ -85,7 +85,7 @@ namespace ke
 #define KE_DEFINE_EVENT_COMMON_PROPERTIES(CLASS_NAME, EVENT_TYPE_VALUE) \
 public: \
     static constexpr ke::EventType TYPE = EVENT_TYPE_VALUE; \
-    static constexpr char * const NAME = #CLASS_NAME; \
+    static constexpr const char * const NAME = #CLASS_NAME; \
 	virtual ke::EventType getType() const override { return CLASS_NAME::TYPE; } \
-	virtual const char * const getName() const override { return #CLASS_NAME; } \
+    virtual const char * getName() const override { return CLASS_NAME::NAME; } \
 private:

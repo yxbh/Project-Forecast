@@ -153,7 +153,10 @@ HEADERS += \
     ../../../KEngine/include/KEngine/BaseAppLogic.hpp \
     ../../../KEngine/include/KEngine/Views/HumanView.hpp \
     ../../../ProjectForecast/ProjectForecastApp.hpp \
-    ../../../ProjectForecast/Views/HumanView.hpp
+    ../../../ProjectForecast/Views/HumanView.hpp \
+    ../../../ProjectForecast/Events/RequestDrawDebugDotEvent.hpp \
+    ../../../ProjectForecast/Systems/DebugDrawSystem.hpp \
+    ../../../ProjectForecast/Systems/EventFeedbackSystem.hpp
 
 SOURCES += \
     ../../../KEngine/include/KEngine/Common/Queues.inl \
@@ -185,7 +188,9 @@ SOURCES += \
     ../../../KEngine/src/UnitTest/UnitTest_StateMachine.cpp \
     ../../../KEngine/src/UnitTest/UnitTest_EntityFactory.cpp \
     ../../../ProjectForecast/ProjectForecastApp.cpp \
-    ../../../ProjectForecast/Views/HumanView.cpp
+    ../../../ProjectForecast/Views/HumanView.cpp \
+    ../../../ProjectForecast/Systems/DebugDrawSystem.cpp \
+    ../../../ProjectForecast/Systems/EventFeedbackSystem.cpp
 #
 
 #
