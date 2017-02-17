@@ -44,6 +44,6 @@ namespace ke
 public: \
     static constexpr ke::SystemType TYPE = SYSTEM_TYPE_VALUE; \
     static constexpr const char * const NAME = #CLASS_NAME; \
-	virtual ke::SystemType getType() const override { return CLASS_NAME::TYPE; } \
+    virtual ke::SystemType getType() const override { return CLASS_NAME::TYPE; } \
     virtual const char * getName() const override { return CLASS_NAME::NAME; } \
 private:

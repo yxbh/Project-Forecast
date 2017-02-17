@@ -22,9 +22,14 @@ namespace ke
         }
         auto systemRawPtr = newSystem.get();
         this->systems[newSystem->getType()] = std::move(newSystem);
-
+        
+        ke::Log::instance()->info("{} initialising ...", systemRawPtr->getName());
         auto ret = systemRawPtr->initialise();
-        if (!ret)
+        if (ret)
+        {
+            ke::Log::instance()->info("{} initialised.", systemRawPtr->getName());
+        }
+        else
         {
             Log::instance()->error("{} failed to initialise.", systemRawPtr->getName());
         }
@@ -32,15 +37,37 @@ namespace ke
         return ret;
     }
 
-    void SystemManager::removeSystem(ke::SystemUptr && newSystem)
+    void SystemManager::removeSystem(ke::SystemUptr && systemToRemove)
     {
-        assert(newSystem);
+        assert(systemToRemove);
+        auto systemIt = this->systems.find(systemToRemove->getType());
+        if (systemIt == this->systems.end())
+        {
+#if defined(KE_DEBUG)
+            ke::Log::instance()->error("System of type ({}) does not exist in the system manager.", systemToRemove->getType());
+#endif
+            return;
+        }
+
+        auto system = systemIt->second.get();
+        if (system == systemToRemove.get())
+        {
+#if defined(KE_DEBUG)
+            ke::Log::instance()->error("Mismatching system of the same type ({}). Input system: {}. Found: {}", system->getType(), systemToRemove->getName(), system->getName());
+#endif
+            return;
+        }
+
+        ke::Log::instance()->info("Shutting down {} ...", system->getName());
+        system->shutdown();
+        this->systems.erase(systemIt);
     }
 
     void SystemManager::clear()
     {
         for (auto & system : this->systems)
         {
+            ke::Log::instance()->info("Shutting down {} ...", system.second->getName());
             system.second->shutdown();
         }
         this->systems.clear();

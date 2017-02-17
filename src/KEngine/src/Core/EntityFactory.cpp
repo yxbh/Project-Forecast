@@ -67,13 +67,13 @@ namespace ke
         for (auto & entityComponentJsonObj : componentsArray)
         {
             // validate entity component JSON object type
-            auto jsonObjectTypeIt = entityComponentJsonObj.find("type");
+            jsonObjectTypeIt = entityComponentJsonObj.find("type");
             if (jsonObjectTypeIt == entityComponentJsonObj.end())
             {
                 Log::instance()->warn("JSON object in entity component array for entity named '{}' does not have an object type. Component ignored.");
                 continue;
             }
-            auto typeValue = (*jsonObjectTypeIt).get<std::string>();
+            typeValue = (*jsonObjectTypeIt).get<std::string>();
             if (typeValue != "entity_component")
             {
                 Log::instance()->error("Unexpected JSON object type '{}' in entity component array for entity named '{}'.", typeValue, newEntity->getName());

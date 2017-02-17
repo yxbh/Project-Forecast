@@ -1,5 +1,7 @@
 #include "HumanView.hpp"
 
+#include "../InputControllers/InputControllers.hpp"
+
 #include "KEngine/Core/EventManager.hpp"
 #include "KEngine/Events/SFML/SfmlEvent.hpp"
 #include "KEngine/Log/Log.hpp"
@@ -11,6 +13,9 @@ namespace pf
 
     HumanView::HumanView()
     {
+        mouseController = std::make_unique<pf::MouseInputController>();
+        keyboardController = std::make_unique<pf::KeyboardInputController>();
+
         ke::EventManager::registerListener<ke::SfmlEvent>(this, &HumanView::handleWindowEvent);
     }
 
@@ -21,7 +26,10 @@ namespace pf
 
     void HumanView::update(ke::Time elapsedTime)
     {
-        // TODO
+        assert(mouseController);
+        assert(keyboardController);
+        mouseController->update(elapsedTime);
+        keyboardController->update(elapsedTime);
     }
 
     void HumanView::handleWindowEvent(ke::EventSptr event)
@@ -37,6 +45,27 @@ namespace pf
         {
         case sf::Event::MouseButtonPressed:
             ke::Log::instance()->info("sf::Event::MouseButtonPressed");
+            switch (event.mouseButton.button)
+            {
+            case sf::Mouse::Left:
+                mouseController->onButtonPressed(ke::MouseButton::Left);
+                break;
+            case sf::Mouse::Right:
+                mouseController->onButtonPressed(ke::MouseButton::Right);
+                break;
+            }
+            break;
+        case sf::Event::MouseButtonReleased:
+            ke::Log::instance()->info("sf::Event::MouseButtonReleased");
+            switch (event.mouseButton.button)
+            {
+            case sf::Mouse::Left:
+                mouseController->onButtonReleased(ke::MouseButton::Left);
+                break;
+            case sf::Mouse::Right:
+                mouseController->onButtonPressed(ke::MouseButton::Right);
+                break;
+            }
             break;
 
         case sf::Event::KeyPressed:

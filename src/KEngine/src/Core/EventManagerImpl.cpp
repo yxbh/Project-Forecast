@@ -76,7 +76,7 @@ namespace ke::priv
         return handled_event;
     }
 
-    void EventManagerImpl::queue(ke::EventSptr p_spNewEvent)
+    void EventManagerImpl::enqueue(ke::EventSptr p_spNewEvent)
     {
         m_ThreadSafeEventQueue.push(p_spNewEvent);
     }

@@ -88,6 +88,9 @@
     <Filter Include="ProjectForecast\Events">
       <UniqueIdentifier>{66963ad5-2c76-4ca8-aa2e-5feff7a7c79a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ProjectForecast\InputControllers">
+      <UniqueIdentifier>{2ad86d00-151f-488c-8ee5-14232ee6d5b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Events.cpp">
@@ -179,6 +182,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\DebugDrawSystem.cpp">
       <Filter>ProjectForecast\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\InputControllers\InputControllers.cpp">
+      <Filter>ProjectForecast\InputControllers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -352,6 +358,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\ProjectForecast\Events\RequestDrawDebugDotEvent.hpp">
       <Filter>ProjectForecast\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IInputController.hpp">
+      <Filter>KEngine\Header Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Point2D.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\InputControllers\InputControllers.hpp">
+      <Filter>ProjectForecast\InputControllers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

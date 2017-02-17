@@ -162,7 +162,7 @@
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>KE_DEBUG;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/</ObjectFileName>
+      <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -178,7 +178,7 @@
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>KE_DEBUG;RUN_UNIT_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/</ObjectFileName>
+      <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -194,7 +194,7 @@
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>KE_DEBUG;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/</ObjectFileName>
+      <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -210,7 +210,7 @@
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>KE_DEBUG;RUN_UNIT_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/</ObjectFileName>
+      <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -229,7 +229,7 @@
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/</ObjectFileName>
+      <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -249,7 +249,7 @@
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>RUN_UNIT_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/</ObjectFileName>
+      <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -269,7 +269,7 @@
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/</ObjectFileName>
+      <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -289,7 +289,7 @@
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>RUN_UNIT_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/</ObjectFileName>
+      <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
@@ -324,6 +324,7 @@
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_StateMachine.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Time.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Views\HumanView.cpp" />
+    <ClCompile Include="..\..\..\..\ProjectForecast\InputControllers\InputControllers.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\main.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\ProjectForecastApp.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\DebugDrawSystem.cpp" />
@@ -339,6 +340,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\json.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\SRDelegate.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\macros.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Point2D.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\ScopeFunc.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\StopWatch.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Queues.hpp" />
@@ -374,6 +376,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEntityComponentJsonLoader.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEventManagerImpl.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IInputController.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IRenderCommand.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IScene.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\ISceneNode.hpp" />
@@ -384,6 +387,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Log\Log.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Views\HumanView.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Events\RequestDrawDebugDotEvent.hpp" />
+    <ClInclude Include="..\..\..\..\ProjectForecast\InputControllers\InputControllers.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\ProjectForecastApp.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Systems\DebugDrawSystem.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Systems\EventFeedbackSystem.hpp" />

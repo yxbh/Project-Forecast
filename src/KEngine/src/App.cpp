@@ -29,6 +29,11 @@ namespace
 
     static const ke::Time LOGIC_UPDATE_FIXED_TIMESPAN = ke::Time::milliseconds(20); // 50fps.
 
+    using namespace std::chrono_literals;
+    static const auto EVENT_THREAD_SLEEP_DURATION = 1ms;
+    static const auto LOGIC_THREAD_SLEEP_DURATION = 1ms;
+    static const auto RENDER_THREAD_SLEEP_DURATION = 1ms;
+
     static std::shared_ptr<ke::GraphicsLoopFrameEvent> graphicsLoopEventHolder;
 
     static void graphicsLoopEventHandler(ke::EventSptr event)
@@ -131,7 +136,7 @@ namespace ke
             ke::Time frameTime = stopwatch.getElapsed();
             stopwatch.restart();
 
-            ke::EventManager::queue(ke::makeEvent<EventLoopFrameEvent>(frameTime));
+            ke::EventManager::enqueue(ke::makeEvent<EventLoopFrameEvent>(frameTime));
 
 #if defined(USE_SDL)
             SDL_Event event;
@@ -150,12 +155,12 @@ namespace ke
             assert(sfWindow);
             while (sfWindow->pollEvent(event))
             {
-                ke::EventManager::queue(ke::makeEvent<ke::SfmlEvent>(event));
+                ke::EventManager::enqueue(ke::makeEvent<ke::SfmlEvent>(event));
                 switch (event.type)
                 {
                 case sf::Event::EventType::Closed:
                     Log::instance()->info("Normal exit requested.");
-                    ke::EventManager::queue(ke::makeEvent<AppExitRequestedEvent>());
+                    ke::EventManager::enqueue(ke::makeEvent<AppExitRequestedEvent>());
                     break;
                 }
             }
@@ -172,8 +177,7 @@ namespace ke
                 ke::Log::instance()->info("Event loop heart beat");
             }
 
-            using namespace std::chrono_literals;
-            std::this_thread::sleep_for(500us);
+            std::this_thread::sleep_for(EVENT_THREAD_SLEEP_DURATION);
         }
 
         ke::Log::instance()->info("KEngine event loop exited.");
@@ -233,7 +237,7 @@ namespace ke
                 {
                     cumulativeLoopTime -= LOGIC_UPDATE_FIXED_TIMESPAN;
 
-                    ke::EventManager::queue(ke::makeEvent<LogicLoopFrameEvent>(LOGIC_UPDATE_FIXED_TIMESPAN));
+                    ke::EventManager::enqueue(ke::makeEvent<LogicLoopFrameEvent>(LOGIC_UPDATE_FIXED_TIMESPAN));
                     ke::EventManager::update();
 
                     //
@@ -261,8 +265,7 @@ namespace ke
                     ke::Log::instance()->info("Logic loop heart beat");
                 }
 
-                using namespace std::chrono_literals;
-                std::this_thread::sleep_for(500us);
+                std::this_thread::sleep_for(LOGIC_THREAD_SLEEP_DURATION);
             }
 
             // we only flag event loop for termination here as some logics may still require the event loop to be alive.
@@ -270,6 +273,10 @@ namespace ke
 
             ke::Log::instance()->info("KEngine logic loop exited.");
 
+            //
+            // clean up.
+            //
+            this->getLogic()->getSystemManager()->clear();
         });       
     }
 
@@ -306,7 +313,7 @@ namespace ke
                 stopwatch.restart();
                 cumulativeLoopTime += frameTime;
 
-                ke::EventManager::queue(ke::makeEvent<GraphicsLoopFrameEvent>(frameTime));
+                ke::EventManager::enqueue(ke::makeEvent<GraphicsLoopFrameEvent>(frameTime));
 
                 if (heartBeat)
                 {
@@ -318,11 +325,8 @@ namespace ke
                 // if queue is empty then interpolate before render.
                 this->renderSystem->processRenderCommands(frameTime);
                 this->renderSystem->render();
-
-                //this->mainWindow->setTitle("KEngine - " + std::to_string(frameTime.asMilliseconds()) + "ms/frame");
-                
-                using namespace std::chrono_literals;
-                std::this_thread::sleep_for(500us);
+                                
+                std::this_thread::sleep_for(RENDER_THREAD_SLEEP_DURATION);
             }
 
             this->mainWindow->setThreadCurrent(false);
@@ -341,11 +345,13 @@ namespace ke
     {
         spdlog::set_async_mode(1048576); // magic number from spdlog repo.
 
+        ke::Log::instance()->info("Creating logic and views ...");
         this->createLogicAndViews();
 
         assert(this->getLogic());
         assert(this->getLogic()->getCurrentView());
 
+        ke::Log::instance()->info("Creating resource manager ...");
         this->resourceManager = std::make_unique<ResourceManager>();
     }
 

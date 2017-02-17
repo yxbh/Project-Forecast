@@ -1,5 +1,6 @@
 #pragma once
 
+#include "KEngine/Interface/IEvent.hpp"
 #include "KEngine/Interface/ISystem.hpp"
 
 namespace pf
@@ -18,6 +19,8 @@ namespace pf
         virtual void shutdown() final;
 
         virtual void update(ke::Time elapsedTime) final;
+
+        void handleDebugDrawRequest(ke::EventSptr event);
         
     };
 

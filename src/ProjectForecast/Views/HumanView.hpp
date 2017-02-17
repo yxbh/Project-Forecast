@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../InputControllers/InputControllers.hpp"
+
 #include "KEngine/Interface/IEvent.hpp"
 #include "KEngine/Views/HumanView.hpp"
 
@@ -21,6 +23,10 @@ namespace pf
 
     private:
         std::string testTextBuffer;
+
+        ke::MouseInputControllerUptr mouseController;
+        ke::KeyboardInputControllerUptr keyboardController;
+
 
         void handleWindowEvent(ke::EventSptr event);
         void handleSfmlEvent(const sf::Event & event);

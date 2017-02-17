@@ -20,7 +20,7 @@ namespace ke::priv
 
         virtual bool deregisterListener(const ke::EventType p_EventType, const ke::EventDelegate & p_Delegate) final;
 
-        virtual void queue(ke::EventSptr p_spNewEvent) final;
+        virtual void enqueue(ke::EventSptr p_spNewEvent) final;
 
         virtual bool dispatchNow(ke::EventSptr p_Event) final;
 

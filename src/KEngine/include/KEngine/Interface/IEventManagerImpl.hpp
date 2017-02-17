@@ -49,7 +49,7 @@ namespace ke::priv
         /// Add an event into the Event queue.
         /// </summary>
         /// <param name="p_spNewEvent"></param>
-        virtual void queue(ke::EventSptr p_spNewEvent) = 0;
+        virtual void enqueue(ke::EventSptr p_spNewEvent) = 0;
         
         /// <summary>
         /// Call all delegates listening to the given event now.
