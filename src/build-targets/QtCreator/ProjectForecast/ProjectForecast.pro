@@ -112,6 +112,7 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Common/ThreadPool.hpp \
     ../../../KEngine/include/KEngine/Common/HeartBeatGenerator.hpp \
     ../../../KEngine/include/KEngine/Common/Point2D.hpp \
+    ../../../KEngine/include/KEngine/Common/Color.hpp \
     ../../../KEngine/include/KEngine/Core/EventManager.hpp \
     ../../../KEngine/include/KEngine/Core/EventManagerImpl.hpp \
     ../../../KEngine/include/KEngine/Core/Entity.hpp \
