@@ -9,7 +9,7 @@ namespace pf
     {
         KE_DEFINE_EVENT_COMMON_PROPERTIES(RequestDrawDebugDotEvent, 0x006B92AF)
     public:
-        virtual ke::EventSptr makeCopy() const
+        virtual ke::EventSptr makeCopy() const override
         {
             return ke::makeEvent<RequestDrawDebugDotEvent>();
         }
