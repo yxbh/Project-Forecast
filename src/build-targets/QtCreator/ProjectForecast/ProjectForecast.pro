@@ -111,6 +111,7 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Common/Json.hpp \
     ../../../KEngine/include/KEngine/Common/ThreadPool.hpp \
     ../../../KEngine/include/KEngine/Common/HeartBeatGenerator.hpp \
+    ../../../KEngine/include/KEngine/Common/Point2D.hpp \
     ../../../KEngine/include/KEngine/Core/EventManager.hpp \
     ../../../KEngine/include/KEngine/Core/EventManagerImpl.hpp \
     ../../../KEngine/include/KEngine/Core/Entity.hpp \
@@ -132,6 +133,7 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Interface/IAppView.hpp \
     ../../../KEngine/include/KEngine/Interface/IScene.hpp \
     ../../../KEngine/include/KEngine/Interface/ISceneNode.hpp \
+    ../../../KEngine/include/KEngine/Interface/IInputController.hpp \
     ../../../KEngine/include/KEngine/Events/SDL2/SDL2Event.hpp \
     ../../../KEngine/include/KEngine/Events/SFML/SfmlEvent.hpp \
     ../../../KEngine/include/KEngine/Events/AppExitRequestedEvent.hpp \
@@ -156,7 +158,8 @@ HEADERS += \
     ../../../ProjectForecast/Views/HumanView.hpp \
     ../../../ProjectForecast/Events/RequestDrawDebugDotEvent.hpp \
     ../../../ProjectForecast/Systems/DebugDrawSystem.hpp \
-    ../../../ProjectForecast/Systems/EventFeedbackSystem.hpp
+    ../../../ProjectForecast/Systems/EventFeedbackSystem.hpp \
+    ../../../ProjectForecast/InputControllers/InputControllers.hpp
 
 SOURCES += \
     ../../../KEngine/include/KEngine/Common/Queues.inl \
@@ -190,7 +193,8 @@ SOURCES += \
     ../../../ProjectForecast/ProjectForecastApp.cpp \
     ../../../ProjectForecast/Views/HumanView.cpp \
     ../../../ProjectForecast/Systems/DebugDrawSystem.cpp \
-    ../../../ProjectForecast/Systems/EventFeedbackSystem.cpp
+    ../../../ProjectForecast/Systems/EventFeedbackSystem.cpp \
+    ../../../ProjectForecast/InputControllers/InputControllers.cpp
 #
 
 #
