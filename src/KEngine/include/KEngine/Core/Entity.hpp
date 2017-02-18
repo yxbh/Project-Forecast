@@ -64,6 +64,12 @@ namespace ke
         inline void destory(void) { m_ComponentSPMap.clear(); }
 
         /// <summary>
+        /// Initialise the entity and all of its components.
+        /// </summary>
+        /// <returns>true if initilisation was successful.</returns>
+        bool initialise(void);
+
+        /// <summary>
         /// Update all components with elapsed time.
         /// </summary>
         /// <param name="p_ElapsedTime"></param>

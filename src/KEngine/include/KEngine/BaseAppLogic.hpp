@@ -22,6 +22,7 @@ namespace ke
     public:
         using AppViewList = std::vector<ke::AppViewSptr>;
 
+        BaseAppLogic();
         virtual ~BaseAppLogic();
 
         /// <summary>

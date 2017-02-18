@@ -2,6 +2,7 @@
 
 #include "KEngine/Interface/IEvent.hpp"
 #include "KEngine/Common/Point2D.hpp"
+#include "KEngine/Common/Color.hpp"
 
 namespace pf
 {
@@ -11,10 +12,9 @@ namespace pf
         KE_DEFINE_EVENT_COMMON_PROPERTIES(RequestDrawDebugDotEvent, 0x006B92AF)
 
     public:
-        RequestDrawDebugDotEvent(ke::Point2D position = {}, float radius = 1.0f)
-            : position(position), radius(radius)
+        RequestDrawDebugDotEvent(ke::Point2D position = {}, float radius = 1.0f, ke::Color color = ke::Color::GREEN)
+            : position(position), radius(radius), color(color)
         {
-
         }
 
         virtual ke::EventSptr makeCopy() const override
@@ -27,6 +27,7 @@ namespace pf
     private:
         ke::Point2D position;
         float radius = 0.0f;
+        ke::Color color{0,0,0, 255};
 
     };
 

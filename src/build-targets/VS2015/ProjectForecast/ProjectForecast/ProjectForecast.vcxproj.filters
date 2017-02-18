@@ -91,6 +91,21 @@
     <Filter Include="ProjectForecast\InputControllers">
       <UniqueIdentifier>{2ad86d00-151f-488c-8ee5-14232ee6d5b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="KEngine\Header Files\Entity">
+      <UniqueIdentifier>{400cb09a-6d31-4038-9ae7-d3dc0c6d5621}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Entity\Components">
+      <UniqueIdentifier>{7cc19a3a-f088-4c3c-b3f7-af8a956dcee2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Entity\ComponentLoaders">
+      <UniqueIdentifier>{9c0bb24f-8421-4619-89f7-2dc5d2d9ae75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Entity">
+      <UniqueIdentifier>{33200075-e21f-4b6d-b8d9-ee1f390e9a88}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Entity\EntityComponentLoaders">
+      <UniqueIdentifier>{fe976fe2-3fff-49b6-abea-791e1311c6c4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Events.cpp">
@@ -185,6 +200,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\ProjectForecast\InputControllers\InputControllers.cpp">
       <Filter>ProjectForecast\InputControllers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Common\Color.cpp">
+      <Filter>KEngine\Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Entity\EntityComponentLoaders\EntityRenderComponentLoader.cpp">
+      <Filter>KEngine\Source Files\Entity\EntityComponentLoaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -367,6 +388,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\ProjectForecast\InputControllers\InputControllers.hpp">
       <Filter>ProjectForecast\InputControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Color.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\Components\EntityRenderComponent.hpp">
+      <Filter>KEngine\Header Files\Entity\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\ComponentLoaders\EntityRenderComponentLoader.hpp">
+      <Filter>KEngine\Header Files\Entity\ComponentLoaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

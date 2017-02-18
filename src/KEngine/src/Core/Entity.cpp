@@ -1,5 +1,6 @@
 #include "KEngine/Core/Entity.hpp"
 #include "KEngine/Interface/IEntityComponent.hpp"
+#include "KEngine/Log/Log.hpp"
 
 #include <cassert>
 #include <chrono>
@@ -44,6 +45,7 @@ namespace ke
 
     Entity::~Entity(void)
     {
+        assert(this->m_ComponentSPMap.empty()); // component must be empty (all circular references removed).
     }
 
     void Entity::addComponent(ke::EntityComponentSptr p_spEntityComponent)
@@ -51,6 +53,20 @@ namespace ke
         assert(p_spEntityComponent != nullptr); // should not be null.
         const auto result = m_ComponentSPMap.insert(std::make_pair(p_spEntityComponent->getType(), p_spEntityComponent));
         assert(result.second); // fails if insertion failed.
+    }
+
+    bool Entity::initialise(void)
+    {
+        bool result = true;
+        for (auto & it : m_ComponentSPMap)
+            if (it.second->initialise())
+            {
+                ke::Log::instance()->error("Entity named '{}' failed to initialise its component: '{}'",
+                                            this->getName(), it.second->getName());
+                result = false;
+            }   
+
+        return result;
     }
 
     void Entity::updateAll(const ke::Time & p_ElapsedTime)

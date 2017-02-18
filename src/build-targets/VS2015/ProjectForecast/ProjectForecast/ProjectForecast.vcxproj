@@ -301,6 +301,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\KEngine\src\App.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\BaseAppLogic.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Common\Color.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Common\Time.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Core\Entity.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Core\EntityFactory.cpp" />
@@ -310,6 +311,7 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Core\StateMachine.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Core\SystemManager.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\dump.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Entity\EntityComponentLoaders\EntityRenderComponentLoader.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\RenderSystem.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\Scene.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SDL2\SDL2Window.cpp" />
@@ -334,6 +336,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\App.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\BaseAppLogic.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Color.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Delegate.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\HeartBeatGenerator.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Json.hpp" />
@@ -355,6 +358,8 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\ResourceManager.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\StateMachine.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\SystemManager.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\ComponentLoaders\EntityRenderComponentLoader.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\Components\EntityRenderComponent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\AppExitRequestedEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\EventLoopFrameEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\GraphicsLoopFrameEvent.hpp" />

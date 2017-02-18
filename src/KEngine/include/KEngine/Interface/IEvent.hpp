@@ -19,7 +19,7 @@ namespace ke
     /// 
     /// Assignment operators and copy constructors are disabled as user should only use smart pointers to an Event class type.
     /// Use the makeCopy() method to make copies of the same event.
-	///
+    ///
     class IEvent
     {
     public:
@@ -86,6 +86,6 @@ namespace ke
 public: \
     static constexpr ke::EventType TYPE = EVENT_TYPE_VALUE; \
     static constexpr const char * const NAME = #CLASS_NAME; \
-	virtual ke::EventType getType() const override { return CLASS_NAME::TYPE; } \
+    virtual ke::EventType getType() const override { return CLASS_NAME::TYPE; } \
     virtual const char * getName() const override { return CLASS_NAME::NAME; } \
 private:

@@ -28,6 +28,7 @@ namespace ke
     public:
         using IDType = ke::EntityComponentId; /// type of the component instance id. each instance has an unique id at run time.
 
+        static constexpr const char * const NAME = "IEntityComponent";
         static const EntityComponentType TYPE = INVALID_ENTITY_COMPONENT_TYPE; // type is different to id.
 
         IEntityComponent(EntitySptr p_spEntity);
@@ -42,18 +43,18 @@ namespace ke
         /// This member function is called by the EntityFactory at the time the component is created.
         /// </summary>
         /// <returns>true on success.</returns>
-        virtual bool initialise(void /* TODO: path to ini file? */) = 0;
+        virtual bool initialise(void) { return true; };
 
         /// <summary>
         /// Carry out any post initialisation operations(e.g. operations that can't be done during initialisation).
         /// </summary>
-        virtual void postInitialise(void) = 0;
+        virtual void postInitialise(void) {};
         
         /// <summary>
         /// Update this EntityComponent instance.
         /// </summary>
         /// <param name="p_ElapsedTime"></param>
-        virtual void update(const ke::Time p_ElapsedTime) = 0;
+        virtual void update(const ke::Time p_ElapsedTime) {};
 
         /// <summary>
         /// Get the type of this particular EntityComponent.
@@ -65,19 +66,25 @@ namespace ke
         /// Get the name of this particular EntityComponent.
         /// </summary>
         /// <returns>the name of this particular EntityComponent.</returns>
-        virtual ke::String getName(void) const = 0;
+        virtual const char * getName(void) const = 0;
 
         /// <summary>
         /// Get a shared pointer to this Component's owner Entity.
         /// </summary>
         /// <returns>a shared pointer to this Component's owner Entity.</returns>
-        EntitySptr getOwnerEntity(void);
+        inline EntitySptr getOwnerEntity(void)
+        {
+            return this->m_spOwnerEntity;
+        }
         
         /// <summary>
         /// Set the owner Entity of this Component instance. Remove the component from it's original owner as well.
         /// </summary>
         /// <param name="p_spEntity"></param>
-        void setOwnerEntity(ke::EntitySptr p_spEntity);
+        inline void setOwnerEntity(ke::EntitySptr p_spEntity)
+        {
+            m_spOwnerEntity = p_spEntity;
+        }
 
     protected:
         ke::EntitySptr m_spOwnerEntity;  // owner
@@ -86,7 +93,7 @@ namespace ke
 
     inline IEntityComponent::IEntityComponent(EntitySptr p_spEntity) : m_spOwnerEntity(p_spEntity) {}
     inline IEntityComponent::~IEntityComponent() {}
-    inline ke::String IEntityComponent::getName(void) const { return KE_TEXT("IEntityComponent"); }
+    inline const char * IEntityComponent::getName(void) const { return IEntityComponent::NAME; }
     inline EntityComponentType IEntityComponent::getType(void) const { return IEntityComponent::TYPE; }
 
     template<typename ComponentT, typename... ArgTs>
@@ -100,9 +107,10 @@ namespace ke
     
 }
 
-#define KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(CLASS_NAME) \
+#define KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(CLASS_NAME, COMPONENT_TYPE_VALUE) \
 public: \
-    static constexpr const char * NAME = #CLASS_NAME; \
-	virtual ke::EntityComponentType getType() const override { return CLASS_NAME::TYPE; } \
-	virtual ke::String getName() const override { return CLASS_NAME::NAME; } \
+    static constexpr ke::EntityComponentType TYPE = COMPONENT_TYPE_VALUE; \
+    static constexpr const char * const NAME = #CLASS_NAME; \
+    virtual ke::EntityComponentType getType() const override { return CLASS_NAME::TYPE; } \
+    virtual const char * getName() const override { return CLASS_NAME::NAME; } \
 private:

@@ -103,6 +103,11 @@ namespace ke
             newEntity->addComponent(entityComponent);
         }
 
+        if (!newEntity->initialise())
+        {
+            ke::Log::instance()->error("Entity initilisation failure.");
+        }
+
         return newEntity;
     }
 

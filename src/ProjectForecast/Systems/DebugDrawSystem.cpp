@@ -1,7 +1,8 @@
 #include "DebugDrawSystem.hpp"
 
 #include "../Events/RequestDrawDebugDotEvent.hpp"
-
+#include "KEngine/Entity/Components/EntityRenderComponent.hpp"
+#include "KEngine/Core/Entity.hpp"
 #include "KEngine/Core/EventManager.hpp"
 #include "KEngine/Log/Log.hpp"
 
@@ -31,6 +32,35 @@ namespace pf
         case pf::RequestDrawDebugDotEvent::TYPE:
         {
             // TODO generate and broadcast entity with render component that contains a SceneNode with a dot.
+
+            static const auto debugDrawEntityJson =
+R"(
+    {
+        "type" : "entity",
+        "name" : "debug dot",
+        "components" :
+        [
+            {
+                "type" : "entity_component",
+                "type_name" : "EntityRenderComponent",
+                "scene_node" :
+                {
+                    "type" : "scene_node",
+                    ""
+                    "children" : []
+                }
+            }
+        ]
+    }
+)";
+
+            auto entity = ke::makeEntity(ke::Entity::newId());
+            auto renderComponent = ke::makeEntityComponent<ke::EntityRenderComponent>(entity);
+            renderComponent->initialise();
+            entity->addComponent(renderComponent);
+
+            entity->initialise();
+
             break;
         }
 

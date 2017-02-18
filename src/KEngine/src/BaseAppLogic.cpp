@@ -1,7 +1,15 @@
 #include "KEngine/BaseAppLogic.hpp"
 
+#include "KEngine/Entity/Components/EntityRenderComponent.hpp"
+#include "KEngine/Entity/ComponentLoaders/EntityRenderComponentLoader.hpp"
+
 namespace ke
 {
+
+    BaseAppLogic::BaseAppLogic()
+    {
+        this->entityFactory.registerComponentJsonLoader<ke::EntityRenderComponentLoader>(ke::EntityRenderComponent::NAME);
+    }
 
     void BaseAppLogic::onUpdate(ke::Time elapsedTime)
     {
