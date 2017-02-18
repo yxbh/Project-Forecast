@@ -11,4 +11,6 @@ namespace ke
         std::int8_t r;
     };
 
+    using Colour = Color;
+
 }
