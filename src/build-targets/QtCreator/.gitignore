@@ -71,3 +71,7 @@ Thumbs.db
 *.dll
 *.exe
 
+# ProjectForecast custom gitignore
+# --------
+ProjectForecast/Build/
+.qmake.stash

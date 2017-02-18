@@ -202,8 +202,23 @@ SOURCES += \
 # Setup external library dependencies.
 #
 macx {
+    #
+    # SDL
+    #
     INCLUDEPATH += /Library/Frameworks/SDL2.framework/Headers
     LIBS += -F/Library/Frameworks
     LIBS += -framework SDL2
+    #
+
+    #
+    # SFML
+    #
+    INCLUDEPATH += ../../../lib/libs-osx/SFML-2.4.1-osx-clang/include
+    DEPENDPATH += ../../../lib/libs-osx/SFML-2.4.1-osx-clang/include
+    QMAKE_LFLAGS += -F../../../lib/libs-osx/SFML-2.4.1-osx-clang/Frameworks
+    LIBS += -framework SFML -framework sfml-system -framework sfml-window -framework sfml-graphics
+    QMAKE_RPATHDIR += @executable_path/../../../ #this is pointing to the folder where the app file is.
+    QMAKE_RPATHDIR += @executable_path/../Frameworks # this is pointing to inside the app file.
+    #
 }
 #
