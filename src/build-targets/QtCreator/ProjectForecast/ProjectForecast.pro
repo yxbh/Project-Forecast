@@ -135,6 +135,8 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Interface/IScene.hpp \
     ../../../KEngine/include/KEngine/Interface/ISceneNode.hpp \
     ../../../KEngine/include/KEngine/Interface/IInputController.hpp \
+    ../../../KEngine/include/KEngine/Entity/ComponentLoaders/EntityRenderComponentLoader.hpp \
+    ../../../KEngine/include/KEngine/Entity/Components/EntityRenderComponent.hpp \
     ../../../KEngine/include/KEngine/Events/SDL2/SDL2Event.hpp \
     ../../../KEngine/include/KEngine/Events/SFML/SfmlEvent.hpp \
     ../../../KEngine/include/KEngine/Events/AppExitRequestedEvent.hpp \
@@ -165,6 +167,7 @@ HEADERS += \
 SOURCES += \
     ../../../KEngine/include/KEngine/Common/Queues.inl \
     ../../../KEngine/include/KEngine/Common/Time.inl \
+    ../../../KEngine/src/Common/Color.cpp \
     ../../../KEngine/src/Common/Time.cpp \
     ../../../KEngine/src/Core/EventManagerImpl.cpp \
     ../../../KEngine/src/Core/EntityFactory.cpp \
@@ -173,6 +176,7 @@ SOURCES += \
     ../../../KEngine/src/Core/EntityManager.cpp \
     ../../../KEngine/src/Core/SystemManager.cpp \
     ../../../KEngine/src/Core/ResourceManager.cpp \
+    ../../../KEngine/src/Entity/EntityComponentLoaders/EntityRenderComponentLoader.cpp \
     ../../../KEngine/src/Graphics/SDL2/SDL2Window.cpp \
     ../../../KEngine/src/Graphics/SFML/SfmlWindow.cpp \
     ../../../KEngine/src/Graphics/WindowFactory.cpp \
