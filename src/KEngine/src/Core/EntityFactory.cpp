@@ -24,7 +24,7 @@ namespace ke
         
         if (isLoaderForNameAlreadyExists)
         {
-            ke::Log::instance()->warn("Json loader for component name {} already registered. It will be overrided.", entityComponentName);
+            ke::Log::instance()->warn("JSON loader for component named {} already registered. It will be overrided.", entityComponentName);
         }
 
         this->creators[entityComponentName] = loader;
