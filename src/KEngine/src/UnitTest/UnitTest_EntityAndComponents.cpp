@@ -10,9 +10,9 @@ namespace
 
     class TestComponent : public ke::IEntityComponent
     {
-        KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(TestComponent)
+        KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(TestComponent, 0xAE3DEA1D)
+
     public:
-        static const ke::EntityComponentType TYPE = 0xAE3DEA1D;
     };
 
 }

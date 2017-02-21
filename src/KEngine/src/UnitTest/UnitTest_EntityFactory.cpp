@@ -11,10 +11,9 @@ namespace
 
     class TestComponent1 : public ke::IEntityComponent
     {
-        KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(TestComponent1)
-    public:
-        static const ke::EntityComponentType TYPE = 0x5C099729;
+        KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(TestComponent1, 0x5C099729)
 
+    public:
         using IEntityComponent::IEntityComponent;
 
         virtual bool initialise() override
@@ -29,10 +28,9 @@ namespace
 
     class TestComponent2 : public ke::IEntityComponent
     {
-        KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(TestComponent2)
-    public:
-        static const ke::EntityComponentType TYPE = 0xA52F3FBE;
+        KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(TestComponent2, 0xA52F3FBE)
 
+    public:
         using IEntityComponent::IEntityComponent;
 
         virtual bool initialise() override
@@ -76,10 +74,10 @@ namespace
 
 TEST_CASE("ke::EntityFactory Component JSON Loader Unit Tests")
 {
-    ke::EntityFactory factory;
 
     SECTION("Test adding component loader for the same component multiple times.")
     {
+        ke::EntityFactory factory;
         CHECK(factory.registerComponentJsonLoader<TestComponent1Loader1>(TestComponent1::NAME));
 
         SECTION("Adding the same loader again for the same component name")
@@ -91,10 +89,13 @@ TEST_CASE("ke::EntityFactory Component JSON Loader Unit Tests")
         {
             CHECK(!factory.registerComponentJsonLoader<TestComponent1Loader2>(TestComponent1::NAME));
         }
+
+        factory.clear();
     }
 
     SECTION("Test adding multiple loaders for different components")
     {
+        ke::EntityFactory factory;
         CHECK(factory.registerComponentJsonLoader<TestComponent1Loader1>(TestComponent1::NAME));
         CHECK(factory.registerComponentJsonLoader<TestComponent2Loader1>(TestComponent2::NAME));
     }
@@ -118,11 +119,11 @@ TEST_CASE("ke::EntityFactory Entity Creation Unit Tests")
                 [
                     {
                         "type" : "entity_component",
-                        "type_name" : "TestComponent1"
+                        "component_name" : "TestComponent1"
                     },
                     {
                         "type" : "entity_component",
-                        "type_name" : "TestComponent2"
+                        "component_name" : "TestComponent2"
                     }
                 ]
             }
@@ -139,6 +140,8 @@ TEST_CASE("ke::EntityFactory Entity Creation Unit Tests")
 
         CHECK(entity);
         CHECK(entity->getComponentCount() == 2);
+
+        entity->destory();
     }
 }
 

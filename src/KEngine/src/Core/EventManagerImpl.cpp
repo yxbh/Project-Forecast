@@ -19,7 +19,7 @@ namespace ke::priv
         for (const DelegateType & listener : listeners)
             if (listener == p_Delegate) // check if already in the list for specified EventType.
             {
-                Log::instance()->warn("listener already registered to event type: {}", p_EventType);
+                Log::instance()->warn("listener already registered to event type({})", p_EventType);
                 return false;
             }
 

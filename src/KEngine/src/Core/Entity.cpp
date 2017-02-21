@@ -59,7 +59,7 @@ namespace ke
     {
         bool result = true;
         for (auto & it : m_ComponentSPMap)
-            if (it.second->initialise())
+            if (!it.second->initialise())
             {
                 ke::Log::instance()->error("Entity named '{}' failed to initialise its component: '{}'",
                                             this->getName(), it.second->getName());

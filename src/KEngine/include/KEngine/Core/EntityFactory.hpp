@@ -22,6 +22,8 @@ namespace ke
 
         ke::EntitySptr createNew(const ke::Json & entityJsonObject) const;
 
+        inline void clear() { this->creators.clear(); }
+
     private:
         EntityComponentCreatorMap creators;
          

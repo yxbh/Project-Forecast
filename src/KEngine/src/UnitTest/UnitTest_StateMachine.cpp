@@ -34,46 +34,46 @@ namespace
     }
 
 
-	class TestStartState : public ke::IStateMachine::IState
-	{
+    class TestStartState : public ke::IStateMachine::IState
+    {
         KE_DEFINE_STATE_MACHINE_STATE_COMMON_PROPERTIES(TestStartState)
-	public:
-		static const ke::SMStateType TYPE = 1;
+    public:
+        static const ke::SMStateType TYPE = 1;
 
-		static const ke::SMStateExitCodeType STATE_EXIT_SUCCESS = 1;
+        static const ke::SMStateExitCodeType STATE_EXIT_SUCCESS = 1;
 
-		using IState::IState;
+        using IState::IState;
 
-		virtual void onEnter() override
+        virtual void onEnter() override
         {
             testStartStateOnEnterCalled = true;
         }
-		virtual void onExit() override
+        virtual void onExit() override
         {
             testStartStateOnExitCalled = true;
         }
-		virtual void update(const ke::Time & elapsedTime) override
-		{
-			KE_UNUSED(elapsedTime);
+        virtual void update(const ke::Time & elapsedTime) override
+        {
+            KE_UNUSED(elapsedTime);
 
-			if (counter) this->finish(STATE_EXIT_SUCCESS);
+            if (counter) this->finish(STATE_EXIT_SUCCESS);
 
-			++counter;
-		}
+            ++counter;
+        }
 
-	private:
-		int counter = 0;
-	};
+    private:
+        int counter = 0;
+    };
 
     class TestStateA : public ke::IStateMachine::IState
     {
         KE_DEFINE_STATE_MACHINE_STATE_COMMON_PROPERTIES(TestStateA)
     public:
-		static const ke::SMStateType TYPE = 2;
+        static const ke::SMStateType TYPE = 2;
 
-		static const ke::SMStateExitCodeType STATE_EXIT_SUCCESS = 1;
+        static const ke::SMStateExitCodeType STATE_EXIT_SUCCESS = 1;
 
-		using IState::IState;
+        using IState::IState;
 
         virtual void onEnter() override
         {
@@ -83,22 +83,22 @@ namespace
         {
             testStateAOnExitCalled = true;
         }
-		virtual void update(const ke::Time & elapsedTime) override
+        virtual void update(const ke::Time & elapsedTime) override
         {
             KE_UNUSED(elapsedTime);
             this->finish(STATE_EXIT_SUCCESS);
         }
     };
 
-	class TestStateB : public ke::IStateMachine::IState
-	{
+    class TestStateB : public ke::IStateMachine::IState
+    {
         KE_DEFINE_STATE_MACHINE_STATE_COMMON_PROPERTIES(TestStateB)
-	public:
-		static const ke::SMStateType TYPE = 3;
+    public:
+        static const ke::SMStateType TYPE = 3;
 
-		static const ke::SMStateExitCodeType STATE_EXIT_SUCCESS = 1;
+        static const ke::SMStateExitCodeType STATE_EXIT_SUCCESS = 1;
 
-		using IState::IState;
+        using IState::IState;
 
         virtual void onEnter() override
         {
@@ -108,18 +108,18 @@ namespace
         {
             testStateBOnExitCalled = true;
         }
-		virtual void update(const ke::Time & elapsedTime) override { KE_UNUSED(elapsedTime); }
-	};
+        virtual void update(const ke::Time & elapsedTime) override { KE_UNUSED(elapsedTime); }
+    };
 
-	class TestEndState : public ke::IStateMachine::IState
-	{
+    class TestEndState : public ke::IStateMachine::IState
+    {
         KE_DEFINE_STATE_MACHINE_STATE_COMMON_PROPERTIES(TestEndState)
-	public:
-		static const ke::SMStateType TYPE = 4;
+    public:
+        static const ke::SMStateType TYPE = 4;
 
-		static const ke::SMStateExitCodeType STATE_EXIT_SUCCESS = 1;
+        static const ke::SMStateExitCodeType STATE_EXIT_SUCCESS = 1;
 
-		using IState::IState;
+        using IState::IState;
 
         virtual void onEnter() override
         {
@@ -129,12 +129,12 @@ namespace
         {
             testEndStateOnExitCalled = true;
         }
-		virtual void update(const ke::Time & elapsedTime) override
+        virtual void update(const ke::Time & elapsedTime) override
         {
             KE_UNUSED(elapsedTime);
             this->finish(STATE_EXIT_SUCCESS);
         }
-	};
+    };
 
 }
 

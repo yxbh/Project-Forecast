@@ -20,7 +20,7 @@ namespace ke
 
     bool EntityFactory::registerComponentJsonLoader(const ke::String & entityComponentName, EntityComponentJsonLoaderSptr loader)
     {
-        bool isLoaderForNameAlreadyExists = this->creators.find(entityComponentName) == this->creators.end();
+        bool isLoaderForNameAlreadyExists = this->creators.find(entityComponentName) != this->creators.end();
         
         if (isLoaderForNameAlreadyExists)
         {
@@ -29,7 +29,7 @@ namespace ke
 
         this->creators[entityComponentName] = loader;
 
-        return isLoaderForNameAlreadyExists;
+        return !isLoaderForNameAlreadyExists;
     }
 
     ke::EntitySptr EntityFactory::createNew(const ke::Json & entityJsonObject) const
@@ -79,7 +79,7 @@ namespace ke
                 Log::instance()->error("Unexpected JSON object type '{}' in entity component array for entity named '{}'.", typeValue, newEntity->getName());
                 return nullptr;
             }
-            auto componentTypeNameIt = entityComponentJsonObj.find("type_name");
+            auto componentTypeNameIt = entityComponentJsonObj.find("component_name");
             if (componentTypeNameIt == entityComponentJsonObj.end())
             {
                 Log::instance()->error("Missing 'type_name' key value pair in entity component JSON object in entity component array for entity named '{}' does not have an object type.", newEntity->getName());
