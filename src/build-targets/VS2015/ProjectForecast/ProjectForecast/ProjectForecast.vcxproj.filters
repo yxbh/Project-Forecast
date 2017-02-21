@@ -207,6 +207,9 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Entity\EntityComponentLoaders\EntityRenderComponentLoader.cpp">
       <Filter>KEngine\Source Files\Entity\EntityComponentLoaders</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SceneNodes.cpp">
+      <Filter>KEngine\Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IApp.hpp">
@@ -397,6 +400,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\ComponentLoaders\EntityRenderComponentLoader.hpp">
       <Filter>KEngine\Header Files\Entity\ComponentLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SceneNodes.hpp">
+      <Filter>KEngine\Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Transform2D.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Dimension2D.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

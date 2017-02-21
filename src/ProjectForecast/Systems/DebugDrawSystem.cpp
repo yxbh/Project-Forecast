@@ -1,5 +1,6 @@
 #include "DebugDrawSystem.hpp"
 
+#include "KEngine/App.hpp"
 #include "../Events/RequestDrawDebugDotEvent.hpp"
 #include "KEngine/Entity/Components/EntityRenderComponent.hpp"
 #include "KEngine/Core/Entity.hpp"
@@ -42,7 +43,7 @@ R"(
         [
             {
                 "type" : "entity_component",
-                "type_name" : "EntityRenderComponent",
+                "component_name" : "EntityRenderComponent",
                 "scene_node" :
                 {
                     "type" : "scene_node",
@@ -59,7 +60,10 @@ R"(
             renderComponent->initialise();
             entity->addComponent(renderComponent);
 
-            entity->initialise();
+            auto result = entity->initialise();
+            assert(result);
+
+            ke::App::instance()->getLogic()->getEntityManager()->addEntity(entity);
 
             break;
         }

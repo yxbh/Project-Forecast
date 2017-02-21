@@ -54,7 +54,7 @@ namespace ke
         /// Update this EntityComponent instance.
         /// </summary>
         /// <param name="p_ElapsedTime"></param>
-        virtual void update(const ke::Time p_ElapsedTime) {};
+        virtual void update(const ke::Time p_ElapsedTime) { KE_UNUSED(p_ElapsedTime); };
 
         /// <summary>
         /// Get the type of this particular EntityComponent.
@@ -97,7 +97,6 @@ namespace ke
     inline EntityComponentType IEntityComponent::getType(void) const { return IEntityComponent::TYPE; }
 
     template<typename ComponentT, typename... ArgTs>
-    //inline EntityComponentSptr makeEntityComponent(ArgTs && ... p_rrArgs)
     inline EntityComponentSptr makeEntityComponent(ArgTs && ... p_rrArgs)
     {
         static_assert(std::is_convertible<ComponentT*, IEntityComponent*>::value, "Given type cannot convert to ke::IEntityComponent.");

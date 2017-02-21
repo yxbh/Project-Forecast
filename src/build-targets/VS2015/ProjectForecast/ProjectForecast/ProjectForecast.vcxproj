@@ -314,6 +314,7 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Entity\EntityComponentLoaders\EntityRenderComponentLoader.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\RenderSystem.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\Scene.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SceneNodes.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SDL2\SDL2Window.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SFML\SfmlWindow.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\WindowFactory.cpp" />
@@ -338,6 +339,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\BaseAppLogic.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Color.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Delegate.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Dimension2D.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\HeartBeatGenerator.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Json.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\json.hpp" />
@@ -350,6 +352,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\String.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\ThreadPool.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Time.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Transform2D.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\Entity.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EntityFactory.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EntityManager.hpp" />
@@ -371,6 +374,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderCommands\TestRenderCommands.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderSystem.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\Scene.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SceneNodes.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SDL2\SDL2Window.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\SfmlWindow.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\Window.hpp" />
