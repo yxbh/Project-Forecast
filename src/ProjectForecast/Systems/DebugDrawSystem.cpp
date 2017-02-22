@@ -2,7 +2,7 @@
 
 #include "KEngine/App.hpp"
 #include "../Events/RequestDrawDebugDotEvent.hpp"
-#include "KEngine/Entity/Components/EntityRenderComponent.hpp"
+#include "KEngine/Entity/Components/EntityRenderableComponents.hpp"
 #include "KEngine/Core/Entity.hpp"
 #include "KEngine/Core/EventManager.hpp"
 #include "KEngine/Log/Log.hpp"
@@ -32,8 +32,6 @@ namespace pf
         {
         case pf::RequestDrawDebugDotEvent::TYPE:
         {
-            // TODO generate and broadcast entity with render component that contains a SceneNode with a dot.
-
             static const auto debugDrawEntityJson =
 R"(
     {
@@ -56,14 +54,14 @@ R"(
 )";
 
             auto entity = ke::makeEntity(ke::Entity::newId());
-            auto renderComponent = ke::makeEntityComponent<ke::EntityRenderComponent>(entity);
-            renderComponent->initialise();
+            auto renderComponent = ke::makeEntityComponent<ke::EntityRenderableCircleShapeComponent>(entity, ke::Color::GREEN);
             entity->addComponent(renderComponent);
 
             auto result = entity->initialise();
             assert(result);
 
             ke::App::instance()->getLogic()->getEntityManager()->addEntity(entity);
+            ke::App::instance()->getLogic()->getCurrentHumanView()->getScene()->addNode(renderComponent->getSceneNode()); // TODO: potentially remove this if we are going to go with the approach where renderable components broadcast events when a scene node is created.
 
             break;
         }

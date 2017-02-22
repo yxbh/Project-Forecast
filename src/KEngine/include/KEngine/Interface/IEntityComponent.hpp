@@ -97,7 +97,7 @@ namespace ke
     inline EntityComponentType IEntityComponent::getType(void) const { return IEntityComponent::TYPE; }
 
     template<typename ComponentT, typename... ArgTs>
-    inline EntityComponentSptr makeEntityComponent(ArgTs && ... p_rrArgs)
+    inline std::shared_ptr<ComponentT> makeEntityComponent(ArgTs && ... p_rrArgs)
     {
         static_assert(std::is_convertible<ComponentT*, IEntityComponent*>::value, "Given type cannot convert to ke::IEntityComponent.");
         static_assert(std::is_base_of<IEntityComponent, ComponentT>::value, "Given type does not have IEntityComponent as base class.");

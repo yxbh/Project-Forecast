@@ -5,7 +5,7 @@
 namespace ke
 {
 
-    class EntityRenderComponentLoader : public ke::IEntityComponentJsonLoader
+    class EntityRenderableComponentLoader : public ke::IEntityComponentJsonLoader
     {
     public:
         virtual ke::EntityComponentSptr loadComponent(const ke::json & jsonObject) override;

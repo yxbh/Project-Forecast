@@ -19,7 +19,9 @@ namespace ke
 
         virtual ke::Scene * getScene() const override { return this->scene.get(); }
 
-    private:
+        virtual bool isHumanView() const final { return true; };
+
+    protected:
         ke::SceneUptr scene;
 
         ke::EntityId currentEntityId = ke::INVALID_ENTITY_ID;

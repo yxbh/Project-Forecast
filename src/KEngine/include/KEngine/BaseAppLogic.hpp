@@ -35,7 +35,7 @@ namespace ke
         void update(ke::Time elapsedTime) { this->onUpdate(elapsedTime); }
 
         virtual void addView(ke::AppViewSptr view, bool setAsCurrent = false);
-        virtual ke::IAppView * getCurrentView() { return this->currentAppView; }
+        virtual ke::IAppView * getCurrentHumanView() { return this->currentHumanView; }
         virtual AppViewList & getViews() { return this->appViews; }
 
         inline EntityFactory * getEntityFactory() { return &this->entityFactory; }
@@ -56,7 +56,7 @@ namespace ke
         ke::SystemManager systemManager;
 
         AppViewList appViews;
-        ke::IAppView * currentAppView;
+        ke::IAppView * currentHumanView;
     };
 
     inline BaseAppLogic::~BaseAppLogic() {}

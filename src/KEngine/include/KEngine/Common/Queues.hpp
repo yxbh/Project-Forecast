@@ -41,47 +41,6 @@ public:
 
 }; // ThreadSafeQueue class
 
-
-/** \class Queue
-    \brief Non-thread-safe wrapper over std::queue.
-*/
-template <class T>
-class Queue
-{
-private:
-    std::queue<T> m_Data;
-
-public:
-    /** Push a copy of \a pValue to the back of the queue. */
-    void push(T p_Value);
-    /** Push \a pValue to the back of the queue. */
-    void push(T && p_rrValue);
-    /** Remove and return the first element in the queue. */
-    std::shared_ptr<T> pop(void);
-    /** Empty the queue. */
-    void clear(void);
-    /** Poll the queue for it's first element.
-        @return true if an element exists in the queue and it's assigned to \a p_Value.*/
-    bool poll(T & p_Value);
-    /** @return true if queue is empty. */
-    bool isEmpty(void) const;
-
-}; // Queue class class
-//template <class T>
-//class Queue
-//    : public std::queue<T>
-//{
-//    /** Remove and return the first element in the queue. */
-//    std::shared_ptr<T> pop(void);
-//    /** Empty the queue. */
-//    void clear(void);
-//    /** Poll the queue for it's first element.
-//        @return true if an element exists in the queue and it's assigned to \a p_Value.*/
-//    bool poll(T & p_Value);
-//    /** @return true if queue is empty. */
-//    bool isEmpty(void) const;
-//};
-
 } // KE ns
 
 #include "Queues.inl"

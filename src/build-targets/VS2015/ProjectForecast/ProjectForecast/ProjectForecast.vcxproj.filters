@@ -395,12 +395,6 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Color.hpp">
       <Filter>KEngine\Header Files\Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\Components\EntityRenderComponent.hpp">
-      <Filter>KEngine\Header Files\Entity\Components</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\ComponentLoaders\EntityRenderComponentLoader.hpp">
-      <Filter>KEngine\Header Files\Entity\ComponentLoaders</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SceneNodes.hpp">
       <Filter>KEngine\Header Files\Graphics</Filter>
     </ClInclude>
@@ -409,6 +403,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Dimension2D.hpp">
       <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderCommand.hpp">
+      <Filter>KEngine\Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\ComponentLoaders\EntityRenderableComponentLoader.hpp">
+      <Filter>KEngine\Header Files\Entity\ComponentLoaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\Components\EntityRenderableComponents.hpp">
+      <Filter>KEngine\Header Files\Entity\Components</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

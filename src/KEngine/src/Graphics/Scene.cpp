@@ -7,6 +7,11 @@
 namespace ke
 {
 
+    Scene::Scene()
+        : rootNode(ke::RootNode::create())
+    {
+    }
+
     bool Scene::addNode(ke::SceneNodeSptr node)
     {
         assert(node->getEntityId());

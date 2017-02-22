@@ -254,7 +254,7 @@ namespace ke
                 //
                 //for (auto view : this->appLogic->getViews())
                 //    this->renderSystem->prepareRenderCommands(view.get()->getScene());
-                this->renderSystem->prepareRenderCommands(this->appLogic->getCurrentView()->getScene());
+                this->renderSystem->prepareRenderCommands(this->appLogic->getCurrentHumanView()->getScene());
                 this->renderSystem->dispatchRenderCommands();
 
                 //
@@ -349,7 +349,7 @@ namespace ke
         this->createLogicAndViews();
 
         assert(this->getLogic());
-        assert(this->getLogic()->getCurrentView());
+        assert(this->getLogic()->getCurrentHumanView());
 
         ke::Log::instance()->info("Creating resource manager ...");
         this->resourceManager = std::make_unique<ResourceManager>();

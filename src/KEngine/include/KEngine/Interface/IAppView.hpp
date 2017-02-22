@@ -27,6 +27,8 @@ namespace ke
 
         virtual ke::Scene * getScene() const { return nullptr; }
 
+        virtual bool isHumanView() const { return false; };
+
     protected:
         AppViewId id;
 

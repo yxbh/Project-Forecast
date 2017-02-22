@@ -361,8 +361,8 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\ResourceManager.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\StateMachine.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\SystemManager.hpp" />
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\ComponentLoaders\EntityRenderComponentLoader.hpp" />
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\Components\EntityRenderComponent.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\ComponentLoaders\EntityRenderableComponentLoader.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\Components\EntityRenderableComponents.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\AppExitRequestedEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\EventLoopFrameEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\GraphicsLoopFrameEvent.hpp" />
@@ -371,6 +371,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\LoopFrameEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SDL2\SDL2Event.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEvent.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderCommand.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderCommands\TestRenderCommands.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderSystem.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\Scene.hpp" />

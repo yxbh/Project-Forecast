@@ -97,49 +97,4 @@ inline bool ThreadSafeQueue<T>::isEmpty() const
     return m_Data.empty();
 }
 
-template <class T>
-inline void Queue<T>::push(T p_Value)
-{
-    m_Data.push(p_Value);
-}
-
-template <class T>
-inline void Queue<T>::push(T && p_rrValue)
-{
-    m_Data.push(std::forward(p_rrValue));
-}
-
-template <class T>
-inline std::shared_ptr<T> Queue<T>::pop(void)
-{
-    if (m_Data.empty())
-        return std::shared_ptr<T>(); // null
-    std::shared_ptr<T> ret = std::shared_ptr<T>(std::make_shared<T>(m_Data.front()));
-    m_Data.pop();
-    return ret;
-}
-
-template<class T>
-inline void Queue<T>::clear(void)
-{
-    while (!m_Data.empty()) m_Data.pop();
-}
-
-template <class T>
-inline bool Queue<T>::poll(T & p_Value)
-{
-    if (m_Data.empty())
-        return false;
-    p_Value = m_Data.front();
-    m_Data.pop();
-    return true;
-}
-
-template <class T>
-inline bool Queue<T>::isEmpty(void) const
-{
-    return m_Data.empty();
-}
-
-
 } // KE ns

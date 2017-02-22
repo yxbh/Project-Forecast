@@ -19,6 +19,7 @@ namespace ke
         static const Color RED;
         static const Color GREEN;
         static const Color BLUE;
+        static const Color TRANSPARENT;
     };
 
     using Colour = Color;

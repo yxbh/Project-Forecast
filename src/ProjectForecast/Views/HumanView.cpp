@@ -16,6 +16,8 @@ namespace pf
         mouseController = std::make_unique<pf::MouseInputController>();
         keyboardController = std::make_unique<pf::KeyboardInputController>();
 
+        scene = std::make_unique<ke::Scene>();
+
         ke::EventManager::registerListener<ke::SfmlEvent>(this, &HumanView::handleWindowEvent);
     }
 

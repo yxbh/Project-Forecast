@@ -3,6 +3,7 @@
 #include "KEngine/Common/Time.hpp"
 #include "KEngine/Interface/IWindow.hpp"
 #include "KEngine/Graphics/Scene.hpp"
+#include "KEngine/Graphics/RenderCommand.hpp"
 
 #include <memory>
 
@@ -42,6 +43,8 @@ namespace ke
 
     private:
         ke::WindowSptr window;
+
+        std::vector<ke::RenderCommand> logicThreadRenderCommandQueue;
     };
 
     using RenderSystemUptr = std::unique_ptr<RenderSystem>;
