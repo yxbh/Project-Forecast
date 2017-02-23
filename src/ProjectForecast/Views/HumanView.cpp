@@ -46,26 +46,26 @@ namespace pf
         switch (event.type)
         {
         case sf::Event::MouseButtonPressed:
-            ke::Log::instance()->info("sf::Event::MouseButtonPressed");
+            //ke::Log::instance()->info("sf::Event::MouseButtonPressed");
             switch (event.mouseButton.button)
             {
             case sf::Mouse::Left:
-                mouseController->onButtonPressed(ke::MouseButton::Left);
+                mouseController->onButtonPressed(ke::MouseButton::Left, { event.mouseButton.x, event.mouseButton.y });
                 break;
             case sf::Mouse::Right:
-                mouseController->onButtonPressed(ke::MouseButton::Right);
+                mouseController->onButtonPressed(ke::MouseButton::Right, { event.mouseButton.x, event.mouseButton.y });
                 break;
             }
             break;
         case sf::Event::MouseButtonReleased:
-            ke::Log::instance()->info("sf::Event::MouseButtonReleased");
+            //ke::Log::instance()->info("sf::Event::MouseButtonReleased");
             switch (event.mouseButton.button)
             {
             case sf::Mouse::Left:
-                mouseController->onButtonReleased(ke::MouseButton::Left);
+                mouseController->onButtonReleased(ke::MouseButton::Left, { event.mouseButton.x, event.mouseButton.y });
                 break;
             case sf::Mouse::Right:
-                mouseController->onButtonPressed(ke::MouseButton::Right);
+                mouseController->onButtonPressed(ke::MouseButton::Right, { event.mouseButton.x, event.mouseButton.y });
                 break;
             }
             break;

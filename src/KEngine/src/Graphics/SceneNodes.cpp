@@ -8,21 +8,23 @@ namespace ke
         return ke::makeSceneNode<ke::RootNode>(ke::INVALID_ENTITY_ID);
     }
 
-    ke::SceneNodeSptr CircleShapeNode::create(ke::EntityId entityId,
+    ke::SceneNodeSptr CircleShapeNode::create(ke::EntityId entityId, const ke::Transform2D & localTransform,
         ke::Color fillColor, float radius, ke::Color outlineColor, float outlineThickness)
     {
         auto newNode = ke::makeSceneNode<ke::CircleShapeNode>(entityId);
+        newNode->setLocalTransform(localTransform);
         auto & states           = newNode->states;
-        states.type             = ke::RenderObjectType::CircleShape;
-        states.radius           = radius;
-        states.outlineThickness = outlineThickness;
-        states.fillColor        = fillColor;
-        states.outlineColor     = outlineColor;
+        states.type                    = ke::GraphicsCommand::Types::RenderCircleShape;
+        states.render.radius           = radius;
+        states.render.outlineThickness = outlineThickness;
+        states.render.fillColor        = fillColor;
+        states.render.outlineColor     = outlineColor;
         return newNode;
     }
 
-    RenderCommand CircleShapeNode::getRenderCommand() const
+    GraphicsCommand CircleShapeNode::getGraphicsCommand() const
     {
+        this->states.render.globalTransform = this->getGlobalTransform();
         return this->states;
     }
 

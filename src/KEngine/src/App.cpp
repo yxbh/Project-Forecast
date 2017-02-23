@@ -254,8 +254,8 @@ namespace ke
                 //
                 //for (auto view : this->appLogic->getViews())
                 //    this->renderSystem->prepareRenderCommands(view.get()->getScene());
-                this->renderSystem->prepareRenderCommands(this->appLogic->getCurrentHumanView()->getScene());
-                this->renderSystem->dispatchRenderCommands();
+                this->renderSystem->prepareCommands(this->appLogic->getCurrentHumanView()->getScene());
+                this->renderSystem->dispatchCommands();
 
                 //
                 // debug/diagnostic stuff
@@ -323,7 +323,7 @@ namespace ke
                 // process the oldest render command list from the render commands queue
                 // e.g. culling, ordering, etc...
                 // if queue is empty then interpolate before render.
-                this->renderSystem->processRenderCommands(frameTime);
+                this->renderSystem->processCommands(frameTime);
                 this->renderSystem->render();
                                 
                 std::this_thread::sleep_for(RENDER_THREAD_SLEEP_DURATION);

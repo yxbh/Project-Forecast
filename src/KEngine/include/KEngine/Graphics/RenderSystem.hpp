@@ -1,9 +1,10 @@
 #pragma once
 
-#include "KEngine/Common/Time.hpp"
 #include "KEngine/Interface/IWindow.hpp"
 #include "KEngine/Graphics/Scene.hpp"
-#include "KEngine/Graphics/RenderCommand.hpp"
+#include "KEngine/Graphics/GraphicsCommand.hpp"
+#include "KEngine/Common/Time.hpp"
+#include "KEngine/Common/Queues.hpp"
 
 #include <memory>
 
@@ -16,23 +17,25 @@ namespace ke
     class RenderSystem
     {
     public:
+        using GraphicsCommandList = std::vector<ke::GraphicsCommand>;
+
         /// <summary>
         /// Generate render commands from the given scene when it is not null.
         /// </summary>
         /// <param name="scene"></param>
-        void prepareRenderCommands(ke::Scene * scene);
+        void prepareCommands(ke::Scene * scene);
 
         /// <summary>
         /// Prepare all the render commands generated so far for processing.
         /// </summary>
-        void dispatchRenderCommands();
+        void dispatchCommands();
 
         /// <summary>
         /// Readies the render commands generated so far for rendering.
         /// Carry out any necessary interpolation/extrapolation for animations and effects.
         /// </summary>
         /// <param name="elapsedTime"></param>
-        void processRenderCommands(ke::Time elapsedTime);
+        void processCommands(ke::Time elapsedTime);
 
         /// <summary>
         /// 
@@ -44,7 +47,8 @@ namespace ke
     private:
         ke::WindowSptr window;
 
-        std::vector<ke::RenderCommand> logicThreadRenderCommandQueue;
+        GraphicsCommandList logicThreadRenderCommandQueue;
+        ke::ThreadSafeQueue<GraphicsCommandList> renderThreadCommandLists;
     };
 
     using RenderSystemUptr = std::unique_ptr<RenderSystem>;

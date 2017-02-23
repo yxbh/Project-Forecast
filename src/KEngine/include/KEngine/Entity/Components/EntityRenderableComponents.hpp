@@ -35,11 +35,12 @@ namespace ke
         KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(EntityRenderableCircleShapeComponent, 0x8617353F)
 
     public:
-        EntityRenderableCircleShapeComponent(ke::EntitySptr entity, ke::Color fillColor,
-            float radius = 5.0f, ke::Color outlineColor = ke::Color::TRANSPARENT, float outlineThickness = 0.0f)
+        EntityRenderableCircleShapeComponent(ke::EntitySptr entity, const ke::Transform2D & localTransform, const ke::Color & fillColor,
+            float radius = 5.0f, const ke::Color & outlineColor = ke::Color::TRANSPARENT, float outlineThickness = 0.0f)
             : EntityRenderableComponent(entity)
         {
-            this->sceneNode = ke::CircleShapeNode::create(entity->getId(), fillColor, radius, outlineColor, outlineThickness);
+            this->sceneNode = ke::CircleShapeNode::create(entity->getId(), localTransform,
+                fillColor, radius, outlineColor, outlineThickness);
         }
 
         virtual bool initialise() final

@@ -4,7 +4,7 @@
 
 #include "KEngine/Common/Point2D.hpp"
 #include "KEngine/Common/Transform2D.hpp"
-#include "KEngine/Graphics/RenderCommand.hpp"
+#include "KEngine/Graphics/GraphicsCommand.hpp"
 
 #include <memory>
 #include <vector>
@@ -31,7 +31,7 @@ namespace ke
         ISceneNode(const ISceneNode&) = delete;
         ISceneNode & operator=(const ISceneNode&) = delete;
 
-        virtual ke::RenderCommand getRenderCommand() const = 0;
+        virtual ke::GraphicsCommand getGraphicsCommand() const = 0;
 
         inline ke::EntityId getEntityId() const { return this->entityId; }
         inline ISceneNode * getParent() const { return this->parentNode; }

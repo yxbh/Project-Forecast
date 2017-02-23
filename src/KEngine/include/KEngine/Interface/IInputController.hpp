@@ -1,6 +1,7 @@
 #pragma once
 
 #include "KEngine/Common/Time.hpp"
+#include "KEngine/Common/Point2D.hpp"
 
 #include <cstdint>
 #include <memory>
@@ -29,13 +30,13 @@ namespace ke
         /// </summary>
         /// <param name="button"></param>
         /// <returns>true if button press was handled.</returns>
-        virtual bool onButtonPressed(ke::MouseButton button) = 0;
+        virtual bool onButtonPressed(ke::MouseButton button, const Point2D & position) = 0;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="button"></param>
         /// <returns>true if the button release was handled.</returns>
-        virtual bool onButtonReleased(ke::MouseButton button) = 0;
+        virtual bool onButtonReleased(ke::MouseButton button, const Point2D & position) = 0;
         virtual bool onPointerMoved() = 0;
     };
 

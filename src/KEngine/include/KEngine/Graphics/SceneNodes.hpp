@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RenderCommand.hpp"
+#include "GraphicsCommand.hpp"
 #include "KEngine/Common/Dimension2D.hpp"
 #include "KEngine/Interface/ISceneNode.hpp"
 
@@ -29,10 +29,10 @@ namespace ke
 
         using SceneNode::SceneNode;
 
-        virtual ke::RenderCommand getRenderCommand() const override
+        virtual ke::GraphicsCommand getGraphicsCommand() const override
         {
-            ke::RenderCommand cmd;
-            cmd.type = ke::RenderObjectType::Invisible;
+            ke::GraphicsCommand cmd;
+            cmd.type = ke::GraphicsCommand::Types::RenderInvisible;
             return cmd;
         }
 
@@ -50,9 +50,9 @@ namespace ke
 
         using SceneNode::SceneNode;
 
-        virtual ke::RenderCommand getRenderCommand() const override
+        virtual ke::GraphicsCommand getGraphicsCommand() const override
         {
-            return ke::RenderCommand();
+            return ke::GraphicsCommand();
         }
 
         inline const ke::Dimension2D & getDimension() const { return this->dimension; }
@@ -65,15 +65,16 @@ namespace ke
     class CircleShapeNode : public ke::SceneNode
     {
     public:
-        static ke::SceneNodeSptr create(ke::EntityId entityId, ke::Color fillColor = ke::Color::GREEN, float radius = 5.0f,
+        static ke::SceneNodeSptr create(ke::EntityId entityId, const ke::Transform2D & localTransform = {},
+            ke::Color fillColor = ke::Color::GREEN, float radius = 5.0f,
             ke::Color outlineColor = ke::Color::TRANSPARENT, float outlineThickness = 0.0f);
 
         using SceneNode::SceneNode;
 
-        virtual RenderCommand getRenderCommand() const final;
+        virtual GraphicsCommand getGraphicsCommand() const final;
 
     private:
-        ke::RenderCommand states;
+        mutable ke::GraphicsCommand states;
     };
 
 }

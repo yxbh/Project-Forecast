@@ -3,6 +3,7 @@
 #include "KEngine/App.hpp"
 #include "../Events/RequestDrawDebugDotEvent.hpp"
 #include "KEngine/Entity/Components/EntityRenderableComponents.hpp"
+#include "KEngine/Common/Transform2D.hpp"
 #include "KEngine/Core/Entity.hpp"
 #include "KEngine/Core/EventManager.hpp"
 #include "KEngine/Log/Log.hpp"
@@ -32,6 +33,8 @@ namespace pf
         {
         case pf::RequestDrawDebugDotEvent::TYPE:
         {
+            auto actualEvent = std::dynamic_pointer_cast<pf::RequestDrawDebugDotEvent>(event);
+            assert(actualEvent);
             static const auto debugDrawEntityJson =
 R"(
     {
@@ -54,7 +57,9 @@ R"(
 )";
 
             auto entity = ke::makeEntity(ke::Entity::newId());
-            auto renderComponent = ke::makeEntityComponent<ke::EntityRenderableCircleShapeComponent>(entity, ke::Color::GREEN);
+            auto & position = actualEvent->getPosition();
+            ke::Transform2D transform{ position.x, position.y };
+            auto renderComponent = ke::makeEntityComponent<ke::EntityRenderableCircleShapeComponent>(entity, transform, ke::Color::GREEN);
             entity->addComponent(renderComponent);
 
             auto result = entity->initialise();

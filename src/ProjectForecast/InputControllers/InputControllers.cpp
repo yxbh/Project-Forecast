@@ -14,18 +14,18 @@ namespace pf
 
     }
 
-    bool MouseInputController::onButtonPressed(ke::MouseButton button)
+    bool MouseInputController::onButtonPressed(ke::MouseButton button, const ke::Point2D & position)
     {
         switch (button)
         {
         case ke::MouseButton::Left:
-            ke::EventManager::enqueue(ke::makeEvent<pf::RequestDrawDebugDotEvent>());
+            ke::EventManager::enqueue(ke::makeEvent<pf::RequestDrawDebugDotEvent>(position));
             return true;
         }
         return false;
     }
 
-    bool MouseInputController::onButtonReleased(ke::MouseButton button)
+    bool MouseInputController::onButtonReleased(ke::MouseButton button, const ke::Point2D & position)
     {
         return false;
     }
