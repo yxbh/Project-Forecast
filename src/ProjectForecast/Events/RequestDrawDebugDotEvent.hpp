@@ -19,7 +19,7 @@ namespace pf
 
         virtual ke::EventSptr makeCopy() const override
         {
-            return ke::makeEvent<RequestDrawDebugDotEvent>(this->position, this->radius);
+            return ke::makeEvent<RequestDrawDebugDotEvent>(this->position, this->radius, this->color);
         }
 
         inline const ke::Point2D & getPosition() const { return this->position; }

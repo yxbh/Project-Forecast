@@ -113,6 +113,8 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Common/HeartBeatGenerator.hpp \
     ../../../KEngine/include/KEngine/Common/Point2D.hpp \
     ../../../KEngine/include/KEngine/Common/Color.hpp \
+    ../../../KEngine/include/KEngine/Common/Dimension2D.hpp \
+    ../../../KEngine/include/KEngine/Common/Transform2D.hpp \
     ../../../KEngine/include/KEngine/Core/EventManager.hpp \
     ../../../KEngine/include/KEngine/Core/EventManagerImpl.hpp \
     ../../../KEngine/include/KEngine/Core/Entity.hpp \
@@ -135,8 +137,8 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Interface/IScene.hpp \
     ../../../KEngine/include/KEngine/Interface/ISceneNode.hpp \
     ../../../KEngine/include/KEngine/Interface/IInputController.hpp \
-    ../../../KEngine/include/KEngine/Entity/ComponentLoaders/EntityRenderComponentLoader.hpp \
-    ../../../KEngine/include/KEngine/Entity/Components/EntityRenderComponent.hpp \
+    ../../../KEngine/include/KEngine/Entity/Components/EntityRenderableComponents.hpp \
+    ../../../KEngine/include/KEngine/Entity/ComponentLoaders/EntityRenderableComponentLoader.hpp \
     ../../../KEngine/include/KEngine/Events/SDL2/SDL2Event.hpp \
     ../../../KEngine/include/KEngine/Events/SFML/SfmlEvent.hpp \
     ../../../KEngine/include/KEngine/Events/AppExitRequestedEvent.hpp \
@@ -152,6 +154,8 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Graphics/RenderSystem.hpp \
     ../../../KEngine/include/KEngine/Graphics/Scene.hpp \
     ../../../KEngine/include/KEngine/Graphics/Window.hpp \
+    ../../../KEngine/include/KEngine/Graphics/RenderCommand.hpp \
+    ../../../KEngine/include/KEngine/Graphics/SceneNodes.hpp \
     ../../../KEngine/include/KEngine/Log/Log.hpp \
     ../../../KEngine/include/KEngine/UnitTest/catch.hpp \
     ../../../KEngine/include/KEngine/App.hpp \
@@ -182,10 +186,10 @@ SOURCES += \
     ../../../KEngine/src/Graphics/WindowFactory.cpp \
     ../../../KEngine/src/Graphics/RenderSystem.cpp \
     ../../../KEngine/src/Graphics/Scene.cpp \
+    ../../../KEngine/src/Graphics/SceneNodes.cpp \
     ../../../KEngine/src/Views/HumanView.cpp \
     ../../../KEngine/src/App.cpp \
     ../../../KEngine/src/BaseAppLogic.cpp \
-    ../../../ProjectForecast/main.cpp \
     ../../../KEngine/src/dump.cpp \
     ../../../KEngine/src/UnitTest/UnitTest_Delegate.cpp \
     ../../../KEngine/src/UnitTest/UnitTest_EventDelegates.cpp \
@@ -199,7 +203,8 @@ SOURCES += \
     ../../../ProjectForecast/Views/HumanView.cpp \
     ../../../ProjectForecast/Systems/DebugDrawSystem.cpp \
     ../../../ProjectForecast/Systems/EventFeedbackSystem.cpp \
-    ../../../ProjectForecast/InputControllers/InputControllers.cpp
+    ../../../ProjectForecast/InputControllers/InputControllers.cpp \
+    ../../../ProjectForecast/main.cpp
 #
 
 #
