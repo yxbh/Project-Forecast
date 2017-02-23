@@ -298,6 +298,13 @@ namespace ke
                 return;
             }
 
+            if (!this->renderSystem->initialise())
+            {
+                Log::instance()->critical("Failuring initialising render system on thread {}.",
+                    std::hash<std::thread::id>()(std::this_thread::get_id()));
+                return;
+            }
+
             mainWindow->display();
 
             ke::Log::instance()->info("Entering KEngine render loop ...");
@@ -329,6 +336,7 @@ namespace ke
                 std::this_thread::sleep_for(RENDER_THREAD_SLEEP_DURATION);
             }
 
+            this->renderSystem->shutdown();
             this->mainWindow->setThreadCurrent(false);
 
             ke::Log::instance()->info("KEngine render loop exited.");

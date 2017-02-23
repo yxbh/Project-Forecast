@@ -2,15 +2,28 @@
 
 #include <SFML/Graphics.hpp>
 
+#include <memory>
 #include <queue>
 
 namespace
 {
     ke::RenderSystem::GraphicsCommandList allCommands;
+
+    std::unique_ptr<sf::Drawable> circleShape;
 }
 
 namespace ke
 {
+
+    bool RenderSystem::initialise()
+    {
+        return true;
+    }
+
+    void RenderSystem::shutdown()
+    {
+        circleShape.reset();
+    }
 
     void RenderSystem::prepareCommands(ke::Scene * scene)
     {
@@ -52,23 +65,27 @@ namespace ke
             {
             case ke::GraphicsCommand::Types::RenderCircleShape:
             {
-                sf::CircleShape shape;
-                shape.setPosition(cmd.render.globalTransform.x, cmd.render.globalTransform.y);
+                if (!circleShape)
+                {
+                    circleShape.reset(new sf::CircleShape);
+                }
+                auto * shape = static_cast<sf::CircleShape*>(circleShape.get());
+                shape->setPosition(cmd.render.globalTransform.x, cmd.render.globalTransform.y);
                 sf::Color sfFillColor(
                     cmd.render.fillColor.r,
                     cmd.render.fillColor.g,
                     cmd.render.fillColor.b,
                     cmd.render.fillColor.a);
-                shape.setFillColor(sfFillColor);
-                shape.setRadius(cmd.render.radius);
+                shape->setFillColor(sfFillColor);
+                shape->setRadius(cmd.render.radius);
                 sf::Color sfOutlineColor(
                     cmd.render.outlineColor.r,
                     cmd.render.outlineColor.g,
                     cmd.render.outlineColor.b,
                     cmd.render.outlineColor.a);
-                shape.setOutlineColor(sfOutlineColor);
-                shape.setOutlineThickness(cmd.render.outlineThickness);
-                renderTarget->draw(shape);
+                shape->setOutlineColor(sfOutlineColor);
+                shape->setOutlineThickness(cmd.render.outlineThickness);
+                renderTarget->draw(*shape);
                 break;
             }
 

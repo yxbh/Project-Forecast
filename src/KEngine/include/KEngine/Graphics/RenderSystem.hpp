@@ -1,6 +1,7 @@
 #pragma once
 
 #include "KEngine/Interface/IWindow.hpp"
+#include "KEngine/Interface/ISystem.hpp"
 #include "KEngine/Graphics/Scene.hpp"
 #include "KEngine/Graphics/GraphicsCommand.hpp"
 #include "KEngine/Common/Time.hpp"
@@ -14,8 +15,10 @@ namespace ke
     /// <summary>
     /// 
     /// </summary>
-    class RenderSystem
+    class RenderSystem : ke::ISystem
     {
+        KE_DEFINE_SYSTEM_COMMON_PROPERTIES(RenderSystem, 0xED936B34)
+
     public:
         using GraphicsCommandList = std::vector<ke::GraphicsCommand>;
 
@@ -43,6 +46,11 @@ namespace ke
         void render();
 
         void setWindow(ke::WindowSptr p_window) { this->window = p_window; }
+
+        virtual bool initialise() final;
+        virtual void shutdown() final;
+
+        inline virtual void update(ke::Time elapsedTime) {};
 
     private:
         ke::WindowSptr window;
