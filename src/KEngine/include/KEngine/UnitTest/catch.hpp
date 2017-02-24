@@ -4345,7 +4345,7 @@ namespace Clara {
                     return "-" + shortNames[0];
                 return "positional args";
             }
-            std::string commands() const {
+            std::string::currentCommandGenThreadCmdListcommands() const {
                 std::ostringstream oss;
                 bool first = true;
                 std::vector<std::string>::const_iterator it = shortNames.begin(), itEnd = shortNames.end();

@@ -6,6 +6,7 @@
 #include "KEngine/Common/StopWatch.hpp"
 #include "KEngine/Common/String.hpp"
 #include "KEngine/Core/EventManager.hpp"
+#include "KEngine/Core/FrameRateCounter.hpp"
 
 #include "KEngine/Events/AppExitRequestedEvent.hpp"
 #include "KEngine/Events/EventLoopFrameEvent.hpp"
@@ -22,6 +23,8 @@
 #include <SDL.h>
 #include <SFML/Window.hpp>
 
+#include <atomic>
+#include <cstdio>
 #include <memory>
 
 namespace
@@ -32,19 +35,18 @@ namespace
     using namespace std::chrono_literals;
     static const auto EVENT_THREAD_SLEEP_DURATION = 1ms;
     static const auto LOGIC_THREAD_SLEEP_DURATION = 1ms;
-    static const auto RENDER_THREAD_SLEEP_DURATION = 1ms;
+    static const auto RENDER_THREAD_SLEEP_DURATION = 0ms;
 
-    static std::shared_ptr<ke::GraphicsLoopFrameEvent> graphicsLoopEventHolder;
+    static const ke::Time LOGIC_THREAD_TARGET_FRAMETIME = ke::Time::milliseconds(10);
 
-    static void graphicsLoopEventHandler(ke::EventSptr event)
-    {
-        std::shared_ptr<ke::GraphicsLoopFrameEvent> frameEvent
-                = std::static_pointer_cast<ke::GraphicsLoopFrameEvent>(event);
-        if (frameEvent)
-        {
-            std::atomic_store(&graphicsLoopEventHolder, frameEvent);
-        }
-    }
+    static std::atomic<float> eventLoopFps    = 0.0f;
+    static std::atomic<float> logicLoopFps    = 0.0f;
+    static std::atomic<float> graphicsLoopFps = 0.0f;
+
+    static std::atomic<size_t> graphicsCommandCount = 0;
+    static std::atomic<size_t> graphicsDrawCallCount = 0;
+
+    static char windowTitleTextBuffer[256] = {};
 
 }
 
@@ -123,18 +125,20 @@ namespace ke
 
     void App::enterEventLoop()
     {
-        ke::EventManager::registerListener<ke::GraphicsLoopFrameEvent>(&::graphicsLoopEventHandler);
-        KE_MAKE_SCOPEFUNC([](){ ke::EventManager::deregisterListener<ke::GraphicsLoopFrameEvent>(&::graphicsLoopEventHandler); });
-
         ke::Log::instance()->info("Entering KEngine event loop ...");
 
         this->isEventLoopRunning = true;
         ke::StopWatch stopwatch;
         ke::HeartBeatGenerator heartBeat(ke::Time::milliseconds(5000));
+        ke::FrameRateCounter fpsCounter(1000);
+
         while(this->isEventLoopRunning)
         {
-            ke::Time frameTime = stopwatch.getElapsed();
+            const auto frameTime = stopwatch.getElapsed();
             stopwatch.restart();
+
+            fpsCounter.push(frameTime);
+            ::eventLoopFps = fpsCounter.getAverageFps();
 
             ke::EventManager::enqueue(ke::makeEvent<EventLoopFrameEvent>(frameTime));
 
@@ -166,11 +170,14 @@ namespace ke
             }
 #endif
 
-            auto graphicsLoopEvent = std::atomic_load_explicit(&graphicsLoopEventHolder, std::memory_order_relaxed);
-            if (graphicsLoopEvent)
-            {
-                this->mainWindow->setTitle("KEngine - " + std::to_string(graphicsLoopEvent->getFrameTimeSpan().asMilliseconds()) + "ms/frame");
-            }
+            // set title with stats.
+            const auto memO = std::memory_order_relaxed;
+            std::snprintf(::windowTitleTextBuffer, sizeof(::windowTitleTextBuffer),
+                "KEngine - FPS(%4.1f, %4.1f, %4.1f), GraphicsCommands(%lld), DrawCalls(%lld).",
+                ::eventLoopFps.load(memO), ::logicLoopFps.load(memO), ::graphicsLoopFps.load(memO),
+                ::graphicsCommandCount.load(memO), ::graphicsDrawCallCount.load(memO));
+            this->mainWindow->setTitle(::windowTitleTextBuffer);
+
 
             if (heartBeat)
             {
@@ -223,12 +230,23 @@ namespace ke
             ke::StopWatch stopwatch;
             ke::Time cumulativeLoopTime;
             ke::HeartBeatGenerator heartBeat(ke::Time::milliseconds(5000));
+            ke::FrameRateCounter fpsCounter(1000);
             this->isLogicLoopRunning = true;
 
             while(this->isLogicLoopRunning)
             {
-                cumulativeLoopTime += stopwatch.getElapsed();
+                const auto frameTime = stopwatch.getElapsed();
+                cumulativeLoopTime += frameTime;
                 stopwatch.restart();
+
+                fpsCounter.push(frameTime);
+                ::logicLoopFps = fpsCounter.getAverageFps();
+
+                if (frameTime < ::LOGIC_THREAD_TARGET_FRAMETIME)
+                {
+                    const auto difference = LOGIC_THREAD_TARGET_FRAMETIME - frameTime;
+                    std::this_thread::sleep_for(std::chrono::milliseconds(difference.asMilliseconds()));
+                }
 
                 //
                 // update logic
@@ -252,10 +270,8 @@ namespace ke
                 //
                 // prepare and dispatch render commands
                 //
-                //for (auto view : this->appLogic->getViews())
-                //    this->renderSystem->prepareRenderCommands(view.get()->getScene());
                 this->renderSystem->prepareCommands(this->appLogic->getCurrentHumanView()->getScene());
-                this->renderSystem->dispatchCommands();
+                ::graphicsCommandCount = this->renderSystem->dispatchCommands();
 
                 //
                 // debug/diagnostic stuff
@@ -310,15 +326,17 @@ namespace ke
             ke::Log::instance()->info("Entering KEngine render loop ...");
 
             ke::StopWatch stopwatch;
-            ke::Time cumulativeLoopTime;
             ke::HeartBeatGenerator heartBeat(ke::Time::milliseconds(5000));
+            ke::FrameRateCounter fpsCounter(500);
             this->isGraphicsLoopRunning = true;
 
             while (this->isGraphicsLoopRunning)
             {
-                ke::Time frameTime = stopwatch.getElapsed();
+                const auto frameTime = stopwatch.getElapsed();
                 stopwatch.restart();
-                cumulativeLoopTime += frameTime;
+
+                fpsCounter.push(frameTime);
+                ::graphicsLoopFps = fpsCounter.getAverageFps();
 
                 ke::EventManager::enqueue(ke::makeEvent<GraphicsLoopFrameEvent>(frameTime));
 
@@ -331,7 +349,8 @@ namespace ke
                 // e.g. culling, ordering, etc...
                 // if queue is empty then interpolate before render.
                 this->renderSystem->processCommands(frameTime);
-                this->renderSystem->render();
+                const auto drawCallCount = this->renderSystem->render();
+                ::graphicsDrawCallCount = drawCallCount ? drawCallCount : ::graphicsDrawCallCount;
                                 
                 std::this_thread::sleep_for(RENDER_THREAD_SLEEP_DURATION);
             }

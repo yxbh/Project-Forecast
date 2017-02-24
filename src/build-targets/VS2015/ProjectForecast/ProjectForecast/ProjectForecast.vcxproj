@@ -324,6 +324,7 @@
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EventDelegates.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EventManager.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Events.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_FrameRateCounter.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_StateMachine.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Time.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Views\HumanView.cpp" />
@@ -342,7 +343,10 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Dimension2D.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\HeartBeatGenerator.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Json.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\atomicops.h" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\concurrentqueue.h" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\json.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\readerwriterqueue.h" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\SRDelegate.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\macros.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Point2D.hpp" />
@@ -358,6 +362,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EntityManager.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManager.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManagerImpl.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\FrameRateCounter.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\ResourceManager.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\StateMachine.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\SystemManager.hpp" />

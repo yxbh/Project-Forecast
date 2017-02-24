@@ -7,6 +7,8 @@
 #include "KEngine/Common/Time.hpp"
 #include "KEngine/Common/Queues.hpp"
 
+#include <array>
+#include <cstdint>
 #include <memory>
 
 namespace ke
@@ -22,16 +24,19 @@ namespace ke
     public:
         using GraphicsCommandList = std::vector<ke::GraphicsCommand>;
 
+        RenderSystem();
+        virtual ~RenderSystem();
+
         /// <summary>
         /// Generate render commands from the given scene when it is not null.
         /// </summary>
         /// <param name="scene"></param>
-        void prepareCommands(ke::Scene * scene);
+        size_t prepareCommands(ke::Scene * scene);
 
         /// <summary>
-        /// Prepare all the render commands generated so far for processing.
+        /// Dispatch all commands generated/received so far for processing.
         /// </summary>
-        void dispatchCommands();
+        size_t dispatchCommands();
 
         /// <summary>
         /// Readies the render commands generated so far for rendering.
@@ -43,7 +48,7 @@ namespace ke
         /// <summary>
         /// 
         /// </summary>
-        void render();
+        size_t render();
 
         void setWindow(ke::WindowSptr p_window) { this->window = p_window; }
 
@@ -54,9 +59,6 @@ namespace ke
 
     private:
         ke::WindowSptr window;
-
-        GraphicsCommandList logicThreadRenderCommandQueue;
-        ke::ThreadSafeQueue<GraphicsCommandList> renderThreadCommandLists;
     };
 
     using RenderSystemUptr = std::unique_ptr<RenderSystem>;

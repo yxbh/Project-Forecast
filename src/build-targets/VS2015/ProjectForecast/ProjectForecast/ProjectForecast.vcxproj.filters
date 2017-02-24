@@ -210,6 +210,9 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SceneNodes.cpp">
       <Filter>KEngine\Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_FrameRateCounter.cpp">
+      <Filter>KEngine\Source Files\UnitTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IApp.hpp">
@@ -412,6 +415,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\GraphicsCommand.hpp">
       <Filter>KEngine\Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\FrameRateCounter.hpp">
+      <Filter>KEngine\Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\concurrentqueue.h">
+      <Filter>KEngine\Header Files\Common\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\atomicops.h">
+      <Filter>KEngine\Header Files\Common\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\readerwriterqueue.h">
+      <Filter>KEngine\Header Files\Common\Libs</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -16,7 +16,7 @@ namespace ke
     {
         assert(node->getEntityId());
 #if defined(KE_DEBUG)
-        if (this->entitySceneNodeMap.find(node->getEntityId()) == this->entitySceneNodeMap.end())
+        if (this->entitySceneNodeMap.find(node->getEntityId()) != this->entitySceneNodeMap.end())
         {
             ke::Log::instance()->error("A scene node associated with entity ID({}) already exists in the entity scenenode map.", node->getEntityId());
         }

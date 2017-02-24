@@ -56,17 +56,23 @@ R"(
     }
 )";
 
-            auto entity = ke::makeEntity(ke::Entity::newId());
-            auto & position = actualEvent->getPosition();
-            ke::Transform2D transform{ position.x, position.y };
-            auto renderComponent = ke::makeEntityComponent<ke::EntityRenderableCircleShapeComponent>(entity, transform, ke::Color::GREEN);
-            entity->addComponent(renderComponent);
+            for (auto i = 0; i < 50; ++i)
+            {
+                auto entity = ke::makeEntity(ke::Entity::newId());
+                auto & position = actualEvent->getPosition();
+                ke::Transform2D transform{ position.x, position.y };
+                auto renderComponent = ke::makeEntityComponent<ke::EntityRenderableCircleShapeComponent>(entity, transform, ke::Color::GREEN);
+                entity->addComponent(renderComponent);
 
-            auto result = entity->initialise();
-            assert(result);
+                auto result = entity->initialise();
+                assert(result);
 
-            ke::App::instance()->getLogic()->getEntityManager()->addEntity(entity);
-            ke::App::instance()->getLogic()->getCurrentHumanView()->getScene()->addNode(renderComponent->getSceneNode()); // TODO: potentially remove this if we are going to go with the approach where renderable components broadcast events when a scene node is created.
+                ke::App::instance()->getLogic()->getEntityManager()->addEntity(entity);
+                ke::App::instance()->getLogic()->getCurrentHumanView()->getScene()->addNode(renderComponent->getSceneNode()); // TODO: potentially remove this if we are going to go with the approach where renderable components broadcast events when a scene node is created.
+
+                //ke::Log::instance()->info("entity with scene node created.");
+            }
+            
 
             break;
         }
