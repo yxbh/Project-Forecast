@@ -55,6 +55,11 @@ namespace ke
         circleShape.reset();
     }
 
+    void RenderSystem::update(ke::Time elapsedTime)
+    {
+        KE_UNUSED(elapsedTime);
+    }
+
     size_t RenderSystem::prepareCommands(ke::Scene * scene)
     {
         if (!scene) return 0; // ignore null scenes;

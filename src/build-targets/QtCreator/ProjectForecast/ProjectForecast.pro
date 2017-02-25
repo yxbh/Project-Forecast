@@ -106,8 +106,6 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Common/Time.hpp \
     ../../../KEngine/include/KEngine/Common/macros.hpp \
     ../../../KEngine/include/KEngine/Common/ScopeFunc.hpp \
-    ../../../KEngine/include/KEngine/Common/Libs/json.hpp \
-    ../../../KEngine/include/KEngine/Common/Libs/SRDelegate.hpp \
     ../../../KEngine/include/KEngine/Common/Json.hpp \
     ../../../KEngine/include/KEngine/Common/ThreadPool.hpp \
     ../../../KEngine/include/KEngine/Common/HeartBeatGenerator.hpp \
@@ -115,9 +113,15 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Common/Color.hpp \
     ../../../KEngine/include/KEngine/Common/Dimension2D.hpp \
     ../../../KEngine/include/KEngine/Common/Transform2D.hpp \
+    ../../../KEngine/include/KEngine/Common/Libs/json.hpp \
+    ../../../KEngine/include/KEngine/Common/Libs/SRDelegate.hpp \
+    ../../../KEngine/include/KEngine/Common/Libs/atomicops.h \
+    ../../../KEngine/include/KEngine/Common/Libs/concurrentqueue.h \
+    ../../../KEngine/include/KEngine/Common/Libs/readerwriterqueue.h \
     ../../../KEngine/include/KEngine/Core/EventManager.hpp \
     ../../../KEngine/include/KEngine/Core/EventManagerImpl.hpp \
     ../../../KEngine/include/KEngine/Core/Entity.hpp \
+    ../../../KEngine/include/KEngine/Core/FrameRateCounter.hpp \
     ../../../KEngine/include/KEngine/Core/StateMachine.hpp \
     ../../../KEngine/include/KEngine/Core/ResourceManager.hpp \
     ../../../KEngine/include/KEngine/Core/EntityFactory.hpp \

@@ -52,10 +52,10 @@ namespace ke
 
         void setWindow(ke::WindowSptr p_window) { this->window = p_window; }
 
-        virtual bool initialise() final;
-        virtual void shutdown() final;
+        virtual bool initialise() override;
+        virtual void shutdown() override;
 
-        inline virtual void update(ke::Time elapsedTime) {};
+        virtual void update(ke::Time elapsedTime) override;
 
     private:
         ke::WindowSptr window;

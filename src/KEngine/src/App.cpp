@@ -39,12 +39,12 @@ namespace
 
     static const ke::Time LOGIC_THREAD_TARGET_FRAMETIME = ke::Time::milliseconds(10);
 
-    static std::atomic<float> eventLoopFps    = 0.0f;
-    static std::atomic<float> logicLoopFps    = 0.0f;
-    static std::atomic<float> graphicsLoopFps = 0.0f;
+    static std::atomic<float> eventLoopFps    = {0.0f};
+    static std::atomic<float> logicLoopFps    = {0.0f};
+    static std::atomic<float> graphicsLoopFps = {0.0f};
 
-    static std::atomic<size_t> graphicsCommandCount = 0;
-    static std::atomic<size_t> graphicsDrawCallCount = 0;
+    static std::atomic<size_t> graphicsCommandCount = {0};
+    static std::atomic<size_t> graphicsDrawCallCount = {0};
 
     static char windowTitleTextBuffer[256] = {};
 
@@ -173,7 +173,7 @@ namespace ke
             // set title with stats.
             const auto memO = std::memory_order_relaxed;
             std::snprintf(::windowTitleTextBuffer, sizeof(::windowTitleTextBuffer),
-                "KEngine - FPS(%4.1f, %4.1f, %4.1f), GraphicsCommands(%lld), DrawCalls(%lld).",
+                "KEngine - FPS(%4.1f, %4.1f, %4.1f), GraphicsCommands(%lu), DrawCalls(%lu).",
                 ::eventLoopFps.load(memO), ::logicLoopFps.load(memO), ::graphicsLoopFps.load(memO),
                 ::graphicsCommandCount.load(memO), ::graphicsDrawCallCount.load(memO));
             this->mainWindow->setTitle(::windowTitleTextBuffer);
@@ -350,7 +350,7 @@ namespace ke
                 // if queue is empty then interpolate before render.
                 this->renderSystem->processCommands(frameTime);
                 const auto drawCallCount = this->renderSystem->render();
-                ::graphicsDrawCallCount = drawCallCount ? drawCallCount : ::graphicsDrawCallCount;
+                ::graphicsDrawCallCount = drawCallCount > 0 ? drawCallCount : ::graphicsDrawCallCount.load();
                                 
                 std::this_thread::sleep_for(RENDER_THREAD_SLEEP_DURATION);
             }

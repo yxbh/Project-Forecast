@@ -46,7 +46,7 @@ namespace pf
         switch (event.type)
         {
         case sf::Event::MouseButtonPressed:
-            //ke::Log::instance()->info("sf::Event::MouseButtonPressed");
+            ke::Log::instance()->info("sf::Event::MouseButtonPressed");
             switch (event.mouseButton.button)
             {
             case sf::Mouse::Left:
