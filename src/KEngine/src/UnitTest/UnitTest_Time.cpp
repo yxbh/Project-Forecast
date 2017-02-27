@@ -15,9 +15,11 @@ TEST_CASE("ke::Time Unit Tests")
 
         THEN("Internal counter should be 0")
         {
+            CHECK(time.asNanoseconds() == 0);
             CHECK(time.asMicroseconds() == 0);
             CHECK(time.asMilliseconds() == 0);
             CHECK(time.asSeconds() == 0.0);
+            CHECK(time2.asNanoseconds() == 0);
             CHECK(time2.asMicroseconds() == 0);
             CHECK(time2.asMilliseconds() == 0);
             CHECK(time2.asSeconds() == 0.0);

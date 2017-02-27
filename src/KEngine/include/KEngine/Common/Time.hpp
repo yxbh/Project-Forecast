@@ -25,7 +25,7 @@ namespace ke
         static const Time Zero;
 
     private:
-        std::int64_t m_TimeInMicroseconds = 0;
+        std::int64_t m_TimeInNanoseconds = 0;
 
     public:
         Time(void) = default;
@@ -34,6 +34,7 @@ namespace ke
         double asSeconds(void) const;
         std::int32_t asMilliseconds(void) const;
         std::int64_t asMicroseconds(void) const;
+        std::int64_t asNanoseconds(void) const;
 
         std::int64_t count(void) const;
         std::int64_t getCount(void) const;
@@ -41,6 +42,7 @@ namespace ke
         static ke::Time seconds(const double p_Amount);
         static ke::Time milliseconds(const std::int64_t p_Amount);
         static ke::Time microseconds(const std::int64_t p_Amount);
+        static ke::Time nanoseconds(const std::int64_t p_Amount);
 
     private:
         explicit Time(const std::int64_t p_Microseconds);

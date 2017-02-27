@@ -39,12 +39,14 @@ namespace
 
     static const ke::Time LOGIC_THREAD_TARGET_FRAMETIME = ke::Time::milliseconds(10);
 
-    static std::atomic<float> eventLoopFps    = {0.0f};
-    static std::atomic<float> logicLoopFps    = {0.0f};
-    static std::atomic<float> graphicsLoopFps = {0.0f};
+    static std::atomic<double> logicLoopFrameTimeMs = { 0.0f };
 
-    static std::atomic<size_t> graphicsCommandCount = {0};
-    static std::atomic<size_t> graphicsDrawCallCount = {0};
+    static std::atomic<float> eventLoopFps    = { 0.0f };
+    static std::atomic<float> logicLoopFps    = { 0.0f };
+    static std::atomic<float> graphicsLoopFps = { 0.0f };
+
+    static std::atomic<size_t> graphicsCommandCount = { 0 };
+    static std::atomic<size_t> graphicsDrawCallCount = { 0 };
 
     static char windowTitleTextBuffer[256] = {};
 
@@ -138,7 +140,7 @@ namespace ke
             stopwatch.restart();
 
             fpsCounter.push(frameTime);
-            ::eventLoopFps = fpsCounter.getAverageFps();
+            ::eventLoopFps.store(fpsCounter.getAverageFps(), std::memory_order_relaxed);
 
             ke::EventManager::enqueue(ke::makeEvent<EventLoopFrameEvent>(frameTime));
 
@@ -173,9 +175,9 @@ namespace ke
             // set title with stats.
             const auto memO = std::memory_order_relaxed;
             std::snprintf(::windowTitleTextBuffer, sizeof(::windowTitleTextBuffer),
-                "KEngine - FPS(%4.1f, %4.1f, %4.1f), GraphicsCommands(%lu), DrawCalls(%lu).",
-                ::eventLoopFps.load(memO), ::logicLoopFps.load(memO), ::graphicsLoopFps.load(memO),
-                ::graphicsCommandCount.load(memO), ::graphicsDrawCallCount.load(memO));
+                "KEngine - FPS(%4.1f, %4.1f[%4.1f/ms], %4.1f), GraphicsCommands(%lu), DrawCalls(%lu).",
+                ::eventLoopFps.load(memO), ::logicLoopFps.load(memO), ::logicLoopFrameTimeMs.load(memO),
+                ::graphicsLoopFps.load(memO), ::graphicsCommandCount.load(memO), ::graphicsDrawCallCount.load(memO));
             this->mainWindow->setTitle(::windowTitleTextBuffer);
 
 
@@ -236,26 +238,28 @@ namespace ke
             while(this->isLogicLoopRunning)
             {
                 const auto frameTime = stopwatch.getElapsed();
-                cumulativeLoopTime += frameTime;
                 stopwatch.restart();
+                cumulativeLoopTime += frameTime;
 
                 fpsCounter.push(frameTime);
-                ::logicLoopFps = fpsCounter.getAverageFps();
+                ::logicLoopFps.store(fpsCounter.getAverageFps(), std::memory_order_relaxed);
+                ::logicLoopFrameTimeMs.store(frameTime.asMilliseconds(), std::memory_order_relaxed);
 
-                if (frameTime < ::LOGIC_THREAD_TARGET_FRAMETIME)
+                /*if (frameTime < ::LOGIC_THREAD_TARGET_FRAMETIME)
                 {
-                    const auto difference = LOGIC_THREAD_TARGET_FRAMETIME - frameTime;
-                    std::this_thread::sleep_for(std::chrono::milliseconds(difference.asMilliseconds()));
-                }
+                    const auto difference = ::LOGIC_THREAD_TARGET_FRAMETIME - frameTime;
+                    std::this_thread::sleep_for(std::chrono::nanoseconds(difference.asNanoseconds()));
+                }*/
+                std::this_thread::sleep_for(std::chrono::milliseconds(::LOGIC_THREAD_TARGET_FRAMETIME.asMilliseconds()));
 
                 //
                 // update logic
                 //
-                while (cumulativeLoopTime >= LOGIC_UPDATE_FIXED_TIMESPAN)
+                while (cumulativeLoopTime >= ::LOGIC_UPDATE_FIXED_TIMESPAN)
                 {
-                    cumulativeLoopTime -= LOGIC_UPDATE_FIXED_TIMESPAN;
+                    cumulativeLoopTime -= ::LOGIC_UPDATE_FIXED_TIMESPAN;
 
-                    ke::EventManager::enqueue(ke::makeEvent<LogicLoopFrameEvent>(LOGIC_UPDATE_FIXED_TIMESPAN));
+                    ke::EventManager::enqueue(ke::makeEvent<LogicLoopFrameEvent>(::LOGIC_UPDATE_FIXED_TIMESPAN));
                     ke::EventManager::update();
 
                     //
@@ -264,14 +268,15 @@ namespace ke
                     ke::EventManager::update();
 
                     // update logic.
-                    this->appLogic->update(LOGIC_UPDATE_FIXED_TIMESPAN);
+                    this->appLogic->update(::LOGIC_UPDATE_FIXED_TIMESPAN);
                 }
 
                 //
                 // prepare and dispatch render commands
                 //
                 this->renderSystem->prepareCommands(this->appLogic->getCurrentHumanView()->getScene());
-                ::graphicsCommandCount = this->renderSystem->dispatchCommands();
+                auto cmdCount = this->renderSystem->dispatchCommands();
+                ::graphicsCommandCount.store(cmdCount, std::memory_order_relaxed);
 
                 //
                 // debug/diagnostic stuff
@@ -281,7 +286,7 @@ namespace ke
                     ke::Log::instance()->info("Logic loop heart beat");
                 }
 
-                std::this_thread::sleep_for(LOGIC_THREAD_SLEEP_DURATION);
+                //std::this_thread::sleep_for(LOGIC_THREAD_SLEEP_DURATION);
             }
 
             // we only flag event loop for termination here as some logics may still require the event loop to be alive.
@@ -336,7 +341,7 @@ namespace ke
                 stopwatch.restart();
 
                 fpsCounter.push(frameTime);
-                ::graphicsLoopFps = fpsCounter.getAverageFps();
+                ::graphicsLoopFps.store(fpsCounter.getAverageFps(), std::memory_order_relaxed);
 
                 ke::EventManager::enqueue(ke::makeEvent<GraphicsLoopFrameEvent>(frameTime));
 
@@ -350,9 +355,9 @@ namespace ke
                 // if queue is empty then interpolate before render.
                 this->renderSystem->processCommands(frameTime);
                 const auto drawCallCount = this->renderSystem->render();
-                ::graphicsDrawCallCount = drawCallCount > 0 ? drawCallCount : ::graphicsDrawCallCount.load();
+                ::graphicsDrawCallCount.store(drawCallCount > 0 ? drawCallCount : ::graphicsDrawCallCount.load(), std::memory_order_relaxed);
                                 
-                std::this_thread::sleep_for(RENDER_THREAD_SLEEP_DURATION);
+                std::this_thread::sleep_for(::RENDER_THREAD_SLEEP_DURATION);
             }
 
             this->renderSystem->shutdown();

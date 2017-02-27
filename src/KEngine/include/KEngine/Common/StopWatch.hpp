@@ -15,7 +15,7 @@ namespace ke
     {
     public:
         using DurationType          = ke::Time;
-        using DurationInternalType  = std::chrono::milliseconds;
+        using DurationInternalType  = std::chrono::nanoseconds;
         using ClockType             = std::chrono::high_resolution_clock;
         using TimePointType         = ClockType::time_point;
 
@@ -36,7 +36,7 @@ namespace ke
             m_AfterTP = ClockType::now();
             m_Duration += std::chrono::duration_cast<DurationInternalType>(m_AfterTP - m_BeforeTP);
             m_BeforeTP = m_AfterTP;
-            return ke::Time::milliseconds(m_Duration.count());
+            return ke::Time::nanoseconds(m_Duration.count());
         }
 
         /// <summary>

@@ -27,8 +27,8 @@ namespace ke
 
         float getAverageFps() const
         {
-            auto avgFrameTime = (float)rollingTotal.asMilliseconds() / (float)this->frameTimeHistory.size();
-            return 1000.0f / avgFrameTime;
+            auto avgFrameTime = (float)rollingTotal.asNanoseconds() / (float)this->frameTimeHistory.size();
+            return 1000000000.0f / avgFrameTime;
         }
 
     private:
