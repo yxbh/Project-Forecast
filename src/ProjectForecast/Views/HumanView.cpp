@@ -74,10 +74,7 @@ namespace pf
         {
             if (event.key.code == sf::Keyboard::Return)
             {
-                auto echoText = "echo({}): " + testTextBuffer;
-                ke::Log::instance()->info(echoText.c_str(), testTextBuffer.length());
-                //ke::Log::instance()->info("return pressed");
-                //ke::Log::instance()->info(std::string("return pressed").c_str());
+                ke::Log::instance()->info("echo({}): {}", testTextBuffer.length(), testTextBuffer);
                 testTextBuffer.clear();
             }
             break;

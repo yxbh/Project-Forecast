@@ -22,14 +22,14 @@ namespace pf
         virtual void update(ke::Time elapsedTime) override;
 
     private:
+        void handleWindowEvent(ke::EventSptr event);
+        void handleSfmlEvent(const sf::Event & event);
+
+
         std::string testTextBuffer;
 
         ke::MouseInputControllerUptr mouseController;
         ke::KeyboardInputControllerUptr keyboardController;
-
-
-        void handleWindowEvent(ke::EventSptr event);
-        void handleSfmlEvent(const sf::Event & event);
     };
 
 }
