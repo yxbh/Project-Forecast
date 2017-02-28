@@ -25,10 +25,10 @@ namespace ke
             this->frameTimeHistory.push(elapsedFrameTime);
         }
 
-        float getAverageFps() const
+        double getAverageFps() const
         {
-            auto avgFrameTime = (float)rollingTotal.asNanoseconds() / (float)this->frameTimeHistory.size();
-            return 1000000000.0f / avgFrameTime;
+            auto avgFrameTime = rollingTotal.asSeconds() / (double)this->frameTimeHistory.size();
+            return 1.0 / avgFrameTime;
         }
 
     private:

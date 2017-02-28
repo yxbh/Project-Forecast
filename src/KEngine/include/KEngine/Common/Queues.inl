@@ -97,4 +97,11 @@ inline bool ThreadSafeQueue<T>::isEmpty() const
     return m_Data.empty();
 }
 
+template<typename T>
+inline size_t ThreadSafeQueue<T>::size() const
+{
+//    std::lock_guard<std::mutex> lock(m_Mut);
+    return m_Data.size();
+}
+
 } // KE ns

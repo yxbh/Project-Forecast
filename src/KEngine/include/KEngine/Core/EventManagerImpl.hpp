@@ -28,6 +28,8 @@ namespace ke::priv
 
         virtual ke::EventProcessResult update(const ke::Time p_DurationLimit = ke::Time::Zero) final;
 
+        virtual size_t getEventCount() const final;
+
     public:
         using DelegateType      = ke::EventDelegate;
         using ListenerList      = std::vector<DelegateType>;

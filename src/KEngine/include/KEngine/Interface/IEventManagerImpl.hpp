@@ -73,6 +73,8 @@ namespace ke::priv
         /// <returns>EventProcessResult indicating status of event processing.</returns>
         virtual EventProcessResult update(const ke::Time p_DurationLimit = ke::Time::Zero) = 0;
         //virtual EventProcessResult update(const ke::Time p_Duration, const ke::Time p_DurationLimit = Time::Zero) = 0;
+
+        virtual size_t getEventCount() const = 0;
     };
 
     inline IEventManagerImpl::~IEventManagerImpl() {}

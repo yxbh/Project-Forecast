@@ -38,6 +38,8 @@ public:
     bool poll(T & p_Value);
     /** @return true if queue is empty. */
     bool isEmpty(void) const;
+    /** @return the number of items in the queue. */
+    size_t size() const;
 
 }; // ThreadSafeQueue class
 

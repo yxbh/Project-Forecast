@@ -3,7 +3,6 @@
 #include "Time.hpp"
 
 #include <chrono>
-#include <type_traits>
 
 namespace ke
 {
@@ -20,12 +19,14 @@ namespace ke
         using TimePointType         = ClockType::time_point;
 
     private:
-        DurationInternalType    m_Duration;
-        TimePointType           m_BeforeTP, m_AfterTP;
+        TimePointType m_TimePoint;
 
     public:
+        /// <summary>
+        /// Construct a stop watch and begin the timer.
+        /// </summary>
         StopWatch(void)
-            : m_Duration(0), m_BeforeTP(ClockType::now()), m_AfterTP(m_BeforeTP) {}
+            : m_TimePoint(ClockType::now()) {}
 
         /// <summary>
         /// Get the elapsed time.
@@ -33,14 +34,12 @@ namespace ke
         /// <returns>The elapsed time.</returns>
         inline DurationType elapsed(void)
         {
-            m_AfterTP = ClockType::now();
-            m_Duration += std::chrono::duration_cast<DurationInternalType>(m_AfterTP - m_BeforeTP);
-            m_BeforeTP = m_AfterTP;
-            return ke::Time::nanoseconds(m_Duration.count());
+            const auto elapsed = std::chrono::duration_cast<DurationInternalType>(ClockType::now() - m_TimePoint);
+            return ke::Time::nanoseconds(elapsed.count());
         }
 
         /// <summary>
-        /// Get the elapsed time as the templated duration type.
+        /// Get the elapsed time since the last time the stop watch was restarted.
         /// </summary>
         /// <returns>The elapsed time.</returns>
         inline DurationType getElapsed(void)
@@ -53,8 +52,7 @@ namespace ke
         /// </summary>
         inline void restart(void)
         {
-            m_BeforeTP = ClockType::now();
-            m_Duration = DurationInternalType(0);
+            m_TimePoint = ClockType::now();
         }
     }; // ElapsedTimer class
 

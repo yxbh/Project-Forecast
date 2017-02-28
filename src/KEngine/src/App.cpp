@@ -32,14 +32,14 @@ namespace
 
     static const ke::Time LOGIC_UPDATE_FIXED_TIMESPAN = ke::Time::milliseconds(20); // 50fps.
 
-    using namespace std::chrono_literals;
-    static const auto EVENT_THREAD_SLEEP_DURATION = 1ms;
-    static const auto LOGIC_THREAD_SLEEP_DURATION = 1ms;
-    static const auto RENDER_THREAD_SLEEP_DURATION = 0ms;
+    static const auto EVENT_THREAD_SLEEP_DURATION = std::chrono::microseconds(100);
+    static const auto LOGIC_THREAD_SLEEP_DURATION = std::chrono::milliseconds(2);
+    static const auto RENDER_THREAD_SLEEP_DURATION = std::chrono::microseconds(10);
 
     static const ke::Time LOGIC_THREAD_TARGET_FRAMETIME = ke::Time::milliseconds(10);
 
     static std::atomic<double> logicLoopFrameTimeMs = { 0.0f };
+    static std::atomic<double> renderLoopFrameTimeMs = { 0.0f };
 
     static std::atomic<float> eventLoopFps    = { 0.0f };
     static std::atomic<float> logicLoopFps    = { 0.0f };
@@ -47,6 +47,8 @@ namespace
 
     static std::atomic<size_t> graphicsCommandCount = { 0 };
     static std::atomic<size_t> graphicsDrawCallCount = { 0 };
+
+    static std::atomic<size_t> eventManagerEventCount = { 0 };
 
     static char windowTitleTextBuffer[256] = {};
 
@@ -174,10 +176,14 @@ namespace ke
 
             // set title with stats.
             const auto memO = std::memory_order_relaxed;
+            using LLU = unsigned long long;
             std::snprintf(::windowTitleTextBuffer, sizeof(::windowTitleTextBuffer),
-                "KEngine - FPS(%4.1f, %4.1f[%4.1f/ms], %4.1f), GraphicsCommands(%lu), DrawCalls(%lu).",
-                ::eventLoopFps.load(memO), ::logicLoopFps.load(memO), ::logicLoopFrameTimeMs.load(memO),
-                ::graphicsLoopFps.load(memO), ::graphicsCommandCount.load(memO), ::graphicsDrawCallCount.load(memO));
+                "KEngine - FPS(%4.1f, %4.1f[%4.1f/ms], %4.1f[%4.1f/ms]), GraphicsCommands(%llu), DrawCalls(%llu), Events(%llu).",
+                ::eventLoopFps.load(memO),
+                ::logicLoopFps.load(memO), ::logicLoopFrameTimeMs.load(memO),
+                ::graphicsLoopFps.load(memO), ::renderLoopFrameTimeMs.load(memO),
+                (LLU)::graphicsCommandCount.load(memO), (LLU)::graphicsDrawCallCount.load(memO),
+                (LLU)::eventManagerEventCount.load(memO));
             this->mainWindow->setTitle(::windowTitleTextBuffer);
 
 
@@ -243,14 +249,15 @@ namespace ke
 
                 fpsCounter.push(frameTime);
                 ::logicLoopFps.store(fpsCounter.getAverageFps(), std::memory_order_relaxed);
-                ::logicLoopFrameTimeMs.store(frameTime.asMilliseconds(), std::memory_order_relaxed);
+                ::logicLoopFrameTimeMs.store(frameTime.asNanoseconds()/1000000.0, std::memory_order_relaxed);
+                ::eventManagerEventCount.store(ke::EventManager::instance()->getEventCount(), std::memory_order_relaxed);
 
-                /*if (frameTime < ::LOGIC_THREAD_TARGET_FRAMETIME)
-                {
-                    const auto difference = ::LOGIC_THREAD_TARGET_FRAMETIME - frameTime;
-                    std::this_thread::sleep_for(std::chrono::nanoseconds(difference.asNanoseconds()));
-                }*/
-                std::this_thread::sleep_for(std::chrono::milliseconds(::LOGIC_THREAD_TARGET_FRAMETIME.asMilliseconds()));
+//                if (frameTime < ::LOGIC_THREAD_TARGET_FRAMETIME)
+//                {
+//                    const auto difference = ::LOGIC_THREAD_TARGET_FRAMETIME - frameTime;
+//                    std::this_thread::sleep_for(std::chrono::nanoseconds(difference.asNanoseconds()));
+//                }
+//                std::this_thread::sleep_for(std::chrono::milliseconds(::LOGIC_THREAD_TARGET_FRAMETIME.asMilliseconds()));
 
                 //
                 // update logic
@@ -286,7 +293,8 @@ namespace ke
                     ke::Log::instance()->info("Logic loop heart beat");
                 }
 
-                //std::this_thread::sleep_for(LOGIC_THREAD_SLEEP_DURATION);
+                if (frameTime < ke::Time::milliseconds(1))
+                    std::this_thread::sleep_for(LOGIC_THREAD_SLEEP_DURATION);
             }
 
             // we only flag event loop for termination here as some logics may still require the event loop to be alive.
@@ -342,12 +350,13 @@ namespace ke
 
                 fpsCounter.push(frameTime);
                 ::graphicsLoopFps.store(fpsCounter.getAverageFps(), std::memory_order_relaxed);
+                ::renderLoopFrameTimeMs.store(frameTime.asMicroseconds()/1000.0, std::memory_order_relaxed);
 
                 ke::EventManager::enqueue(ke::makeEvent<GraphicsLoopFrameEvent>(frameTime));
 
                 if (heartBeat)
                 {
-                    ke::Log::instance()->info("render loop heart beat");
+                    ke::Log::instance()->info("Render loop heart beat");
                 }
 
                 // process the oldest render command list from the render commands queue
@@ -356,8 +365,9 @@ namespace ke
                 this->renderSystem->processCommands(frameTime);
                 const auto drawCallCount = this->renderSystem->render();
                 ::graphicsDrawCallCount.store(drawCallCount > 0 ? drawCallCount : ::graphicsDrawCallCount.load(), std::memory_order_relaxed);
-                                
-                std::this_thread::sleep_for(::RENDER_THREAD_SLEEP_DURATION);
+
+                if (frameTime < ke::Time::milliseconds(1))
+                    std::this_thread::sleep_for(::RENDER_THREAD_SLEEP_DURATION);
             }
 
             this->renderSystem->shutdown();

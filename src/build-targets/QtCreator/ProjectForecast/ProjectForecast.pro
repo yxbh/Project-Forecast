@@ -154,11 +154,10 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Graphics/WindowFactory.hpp \
     ../../../KEngine/include/KEngine/Graphics/SFML/SfmlWindow.hpp \
     ../../../KEngine/include/KEngine/Graphics/SDL2/SDL2Window.hpp \
-    ../../../KEngine/include/KEngine/Graphics/RenderCommands/TestRenderCommands.hpp \
     ../../../KEngine/include/KEngine/Graphics/RenderSystem.hpp \
     ../../../KEngine/include/KEngine/Graphics/Scene.hpp \
     ../../../KEngine/include/KEngine/Graphics/Window.hpp \
-    ../../../KEngine/include/KEngine/Graphics/RenderCommand.hpp \
+    ../../../KEngine/include/KEngine/Graphics/GraphicsCommand.hpp \
     ../../../KEngine/include/KEngine/Graphics/SceneNodes.hpp \
     ../../../KEngine/include/KEngine/Log/Log.hpp \
     ../../../KEngine/include/KEngine/UnitTest/catch.hpp \

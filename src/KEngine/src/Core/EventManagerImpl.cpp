@@ -106,19 +106,24 @@ namespace ke::priv
 
     EventProcessResult EventManagerImpl::update(const ke::Time p_ExcutionDurationLimit)
     {
-        bool has_duraton_limit = p_ExcutionDurationLimit == ke::Time::Zero ? false : true;
+        bool has_duraton_limit = p_ExcutionDurationLimit != ke::Time::Zero; // no limit if 0.
 
-        ke::StopWatch stopwatch; stopwatch.restart();
+        ke::StopWatch stopwatch;
 
         ke::EventSptr moving_event_ptr;
-        while (m_ThreadSafeEventQueue.poll(moving_event_ptr))
+        static constexpr const auto MAX_NUM_EVENTS = 100000;
+        auto eventCount = 0;
+        while (m_ThreadSafeEventQueue.poll(moving_event_ptr) && eventCount < MAX_NUM_EVENTS)
+        {
             m_EventQueue.push_back(moving_event_ptr);
+            ++eventCount;
+        }
 
         ke::EventSptr event_ptr;
         while (!m_EventQueue.empty())
         {
             if (has_duraton_limit && stopwatch.getElapsed() >= p_ExcutionDurationLimit) // if elapsed time if duration limit setted.
-                break;
+                break; // TODO: this implementation is discarding all the events left in the temp event queue! FIX!
 
             event_ptr = m_EventQueue.front(); m_EventQueue.pop_front();
 
@@ -134,6 +139,11 @@ namespace ke::priv
         if (m_ThreadSafeEventQueue.isEmpty())
             return ke::EventProcessResult::ALL_EVENTS_PROCESSED;
         return ke::EventProcessResult::SOME_EVENTS_PROCESSED;
+    }
+
+    size_t EventManagerImpl::getEventCount() const
+    {
+        return m_ThreadSafeEventQueue.size();
     }
 
 }
