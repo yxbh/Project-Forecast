@@ -104,6 +104,66 @@ TEST_CASE("ke::Time Unit Tests")
         CHECK(ke::Time::seconds(1.5).asMilliseconds() == 1500);
     }
 
+    SECTION("Equality ==")
+    {
+        CHECK(ke::Time::Zero == ke::Time::Zero);
+
+        CHECK(ke::Time::nanoseconds(0) == ke::Time::Zero);
+        CHECK(ke::Time::nanoseconds(1000) == ke::Time::microseconds(1));
+        CHECK(ke::Time::nanoseconds(1000000) == ke::Time::microseconds(1000));
+        CHECK(ke::Time::nanoseconds(1000000) == ke::Time::milliseconds(1));
+        CHECK(ke::Time::nanoseconds(1000000000) == ke::Time::milliseconds(1000));
+
+        CHECK(ke::Time::microseconds(0) == ke::Time::Zero);
+
+        CHECK(ke::Time::milliseconds(0) == ke::Time::Zero);
+
+        CHECK(ke::Time::seconds(0) == ke::Time::Zero);
+    }
+
+    SECTION("Comparison >")
+    {
+        CHECK(ke::Time::nanoseconds(1) > ke::Time::Zero);
+
+        CHECK(ke::Time::microseconds(1) > ke::Time::Zero);
+
+        CHECK(ke::Time::milliseconds(1) > ke::Time::Zero);
+        CHECK(ke::Time::milliseconds(1) > ke::Time::nanoseconds(1));
+
+        CHECK(ke::Time::seconds(1) > ke::Time::Zero);
+    }
+
+    SECTION("Comparison >=")
+    {
+        CHECK(ke::Time::Zero >= ke::Time::Zero);
+    }
+
+    SECTION("Comparison <=")
+    {
+        CHECK(ke::Time::Zero <= ke::Time::Zero);
+    }
+
+    SECTION("Comparison <")
+    {
+        CHECK(ke::Time::Zero < ke::Time::nanoseconds(1));
+        CHECK(ke::Time::Zero < ke::Time::microseconds(1));
+        CHECK(ke::Time::Zero < ke::Time::milliseconds(1));
+        CHECK(ke::Time::Zero < ke::Time::seconds(1));
+    }
+
+    SECTION("operator +=")
+    {
+        auto timeSpan = ke::Time::Zero;
+        CHECK((timeSpan += ke::Time::Zero) == ke::Time::Zero);
+        CHECK((timeSpan += ke::Time::nanoseconds(10)) == ke::Time::nanoseconds(10));
+
+    }
+
+    SECTION("operator -=")
+    {
+
+    }
+
     SECTION("Addition")
     {
         CHECK((ke::Time::milliseconds(10) + ke::Time::milliseconds(0)) == ke::Time::milliseconds(10));
