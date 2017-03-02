@@ -46,6 +46,10 @@ namespace ke
     class CameraNode : public ke::SceneNode
     {
     public:
+        using Uptr = std::unique_ptr<CameraNode>;
+        using Sptr = std::shared_ptr<CameraNode>;
+        using Wptr = std::weak_ptr<CameraNode>;
+
         static ke::SceneNodeSptr create();
 
         using SceneNode::SceneNode;
@@ -57,7 +61,7 @@ namespace ke
 
         inline const ke::Dimension2D & getDimension() const { return this->dimension; }
 
-    private:
+    protected:
         ke::Dimension2D dimension;
     };
 

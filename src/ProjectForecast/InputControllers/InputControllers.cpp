@@ -41,12 +41,12 @@ namespace pf
 
     }
 
-    bool KeyboardInputController::onKeyPressed()
+    bool KeyboardInputController::onKeyPressed(const ke::KeyBoardKeyInfo & keyInfo)
     {
         return false;
     }
 
-    bool KeyboardInputController::onKeyReleased()
+    bool KeyboardInputController::onKeyReleased(const ke::KeyBoardKeyInfo & keyInfo)
     {
         return false;
     }

@@ -333,6 +333,7 @@
     <ClCompile Include="..\..\..\..\ProjectForecast\main.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\ProjectForecastApp.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\DebugDrawSystem.cpp" />
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\EntityTransformControlSystem.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\EventFeedbackSystem.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\Views\HumanView.cpp" />
   </ItemGroup>
@@ -368,8 +369,10 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\StateMachine.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\SystemManager.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\ComponentLoaders\EntityRenderableComponentLoader.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\Components\EntityCameraComponent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\Components\EntityRenderableComponents.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\AppExitRequestedEvent.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\EntityTransformControlCommandEvents.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\EventLoopFrameEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\GraphicsLoopFrameEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\GraphicsLoopSetupFailureEvent.hpp" />
@@ -406,6 +409,7 @@
     <ClInclude Include="..\..\..\..\ProjectForecast\InputControllers\InputControllers.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\ProjectForecastApp.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Systems\DebugDrawSystem.hpp" />
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\EntityTransformControlSystem.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Systems\EventFeedbackSystem.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Views\HumanView.hpp" />
   </ItemGroup>

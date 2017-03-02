@@ -114,6 +114,15 @@ namespace ke
         template <class ComponentClassType>
         std::weak_ptr<ComponentClassType> getComponent(const ke::EntityComponentType p_ComponentType);
 
+        /// <summary>
+        /// Get a component from the entity of the specified type.
+        /// The component type is deducted from the template arguement.
+        /// The component must have a static TYPE variable of type ke::EntityComponentType defined.
+        /// </summary>
+        /// <returns>a weak pointer to the requested Component type with the specified EntityComponentType.</returns>
+        template <class ComponentClassType>
+        std::weak_ptr<ComponentClassType> getComponent();
+
     private:
         ke::EntityComponentSPMap        m_ComponentSPMap; // <EntityComponentType, EntityComponent>
         ke::EntityId                    m_EntityID;
@@ -138,7 +147,16 @@ namespace ke
     {
         EntityComponentSPMap::iterator it(m_ComponentSPMap.find(p_ComponentType));
         if (it == m_ComponentSPMap.end()) // does not contain component
-            return nullptr;
+            return std::weak_ptr<ComponentClassType>();
+        return std::weak_ptr<ComponentClassType>(std::static_pointer_cast<ComponentClassType>(it->second)); // return weak pointer version.
+    }
+
+    template <class ComponentClassType>
+    inline std::weak_ptr<ComponentClassType> Entity::getComponent()
+    {
+        EntityComponentSPMap::iterator it(m_ComponentSPMap.find(ComponentClassType::TYPE));
+        if (it == m_ComponentSPMap.end()) // does not contain component
+            return std::weak_ptr<ComponentClassType>();
         return std::weak_ptr<ComponentClassType>(std::static_pointer_cast<ComponentClassType>(it->second)); // return weak pointer version.
     }
 

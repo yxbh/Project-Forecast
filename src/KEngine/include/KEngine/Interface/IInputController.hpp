@@ -45,23 +45,29 @@ namespace ke
     using MouseInputControllerWptr = std::weak_ptr<IMouseInputController>;
 
 
+    struct KeyBoardKeyInfo
+    {
+        int32_t keyCode;
+        int32_t scanCode;
+    };
+
     /// <summary>
     /// Interface for implementing a keyboard input controller that converts keyboard input into control command events.
     /// </summary>
     class IKeyboardInputController
     {
     public:
-        virtual void update(ke::Time) {};
+        virtual void update(ke::Time elapsedTime) { KE_UNUSED(elapsedTime); };
         /// <summary>
         /// 
         /// </summary>
         /// <returns>true if key press was handled.</returns>
-        virtual bool onKeyPressed() = 0;
+        virtual bool onKeyPressed(const ke::KeyBoardKeyInfo & keyInfo) = 0;
         /// <summary>
         /// 
         /// </summary>
         /// <returns>true if key release was handled.</returns>
-        virtual bool onKeyReleased() = 0;
+        virtual bool onKeyReleased(const ke::KeyBoardKeyInfo & keyInfo) = 0;
     };
 
     using KeyboardInputControllerUptr = std::unique_ptr<IKeyboardInputController>;

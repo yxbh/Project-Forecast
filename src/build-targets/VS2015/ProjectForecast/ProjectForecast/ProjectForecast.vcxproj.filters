@@ -106,6 +106,12 @@
     <Filter Include="KEngine\Source Files\Entity\EntityComponentLoaders">
       <UniqueIdentifier>{fe976fe2-3fff-49b6-abea-791e1311c6c4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="KEngine\Header Files\Systems">
+      <UniqueIdentifier>{c80ed5aa-010a-412e-8d3a-0bfe90656681}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Systems">
+      <UniqueIdentifier>{75fa3c06-089c-4f4a-bf98-3daa9d0d3e9c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Events.cpp">
@@ -212,6 +218,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_FrameRateCounter.cpp">
       <Filter>KEngine\Source Files\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\EntityTransformControlSystem.cpp">
+      <Filter>ProjectForecast\Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -386,9 +395,6 @@
     <ClInclude Include="..\..\..\..\ProjectForecast\Events\RequestDrawDebugDotEvent.hpp">
       <Filter>ProjectForecast\Events</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IInputController.hpp">
-      <Filter>KEngine\Header Files\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Point2D.hpp">
       <Filter>KEngine\Header Files\Common</Filter>
     </ClInclude>
@@ -427,6 +433,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\readerwriterqueue.h">
       <Filter>KEngine\Header Files\Common\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\Components\EntityCameraComponent.hpp">
+      <Filter>KEngine\Header Files\Entity\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\EntityTransformControlSystem.hpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\EntityTransformControlCommandEvents.hpp">
+      <Filter>KEngine\Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IInputController.hpp">
+      <Filter>KEngine\Header Files\Interface</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

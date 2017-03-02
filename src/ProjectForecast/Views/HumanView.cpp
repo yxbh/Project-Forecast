@@ -26,6 +26,12 @@ namespace pf
         ke::EventManager::deregisterListener<ke::SfmlEvent>(this, &HumanView::handleWindowEvent);
     }
 
+    void HumanView::attachEntity(ke::EntityId entityId)
+    {
+        this->ke::HumanView::attachEntity(entityId);
+        static_cast<pf::KeyboardInputController*>(this->keyboardController.get())->attachEntity(entityId);
+    }
+
     void HumanView::update(ke::Time elapsedTime)
     {
         assert(mouseController);

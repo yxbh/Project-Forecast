@@ -119,6 +119,11 @@ namespace ke::priv
             ++eventCount;
         }
 
+        if (eventCount >= 5000)
+        {
+            ke::Log::instance()->warn("There are too many events!");
+        }
+
         ke::EventSptr event_ptr;
         while (!m_EventQueue.empty())
         {

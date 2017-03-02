@@ -19,6 +19,7 @@ namespace pf
         HumanView();
         virtual ~HumanView();
 
+        virtual void attachEntity(ke::EntityId entityId) override;
         virtual void update(ke::Time elapsedTime) override;
 
     private:

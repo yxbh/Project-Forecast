@@ -142,7 +142,7 @@ namespace ke
             stopwatch.restart();
 
             fpsCounter.push(frameTime);
-            ::eventLoopFps.store(fpsCounter.getAverageFps(), std::memory_order_relaxed);
+            ::eventLoopFps.store((float)fpsCounter.getAverageFps(), std::memory_order_relaxed);
 
             ke::EventManager::enqueue(ke::makeEvent<EventLoopFrameEvent>(frameTime));
 
@@ -248,7 +248,7 @@ namespace ke
                 cumulativeLoopTime += frameTime;
 
                 fpsCounter.push(frameTime);
-                ::logicLoopFps.store(fpsCounter.getAverageFps(), std::memory_order_relaxed);
+                ::logicLoopFps.store((float)fpsCounter.getAverageFps(), std::memory_order_relaxed);
                 ::logicLoopFrameTimeMs.store(frameTime.asNanoseconds()/1000000.0, std::memory_order_relaxed);
                 ::eventManagerEventCount.store(ke::EventManager::instance()->getEventCount(), std::memory_order_relaxed);
 
@@ -349,7 +349,7 @@ namespace ke
                 stopwatch.restart();
 
                 fpsCounter.push(frameTime);
-                ::graphicsLoopFps.store(fpsCounter.getAverageFps(), std::memory_order_relaxed);
+                ::graphicsLoopFps.store((float)fpsCounter.getAverageFps(), std::memory_order_relaxed);
                 ::renderLoopFrameTimeMs.store(frameTime.asMicroseconds()/1000.0, std::memory_order_relaxed);
 
                 ke::EventManager::enqueue(ke::makeEvent<GraphicsLoopFrameEvent>(frameTime));

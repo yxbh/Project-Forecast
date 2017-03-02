@@ -3,6 +3,7 @@
 #include "KEngine/App.hpp"
 #include "../Events/RequestDrawDebugDotEvent.hpp"
 #include "KEngine/Entity/Components/EntityRenderableComponents.hpp"
+#include "KEngine/Entity/Components/EntityCameraComponent.hpp"
 #include "KEngine/Common/Transform2D.hpp"
 #include "KEngine/Core/Entity.hpp"
 #include "KEngine/Core/EventManager.hpp"
@@ -14,6 +15,16 @@ namespace pf
     bool DebugDrawSystem::initialise()
     {
         ke::EventManager::registerListener<pf::RequestDrawDebugDotEvent>(this, &DebugDrawSystem::handleDebugDrawRequest);
+
+
+        auto entity = ke::makeEntity(ke::Entity::newId());
+        auto cameraComponent = ke::makeEntityComponent<ke::EntityCameraComponent>(entity);
+        cameraComponent->setCameraNode(ke::makeSceneNode<ke::CameraNode>(entity->getId()));
+        ke::App::instance()->getLogic()->getEntityManager()->addEntity(entity);
+        ke::App::instance()->getLogic()->getCurrentHumanView()->getScene()->setCameraNode(cameraComponent->getCameraNode());
+        ke::App::instance()->getLogic()->getCurrentHumanView()->attachEntity(entity->getId());
+
+
         return true;
     }
 
@@ -44,7 +55,7 @@ R"(
         [
             {
                 "type" : "entity_component",
-                "component_name" : "EntityRenderComponent",
+                "component_name" : "EntityRenderableCircleShapeComponent",
                 "scene_node" :
                 {
                     "type" : "scene_node",
