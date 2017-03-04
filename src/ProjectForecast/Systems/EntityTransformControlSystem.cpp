@@ -42,7 +42,7 @@ namespace pf
 
         auto entityWptr = ke::App::instance()->getLogic()->getEntityManager()->findEntityById(entityId);
         auto entity = entityWptr.lock();
-        if (entity)
+        if (!entity)
         {
             ke::Log::instance()->error("Could not find entity({}) to execute transform control command on.", entityId);
             return;
@@ -63,9 +63,9 @@ namespace pf
 
         auto entityWptr = ke::App::instance()->getLogic()->getEntityManager()->findEntityById(entityId);
         auto entity = entityWptr.lock();
-        if (entity)
+        if (!entity)
         {
-            ke::Log::instance()->error("Could not find entity({}) to execute transform control command on.", entityId);
+            ke::Log::instance()->error("Could not find entity({}) to execute transform delta control command on.", entityId);
             return;
         }
 

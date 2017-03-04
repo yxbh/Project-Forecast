@@ -52,28 +52,17 @@ namespace pf
         switch (event.type)
         {
         case sf::Event::MouseButtonPressed:
-            ke::Log::instance()->info("sf::Event::MouseButtonPressed");
-            switch (event.mouseButton.button)
-            {
-            case sf::Mouse::Left:
-                mouseController->onButtonPressed(ke::MouseButton::Left, { event.mouseButton.x, event.mouseButton.y });
-                break;
-            case sf::Mouse::Right:
-                mouseController->onButtonPressed(ke::MouseButton::Right, { event.mouseButton.x, event.mouseButton.y });
-                break;
-            }
+            //ke::Log::instance()->info("sf::Event::MouseButtonPressed");
+            mouseController->onButtonPressed(
+                ke::Mouse::mapInternalApiButtonToKeButton(event.mouseButton.button),
+                { event.mouseButton.x, event.mouseButton.y });
             break;
+
         case sf::Event::MouseButtonReleased:
             //ke::Log::instance()->info("sf::Event::MouseButtonReleased");
-            switch (event.mouseButton.button)
-            {
-            case sf::Mouse::Left:
-                mouseController->onButtonReleased(ke::MouseButton::Left, { event.mouseButton.x, event.mouseButton.y });
-                break;
-            case sf::Mouse::Right:
-                mouseController->onButtonPressed(ke::MouseButton::Right, { event.mouseButton.x, event.mouseButton.y });
-                break;
-            }
+            mouseController->onButtonReleased(
+                ke::Mouse::mapInternalApiButtonToKeButton(event.mouseButton.button),
+                { event.mouseButton.x, event.mouseButton.y });
             break;
 
         case sf::Event::KeyPressed:
@@ -88,7 +77,7 @@ namespace pf
 
         case sf::Event::TextEntered:
         {
-            if (event.text.unicode < 127 && event.text.unicode > 32) // we only care about printing ASCII characters between 32 and 127.
+            if (event.text.unicode >= 32 && event.text.unicode < 127) // we only care about printing ASCII characters between 32 and 127.
             {
                 testTextBuffer = testTextBuffer + static_cast<char>(event.text.unicode);
             }

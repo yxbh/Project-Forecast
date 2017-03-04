@@ -308,6 +308,8 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Core\EntityFactory.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Core\EntityManager.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Core\EventManagerImpl.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\Keyboard.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\Mouse.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Core\ResourceManager.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Core\StateMachine.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Core\SystemManager.cpp" />
@@ -322,6 +324,7 @@
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Delegate.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EntityAndComponents.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EntityFactory.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EntityManager.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EventDelegates.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EventManager.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Events.cpp" />
@@ -365,6 +368,8 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManager.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManagerImpl.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\FrameRateCounter.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\Keyboard.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\Mouse.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\ResourceManager.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\StateMachine.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\SystemManager.hpp" />

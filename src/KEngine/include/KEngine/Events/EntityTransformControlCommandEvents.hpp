@@ -10,7 +10,7 @@ namespace ke
     /// <summary>
     /// A command event for setting an entity's transform.
     /// </summary>
-    class EntityTransformControlCommandEvent : ke::IEvent
+    class EntityTransformControlCommandEvent : public ke::IEvent
     {
         KE_DEFINE_EVENT_COMMON_PROPERTIES(EntityTransformControlCommandEvent, 0x33E359F3)
 
@@ -45,6 +45,11 @@ namespace ke
             return this->transform;
         }
 
+        virtual Sptr makeCopy() const override
+        {
+            return ke::makeEvent<EntityTransformControlCommandEvent>(this->entityId, this->transform);
+        }
+
     protected:
         ke::EntityId entityId;
         ke::Transform2D transform;
@@ -60,6 +65,11 @@ namespace ke
 
     public:
         using ke::EntityTransformControlCommandEvent::EntityTransformControlCommandEvent;
+
+        virtual Sptr makeCopy() const override
+        {
+            return ke::makeEvent<EntityTransformDeltaControlCommandEvent>(this->entityId, this->transform);
+        }
     };
 
 }

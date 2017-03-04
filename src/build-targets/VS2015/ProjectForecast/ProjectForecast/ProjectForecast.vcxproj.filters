@@ -112,6 +112,12 @@
     <Filter Include="KEngine\Source Files\Systems">
       <UniqueIdentifier>{75fa3c06-089c-4f4a-bf98-3daa9d0d3e9c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="KEngine\Header Files\Utility">
+      <UniqueIdentifier>{9407b554-33cf-4923-bf2f-715dc18eba6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Utility">
+      <UniqueIdentifier>{7e5a3286-e4e7-4e5b-8def-4b49e325707a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Events.cpp">
@@ -221,6 +227,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\EntityTransformControlSystem.cpp">
       <Filter>ProjectForecast\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\Keyboard.cpp">
+      <Filter>KEngine\Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\Mouse.cpp">
+      <Filter>KEngine\Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EntityManager.cpp">
+      <Filter>KEngine\Source Files\UnitTest</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -445,6 +460,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IInputController.hpp">
       <Filter>KEngine\Header Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\Keyboard.hpp">
+      <Filter>KEngine\Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\Mouse.hpp">
+      <Filter>KEngine\Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

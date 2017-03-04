@@ -10,8 +10,8 @@ namespace pf
     {
     public:
         virtual void update(ke::Time elapsedTime) override;
-        virtual bool onButtonPressed(ke::MouseButton button, const ke::Point2D & position) override;
-        virtual bool onButtonReleased(ke::MouseButton button, const ke::Point2D & position) override;
+        virtual bool onButtonPressed(ke::Mouse::Button button, const ke::Point2D & position) override;
+        virtual bool onButtonReleased(ke::Mouse::Button button, const ke::Point2D & position) override;
         virtual bool onPointerMoved() override;
     };
 
@@ -27,8 +27,8 @@ namespace pf
         }
 
         virtual void update(ke::Time elapsedTime) override;
-        virtual bool onKeyPressed(const ke::KeyBoardKeyInfo & keyInfo) override;
-        virtual bool onKeyReleased(const ke::KeyBoardKeyInfo & keyInfo) override;
+        virtual bool onKeyPressed(const ke::Keyboard::KeyInfo & keyInfo) override;
+        virtual bool onKeyReleased(const ke::Keyboard::KeyInfo & keyInfo) override;
 
     private:
         ke::EntityId entityId;

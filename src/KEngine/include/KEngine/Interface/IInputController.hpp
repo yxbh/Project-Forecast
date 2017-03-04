@@ -2,6 +2,8 @@
 
 #include "KEngine/Common/Time.hpp"
 #include "KEngine/Common/Point2D.hpp"
+#include "KEngine/Core/Mouse.hpp"
+#include "KEngine/Core/Keyboard.hpp"
 
 #include <cstdint>
 #include <memory>
@@ -9,14 +11,6 @@
 
 namespace ke
 {
-
-    enum MouseButton : std::uint32_t
-    {
-        Left   = 1,
-        Right  = 2,
-        Middle = 3
-    };
-
 
     /// <summary>
     /// Interface for implementing a mouse input controller that converts mouse input into control command events.
@@ -30,13 +24,13 @@ namespace ke
         /// </summary>
         /// <param name="button"></param>
         /// <returns>true if button press was handled.</returns>
-        virtual bool onButtonPressed(ke::MouseButton button, const Point2D & position) = 0;
+        virtual bool onButtonPressed(ke::Mouse::Button button, const Point2D & position) = 0;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="button"></param>
         /// <returns>true if the button release was handled.</returns>
-        virtual bool onButtonReleased(ke::MouseButton button, const Point2D & position) = 0;
+        virtual bool onButtonReleased(ke::Mouse::Button button, const Point2D & position) = 0;
         virtual bool onPointerMoved() = 0;
     };
 
@@ -44,12 +38,6 @@ namespace ke
     using MouseInputControllerSptr = std::shared_ptr<IMouseInputController>;
     using MouseInputControllerWptr = std::weak_ptr<IMouseInputController>;
 
-
-    struct KeyBoardKeyInfo
-    {
-        int32_t keyCode;
-        int32_t scanCode;
-    };
 
     /// <summary>
     /// Interface for implementing a keyboard input controller that converts keyboard input into control command events.
@@ -62,12 +50,12 @@ namespace ke
         /// 
         /// </summary>
         /// <returns>true if key press was handled.</returns>
-        virtual bool onKeyPressed(const ke::KeyBoardKeyInfo & keyInfo) = 0;
+        virtual bool onKeyPressed(const ke::Keyboard::KeyInfo & keyInfo) = 0;
         /// <summary>
         /// 
         /// </summary>
         /// <returns>true if key release was handled.</returns>
-        virtual bool onKeyReleased(const ke::KeyBoardKeyInfo & keyInfo) = 0;
+        virtual bool onKeyReleased(const ke::Keyboard::KeyInfo & keyInfo) = 0;
     };
 
     using KeyboardInputControllerUptr = std::unique_ptr<IKeyboardInputController>;
