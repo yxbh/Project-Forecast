@@ -151,6 +151,7 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Events/LogicLoopFrameEvent.hpp \
     ../../../KEngine/include/KEngine/Events/LoopFrameEvent.hpp \
     ../../../KEngine/include/KEngine/Events/GraphicsLoopSetupFailureEvent.hpp \
+    ../../../KEngine/include/KEngine/Events/EntityTransformControlCommandEvents.hpp \
     ../../../KEngine/include/KEngine/Graphics/WindowFactory.hpp \
     ../../../KEngine/include/KEngine/Graphics/SFML/SfmlWindow.hpp \
     ../../../KEngine/include/KEngine/Graphics/SDL2/SDL2Window.hpp \
@@ -169,7 +170,8 @@ HEADERS += \
     ../../../ProjectForecast/Events/RequestDrawDebugDotEvent.hpp \
     ../../../ProjectForecast/Systems/DebugDrawSystem.hpp \
     ../../../ProjectForecast/Systems/EventFeedbackSystem.hpp \
-    ../../../ProjectForecast/InputControllers/InputControllers.hpp
+    ../../../ProjectForecast/InputControllers/InputControllers.hpp \
+    ../../../ProjectForecast/Systems/EntityTransformControlSystem.hpp
 
 SOURCES += \
     ../../../KEngine/include/KEngine/Common/Queues.inl \
@@ -206,6 +208,7 @@ SOURCES += \
     ../../../ProjectForecast/Views/HumanView.cpp \
     ../../../ProjectForecast/Systems/DebugDrawSystem.cpp \
     ../../../ProjectForecast/Systems/EventFeedbackSystem.cpp \
+    ../../../ProjectForecast/Systems/EntityTransformControlSystem.cpp \
     ../../../ProjectForecast/InputControllers/InputControllers.cpp \
     ../../../ProjectForecast/main.cpp
 #

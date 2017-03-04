@@ -17,7 +17,7 @@ namespace ke
     public:
         EntityTransformControlCommandEvent(
             ke::EntityId p_entityId = ke::INVALID_ENTITY_ID,
-            ke::Transform2D & p_transform = ke::Transform2D())
+            const ke::Transform2D & p_transform = ke::Transform2D())
             : entityId(p_entityId), transform(p_transform) {}
 
         inline void setEntityId(ke::EntityId p_entityId)
