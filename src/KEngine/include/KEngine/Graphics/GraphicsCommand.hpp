@@ -53,8 +53,8 @@ namespace ke
 
         union
         {
-            ke::graphics::TextureLoadCommandProperty texture;
             ke::graphics::RenderCommandProperty render;
+            ke::graphics::TextureLoadCommandProperty texture;
         };
 
         GraphicsCommand() {}

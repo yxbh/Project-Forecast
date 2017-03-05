@@ -467,6 +467,9 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\Mouse.hpp">
       <Filter>KEngine\Header Files\Core</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderLayer.hpp">
+      <Filter>KEngine\Header Files\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\KEngine\include\KEngine\Common\Queues.inl">
