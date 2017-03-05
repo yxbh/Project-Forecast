@@ -20,6 +20,7 @@ namespace pf
         auto entity = ke::makeEntity(ke::Entity::newId());
         auto cameraComponent = ke::makeEntityComponent<ke::EntityCameraComponent>(entity);
         cameraComponent->setCameraNode(ke::makeSceneNode<ke::CameraNode>(entity->getId()));
+        entity->addComponent(cameraComponent);
         ke::App::instance()->getLogic()->getEntityManager()->addEntity(entity);
         ke::App::instance()->getLogic()->getCurrentHumanView()->getScene()->setCameraNode(cameraComponent->getCameraNode());
         ke::App::instance()->getLogic()->getCurrentHumanView()->attachEntity(entity->getId());

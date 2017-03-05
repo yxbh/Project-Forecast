@@ -69,7 +69,7 @@ namespace pf
             return;
         }
 
-        auto componentWptr = entity->getComponent<ke::EntityCameraComponent>(ke::EntityCameraComponent::TYPE);
+        auto componentWptr = entity->getComponent<ke::EntityCameraComponent>();
         auto component = componentWptr.lock();
         assert(component);
         component->getCameraNode()->setLocalTransform(
