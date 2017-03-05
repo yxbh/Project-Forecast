@@ -4,6 +4,7 @@
 #include "KEngine/Interface/ISystem.hpp"
 
 #include <unordered_map>
+#include <vector>
 
 namespace ke
 {
@@ -16,6 +17,7 @@ namespace ke
     {
     public:
         using SystemMap = std::unordered_map<ke::SystemType, ke::SystemUptr>;
+        using SystemList = std::vector<ke::ISystem*>;
 
         ~SystemManager();
 
@@ -37,7 +39,8 @@ namespace ke
         void update(ke::Time elapsedTime);
 
     private:
-        SystemMap systems;
+        SystemMap systemsMap;
+        SystemList systems;
     };
 
     

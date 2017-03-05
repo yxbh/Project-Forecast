@@ -14,14 +14,15 @@ namespace ke
     bool SystemManager::addSystem(ke::SystemUptr && newSystem)
     {
         assert(newSystem);
-        if (this->systems.find(newSystem->getType()) != this->systems.end())
+        if (this->systemsMap.find(newSystem->getType()) != this->systemsMap.end())
         {
             ke::Log::instance()->error("System '{}' of type ({}) already exists in the system manager.",
                                         newSystem->getName(), newSystem->getType());
             return false;
         }
         auto systemRawPtr = newSystem.get();
-        this->systems[newSystem->getType()] = std::move(newSystem);
+        this->systemsMap[newSystem->getType()] = std::move(newSystem);
+        this->systems.push_back(systemRawPtr);
         
         ke::Log::instance()->info("{} initialising ...", systemRawPtr->getName());
         auto ret = systemRawPtr->initialise();
@@ -40,8 +41,8 @@ namespace ke
     void SystemManager::removeSystem(ke::SystemUptr && systemToRemove)
     {
         assert(systemToRemove);
-        auto systemIt = this->systems.find(systemToRemove->getType());
-        if (systemIt == this->systems.end())
+        auto systemIt = this->systemsMap.find(systemToRemove->getType());
+        if (systemIt == this->systemsMap.end())
         {
 #if defined(KE_DEBUG)
             ke::Log::instance()->error("System of type ({}) does not exist in the system manager.", systemToRemove->getType());
@@ -60,24 +61,27 @@ namespace ke
 
         ke::Log::instance()->info("Shutting down {} ...", system->getName());
         system->shutdown();
-        this->systems.erase(systemIt);
+        std::remove(this->systems.begin(), this->systems.end(), system);
+        this->systemsMap.erase(systemIt);
     }
 
     void SystemManager::clear()
     {
-        for (auto & system : this->systems)
+        for (auto it = this->systems.rbegin(); it != this->systems.rend(); ++it)
         {
-            ke::Log::instance()->info("Shutting down {} ...", system.second->getName());
-            system.second->shutdown();
+            auto & system = *it;
+            ke::Log::instance()->info("Shutting down {} ...", system->getName());
+            system->shutdown();
         }
         this->systems.clear();
+        this->systemsMap.clear();
     }
 
     void SystemManager::update(ke::Time elapsedTime)
     {
-        for (auto & system : this->systems)
+        for (auto system : this->systems)
         {
-            system.second->update(elapsedTime);
+            system->update(elapsedTime);
         }
     }
 
