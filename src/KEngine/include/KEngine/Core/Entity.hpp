@@ -154,10 +154,7 @@ namespace ke
     template <class ComponentClassType>
     inline std::weak_ptr<ComponentClassType> Entity::getComponent()
     {
-        EntityComponentSPMap::iterator it(m_ComponentSPMap.find(ComponentClassType::TYPE));
-        if (it == m_ComponentSPMap.end()) // does not contain component
-            return std::weak_ptr<ComponentClassType>();
-        return std::weak_ptr<ComponentClassType>(std::static_pointer_cast<ComponentClassType>(it->second)); // return weak pointer version.
+        return this->getComponent<ComponentClassType>(ComponentClassType::TYPE);
     }
 
 }

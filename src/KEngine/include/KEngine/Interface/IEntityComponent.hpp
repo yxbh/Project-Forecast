@@ -3,6 +3,8 @@
 #include "KEngine/Interface/IEntity.hpp"
 #include "KEngine/Common/String.hpp"
 
+#include <cstdint>
+
 namespace ke
 {
     using EntityComponentId = std::uint64_t;
@@ -28,8 +30,8 @@ namespace ke
     public:
         using IDType = ke::EntityComponentId; /// type of the component instance id. each instance has an unique id at run time.
 
+        static constexpr const EntityComponentType TYPE = INVALID_ENTITY_COMPONENT_TYPE; // type is different to id.
         static constexpr const char * const NAME = "IEntityComponent";
-        static const EntityComponentType TYPE = INVALID_ENTITY_COMPONENT_TYPE; // type is different to id.
 
         IEntityComponent(EntitySptr p_spEntity);
         IEntityComponent(const IEntityComponent &) = delete;
@@ -108,7 +110,7 @@ namespace ke
 
 #define KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(CLASS_NAME, COMPONENT_TYPE_VALUE) \
 public: \
-    static constexpr ke::EntityComponentType TYPE = COMPONENT_TYPE_VALUE; \
+    static constexpr const ke::EntityComponentType TYPE = COMPONENT_TYPE_VALUE; \
     static constexpr const char * const NAME = #CLASS_NAME; \
     virtual ke::EntityComponentType getType() const override { return CLASS_NAME::TYPE; } \
     virtual const char * getName() const override { return CLASS_NAME::NAME; } \

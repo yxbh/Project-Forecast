@@ -127,6 +127,8 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Core/EntityFactory.hpp \
     ../../../KEngine/include/KEngine/Core/EntityManager.hpp \
     ../../../KEngine/include/KEngine/Core/SystemManager.hpp \
+    ../../../KEngine/include/KEngine/Core/Keyboard.hpp \
+    ../../../KEngine/include/KEngine/Core/Mouse.hpp \
     ../../../KEngine/include/KEngine/Interface/IApp.hpp \
     ../../../KEngine/include/KEngine/Interface/IEvent.hpp \
     ../../../KEngine/include/KEngine/Interface/IEventManagerImpl.hpp \
@@ -142,6 +144,7 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Interface/ISceneNode.hpp \
     ../../../KEngine/include/KEngine/Interface/IInputController.hpp \
     ../../../KEngine/include/KEngine/Entity/Components/EntityRenderableComponents.hpp \
+    ../../../KEngine/include/KEngine/Entity/Components/EntityCameraComponent.hpp \
     ../../../KEngine/include/KEngine/Entity/ComponentLoaders/EntityRenderableComponentLoader.hpp \
     ../../../KEngine/include/KEngine/Events/SDL2/SDL2Event.hpp \
     ../../../KEngine/include/KEngine/Events/SFML/SfmlEvent.hpp \
@@ -160,6 +163,7 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Graphics/Window.hpp \
     ../../../KEngine/include/KEngine/Graphics/GraphicsCommand.hpp \
     ../../../KEngine/include/KEngine/Graphics/SceneNodes.hpp \
+    ../../../KEngine/include/KEngine/Graphics/RenderLayer.hpp \
     ../../../KEngine/include/KEngine/Log/Log.hpp \
     ../../../KEngine/include/KEngine/UnitTest/catch.hpp \
     ../../../KEngine/include/KEngine/App.hpp \
@@ -185,6 +189,8 @@ SOURCES += \
     ../../../KEngine/src/Core/EntityManager.cpp \
     ../../../KEngine/src/Core/SystemManager.cpp \
     ../../../KEngine/src/Core/ResourceManager.cpp \
+    ../../../KEngine/src/Core/Keyboard.cpp \
+    ../../../KEngine/src/Core/Mouse.cpp \
     ../../../KEngine/src/Entity/EntityComponentLoaders/EntityRenderComponentLoader.cpp \
     ../../../KEngine/src/Graphics/SDL2/SDL2Window.cpp \
     ../../../KEngine/src/Graphics/SFML/SfmlWindow.cpp \
@@ -204,6 +210,7 @@ SOURCES += \
     ../../../KEngine/src/UnitTest/UnitTest_EntityAndComponents.cpp \
     ../../../KEngine/src/UnitTest/UnitTest_StateMachine.cpp \
     ../../../KEngine/src/UnitTest/UnitTest_EntityFactory.cpp \
+    ../../../KEngine/src/UnitTest/UnitTest_EntityManager.cpp \
     ../../../ProjectForecast/ProjectForecastApp.cpp \
     ../../../ProjectForecast/Views/HumanView.cpp \
     ../../../ProjectForecast/Systems/DebugDrawSystem.cpp \
