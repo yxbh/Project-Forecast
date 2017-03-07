@@ -52,18 +52,21 @@ namespace pf
         switch (event.type)
         {
         case sf::Event::MouseButtonPressed:
-            //ke::Log::instance()->info("sf::Event::MouseButtonPressed");
+        {
+
             mouseController->onButtonPressed(
                 ke::Mouse::mapInternalApiButtonToKeButton(event.mouseButton.button),
                 { event.mouseButton.x, event.mouseButton.y });
             break;
+        }
 
         case sf::Event::MouseButtonReleased:
-            //ke::Log::instance()->info("sf::Event::MouseButtonReleased");
+        {
             mouseController->onButtonReleased(
                 ke::Mouse::mapInternalApiButtonToKeButton(event.mouseButton.button),
                 { event.mouseButton.x, event.mouseButton.y });
             break;
+        }
 
         case sf::Event::KeyPressed:
         {

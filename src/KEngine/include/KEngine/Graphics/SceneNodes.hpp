@@ -56,7 +56,10 @@ namespace ke
 
         virtual ke::GraphicsCommand getGraphicsCommand() const override
         {
-            return ke::GraphicsCommand();
+            ke::GraphicsCommand cmd;
+            cmd.type = ke::GraphicsCommand::Types::SetViewContext;
+            cmd.view.transform = this->getGlobalTransform();
+            return cmd;
         }
 
         inline const ke::Dimension2D & getDimension() const { return this->dimension; }

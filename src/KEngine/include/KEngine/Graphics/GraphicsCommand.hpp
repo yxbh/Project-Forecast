@@ -1,5 +1,4 @@
 #pragma once
-#pragma once
 
 #include "KEngine/Common/Color.hpp"
 #include "KEngine/Common/Point2D.hpp"
@@ -8,6 +7,12 @@
 
 namespace ke::graphics
 {
+
+    struct ViewContextCommandProperty
+    {
+        ke::Transform2D transform;
+        ke::Point2D dimension;
+    };
 
     struct TextureLoadCommandProperty
     {
@@ -41,6 +46,7 @@ namespace ke
         enum Types : std::uint8_t
         {
             Invalid = 0,
+            SetViewContext,
             GenerateTexture,
             RenderInvisible,
             RenderCircleShape,
@@ -54,6 +60,7 @@ namespace ke
         union
         {
             ke::graphics::RenderCommandProperty render;
+            ke::graphics::ViewContextCommandProperty view;
             ke::graphics::TextureLoadCommandProperty texture;
         };
 

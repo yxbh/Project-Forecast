@@ -1,7 +1,10 @@
 #include "KEngine/Graphics/RenderSystem.hpp"
 
+#include "KEngine/Graphics/RenderLayer.hpp"
+
 #include "KEngine/Common/Libs/concurrentqueue.h"
 #include "KEngine/Common/Libs/readerwriterqueue.h"
+#include "KEngine/Log/Log.hpp"
 
 #include <SFML/Graphics.hpp>
 
@@ -26,9 +29,11 @@ namespace
     using GraphicsCommandList = std::vector<ke::GraphicsCommand>;
 
     static GraphicsCommandList currentCommandGenThreadCmdList;
-    static GraphicsCommandList currentRenderThreadmdList;
+    static GraphicsCommandList currentRenderThreadCmdList;
     static ConcurrentQueue<GraphicsCommandList> commandGenThreadCmdListQueue;
     static ConcurrentQueue<GraphicsCommandList> renderThreadCmdListQueue;
+
+    static std::vector<ke::RenderLayer> renderLayers;
 }
 
 namespace ke
@@ -66,7 +71,6 @@ namespace ke
 
         if (::commandGenThreadCmdListQueue.size_approx() == 0)
         {
-
             ::currentCommandGenThreadCmdList = GraphicsCommandList();
             ::currentCommandGenThreadCmdList.reserve(4096);
         }
@@ -82,9 +86,15 @@ namespace ke
             {
                 return 0;
             }
-        }        
+        }
 
         ::currentCommandGenThreadCmdList.clear();
+
+        // generate view command.
+        assert(scene->getCameraNode());
+        ::currentCommandGenThreadCmdList.push_back(scene->getCameraNode()->getGraphicsCommand());
+
+        // generate command from scene tree.
         std::queue<ke::ISceneNode*> nodes;
         nodes.push(scene->getRootNode());
         while (nodes.size())
@@ -111,18 +121,57 @@ namespace ke
     void RenderSystem::processCommands(ke::Time elapsedTime)
     {
         KE_UNUSED(elapsedTime);
+        ::renderLayers.clear();
+        if (::renderThreadCmdListQueue.size_approx() == 0) return;
+
         GraphicsCommandList throwAway;
         while (::renderThreadCmdListQueue.size_approx() > 2)
         {
             ::renderThreadCmdListQueue.try_dequeue(throwAway);
             //throwAway.~vector();
         }
+
+        if (::renderThreadCmdListQueue.size_approx() == 0) return;
+        if (!::renderThreadCmdListQueue.try_dequeue(::currentRenderThreadCmdList))
+        {
+            return;
+        }
+
+        // filter the commands to their respective processors.
+        for (const auto & command : ::currentRenderThreadCmdList)
+        {
+            switch (command.type)
+            {
+            case GraphicsCommand::Types::SetViewContext:
+            {
+                sf::RenderWindow * renderTarget = static_cast<sf::RenderWindow*>(this->window.get()->get());
+                auto view = renderTarget->getView();
+                view.setCenter(static_cast<float>(command.view.transform.x), static_cast<float>(command.view.transform.y));
+                renderTarget->setView(view);
+                break;
+            }
+
+            case GraphicsCommand::Types::RenderCircleShape:
+            case GraphicsCommand::Types::RenderSquareShape:
+            case GraphicsCommand::Types::RenderConvexShape:
+            case GraphicsCommand::Types::RenderSprite:
+            {
+                while (command.render.depth >= ::renderLayers.size())
+                {
+                    ::renderLayers.push_back(ke::RenderLayer());
+                }
+
+                ::renderLayers[command.render.depth].graphicsCommands.push_back(command);
+                break;
+            }
+
+            } // switch command type.
+        } // for each command.
     }
 
     size_t RenderSystem::render()
     {
-        if (::renderThreadCmdListQueue.size_approx() == 0) return 0;
-        if (!::renderThreadCmdListQueue.try_dequeue(::currentRenderThreadmdList))
+        if (::renderLayers.size() == 0)
         {
             return 0;
         }
@@ -131,41 +180,46 @@ namespace ke
         ::drawCallCount = 0;
 
         renderTarget->clear();
-        for (ke::GraphicsCommand & cmd : ::currentRenderThreadmdList)
+        for (const auto & layer : ::renderLayers)
         {
-            switch (cmd.type)
+            for (const ke::GraphicsCommand & cmd : layer.graphicsCommands)
             {
-            case ke::GraphicsCommand::Types::RenderCircleShape:
-            {
-                if (!circleShape)
+                switch (cmd.type)
                 {
-                    circleShape.reset(new sf::CircleShape);
-                }
-                auto * shape = static_cast<sf::CircleShape*>(circleShape.get());
-                shape->setPosition(cmd.render.globalTransform.x, cmd.render.globalTransform.y);
-                sf::Color sfFillColor(
-                    cmd.render.fillColor.r,
-                    cmd.render.fillColor.g,
-                    cmd.render.fillColor.b,
-                    cmd.render.fillColor.a);
-                shape->setFillColor(sfFillColor);
-                shape->setRadius(cmd.render.radius);
-                sf::Color sfOutlineColor(
-                    cmd.render.outlineColor.r,
-                    cmd.render.outlineColor.g,
-                    cmd.render.outlineColor.b,
-                    cmd.render.outlineColor.a);
-                shape->setOutlineColor(sfOutlineColor);
-                shape->setOutlineThickness(cmd.render.outlineThickness);
-                renderTarget->draw(*shape);
-                ++::drawCallCount;
-                break;
-            }
+                case ke::GraphicsCommand::Types::RenderCircleShape:
+                {
+                    if (!circleShape)
+                    {
+                        circleShape.reset(new sf::CircleShape);
+                    }
 
+                    auto * shape = static_cast<sf::CircleShape*>(circleShape.get());
+                    shape->setPosition(cmd.render.globalTransform.x, cmd.render.globalTransform.y);
+                    sf::Color sfFillColor(
+                        cmd.render.fillColor.r,
+                        cmd.render.fillColor.g,
+                        cmd.render.fillColor.b,
+                        cmd.render.fillColor.a);
+                    shape->setFillColor(sfFillColor);
+                    shape->setRadius(cmd.render.radius);
+                    sf::Color sfOutlineColor(
+                        cmd.render.outlineColor.r,
+                        cmd.render.outlineColor.g,
+                        cmd.render.outlineColor.b,
+                        cmd.render.outlineColor.a);
+                    shape->setOutlineColor(sfOutlineColor);
+                    shape->setOutlineThickness(cmd.render.outlineThickness);
+                    renderTarget->draw(*shape);
+                    ++::drawCallCount;
+                    break;
+                }
+
+                }
             }
         }
+
         renderTarget->display();
-        ::commandGenThreadCmdListQueue.enqueue(std::move(::currentRenderThreadmdList));
+        ::commandGenThreadCmdListQueue.enqueue(std::move(::currentRenderThreadCmdList));
 
         return ::drawCallCount;
     }
