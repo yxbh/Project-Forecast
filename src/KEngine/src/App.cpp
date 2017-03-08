@@ -171,9 +171,9 @@ namespace ke
                 case sf::Event::EventType::MouseButtonReleased:
                 {
                     auto keEvent = SfmlEventTranslator::translate(event, sfWindow);
-                    if (!keEvent)
+                    if (keEvent)
                     {
-                        ke::EventManager::enqueue(keEvent);
+                        ke::EventManager::enqueue(std::move(keEvent));
                     }
                     break;
                 }

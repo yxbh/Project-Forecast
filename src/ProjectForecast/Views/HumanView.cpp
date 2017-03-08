@@ -3,6 +3,7 @@
 #include "../InputControllers/InputControllers.hpp"
 
 #include "KEngine/Core/EventManager.hpp"
+#include "KEngine/Events/AppEvents.hpp"
 #include "KEngine/Events/SFML/SfmlEvent.hpp"
 #include "KEngine/Log/Log.hpp"
 
@@ -42,9 +43,27 @@ namespace pf
 
     void HumanView::handleWindowEvent(ke::EventSptr event)
     {
-        std::shared_ptr<ke::SfmlEvent> windowEvent = std::static_pointer_cast<ke::SfmlEvent>(event);
-        assert(windowEvent);
-        this->handleSfmlEvent(windowEvent->getSfmlEvent());
+        switch (event->getType())
+        {
+            case ke::SfmlEvent::TYPE:
+            {
+                std::shared_ptr<ke::SfmlEvent> windowEvent = std::static_pointer_cast<ke::SfmlEvent>(event);
+                this->handleSfmlEvent(windowEvent->getSfmlEvent());
+                break;
+            }
+
+            case ke::MouseButtonPressedEvent::TYPE:
+            {
+                break;
+            }
+
+            case ke::MouseButtonReleasedEvent::TYPE:
+            {
+                break;
+            }
+
+        }
+        
     }
 
     void HumanView::handleSfmlEvent(const sf::Event & event)
