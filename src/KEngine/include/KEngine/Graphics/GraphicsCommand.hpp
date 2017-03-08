@@ -11,7 +11,7 @@ namespace ke::graphics
     struct ViewContextCommandProperty
     {
         ke::Transform2D transform;
-        ke::Point2D dimension;
+        ke::Point2DInt32 dimension;
     };
 
     struct TextureLoadCommandProperty
@@ -22,7 +22,7 @@ namespace ke::graphics
 
     struct RenderCommandProperty
     {
-        Point2D origin;
+        Point2DInt32 origin;
         Transform2D globalTransform;
         Transform2D deltaTransform;
 

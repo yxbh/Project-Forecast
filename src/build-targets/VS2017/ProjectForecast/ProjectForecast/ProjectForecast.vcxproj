@@ -315,6 +315,7 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Core\SystemManager.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\dump.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Entity\EntityComponentLoaders\EntityRenderComponentLoader.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Events\SFML\SfmlEventTranslator.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\RenderSystem.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\Scene.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SceneNodes.cpp" />
@@ -386,6 +387,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\LoopFrameEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SDL2\SDL2Event.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEvent.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEventTranslator.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\GraphicsCommand.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderCommands\TestRenderCommands.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderLayer.hpp" />

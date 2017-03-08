@@ -131,8 +131,12 @@ namespace ke
         /// </summary>
         struct KeyInfo
         {
-            int16_t keyCode;
-            int16_t scanCode;
+            int16_t keyCode  = 0;
+            int16_t scanCode = 0;
+            bool control = false;
+            bool alt     = false;
+            bool shift   = false;
+            bool system  = false;
         };
 
         /// <summary>

@@ -15,13 +15,14 @@
 #include "KEngine/Events/GraphicsLoopSetupFailureEvent.hpp"
 #include "KEngine/Events/SDL2/SDL2Event.hpp"
 #include "KEngine/Events/SFML/SfmlEvent.hpp"
+#include "KEngine/Events/SFML/SfmlEventTranslator.hpp"
 
 #include "KEngine/Log/Log.hpp"
 
 #include "KEngine/Graphics/WindowFactory.hpp"
 
 #include <SDL.h>
-#include <SFML/Window.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 
 #include <atomic>
 #include <cstdio>
@@ -159,17 +160,30 @@ namespace ke
             }
 #elif defined(USE_SFML)
             sf::Event event;
-            auto sfWindow = static_cast<sf::Window*>(this->mainWindow->get());
+            auto sfWindow = static_cast<sf::RenderWindow*>(this->mainWindow->get());
             assert(sfWindow);
             while (sfWindow->pollEvent(event))
             {
                 ke::EventManager::enqueue(ke::makeEvent<ke::SfmlEvent>(event));
                 switch (event.type)
                 {
+                case sf::Event::EventType::MouseButtonPressed:
+                case sf::Event::EventType::MouseButtonReleased:
+                {
+                    auto keEvent = SfmlEventTranslator::translate(event, sfWindow);
+                    if (!keEvent)
+                    {
+                        ke::EventManager::enqueue(keEvent);
+                    }
+                    break;
+                }
+
                 case sf::Event::EventType::Closed:
                     Log::instance()->info("Normal exit requested.");
                     ke::EventManager::enqueue(ke::makeEvent<AppExitRequestedEvent>());
                     break;
+
+                default: break;
                 }
             }
 #endif

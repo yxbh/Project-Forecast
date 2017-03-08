@@ -7,7 +7,6 @@
 #include "KEngine/Common/Time.hpp"
 #include "KEngine/Common/Queues.hpp"
 
-#include <array>
 #include <cstdint>
 #include <memory>
 

@@ -118,6 +118,12 @@
     <Filter Include="KEngine\Source Files\Utility">
       <UniqueIdentifier>{7e5a3286-e4e7-4e5b-8def-4b49e325707a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="KEngine\Source Files\Events">
+      <UniqueIdentifier>{c1008218-41f0-4b92-80cf-450492fdd3ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Events\SFML">
+      <UniqueIdentifier>{6ff9425a-33dc-4919-ae0f-845a88d355b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Events.cpp">
@@ -236,6 +242,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EntityManager.cpp">
       <Filter>KEngine\Source Files\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Events\SFML\SfmlEventTranslator.cpp">
+      <Filter>KEngine\Source Files\Events\SFML</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -472,6 +481,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\AppEvents.hpp">
       <Filter>KEngine\Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEventTranslator.hpp">
+      <Filter>KEngine\Header Files\Events\SFML</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

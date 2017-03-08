@@ -146,7 +146,7 @@ namespace ke
             {
                 sf::RenderWindow * renderTarget = static_cast<sf::RenderWindow*>(this->window.get()->get());
                 auto view = renderTarget->getView();
-                view.setCenter(static_cast<float>(command.view.transform.x), static_cast<float>(command.view.transform.y));
+                view.setCenter(static_cast<float>(command.view.transform.x), static_cast<float>(-command.view.transform.y));
                 renderTarget->setView(view);
                 break;
             }

@@ -71,7 +71,7 @@ namespace ke
     /// <param name="...args"></param>
     /// <returns></returns>
     template <typename Event_T, typename ... Args_T>
-    auto makeEvent(Args_T && ... args ) -> EventSptr
+    auto makeEvent(Args_T && ... args ) -> std::shared_ptr<Event_T>
     {
         return std::make_shared<Event_T>(std::forward<Args_T>(args)...);
     }

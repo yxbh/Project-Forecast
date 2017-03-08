@@ -5,14 +5,18 @@
 namespace ke
 {
 
+    template <typename ValueType>
     struct Point2D
     {
-        using ValueType = std::int32_t;
-
         ValueType x = 0;
         ValueType y = 0;
-
-        Point2D(ValueType p_x = 0, ValueType p_y = 0) : x(p_x), y(p_y) {}
     };
+
+    using Point2DInt32  = Point2D<std::int32_t>;
+    using Point2DInt64  = Point2D<std::int64_t>;
+    using Point2DUInt32 = Point2D<std::uint32_t>;
+    using Point2DUInt64 = Point2D<std::uint64_t>;
+    using Point2DFloat  = Point2D<float>;
+    using Point2DDouble = Point2D<double>;
 
 }

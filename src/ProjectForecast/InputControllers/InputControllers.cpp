@@ -15,7 +15,7 @@ namespace pf
         KE_UNUSED(elapsedTime);
     }
 
-    bool MouseInputController::onButtonPressed(ke::Mouse::Button button, const ke::Point2D & position)
+    bool MouseInputController::onButtonPressed(ke::Mouse::Button button, const ke::Point2DInt32 & position)
     {
         switch (button)
         {
@@ -26,7 +26,7 @@ namespace pf
         return false;
     }
 
-    bool MouseInputController::onButtonReleased(ke::Mouse::Button button, const ke::Point2D & position)
+    bool MouseInputController::onButtonReleased(ke::Mouse::Button button, const ke::Point2DInt32 & position)
     {
         KE_UNUSED(button);
         KE_UNUSED(position);
