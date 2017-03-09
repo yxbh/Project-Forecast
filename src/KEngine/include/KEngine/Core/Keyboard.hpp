@@ -14,6 +14,8 @@ namespace ke
     class Keyboard
     {
     public:
+        static constexpr const std::int16_t NULL_KEYBOARD_SCANCODE = 0;
+
         /// <summary>
         /// This is borrowed from SFML (2.4.2).
         /// TODO: research SDL implememtation.
@@ -131,8 +133,9 @@ namespace ke
         /// </summary>
         struct KeyInfo
         {
-            int16_t keyCode  = 0;
-            int16_t scanCode = 0;
+            using CodeType = std::int16_t;
+            CodeType keyCode  = 0;
+            CodeType scanCode = 0;
             bool control = false;
             bool alt     = false;
             bool shift   = false;

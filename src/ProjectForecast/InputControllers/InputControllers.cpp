@@ -15,21 +15,20 @@ namespace pf
         KE_UNUSED(elapsedTime);
     }
 
-    bool MouseInputController::onButtonPressed(ke::Mouse::Button button, const ke::Point2DInt32 & position)
+    bool MouseInputController::onButtonPressed(const ke::Mouse::ButtonInfo & buttonInfo)
     {
-        switch (button)
+        switch (buttonInfo.button)
         {
         case ke::Mouse::Button::Left:
-            ke::EventManager::enqueue(ke::makeEvent<pf::RequestDrawDebugDotEvent>(position));
+            ke::EventManager::enqueue(ke::makeEvent<pf::RequestDrawDebugDotEvent>(buttonInfo.worldPosition));
             return true;
         }
         return false;
     }
 
-    bool MouseInputController::onButtonReleased(ke::Mouse::Button button, const ke::Point2DInt32 & position)
+    bool MouseInputController::onButtonReleased(const ke::Mouse::ButtonInfo & buttonInfo)
     {
-        KE_UNUSED(button);
-        KE_UNUSED(position);
+        KE_UNUSED(buttonInfo);
         return false;
     }
 

@@ -24,13 +24,13 @@ namespace ke
         /// </summary>
         /// <param name="button"></param>
         /// <returns>true if button press was handled.</returns>
-        virtual bool onButtonPressed(ke::Mouse::Button button, const Point2DInt32 & position) = 0;
+        virtual bool onButtonPressed(const ke::Mouse::ButtonInfo & buttonInfo) = 0;
         /// <summary>
         /// 
         /// </summary>
         /// <param name="button"></param>
         /// <returns>true if the button release was handled.</returns>
-        virtual bool onButtonReleased(ke::Mouse::Button button, const Point2DInt32 & position) = 0;
+        virtual bool onButtonReleased(const ke::Mouse::ButtonInfo & buttonInfo) = 0;
         virtual bool onPointerMoved() = 0;
     };
 

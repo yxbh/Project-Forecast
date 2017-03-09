@@ -194,7 +194,7 @@ namespace ke
                     }
 
                     auto * shape = static_cast<sf::CircleShape*>(circleShape.get());
-                    shape->setPosition(cmd.render.globalTransform.x, cmd.render.globalTransform.y);
+                    shape->setPosition(cmd.render.globalTransform.x, -cmd.render.globalTransform.y);
                     sf::Color sfFillColor(
                         cmd.render.fillColor.r,
                         cmd.render.fillColor.g,

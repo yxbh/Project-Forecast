@@ -20,11 +20,19 @@ namespace pf
         scene = std::make_unique<ke::Scene>();
 
         ke::EventManager::registerListener<ke::SfmlEvent>(this, &HumanView::handleWindowEvent);
+        ke::EventManager::registerListener<ke::MouseButtonPressedEvent>(this, &HumanView::handleWindowEvent);
+        ke::EventManager::registerListener<ke::MouseButtonReleasedEvent>(this, &HumanView::handleWindowEvent);
+        ke::EventManager::registerListener<ke::KeyboardKeyPressedEvent>(this, &HumanView::handleWindowEvent);
+        ke::EventManager::registerListener<ke::KeyboardKeyReleasedEvent>(this, &HumanView::handleWindowEvent);
     }
 
     HumanView::~HumanView()
     {
         ke::EventManager::deregisterListener<ke::SfmlEvent>(this, &HumanView::handleWindowEvent);
+        ke::EventManager::deregisterListener<ke::MouseButtonPressedEvent>(this, &HumanView::handleWindowEvent);
+        ke::EventManager::deregisterListener<ke::MouseButtonReleasedEvent>(this, &HumanView::handleWindowEvent);
+        ke::EventManager::deregisterListener<ke::KeyboardKeyPressedEvent>(this, &HumanView::handleWindowEvent);
+        ke::EventManager::deregisterListener<ke::KeyboardKeyReleasedEvent>(this, &HumanView::handleWindowEvent);
     }
 
     void HumanView::attachEntity(ke::EntityId entityId)
@@ -47,21 +55,38 @@ namespace pf
         {
             case ke::SfmlEvent::TYPE:
             {
-                std::shared_ptr<ke::SfmlEvent> windowEvent = std::static_pointer_cast<ke::SfmlEvent>(event);
+                auto windowEvent = std::static_pointer_cast<ke::SfmlEvent>(event);
                 this->handleSfmlEvent(windowEvent->getSfmlEvent());
                 break;
             }
 
             case ke::MouseButtonPressedEvent::TYPE:
             {
+                auto mouseEvent = std::static_pointer_cast<ke::MouseButtonPressedEvent>(event);
+                mouseController->onButtonPressed(mouseEvent->getDetail());
                 break;
             }
 
             case ke::MouseButtonReleasedEvent::TYPE:
             {
+                auto mouseEvent = std::static_pointer_cast<ke::MouseButtonReleasedEvent>(event);
+                mouseController->onButtonReleased(mouseEvent->getDetail());
                 break;
             }
 
+            case ke::KeyboardKeyPressedEvent::TYPE:
+            {
+                auto keyboardEvent = std::static_pointer_cast<ke::KeyboardKeyPressedEvent>(event);
+                keyboardController->onKeyPressed(keyboardEvent->getDetail());
+                break;
+            }
+
+            case ke::KeyboardKeyReleasedEvent::TYPE:
+            {
+                auto keyboardEvent = std::static_pointer_cast<ke::KeyboardKeyReleasedEvent>(event);
+                keyboardController->onKeyReleased(keyboardEvent->getDetail());
+                break;
+            }
         }
         
     }
@@ -70,23 +95,6 @@ namespace pf
     {
         switch (event.type)
         {
-        case sf::Event::MouseButtonPressed:
-        {
-
-            mouseController->onButtonPressed(
-                ke::Mouse::mapInternalApiButtonToKeButton(event.mouseButton.button),
-                { event.mouseButton.x, event.mouseButton.y });
-            break;
-        }
-
-        case sf::Event::MouseButtonReleased:
-        {
-            mouseController->onButtonReleased(
-                ke::Mouse::mapInternalApiButtonToKeButton(event.mouseButton.button),
-                { event.mouseButton.x, event.mouseButton.y });
-            break;
-        }
-
         case sf::Event::KeyPressed:
         {
             if (event.key.code == sf::Keyboard::Return)

@@ -8,6 +8,8 @@ namespace ke
         return sf::Mouse::isButtonPressed(::ke::Mouse::mapKeButtonToInternalSfmlButton(button));
     }
 
+#if defined(USE_SFML)
+
     ::ke::Mouse::Button Mouse::mapInternalApiButtonToKeButton(const ::sf::Mouse::Button sfmlButton)
     {
         return static_cast<::ke::Mouse::Button>(sfmlButton);
@@ -17,5 +19,7 @@ namespace ke
     {
         return static_cast<::sf::Mouse::Button>(keButton);
     }
+
+#endif
 
 }

@@ -68,10 +68,11 @@ R"(
     }
 )";
 
+            auto & position = actualEvent->getPosition();
+            ke::Log::instance()->info("creating dot at ({}, {})", position.x, position.y);
             for (auto i = 0; i < 50; ++i)
             {
                 auto entity = ke::makeEntity(ke::Entity::newId());
-                auto & position = actualEvent->getPosition();
                 ke::Transform2D transform{ position.x, position.y };
                 auto renderComponent = ke::makeEntityComponent<ke::EntityRenderableCircleShapeComponent>(entity, transform, ke::Color::GREEN);
                 entity->addComponent(renderComponent);

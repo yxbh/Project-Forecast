@@ -13,59 +13,67 @@ namespace ke
         KE_DEFINE_EVENT_COMMON_PROPERTIES(KeyboardEvent, 0xE1D2E239)
 
     public:
+        KeyboardEvent(const ke::Keyboard::KeyInfo & keyInfo) : detail(keyInfo) {}
+
         inline const ke::Keyboard::KeyInfo & getDetail() const { return this->detail; }
 
     protected:
         ke::Keyboard::KeyInfo detail;
     };
     
-    class KeyPressedEvent : public KeyboardEvent
+    class KeyboardKeyPressedEvent : public KeyboardEvent
     {
-        KE_DEFINE_EVENT_COMMON_PROPERTIES(KeyPressedEvent, 0x8B492E75)
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(KeyboardKeyPressedEvent, 0x8B492E75)
 
     public:
+        using KeyboardEvent::KeyboardEvent;
+
+        virtual ke::EventSptr makeCopy() const final
+        {
+            return ke::makeEvent<KeyboardKeyPressedEvent>(this->detail);
+        }
     };
 
-    class KeyReleasedEvent : public KeyboardEvent
+    class KeyboardKeyReleasedEvent : public KeyboardEvent
     {
-        KE_DEFINE_EVENT_COMMON_PROPERTIES(KeyReleasedEvent, 0xABCAB2CA)
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(KeyboardKeyReleasedEvent, 0xABCAB2CA)
 
     public:
+        using KeyboardEvent::KeyboardEvent;
+
+        virtual ke::EventSptr makeCopy() const final
+        {
+            return ke::makeEvent<KeyboardKeyReleasedEvent>(this->detail);
+        }
     };
 
-
-    struct MouseEventInfo
+    
+    class MouseButtonEvent : public ke::IEvent
     {
-        Point2DInt32 screenPosition;
-        Point2DFloat worldPosition;
-    };
-
-    class MouseEvent : public ke::IEvent
-    {
-        KE_DEFINE_EVENT_COMMON_PROPERTIES(KeyReleasedEvent, 0xA16F2D57)
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(MouseButtonEvent, 0xA16F2D57)
 
     public:
         using ScreenPositionType = Point2DInt32;
         using WorldPositionType = Point2DFloat;
 
-        MouseEvent(const MouseEventInfo & eventInfo) : detail(eventInfo) {}
+        MouseButtonEvent(const ke::Mouse::ButtonInfo & eventInfo) : detail(eventInfo) {}
 
-        inline void setDetail(const MouseEventInfo & eventInfo) { this->detail = eventInfo; }
-        inline const MouseEventInfo & getDetail() const { return this->detail; }
+        inline void setDetail(const ke::Mouse::ButtonInfo & eventInfo) { this->detail = eventInfo; }
+        inline const ke::Mouse::ButtonInfo & getDetail() const { return this->detail; }
 
         inline const ScreenPositionType & getScreenPosition() const { return this->detail.screenPosition; }
         inline const WorldPositionType & getWorldnPosition() const { return this->detail.worldPosition; }
 
     protected:
-        MouseEventInfo detail;
+        ke::Mouse::ButtonInfo detail;
     };
 
-    class MouseButtonPressedEvent : public MouseEvent
+    class MouseButtonPressedEvent : public MouseButtonEvent
     {
         KE_DEFINE_EVENT_COMMON_PROPERTIES(MouseButtonPressedEvent, 0x0F049484)
 
     public:
-        using MouseEvent::MouseEvent;
+        using MouseButtonEvent::MouseButtonEvent;
 
         virtual ke::EventSptr makeCopy() const final
         {
@@ -73,12 +81,12 @@ namespace ke
         }
     };
 
-    class MouseButtonReleasedEvent : public MouseEvent
+    class MouseButtonReleasedEvent : public MouseButtonEvent
     {
         KE_DEFINE_EVENT_COMMON_PROPERTIES(MouseButtonReleasedEvent, 0x44636E5A)
 
     public:
-        using MouseEvent::MouseEvent;
+        using MouseButtonEvent::MouseButtonEvent;
 
         virtual ke::EventSptr makeCopy() const final
         {

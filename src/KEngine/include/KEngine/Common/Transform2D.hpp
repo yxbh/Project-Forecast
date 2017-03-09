@@ -10,7 +10,7 @@ namespace ke
     class Transform2D
     {
     public:
-        using PointType = std::int32_t;
+        using PointType = float;
 
         PointType x = 0;
         PointType y = 0;
