@@ -148,7 +148,9 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Entity/ComponentLoaders/EntityRenderableComponentLoader.hpp \
     ../../../KEngine/include/KEngine/Events/SDL2/SDL2Event.hpp \
     ../../../KEngine/include/KEngine/Events/SFML/SfmlEvent.hpp \
+    ../../../KEngine/include/KEngine/Events/SFML/SfmlEventTranslator.hpp \
     ../../../KEngine/include/KEngine/Events/AppExitRequestedEvent.hpp \
+    ../../../KEngine/include/KEngine/Events/AppEvents.hpp \
     ../../../KEngine/include/KEngine/Events/EventLoopFrameEvent.hpp \
     ../../../KEngine/include/KEngine/Events/GraphicsLoopFrameEvent.hpp \
     ../../../KEngine/include/KEngine/Events/LogicLoopFrameEvent.hpp \
@@ -192,6 +194,7 @@ SOURCES += \
     ../../../KEngine/src/Core/Keyboard.cpp \
     ../../../KEngine/src/Core/Mouse.cpp \
     ../../../KEngine/src/Entity/EntityComponentLoaders/EntityRenderComponentLoader.cpp \
+    ../../../KEngine/src/Events/SFML/SfmlEventTranslator.cpp \
     ../../../KEngine/src/Graphics/SDL2/SDL2Window.cpp \
     ../../../KEngine/src/Graphics/SFML/SfmlWindow.cpp \
     ../../../KEngine/src/Graphics/WindowFactory.cpp \
