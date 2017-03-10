@@ -171,6 +171,8 @@ namespace ke
                 case sf::Event::EventType::MouseButtonReleased:
                 case sf::Event::EventType::KeyPressed:
                 case sf::Event::EventType::KeyReleased:
+                case sf::Event::EventType::TextEntered:
+                case sf::Event::EventType::Resized:
                 {
                     auto keEvent = SfmlEventTranslator::translate(event, sfWindow);
                     if (keEvent)

@@ -24,6 +24,8 @@ namespace pf
         ke::EventManager::registerListener<ke::MouseButtonReleasedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::registerListener<ke::KeyboardKeyPressedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::registerListener<ke::KeyboardKeyReleasedEvent>(this, &HumanView::handleWindowEvent);
+        ke::EventManager::registerListener<ke::KeyboardTextEvent>(this, &HumanView::handleWindowEvent);
+        ke::EventManager::registerListener<ke::WindowResizedEvent>(this, &HumanView::handleWindowEvent);
     }
 
     HumanView::~HumanView()
@@ -33,6 +35,8 @@ namespace pf
         ke::EventManager::deregisterListener<ke::MouseButtonReleasedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::deregisterListener<ke::KeyboardKeyPressedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::deregisterListener<ke::KeyboardKeyReleasedEvent>(this, &HumanView::handleWindowEvent);
+        ke::EventManager::deregisterListener<ke::KeyboardTextEvent>(this, &HumanView::handleWindowEvent);
+        ke::EventManager::deregisterListener<ke::WindowResizedEvent>(this, &HumanView::handleWindowEvent);
     }
 
     void HumanView::attachEntity(ke::EntityId entityId)
@@ -55,8 +59,8 @@ namespace pf
         {
             case ke::SfmlEvent::TYPE:
             {
-                auto windowEvent = std::static_pointer_cast<ke::SfmlEvent>(event);
-                this->handleSfmlEvent(windowEvent->getSfmlEvent());
+                auto sfEvent = std::static_pointer_cast<ke::SfmlEvent>(event);
+                this->handleSfmlEvent(sfEvent->getSfmlEvent());
                 break;
             }
 
@@ -76,15 +80,42 @@ namespace pf
 
             case ke::KeyboardKeyPressedEvent::TYPE:
             {
-                auto keyboardEvent = std::static_pointer_cast<ke::KeyboardKeyPressedEvent>(event);
-                keyboardController->onKeyPressed(keyboardEvent->getDetail());
+                auto keyboardEvent = static_cast<ke::KeyboardKeyPressedEvent*>(event.get());
+
+                if (keyboardEvent->getDetail().keyCode == ke::Keyboard::Return)
+                {
+                    ke::Log::instance()->info("echo({}): {}", testTextBuffer.length(), testTextBuffer);
+                    testTextBuffer.clear();
+                }
+                else
+                {
+                    keyboardController->onKeyReleased(keyboardEvent->getDetail());
+                }
                 break;
             }
 
             case ke::KeyboardKeyReleasedEvent::TYPE:
             {
                 auto keyboardEvent = std::static_pointer_cast<ke::KeyboardKeyReleasedEvent>(event);
-                keyboardController->onKeyReleased(keyboardEvent->getDetail());
+                keyboardController->onKeyPressed(keyboardEvent->getDetail());
+                break;
+            }
+
+            case ke::KeyboardTextEvent::TYPE:
+            {
+                auto textEvent = static_cast<ke::KeyboardTextEvent*>(event.get());
+                // we only care about printing ASCII characters between 32 and 127.
+                if (textEvent->getDetail().unicode >= 32 &&
+                    textEvent->getDetail().unicode < 127)
+                {
+                    testTextBuffer = testTextBuffer + static_cast<char>(textEvent->getDetail().unicode);
+                }
+                break;
+            }
+
+            case ke::WindowResizedEvent::TYPE:
+            {
+                ke::Log::instance()->info("Window resized.");
                 break;
             }
         }
@@ -95,24 +126,6 @@ namespace pf
     {
         switch (event.type)
         {
-        case sf::Event::KeyPressed:
-        {
-            if (event.key.code == sf::Keyboard::Return)
-            {
-                ke::Log::instance()->info("echo({}): {}", testTextBuffer.length(), testTextBuffer);
-                testTextBuffer.clear();
-            }
-            break;
-        }
-
-        case sf::Event::TextEntered:
-        {
-            if (event.text.unicode >= 32 && event.text.unicode < 127) // we only care about printing ASCII characters between 32 and 127.
-            {
-                testTextBuffer = testTextBuffer + static_cast<char>(event.text.unicode);
-            }
-            break;
-        }        
 
         default:
             break;

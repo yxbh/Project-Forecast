@@ -64,8 +64,20 @@ namespace ke
             return ke::makeEvent<ke::KeyboardKeyReleasedEvent>(eventInfo);
         }
 
-        default: return nullptr;
+        case sf::Event::TextEntered:
+        {
+            ke::Keyboard::TextInfo detail{ event.text.unicode };
+            return ke::makeEvent<ke::KeyboardTextEvent>(detail);
         }
+
+        case sf::Event::Resized:
+        {
+            ke::Dimension2DUInt32 newSize{ event.size.width, event.size.height };
+            return ke::makeEvent<ke::WindowResizedEvent>(newSize);
+        }
+
+        default: return nullptr;
+        } // switch sf::Event type.
     }
 
 }

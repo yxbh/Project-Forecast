@@ -3,30 +3,31 @@
 #include "KEngine/Interface/IEvent.hpp"
 #include "KEngine/Interface/IInputController.hpp"
 
+#include "KEngine/Common/Dimension2D.hpp"
 #include "KEngine/Common/Point2D.hpp"
 
 namespace ke
 {
 
-    class KeyboardEvent : public ke::IEvent
+    class KeyboardKeyEvent : public ke::IEvent
     {
-        KE_DEFINE_EVENT_COMMON_PROPERTIES(KeyboardEvent, 0xE1D2E239)
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(KeyboardKeyEvent, 0xE1D2E239)
 
     public:
-        KeyboardEvent(const ke::Keyboard::KeyInfo & keyInfo) : detail(keyInfo) {}
+        KeyboardKeyEvent(const ke::Keyboard::KeyInfo & keyInfo) : detail(keyInfo) {}
 
         inline const ke::Keyboard::KeyInfo & getDetail() const { return this->detail; }
 
     protected:
         ke::Keyboard::KeyInfo detail;
     };
-    
-    class KeyboardKeyPressedEvent : public KeyboardEvent
+
+    class KeyboardKeyPressedEvent : public KeyboardKeyEvent
     {
         KE_DEFINE_EVENT_COMMON_PROPERTIES(KeyboardKeyPressedEvent, 0x8B492E75)
 
     public:
-        using KeyboardEvent::KeyboardEvent;
+        using KeyboardKeyEvent::KeyboardKeyEvent;
 
         virtual ke::EventSptr makeCopy() const final
         {
@@ -34,12 +35,12 @@ namespace ke
         }
     };
 
-    class KeyboardKeyReleasedEvent : public KeyboardEvent
+    class KeyboardKeyReleasedEvent : public KeyboardKeyEvent
     {
         KE_DEFINE_EVENT_COMMON_PROPERTIES(KeyboardKeyReleasedEvent, 0xABCAB2CA)
 
     public:
-        using KeyboardEvent::KeyboardEvent;
+        using KeyboardKeyEvent::KeyboardKeyEvent;
 
         virtual ke::EventSptr makeCopy() const final
         {
@@ -47,7 +48,25 @@ namespace ke
         }
     };
 
-    
+    class KeyboardTextEvent : public ke::IEvent
+    {
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(KeyboardTextEvent, 0x795AF2F1)
+
+    public:
+        KeyboardTextEvent(const ke::Keyboard::TextInfo & textInfo) : detail(textInfo) {}
+
+        inline const ke::Keyboard::TextInfo & getDetail() const { return this->detail; }
+
+        virtual ke::EventSptr makeCopy() const final
+        {
+            return ke::makeEvent<KeyboardTextEvent>(this->detail);
+        }
+
+    protected:
+        ke::Keyboard::TextInfo detail;
+    };
+
+
     class MouseButtonEvent : public ke::IEvent
     {
         KE_DEFINE_EVENT_COMMON_PROPERTIES(MouseButtonEvent, 0xA16F2D57)
@@ -95,5 +114,25 @@ namespace ke
     };
 
 
+    class WindowResizedEvent : public ke::IEvent
+    {
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(WindowResizedEvent, 0x1CFE21D7)
+
+    public:
+        WindowResizedEvent(const ke::Dimension2DUInt32 & p_newSize)
+            : newSize(p_newSize)
+        {}
+
+        inline const ke::Dimension2DUInt32 & getNewSize() const { return this->newSize; }
+
+        virtual ke::EventSptr makeCopy() const final
+        {
+            return ke::makeEvent<WindowResizedEvent>(this->newSize);
+        }
+
+    private:
+        ke::Dimension2DUInt32 newSize;
+
+    };
 
 }

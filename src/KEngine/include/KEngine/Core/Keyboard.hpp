@@ -142,6 +142,11 @@ namespace ke
             bool system  = false;
         };
 
+        struct TextInfo
+        {
+            std::uint32_t unicode;
+        };
+
         /// <summary>
         /// Check if the given keyboard key is pressed.
         /// </summary>

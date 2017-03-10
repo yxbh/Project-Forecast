@@ -62,10 +62,10 @@ namespace ke
             return cmd;
         }
 
-        inline const ke::Dimension2D & getDimension() const { return this->dimension; }
+        inline const ke::Dimension2DUInt32 & getDimension() const { return this->dimension; }
 
     protected:
-        ke::Dimension2D dimension;
+        ke::Dimension2DUInt32 dimension;
     };
 
 
