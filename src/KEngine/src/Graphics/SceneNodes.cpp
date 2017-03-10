@@ -13,8 +13,9 @@ namespace ke
     {
         auto newNode = ke::makeSceneNode<ke::CircleShapeNode>(entityId);
         newNode->setLocalTransform(localTransform);
-        auto & states           = newNode->states;
+        auto & states                  = newNode->states;
         states.type                    = ke::GraphicsCommand::Types::RenderCircleShape;
+        states.render.id               = newNode->getId();
         states.render.radius           = radius;
         states.render.origin           = { radius, radius };
         states.render.outlineThickness = outlineThickness;

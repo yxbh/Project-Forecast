@@ -11,6 +11,7 @@
 
 namespace ke
 {
+    using SceneNodeId = std::uint32_t;
 
     class ISceneNode;
 
@@ -27,12 +28,13 @@ namespace ke
     public:
         using SceneNodeList = std::vector<SceneNodeSptr>;
 
-        ISceneNode(ke::EntityId p_entityId) : entityId(p_entityId) {}
+        ISceneNode(ke::EntityId p_entityId) : id(newId()), entityId(p_entityId) {}
         ISceneNode(const ISceneNode&) = delete;
         ISceneNode & operator=(const ISceneNode&) = delete;
 
         virtual ke::GraphicsCommand getGraphicsCommand() const = 0;
 
+        inline SceneNodeId getId() const { return this->id; }
         inline ke::EntityId getEntityId() const { return this->entityId; }
         inline ISceneNode * getParent() const { return this->parentNode; }
         inline const SceneNodeList & getChildren() const { return this->childrenNodes; }
@@ -120,6 +122,13 @@ namespace ke
     protected:
         inline void setEntityId(ke::EntityId p_entityId) { this->entityId = p_entityId; }
 
+        static SceneNodeId newId()
+        {
+            static SceneNodeId lastId = 0;
+            return ++lastId;
+        }
+
+        SceneNodeId id = 0;
         ke::EntityId entityId = ke::INVALID_ENTITY_ID;
         ke::Transform2D localTransform; // transform relative to its parent.
         mutable ke::Transform2D globalTransform;

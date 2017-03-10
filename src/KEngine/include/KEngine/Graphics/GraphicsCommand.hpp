@@ -4,6 +4,7 @@
 #include "KEngine/Common/Point2D.hpp"
 #include "KEngine/Common/Transform2D.hpp"
 
+#include <cstdint>
 
 namespace ke::graphics
 {
@@ -20,8 +21,12 @@ namespace ke::graphics
         std::uint16_t textureId = 0;
     };
 
+    using IdType = std::uint32_t;
+
     struct RenderCommandProperty
     {
+        IdType id = 0;
+
         Point2DFloat origin;
         Transform2D globalTransform;
         Transform2D deltaTransform;

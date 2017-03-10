@@ -32,6 +32,7 @@ namespace ke
         virtual ke::GraphicsCommand getGraphicsCommand() const override
         {
             ke::GraphicsCommand cmd;
+            cmd.render.id = this->getId();
             cmd.type = ke::GraphicsCommand::Types::RenderInvisible;
             return cmd;
         }

@@ -6,6 +6,8 @@
 #include <SFML/Graphics/CircleShape.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
 
+#include <unordered_map>
+
 namespace ke
 {
     
@@ -35,24 +37,37 @@ namespace ke
             if (!viewRect.intersects(shapeMaxGlobalBound))
                 return;
 
-            shape.setPosition(command.render.globalTransform.x, -command.render.globalTransform.y);
-            sf::Color sfFillColor(
-                command.render.fillColor.r,
-                command.render.fillColor.g,
-                command.render.fillColor.b,
-                command.render.fillColor.a);
-            shape.setFillColor(sfFillColor);
-            shape.setRadius(command.render.radius);
-            shape.setOrigin(command.render.origin.x, command.render.origin.y);
-            sf::Color sfOutlineColor(
-                command.render.outlineColor.r,
-                command.render.outlineColor.g,
-                command.render.outlineColor.b,
-                command.render.outlineColor.a);
-            shape.setOutlineColor(sfOutlineColor);
-            shape.setOutlineThickness(command.render.outlineThickness);
+            auto it = shapeMap.find(command.render.id);
+            sf::CircleShape * shapePtr = nullptr;
+            if (it == shapeMap.end())
+            {
+                shape.setPosition(command.render.globalTransform.x, -command.render.globalTransform.y);
+                sf::Color sfFillColor(
+                    command.render.fillColor.r,
+                    command.render.fillColor.g,
+                    command.render.fillColor.b,
+                    command.render.fillColor.a);
+                shape.setFillColor(sfFillColor);
+                shape.setRadius(command.render.radius);
+                shape.setOrigin(command.render.origin.x, command.render.origin.y);
+                sf::Color sfOutlineColor(
+                    command.render.outlineColor.r,
+                    command.render.outlineColor.g,
+                    command.render.outlineColor.b,
+                    command.render.outlineColor.a);
+                shape.setOutlineColor(sfOutlineColor);
+                shape.setOutlineThickness(command.render.outlineThickness);
 
-            renderTarget->draw(shape);
+                shapeMap[command.render.id] = shape;
+
+                shapePtr = &shape;
+            }
+            else
+            {
+                shapePtr = &(it->second);
+            }
+            
+            renderTarget->draw(*shapePtr);
             ++this->drawCallCount;
         }
 
@@ -70,6 +85,8 @@ namespace ke
         sf::RenderTarget * renderTarget;
         sf::VertexArray vertexArray;
         sf::CircleShape shape;
+
+        std::unordered_map<SceneNodeId, sf::CircleShape> shapeMap;
 
         size_t drawCallCount = 0;
     };
