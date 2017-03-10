@@ -159,6 +159,7 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Events/EntityTransformControlCommandEvents.hpp \
     ../../../KEngine/include/KEngine/Graphics/WindowFactory.hpp \
     ../../../KEngine/include/KEngine/Graphics/SFML/SfmlWindow.hpp \
+    ../../../KEngine/include/KEngine/Graphics/SFML/CircleShapeRenderer.hpp \
     ../../../KEngine/include/KEngine/Graphics/SDL2/SDL2Window.hpp \
     ../../../KEngine/include/KEngine/Graphics/RenderSystem.hpp \
     ../../../KEngine/include/KEngine/Graphics/Scene.hpp \
