@@ -1,5 +1,6 @@
 #pragma once
 
+#include "KEngine/Interface/IEvent.hpp"
 #include "KEngine/Interface/IWindow.hpp"
 #include "KEngine/Interface/ISystem.hpp"
 #include "KEngine/Graphics/Scene.hpp"
@@ -30,11 +31,13 @@ namespace ke
         /// Generate render commands from the given scene when it is not null.
         /// </summary>
         /// <param name="scene"></param>
+        /// <returns>number of commands prepared.</returns>
         size_t prepareCommands(ke::Scene * scene);
 
         /// <summary>
         /// Dispatch all commands generated/received so far for processing.
         /// </summary>
+        /// <returns>number of commands dispatched.</returns>
         size_t dispatchCommands();
 
         /// <summary>
@@ -47,9 +50,15 @@ namespace ke
         /// <summary>
         /// 
         /// </summary>
+        /// <returns>number of draw calls issued.</returns>
         size_t render();
 
         void setWindow(ke::WindowSptr p_window) { this->window = p_window; }
+
+        void receiveEvent(ke::EventSptr event);
+        void processEvents();
+
+        void updateOnRenderLoop(ke::Time elapsedTime);
 
         virtual bool initialise() override;
         virtual void shutdown() override;
@@ -58,6 +67,8 @@ namespace ke
 
     private:
         ke::WindowSptr window;
+
+        ke::ThreadSafeQueue<ke::EventSptr> events;
     };
 
     using RenderSystemUptr = std::unique_ptr<RenderSystem>;

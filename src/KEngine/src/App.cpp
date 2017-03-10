@@ -377,6 +377,8 @@ namespace ke
                     ke::Log::instance()->info("Render loop heart beat");
                 }
 
+                this->renderSystem->updateOnRenderLoop(frameTime);
+
                 // process the oldest render command list from the render commands queue
                 // e.g. culling, ordering, etc...
                 // if queue is empty then interpolate before render.

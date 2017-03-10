@@ -8,7 +8,7 @@ namespace ke
     template <typename ValueType>
     struct Dimension2D
     {
-        ValueType weight = 0;
+        ValueType width  = 0;
         ValueType height = 0;
     };
 

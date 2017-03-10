@@ -22,7 +22,7 @@ namespace ke::graphics
 
     struct RenderCommandProperty
     {
-        Point2DInt32 origin;
+        Point2DFloat origin;
         Transform2D globalTransform;
         Transform2D deltaTransform;
 

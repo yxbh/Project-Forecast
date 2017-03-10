@@ -16,6 +16,7 @@ namespace ke
         auto & states           = newNode->states;
         states.type                    = ke::GraphicsCommand::Types::RenderCircleShape;
         states.render.radius           = radius;
+        states.render.origin           = { radius, radius };
         states.render.outlineThickness = outlineThickness;
         states.render.fillColor        = fillColor;
         states.render.outlineColor     = outlineColor;

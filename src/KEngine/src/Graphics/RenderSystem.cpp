@@ -1,9 +1,12 @@
 #include "KEngine/Graphics/RenderSystem.hpp"
 
 #include "KEngine/Graphics/RenderLayer.hpp"
+#include "KEngine/Graphics/SFML/CircleShapeRenderer.hpp"
 
 #include "KEngine/Common/Libs/concurrentqueue.h"
 #include "KEngine/Common/Libs/readerwriterqueue.h"
+#include "KEngine/Core/EventManager.hpp"
+#include "KEngine/Events/AppEvents.hpp"
 #include "KEngine/Log/Log.hpp"
 
 #include <SFML/Graphics.hpp>
@@ -17,9 +20,7 @@ namespace
 
     static ke::RenderSystem * instance = nullptr;
 
-    std::unique_ptr<sf::Drawable> circleShape;
-
-    static uint32_t drawCallCount = 0;
+    static size_t drawCallCount = 0;
 
     template<typename Type>
     //using ConcurrentQueue = moodycamel::ConcurrentQueue<Type>;
@@ -34,6 +35,16 @@ namespace
     static ConcurrentQueue<GraphicsCommandList> renderThreadCmdListQueue;
 
     static std::vector<ke::RenderLayer> renderLayers;
+
+    static ke::CircleShapeRenderer circleShapeRenderer;
+
+
+    static bool graphicsCommandRenderTypeComparer(const ke::GraphicsCommand & lhs, const ke::GraphicsCommand & rhs)
+    {
+        return
+            lhs.type < rhs.type &&
+            lhs.render.textureId < rhs.render.textureId;
+    }
 }
 
 namespace ke
@@ -52,12 +63,13 @@ namespace ke
 
     bool RenderSystem::initialise()
     {
+        ke::EventManager::registerListener<ke::WindowResizedEvent>(this, &RenderSystem::receiveEvent);
         return true;
     }
 
     void RenderSystem::shutdown()
     {
-        circleShape.reset();
+        ke::EventManager::deregisterListener<ke::WindowResizedEvent>(this, &RenderSystem::receiveEvent);
     }
 
     void RenderSystem::update(ke::Time elapsedTime)
@@ -121,8 +133,8 @@ namespace ke
     void RenderSystem::processCommands(ke::Time elapsedTime)
     {
         KE_UNUSED(elapsedTime);
-        ::renderLayers.clear();
         if (::renderThreadCmdListQueue.size_approx() == 0) return;
+        for (auto & layer : ::renderLayers) layer.graphicsCommands.clear();
 
         GraphicsCommandList throwAway;
         while (::renderThreadCmdListQueue.size_approx() > 2)
@@ -137,6 +149,9 @@ namespace ke
             return;
         }
 
+        sf::RenderWindow * renderTarget = static_cast<sf::RenderWindow*>(this->window.get()->get());
+        ::circleShapeRenderer.setRenderTarget(renderTarget);
+
         // filter the commands to their respective processors.
         for (const auto & command : ::currentRenderThreadCmdList)
         {
@@ -144,7 +159,6 @@ namespace ke
             {
             case GraphicsCommand::Types::SetViewContext:
             {
-                sf::RenderWindow * renderTarget = static_cast<sf::RenderWindow*>(this->window.get()->get());
                 auto view = renderTarget->getView();
                 view.setCenter(static_cast<float>(command.view.transform.x), static_cast<float>(-command.view.transform.y));
                 renderTarget->setView(view);
@@ -158,7 +172,9 @@ namespace ke
             {
                 while (command.render.depth >= ::renderLayers.size())
                 {
-                    ::renderLayers.push_back(ke::RenderLayer());
+                    ke::RenderLayer newLayer;
+                    newLayer.graphicsCommands.reserve(5000);
+                    ::renderLayers.emplace_back(std::move(newLayer));
                 }
 
                 ::renderLayers[command.render.depth].graphicsCommands.push_back(command);
@@ -167,6 +183,13 @@ namespace ke
 
             } // switch command type.
         } // for each command.
+
+        for (auto & renderLayer : ::renderLayers)
+        {
+            std::sort(
+                renderLayer.graphicsCommands.begin(), renderLayer.graphicsCommands.end(),
+                ::graphicsCommandRenderTypeComparer);
+        }
     }
 
     size_t RenderSystem::render()
@@ -188,40 +211,53 @@ namespace ke
                 {
                 case ke::GraphicsCommand::Types::RenderCircleShape:
                 {
-                    if (!circleShape)
-                    {
-                        circleShape.reset(new sf::CircleShape);
-                    }
-
-                    auto * shape = static_cast<sf::CircleShape*>(circleShape.get());
-                    shape->setPosition(cmd.render.globalTransform.x, -cmd.render.globalTransform.y);
-                    sf::Color sfFillColor(
-                        cmd.render.fillColor.r,
-                        cmd.render.fillColor.g,
-                        cmd.render.fillColor.b,
-                        cmd.render.fillColor.a);
-                    shape->setFillColor(sfFillColor);
-                    shape->setRadius(cmd.render.radius);
-                    sf::Color sfOutlineColor(
-                        cmd.render.outlineColor.r,
-                        cmd.render.outlineColor.g,
-                        cmd.render.outlineColor.b,
-                        cmd.render.outlineColor.a);
-                    shape->setOutlineColor(sfOutlineColor);
-                    shape->setOutlineThickness(cmd.render.outlineThickness);
-                    renderTarget->draw(*shape);
-                    ++::drawCallCount;
+                    ::circleShapeRenderer.render(cmd);
                     break;
                 }
 
                 }
             }
+
+            ::drawCallCount += ::circleShapeRenderer.finaliseRender();
+
         }
 
         renderTarget->display();
         ::commandGenThreadCmdListQueue.enqueue(std::move(::currentRenderThreadCmdList));
 
         return ::drawCallCount;
+    }
+
+    void RenderSystem::updateOnRenderLoop(ke::Time elapsedTime)
+    {
+        KE_UNUSED(elapsedTime);
+        this->processEvents();
+    }
+
+    void RenderSystem::receiveEvent(ke::EventSptr event)
+    {
+        events.push(event);
+    }
+
+    void RenderSystem::processEvents()
+    {
+        while (!this->events.isEmpty())
+        {
+            auto event = events.pop();
+            switch (event->getType())
+            {
+            case ke::WindowResizedEvent::TYPE:
+            {
+                auto resizedEvent = static_cast<ke::WindowResizedEvent*>(event.get());
+                const auto & newSize = resizedEvent->getNewSize();
+                sf::RenderWindow * sfWindow = static_cast<sf::RenderWindow*>(this->window.get()->get());
+                auto view = sfWindow->getView();
+                view.setSize({ static_cast<float>(newSize.width), static_cast<float>(newSize.height) });
+                sfWindow->setView(view);
+                break;
+            }
+            }
+        }
     }
 
 }
