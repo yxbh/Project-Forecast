@@ -488,6 +488,9 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\CircleShapeRenderer.hpp">
       <Filter>KEngine\Header Files\Graphics\SFML</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\SfmlHelper.hpp">
+      <Filter>KEngine\Header Files\Graphics\SFML</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\KEngine\include\KEngine\Common\Queues.inl">
