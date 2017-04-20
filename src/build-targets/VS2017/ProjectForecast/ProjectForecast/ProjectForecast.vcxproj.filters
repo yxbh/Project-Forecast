@@ -491,6 +491,9 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\SfmlHelper.hpp">
       <Filter>KEngine\Header Files\Graphics\SFML</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IResource.hpp">
+      <Filter>KEngine\Header Files\Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\KEngine\include\KEngine\Common\Queues.inl">

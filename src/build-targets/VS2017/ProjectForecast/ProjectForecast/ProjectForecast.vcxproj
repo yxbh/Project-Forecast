@@ -408,6 +408,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEventManagerImpl.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IInputController.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IRenderCommand.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IResource.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IScene.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\ISceneNode.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IStateMachine.hpp" />
