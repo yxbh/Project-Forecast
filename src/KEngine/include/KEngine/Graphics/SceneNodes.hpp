@@ -2,7 +2,7 @@
 
 #include "GraphicsCommand.hpp"
 #include "KEngine/Common/Dimension2D.hpp"
-#include "KEngine/Interface/ISceneNode.hpp"
+#include "KEngine/Interfaces/ISceneNode.hpp"
 
 namespace ke
 {

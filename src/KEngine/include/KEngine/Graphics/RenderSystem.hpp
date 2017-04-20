@@ -1,8 +1,8 @@
 #pragma once
 
-#include "KEngine/Interface/IEvent.hpp"
-#include "KEngine/Interface/IWindow.hpp"
-#include "KEngine/Interface/ISystem.hpp"
+#include "KEngine/Interfaces/IEvent.hpp"
+#include "KEngine/Interfaces/IWindow.hpp"
+#include "KEngine/Interfaces/ISystem.hpp"
 #include "KEngine/Graphics/Scene.hpp"
 #include "KEngine/Graphics/GraphicsCommand.hpp"
 #include "KEngine/Common/Time.hpp"

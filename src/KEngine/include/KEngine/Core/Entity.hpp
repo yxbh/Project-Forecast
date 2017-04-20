@@ -1,6 +1,6 @@
 #pragma once
 
-#include "KEngine/Interface/IEntity.hpp"
+#include "KEngine/Interfaces/IEntity.hpp"
 
 #include <unordered_set>
 

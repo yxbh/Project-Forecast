@@ -1,6 +1,6 @@
 #pragma once
 
-#include "KEngine/Interface/IEvent.hpp"
+#include "KEngine/Interfaces/IEvent.hpp"
 #include "KEngine/Common/Point2D.hpp"
 #include "KEngine/Common/Color.hpp"
 

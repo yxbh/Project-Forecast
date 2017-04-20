@@ -1,5 +1,5 @@
 #include "KEngine/Core/Entity.hpp"
-#include "KEngine/Interface/IEntityComponent.hpp"
+#include "KEngine/Interfaces/IEntityComponent.hpp"
 #include "KEngine/Log/Log.hpp"
 
 #include <cassert>

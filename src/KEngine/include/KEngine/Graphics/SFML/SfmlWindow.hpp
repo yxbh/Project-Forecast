@@ -1,7 +1,7 @@
 #pragma once
 
-#include "KEngine/Interface/IWindow.hpp"
-#include "KEngine/Interface/IEvent.hpp"
+#include "KEngine/Interfaces/IWindow.hpp"
+#include "KEngine/Interfaces/IEvent.hpp"
 
 #include <SFML/Graphics.hpp>
 

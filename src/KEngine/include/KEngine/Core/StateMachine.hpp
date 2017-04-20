@@ -1,6 +1,6 @@
 #pragma once
 
-#include "KEngine/Interface/IStateMachine.hpp"
+#include "KEngine/Interfaces/IStateMachine.hpp"
 
 #include <unordered_map>
 #include <unordered_set>

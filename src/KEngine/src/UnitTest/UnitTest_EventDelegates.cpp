@@ -2,7 +2,7 @@
 
 #include "KEngine/Common/macros.hpp"
 #include "KEngine/Common/Delegate.hpp"
-#include "KEngine/Interface/IEvent.hpp"
+#include "KEngine/Interfaces/IEvent.hpp"
 
 #include "KEngine/UnitTest/catch.hpp"
 

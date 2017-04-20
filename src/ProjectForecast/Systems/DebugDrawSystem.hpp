@@ -1,7 +1,7 @@
 #pragma once
 
-#include "KEngine/Interface/IEvent.hpp"
-#include "KEngine/Interface/ISystem.hpp"
+#include "KEngine/Interfaces/IEvent.hpp"
+#include "KEngine/Interfaces/ISystem.hpp"
 
 namespace pf
 {

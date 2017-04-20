@@ -2,7 +2,7 @@
 
 #include "../InputControllers/InputControllers.hpp"
 
-#include "KEngine/Interface/IEvent.hpp"
+#include "KEngine/Interfaces/IEvent.hpp"
 #include "KEngine/Views/HumanView.hpp"
 
 namespace sf

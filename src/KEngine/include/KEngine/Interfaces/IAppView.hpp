@@ -1,7 +1,7 @@
 #pragma once
 
-#include "KEngine/Interface/IEntity.hpp"
-#include "KEngine/Interface/IScene.hpp"
+#include "KEngine/Interfaces/IEntity.hpp"
+#include "KEngine/Interfaces/IScene.hpp"
 
 #include <memory>
 

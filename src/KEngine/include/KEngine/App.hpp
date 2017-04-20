@@ -1,8 +1,8 @@
 #pragma once
 
-#include "KEngine/Interface/IApp.hpp"
-#include "KEngine/Interface/IEvent.hpp"
-#include "KEngine/Interface/IWindow.hpp"
+#include "KEngine/Interfaces/IApp.hpp"
+#include "KEngine/Interfaces/IEvent.hpp"
+#include "KEngine/Interfaces/IWindow.hpp"
 #include "KEngine/Core/ResourceManager.hpp"
 #include "KEngine/Graphics/RenderSystem.hpp"
 #include "KEngine/BaseAppLogic.hpp"

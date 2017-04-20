@@ -1,6 +1,6 @@
 #pragma once
 
-#include "KEngine/Interface/IEntityComponentJsonLoader.hpp"
+#include "KEngine/Interfaces/IEntityComponentJsonLoader.hpp"
 
 namespace ke
 {

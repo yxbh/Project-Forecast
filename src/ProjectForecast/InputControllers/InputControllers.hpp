@@ -1,7 +1,7 @@
 #pragma once
 
-#include "KEngine/Interface/IEntity.hpp"
-#include "KEngine/Interface/IInputController.hpp"
+#include "KEngine/Interfaces/IEntity.hpp"
+#include "KEngine/Interfaces/IInputController.hpp"
 
 namespace pf
 {

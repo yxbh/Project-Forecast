@@ -1,7 +1,7 @@
 #pragma once
 
 #include "KEngine/Common/Time.hpp"
-#include "KEngine/Interface/ISystem.hpp"
+#include "KEngine/Interfaces/ISystem.hpp"
 
 #include <unordered_map>
 #include <vector>

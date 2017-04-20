@@ -1,7 +1,7 @@
 #pragma once
 
-#include "KEngine/Interface/IAppView.hpp"
-#include "KEngine/Interface/IEntity.hpp"
+#include "KEngine/Interfaces/IAppView.hpp"
+#include "KEngine/Interfaces/IEntity.hpp"
 #include "KEngine/Graphics/Scene.hpp"
 
 namespace ke

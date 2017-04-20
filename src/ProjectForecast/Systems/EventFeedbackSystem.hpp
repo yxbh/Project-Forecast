@@ -1,6 +1,6 @@
 #pragma once
 
-#include "KEngine/Interface/ISystem.hpp"
+#include "KEngine/Interfaces/ISystem.hpp"
 
 namespace pf
 {

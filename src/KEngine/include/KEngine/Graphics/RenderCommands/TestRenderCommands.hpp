@@ -1,6 +1,6 @@
 #pragma once
 
-#include "KEngine/Interface/IRenderCommand.hpp"
+#include "KEngine/Interfaces/IRenderCommand.hpp"
 
 namespace ke
 {

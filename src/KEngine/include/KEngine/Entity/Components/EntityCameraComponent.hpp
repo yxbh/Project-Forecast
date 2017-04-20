@@ -1,6 +1,6 @@
 #pragma once
 
-#include "KEngine/Interface/IEntityComponent.hpp"
+#include "KEngine/Interfaces/IEntityComponent.hpp"
 
 #include "KEngine/Graphics/SceneNodes.hpp"
 

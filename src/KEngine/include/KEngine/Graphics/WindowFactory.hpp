@@ -1,6 +1,6 @@
 #pragma once
 
-#include "KEngine/Interface/IWindow.hpp"
+#include "KEngine/Interfaces/IWindow.hpp"
 
 namespace ke
 {

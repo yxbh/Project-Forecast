@@ -1,7 +1,7 @@
 #pragma once
 
-#include "KEngine/Interface/IEntity.hpp"
-#include "KEngine/Interface/IEntityComponentJsonLoader.hpp"
+#include "KEngine/Interfaces/IEntity.hpp"
+#include "KEngine/Interfaces/IEntityComponentJsonLoader.hpp"
 
 #include <unordered_map>
 

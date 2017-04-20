@@ -2,9 +2,9 @@
 
 #include "SceneNodes.hpp"
 
-#include "KEngine/Interface/IEntity.hpp"
-#include "KEngine/Interface/IScene.hpp"
-#include "KEngine/Interface/ISceneNode.hpp"
+#include "KEngine/Interfaces/IEntity.hpp"
+#include "KEngine/Interfaces/IScene.hpp"
+#include "KEngine/Interfaces/ISceneNode.hpp"
 
 #include <unordered_map>
 

@@ -1,7 +1,7 @@
 #if defined(RUN_UNIT_TESTS)
 
 #include "KEngine/Core/EventManager.hpp"
-#include "KEngine/Interface/IEvent.hpp"
+#include "KEngine/Interfaces/IEvent.hpp"
 
 #include "KEngine/UnitTest/catch.hpp"
 

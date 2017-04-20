@@ -4,7 +4,7 @@
 #include "KEngine/Core/EntityFactory.hpp"
 #include "KEngine/Core/EntityManager.hpp"
 #include "KEngine/Core/SystemManager.hpp"
-#include "KEngine/Interface/IAppView.hpp"
+#include "KEngine/Interfaces/IAppView.hpp"
 
 #include <memory>
 #include <vector>

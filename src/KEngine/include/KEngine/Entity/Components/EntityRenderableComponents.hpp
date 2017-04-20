@@ -1,7 +1,7 @@
 #pragma once
 
 #include "KEngine/Graphics/SceneNodes.hpp"
-#include "KEngine/Interface/IEntityComponent.hpp"
+#include "KEngine/Interfaces/IEntityComponent.hpp"
 #include <cassert>
 
 namespace ke

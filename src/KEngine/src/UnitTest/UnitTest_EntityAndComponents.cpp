@@ -1,6 +1,6 @@
 #if defined(RUN_UNIT_TESTS)
 
-#include "KEngine/Interface/IEntityComponent.hpp"
+#include "KEngine/Interfaces/IEntityComponent.hpp"
 #include "KEngine/Core/Entity.hpp"
 
 #include "KEngine/UnitTest/catch.hpp"

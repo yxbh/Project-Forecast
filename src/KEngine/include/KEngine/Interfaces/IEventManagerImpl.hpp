@@ -2,7 +2,7 @@
 
 #include "KEngine/Common/Delegate.hpp"
 #include "KEngine/Common/Time.hpp"
-#include "KEngine/Interface/IEvent.hpp"
+#include "KEngine/Interfaces/IEvent.hpp"
 
 namespace ke
 {

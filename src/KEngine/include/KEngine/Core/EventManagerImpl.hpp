@@ -1,6 +1,6 @@
 #pragma once
 
-#include "KEngine/Interface/IEventManagerImpl.hpp"
+#include "KEngine/Interfaces/IEventManagerImpl.hpp"
 
 #include <deque>
 #include <unordered_map>

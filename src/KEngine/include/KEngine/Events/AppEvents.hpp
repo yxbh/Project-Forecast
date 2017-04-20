@@ -1,7 +1,7 @@
 #pragma once
 
-#include "KEngine/Interface/IEvent.hpp"
-#include "KEngine/Interface/IInputController.hpp"
+#include "KEngine/Interfaces/IEvent.hpp"
+#include "KEngine/Interfaces/IInputController.hpp"
 
 #include "KEngine/Common/Dimension2D.hpp"
 #include "KEngine/Common/Point2D.hpp"

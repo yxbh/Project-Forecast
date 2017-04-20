@@ -48,9 +48,6 @@
     <Filter Include="KEngine\Header Files\Events\SFML">
       <UniqueIdentifier>{c375f036-20c8-47e7-b471-200f90c41954}</UniqueIdentifier>
     </Filter>
-    <Filter Include="KEngine\Header Files\Interface">
-      <UniqueIdentifier>{7c6063c2-880e-4fe2-b12a-6602e2e4b816}</UniqueIdentifier>
-    </Filter>
     <Filter Include="KEngine\Header Files\Log">
       <UniqueIdentifier>{8d11e13c-cb27-4a57-bebb-636647b85e46}</UniqueIdentifier>
     </Filter>
@@ -123,6 +120,9 @@
     </Filter>
     <Filter Include="KEngine\Source Files\Events\SFML">
       <UniqueIdentifier>{6ff9425a-33dc-4919-ae0f-845a88d355b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Interfaces">
+      <UniqueIdentifier>{7c6063c2-880e-4fe2-b12a-6602e2e4b816}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -248,15 +248,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IApp.hpp">
-      <Filter>KEngine\Header Files\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEventManagerImpl.hpp">
-      <Filter>KEngine\Header Files\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEvent.hpp">
-      <Filter>KEngine\Header Files\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManager.hpp">
       <Filter>KEngine\Header Files\Core</Filter>
     </ClInclude>
@@ -287,9 +278,6 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\Window.hpp">
       <Filter>KEngine\Header Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IWindow.hpp">
-      <Filter>KEngine\Header Files\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\ScopeFunc.hpp">
       <Filter>KEngine\Header Files\Common</Filter>
     </ClInclude>
@@ -308,9 +296,6 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SDL2\SDL2Event.hpp">
       <Filter>KEngine\Header Files\Events\SDL2</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\ISystem.hpp">
-      <Filter>KEngine\Header Files\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\LoopFrameEvent.hpp">
       <Filter>KEngine\Header Files\Events</Filter>
     </ClInclude>
@@ -325,18 +310,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\Entity.hpp">
       <Filter>KEngine\Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEntityComponent.hpp">
-      <Filter>KEngine\Header Files\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEntity.hpp">
-      <Filter>KEngine\Header Files\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IRenderCommand.hpp">
-      <Filter>KEngine\Header Files\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IStateMachine.hpp">
-      <Filter>KEngine\Header Files\Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\StateMachine.hpp">
       <Filter>KEngine\Header Files\Core</Filter>
@@ -374,9 +347,6 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EntityFactory.hpp">
       <Filter>KEngine\Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IEntityComponentJsonLoader.hpp">
-      <Filter>KEngine\Header Files\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderCommands\TestRenderCommands.hpp">
       <Filter>KEngine\Header Files\Graphics\RenderCommands</Filter>
     </ClInclude>
@@ -386,17 +356,8 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\Scene.hpp">
       <Filter>KEngine\Header Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IAppView.hpp">
-      <Filter>KEngine\Header Files\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IScene.hpp">
-      <Filter>KEngine\Header Files\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Views\HumanView.hpp">
       <Filter>KEngine\Header Files\Views</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\ISceneNode.hpp">
-      <Filter>KEngine\Header Files\Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\ProjectForecast\ProjectForecastApp.hpp">
       <Filter>ProjectForecast</Filter>
@@ -467,9 +428,6 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\EntityTransformControlCommandEvents.hpp">
       <Filter>KEngine\Header Files\Events</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IInputController.hpp">
-      <Filter>KEngine\Header Files\Interface</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\Keyboard.hpp">
       <Filter>KEngine\Header Files\Core</Filter>
     </ClInclude>
@@ -491,8 +449,50 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\SfmlHelper.hpp">
       <Filter>KEngine\Header Files\Graphics\SFML</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interface\IResource.hpp">
-      <Filter>KEngine\Header Files\Interface</Filter>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IApp.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IAppView.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IEntity.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IEntityComponent.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IEntityComponentJsonLoader.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IEvent.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IEventManagerImpl.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IInputController.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IRenderCommand.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IResource.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IScene.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\ISceneNode.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IStateMachine.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\ISystem.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IWindow.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
