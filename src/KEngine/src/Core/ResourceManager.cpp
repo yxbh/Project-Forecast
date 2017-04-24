@@ -49,8 +49,8 @@ namespace ke
         }
 
         // read the JSON content.
-        std::ifstream ifs(manifestPath.c_str());
-        std::string content((std::istreambuf_iterator<char>(ifs)), (std::istreambuf_iterator<char>()));
+        std::ifstream ifs{ manifestPath.c_str() };
+        std::string content( std::istreambuf_iterator<char> { ifs }, std::istreambuf_iterator<char>{} );
         auto manifestJson = ke::Json::parse(content.begin(), content.end());
 
         // type check JSON for manifest
