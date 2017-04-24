@@ -409,12 +409,14 @@ namespace ke
 
         ke::Log::instance()->info("Creating logic and views ...");
         this->createLogicAndViews();
+        ke::Log::instance()->info("Creating logic and views ... DONE");
 
         assert(this->getLogic());
         assert(this->getLogic()->getCurrentHumanView());
 
         ke::Log::instance()->info("Creating resource manager ...");
         this->resourceManager = std::make_unique<ResourceManager>();
+        ke::Log::instance()->info("Creating resource manager ... DONE");
     }
 
     void App::cleanUpExec()
