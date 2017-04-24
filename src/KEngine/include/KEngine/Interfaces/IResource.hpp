@@ -8,7 +8,7 @@
 namespace ke
 {
 
-    using ResourceTypeInternalType = char * const;
+    using ResourceTypeInternalType = const char * const;
     using ResourceType = std::string;
 
     /// <summary>
