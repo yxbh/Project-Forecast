@@ -124,6 +124,18 @@
     <Filter Include="KEngine\Header Files\Interfaces">
       <UniqueIdentifier>{7c6063c2-880e-4fe2-b12a-6602e2e4b816}</UniqueIdentifier>
     </Filter>
+    <Filter Include="KEngine\Header Files\Resources">
+      <UniqueIdentifier>{b7e348d4-e368-4f00-a859-40f5e7a8389f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Resources">
+      <UniqueIdentifier>{e7d688fc-1643-42fa-8f0d-0550cbffe76f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Resources\Loaders">
+      <UniqueIdentifier>{84f70bc7-6b6e-4a78-9774-375685f2a48a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Resources\Loaders">
+      <UniqueIdentifier>{3f5b6a71-ba4d-4869-912d-4a453b32afb6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Events.cpp">
@@ -245,6 +257,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\KEngine\src\Events\SFML\SfmlEventTranslator.cpp">
       <Filter>KEngine\Source Files\Events\SFML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Resources\ImageResource.cpp">
+      <Filter>KEngine\Source Files\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Resources\ResourceManifestResource.cpp">
+      <Filter>KEngine\Source Files\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Resources\Loaders\ImageResourceLoader.cpp">
+      <Filter>KEngine\Source Files\Resources\Loaders</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -493,6 +514,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IWindow.hpp">
       <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\ImageResource.hpp">
+      <Filter>KEngine\Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\ResourceManifestResource.hpp">
+      <Filter>KEngine\Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IResourceLoader.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\Loaders\ImageResourceLoader.hpp">
+      <Filter>KEngine\Header Files\Resources\Loaders</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

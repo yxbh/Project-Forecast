@@ -1,14 +1,21 @@
 #pragma once
 
+#include "KEngine/Common/String.hpp"
+
 #include <cstdint>
 #include <memory>
 
 namespace ke
 {
 
-    using ResourceType = std::uint16_t;
+    using ResourceTypeInternalType = char * const;
+    using ResourceType = std::string;
 
-
+    /// <summary>
+    /// An interface class for implementing resources used by KEngine.
+    /// Use the KE_DEFINE_RESOURCE_COMMON_PROPERTIES when defining a new resource type.
+    /// Related classes: ke::ResourceManager
+    /// </summary>
     class IResource
     {
     public:
@@ -16,8 +23,8 @@ namespace ke
         using Uptr = std::unique_ptr<IResource>;
         using Wptr = std::weak_ptr<IResource>;
 
-        static const ResourceType INVALID_RESOURCE = 0;
-        static const ResourceType TYPE = INVALID_RESOURCE; /// each class inheriting from IResource is required to redefine this.
+        static constexpr ResourceTypeInternalType INVALID_RESOURCE = "invalid_type";
+        static constexpr ResourceTypeInternalType TYPE = INVALID_RESOURCE; /// each class inheriting from IResource is required to redefine this.
 
         IResource();
         IResource(IResource &) = delete;
@@ -28,7 +35,15 @@ namespace ke
         virtual ~IResource();
 
         virtual ke::ResourceType getType() const = 0;
-        virtual const char * getName() const = 0;
+        inline ke::String getName() const { return this->name; }
+        inline ke::String getSourcePath() const { return this->sourcePath; }
+
+        inline void setName(const ke::String & newName) { this->name = newName; }
+        inline void setSourcePath(const ke::String & newSourcePath) { this->sourcePath = newSourcePath; }
+
+    protected:
+        ke::String name;
+        ke::String sourcePath;
     };
 
     inline IResource::IResource() {}
@@ -62,8 +77,6 @@ namespace ke
 /// </summary>
 #define KE_DEFINE_RESOURCE_COMMON_PROPERTIES(CLASS_NAME, RESOURCE_TYPE_VALUE) \
 public: \
-    static constexpr ke::ResourceType TYPE = RESOURCE_TYPE_VALUE; \
-    static constexpr const char * const NAME = #CLASS_NAME; \
+    static constexpr ke::ResourceTypeInternalType TYPE = RESOURCE_TYPE_VALUE; \
     virtual ke::ResourceType getType() const override { return CLASS_NAME::TYPE; } \
-    virtual const char * getName() const override { return CLASS_NAME::NAME; } \
 private:

@@ -322,6 +322,9 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SDL2\SDL2Window.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SFML\SfmlWindow.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\WindowFactory.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Resources\ImageResource.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Resources\Loaders\ImageResourceLoader.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Resources\ResourceManifestResource.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Delegate.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EntityAndComponents.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EntityFactory.cpp" />
@@ -410,12 +413,16 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IInputController.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IRenderCommand.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IResource.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IResourceLoader.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IScene.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\ISceneNode.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IStateMachine.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\ISystem.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IWindow.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Log\Log.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\ImageResource.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\Loaders\ImageResourceLoader.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\ResourceManifestResource.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Views\HumanView.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Events\RequestDrawDebugDotEvent.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\InputControllers\InputControllers.hpp" />

@@ -1,10 +1,14 @@
 #pragma once
 
+#include "KEngine/Interfaces/IResource.hpp"
+#include "KEngine/Interfaces/IResourceLoader.hpp"
+
 #include "KEngine/Common/ThreadPool.hpp"
 #include "KEngine/Common/String.hpp"
 
 #include <forward_list>
 #include <memory>
+#include <unordered_map>
 
 namespace ke
 {
@@ -16,6 +20,8 @@ namespace ke
     {
     public:
         using ResourceId = ke::String;
+        using ResourceLoaderMap = std::unordered_map<ke::ResourceType, ke::ResourceLoaderSptr>;
+        using ResourceMap = std::unordered_map<ke::String, ke::ResourceSptr>;
 
         ResourceManager();
         ResourceManager(const ResourceManager &) = delete;
@@ -24,20 +30,30 @@ namespace ke
         ResourceManager & operator=(ResourceManager &&) = default;
         virtual ~ResourceManager();
 
-        /// <summary>
-        /// 
-        /// </summary>
         void update();
 
         bool isLoading() const;
 
-        // TODO: getResource() and pre/loadResource() methods.
+        void loadFromManifest(ke::String manifestPath);
+
+        /// <summary>
+        /// Release ownership of the specified resource.
+        /// </summary>
+        void release(ResourceSptr resource);
+
+        void registerResourceLoader(ke::ResourceType resourceType, ke::ResourceLoaderSptr loader);
 
     private:
+        bool validateManifestJson(const ke::Json & manifestJson, const ke::String & manifestPath);
+        bool validateResourceJson(const ke::Json & resourceJson);
+
         using LoadResultFuture = std::future<bool>;
 
         ThreadPool threadPool;
         std::forward_list<LoadResultFuture> threadedInProgressLoadingFutures;
+
+        ResourceLoaderMap resourceLoaders;
+        ResourceMap allResources;
     };
 
     inline ResourceManager::~ResourceManager() {}
