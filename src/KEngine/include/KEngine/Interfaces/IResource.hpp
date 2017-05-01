@@ -35,8 +35,8 @@ namespace ke
         virtual ~IResource();
 
         virtual ke::ResourceType getType() const = 0;
-        inline ke::String getName() const { return this->name; }
-        inline ke::String getSourcePath() const { return this->sourcePath; }
+        inline const ke::String & getName() const { return this->name; }
+        inline const ke::String & getSourcePath() const { return this->sourcePath; }
 
         inline void setName(const ke::String & newName) { this->name = newName; }
         inline void setSourcePath(const ke::String & newSourcePath) { this->sourcePath = newSourcePath; }
