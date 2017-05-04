@@ -3,11 +3,15 @@
 
 #include "Models/Models.hpp"
 
+#include <QStringList>
+
 struct Context
 {
     KengineResourceModel * resourceModel;
     QString currentWorkspaceManifestPath;
     QString manifestOutputPath;
+
+    QStringList errorMessages;
 };
 
 #endif // CONTEXT_HPP

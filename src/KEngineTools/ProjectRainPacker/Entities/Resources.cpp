@@ -5,7 +5,8 @@ void to_json(ke::Json & jsonObject, const std::shared_ptr<KengineResource> & res
     jsonObject = ke::Json
     {
         { "name", resource->getName() },
-        { "type", ResourceTypes::Unknown },
+        { "type", KengineJsonTypes::Resource },
+        { "resource_type", ResourceTypes::Unknown },
         { "source_path", resource->getSourcePath() }
     };
 }
@@ -21,7 +22,8 @@ void to_json(ke::Json & jsonObject, const std::shared_ptr<ImageResource> & resou
     jsonObject = ke::Json
     {
         { "name", resource->getName() },
-        { "type", resource->getType() },
+        { "type", KengineJsonTypes::Resource },
+        { "resource_type", resource->getType() },
         { "source_path", resource->getSourcePath() }
     };
 }

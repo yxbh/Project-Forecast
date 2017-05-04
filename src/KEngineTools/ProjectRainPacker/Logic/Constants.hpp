@@ -5,6 +5,11 @@
 #include <functional>
 #include <unordered_map>
 
+namespace KengineJsonTypes
+{
+    static constexpr const char * const Resource = "resource";
+}
+
 namespace KengineResourceProperties
 {
 

@@ -6,10 +6,10 @@
 /// Reference: https://github.com/gabime/spdlog/wiki
 /// </summary>
 
-namespace ke::log
+namespace ke { namespace log
 {
     using namespace spdlog; // alias the spdlog namespace to make it our own.
-}
+}}
 
 namespace ke
 {

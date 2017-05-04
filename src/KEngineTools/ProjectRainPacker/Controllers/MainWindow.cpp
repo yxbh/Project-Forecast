@@ -2,7 +2,7 @@
 #include "ui_MainWindow.h"
 
 #include "Logic/Constants.hpp"
-#include "Logic/ManifestWriter.hpp"
+#include "Logic/ManifestEditor.hpp"
 #include "Controllers/ManifestGenerationDialog.hpp"
 
 #include "qtpropertymanager.h"
@@ -12,6 +12,7 @@
 
 #include <QDebug>
 #include <QHeaderView>
+#include <QMessageBox>
 #include <QTreeWidget>
 #include <QFileDialog>
 
@@ -73,12 +74,29 @@ void MainWindow::setupModels()
 
 void MainWindow::saveWorkspaceManifest(QString outputManifestPath)
 {
-    ManifestWriter::write(this->context, outputManifestPath);
+    if (!ManifestEditor::write(this->context, outputManifestPath) ||
+        this->context.errorMessages.count() > 0)
+    {
+        QMessageBox::critical(this, "Error",
+            "There was a problem generating the manifest at '" + outputManifestPath + "'.\nError: " + this->context.errorMessages.join('\n'));
+        this->context.errorMessages.clear();
+    }
 }
 
 void MainWindow::loadWorkspaceManifest(QString inputManifestPath)
 {
-
+    if (!QFile(inputManifestPath).exists())
+    {
+        QMessageBox::critical(this, "Error", "The manifest path at '"+ inputManifestPath + "' does not exist.");
+        return;
+    }
+    if (!ManifestEditor::read(this->context, inputManifestPath) ||
+        this->context.errorMessages.count() > 0)
+    {
+        QMessageBox::critical(this, "Error",
+            "There was a problem reading the manifest from '" + inputManifestPath + "'.\nError: " + this->context.errorMessages.join('\n'));
+        this->context.errorMessages.clear();
+    }
 }
 
 void MainWindow::updatePropertyBrowserContent(QtAbstractPropertyBrowser * propertyBrowser, ke::ResourceSptr resource, int row)
