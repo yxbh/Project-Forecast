@@ -1,6 +1,8 @@
 #include "Controllers/MainWindow.hpp"
 #include <QApplication>
 
+#include "KEngine/Log/Log.hpp"
+
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
