@@ -88,6 +88,8 @@ CONFIG(release, debug|release) { # Release build dirs
 
 
 SOURCES += \
+    ../../KEngine/include/KEngine/Log/spdlog/fmt/bundled/format.cc \
+    ../../KEngine/include/KEngine/Log/spdlog/fmt/bundled/ostream.cc \
     ../../KEngine/src/Common/Color.cpp \
     ../../KEngine/src/Common/Time.cpp \
     Controllers/MainWindow.cpp \
@@ -98,11 +100,9 @@ SOURCES += \
     Logic/Constants.cpp \
     Logic/Context.cpp \
     Logic/ResourceManufacturer.cpp \
-    Models/Models.cpp \
-    main.cpp \
     Logic/ManifestEditor.cpp \
-    ../../KEngine/include/KEngine/Log/spdlog/fmt/bundled/format.cc \
-    ../../KEngine/include/KEngine/Log/spdlog/fmt/bundled/ostream.cc
+    Models/Models.cpp \
+    main.cpp
 
 HEADERS  += \
     ../../KEngine/include/KEngine/Common/Libs/atomicops.h \
@@ -121,16 +121,6 @@ HEADERS  += \
     ../../KEngine/include/KEngine/Common/ThreadPool.hpp \
     ../../KEngine/include/KEngine/Common/Time.hpp \
     ../../KEngine/include/KEngine/Interfaces/IResource.hpp \
-    Controllers/MainWindow.hpp \
-    Controllers/KengineResourceTableView.hpp \
-    Controllers/ManifestGenerationDialog.hpp \
-    Entities/Resources.hpp \
-    Logic/Constants.hpp \
-    Logic/UrlResourceTypeDetector.hpp \
-    Logic/Context.hpp \
-    Logic/ResourceManufacturer.hpp \
-    Models/Models.hpp \
-    Logic/ManifestEditor.hpp \
     ../../KEngine/include/KEngine/Log/spdlog/details/async_log_helper.h \
     ../../KEngine/include/KEngine/Log/spdlog/details/async_logger_impl.h \
     ../../KEngine/include/KEngine/Log/spdlog/details/file_helper.h \
@@ -165,7 +155,17 @@ HEADERS  += \
     ../../KEngine/include/KEngine/Log/spdlog/logger.h \
     ../../KEngine/include/KEngine/Log/spdlog/spdlog.h \
     ../../KEngine/include/KEngine/Log/spdlog/tweakme.h \
-    ../../KEngine/include/KEngine/Log/Log.hpp
+    ../../KEngine/include/KEngine/Log/Log.hpp \
+    Controllers/MainWindow.hpp \
+    Controllers/KengineResourceTableView.hpp \
+    Controllers/ManifestGenerationDialog.hpp \
+    Entities/Resources.hpp \
+    Logic/Constants.hpp \
+    Logic/UrlResourceTypeDetector.hpp \
+    Logic/Context.hpp \
+    Logic/ResourceManufacturer.hpp \
+    Logic/ManifestEditor.hpp \
+    Models/Models.hpp
 
 FORMS    += \
     UI/MainWindow.ui \
