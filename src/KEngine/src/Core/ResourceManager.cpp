@@ -126,6 +126,12 @@ namespace ke
             ke::Log::instance()->error("Engine resource JSON missing 'type'. Content: {}", resourceJson.dump(2));
             return false;
         }
+        auto typeValue = typeItr->get<std::string>();
+        if (typeValue != "resource")
+        {
+            ke::Log::instance()->error("Engine resource JSON containts unexpected 'type' value: {}", typeValue);
+            return false;
+        }
 
         auto resourceTypeItr = resourceJson.find("resource_type");
         if (resourceTypeItr == resourceJson.end())

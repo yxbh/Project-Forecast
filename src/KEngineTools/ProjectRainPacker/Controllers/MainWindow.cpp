@@ -189,11 +189,6 @@ void MainWindow::on_tableView_allResources_activated(const QModelIndex &index)
     this->showCurrentKengineResourceProperties(index);
 }
 
-void MainWindow::on_actionQuit_triggered()
-{
-    this->close();
-}
-
 void MainWindow::on_tableView_allResources_clicked(const QModelIndex &index)
 {
     this->showCurrentKengineResourceProperties(index);
@@ -242,4 +237,9 @@ void MainWindow::on_action_Open_triggered()
         return;
     }
     this->loadWorkspaceManifest(workspaceManifestPath);
+}
+
+void MainWindow::on_action_Quit_triggered()
+{
+    this->close();
 }

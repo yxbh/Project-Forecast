@@ -31,12 +31,12 @@ protected:
 
 private slots:
     void on_tableView_allResources_activated(const QModelIndex &index);
-    void on_actionQuit_triggered();
     void on_tableView_allResources_clicked(const QModelIndex &index);
     void on_action_GenerateManifest_triggered();
     void on_action_Save_triggered();
     void on_action_SaveAs_triggered();
     void on_action_Open_triggered();
+    void on_action_Quit_triggered();
 
 private:
     void updatePropertyBrowserContent(QtAbstractPropertyBrowser * propertyBrowser, ke::ResourceSptr resourceItem, int row);

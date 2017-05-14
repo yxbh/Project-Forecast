@@ -40,6 +40,11 @@ namespace
             ke::Log::instance()->error("Engine resource JSON missing 'type'. Content: {}", resourceJson.dump(2));
             return false;
         }
+        if (typeItr->get<std::string>() != "resource")
+        {
+            ke::Log::instance()->error("ENgine resource JSON has unexpected 'type' value. Content: {}", resourceJson.dump(2));
+            return false;
+        }
 
         auto resourceTypeItr = resourceJson.find("resource_type");
         if (resourceTypeItr == resourceJson.end())
@@ -56,8 +61,11 @@ namespace
             return false;
         }
         auto resourceName = resourceNameItr->get<std::string>();
-
-
+        if (resourceName.length() == 0)
+        {
+            ke::Log::instance()->error("Engine resource JSON contains empty 'resource_name'. Content: {}", resourceJson.dump(2));
+            return false;
+        }
 
         return true;
     }
@@ -170,11 +178,12 @@ ke::Json ManifestEditor::toJson(ke::ResourceSptr resource)
 
 ke::ResourceSptr ManifestEditor::toResource(const ke::Json & resourceJson)
 {
-    QString resourceType = resourceJson["type"].get<std::string>().c_str();
+    QString resourceType = resourceJson["resource_type"].get<std::string>().c_str();
     resourceType = resourceType.toLower();
     if (resourceType == QString(ResourceTypes::Image).toLower())
     {
         auto resource = ke::makeResource<ImageResource>();
+        assert(resource);
         resource = resourceJson;
         return resource;
     }
