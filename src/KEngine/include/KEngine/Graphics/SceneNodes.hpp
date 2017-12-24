@@ -2,6 +2,7 @@
 
 #include "GraphicsCommand.hpp"
 #include "KEngine/Common/Dimension2D.hpp"
+#include "KEngine/Common/Rect2D.hpp"
 #include "KEngine/Interfaces/ISceneNode.hpp"
 
 namespace ke
@@ -76,6 +77,20 @@ namespace ke
         static ke::SceneNodeSptr create(ke::EntityId entityId, const ke::Transform2D & localTransform = {},
             ke::Color fillColor = ke::Color::GREEN, float radius = 5.0f,
             ke::Color outlineColor = ke::Color::TRANSPARENT, float outlineThickness = 0.0f);
+
+        using SceneNode::SceneNode;
+
+        virtual GraphicsCommand getGraphicsCommand() const final;
+
+    private:
+        mutable ke::GraphicsCommand states;
+    };
+
+    class SpriteNode : public ke::SceneNode
+    {
+    public:
+        static ke::SceneNodeSptr create(ke::EntityId entityId, size_t textureId,
+            const ke::Transform2D & localTransform, const ke::Rect2DInt32 & textureRect, ke::Color fillColor = ke::Color::WHITE);
 
         using SceneNode::SceneNode;
 

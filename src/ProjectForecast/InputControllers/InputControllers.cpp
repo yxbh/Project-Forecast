@@ -1,6 +1,7 @@
 #include "InputControllers.hpp"
 
 #include "../Events/RequestDrawDebugDotEvent.hpp"
+#include "../Events/GMSRoomLoadRequestEvent.hpp"
 
 #include "KEngine/Common/Transform2D.hpp"
 #include "KEngine/Core/EventManager.hpp"
@@ -81,7 +82,11 @@ namespace pf
 
     bool KeyboardInputController::onKeyReleased(const ke::Keyboard::KeyInfo & keyInfo)
     {
-        KE_UNUSED(keyInfo);
+        if (keyInfo.keyCode == ke::Keyboard::Add)
+        {
+            ke::EventManager::enqueue(ke::makeEvent<pf::GMSRoomLoadRequestEvent>("r1_1_1"));
+            return true;
+        }
         return false;
     }
 

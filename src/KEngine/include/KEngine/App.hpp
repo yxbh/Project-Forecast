@@ -37,6 +37,8 @@ namespace ke
         virtual void setLogic(ke::AppLogicUptr && appLogic);
         inline ke::BaseAppLogic * getLogic() const { return this->appLogic.get(); };
 
+        inline ke::ResourceManager * getResourceManager() const { return this->resourceManager.get(); }
+
         inline static ke::App * instance() { return App::sGlobalAppInstance; }
 
     protected:
@@ -52,7 +54,6 @@ namespace ke
     private:
         void enterEventLoop();
         void enterLogicLoop();
-        void enterGraphicsLoop();
 
         void initExec();
         void cleanUpExec();
@@ -72,7 +73,6 @@ namespace ke
         std::atomic_bool isNormalExitRequested { false };
 
         std::thread logicLoopThread;
-        std::thread graphicsLoopThread;
 
         ke::WindowSptr mainWindow;
     };

@@ -59,18 +59,30 @@ namespace ke
     {
         bool result = true;
         for (auto & it : m_ComponentSPMap)
-            if (!it.second->initialise())
+            if (!it.second->isInitialised())
             {
-                ke::Log::instance()->error("Entity named '{}' failed to initialise its component: '{}'",
-                                            this->getName(), it.second->getName());
-                result = false;
-            }   
-
+                if (it.second->initialise())
+                {
+                    it.second->postInitialise();
+                }
+                else
+                {
+                    ke::Log::instance()->error("Entity named '{}'({}) failed to initialise its component: '{}'",
+                        this->getName(), this->getId(), it.second->getName());
+                    result = false;
+                }
+            }
+            
         return result;
     }
 
     void Entity::updateAll(const ke::Time & p_ElapsedTime)
     {
+        if (!this->m_Initialised)
+        {
+            this->m_Initialised = this->initialise();
+        }
+
         for (auto & it : m_ComponentSPMap)  it.second->update(p_ElapsedTime);
     }
 

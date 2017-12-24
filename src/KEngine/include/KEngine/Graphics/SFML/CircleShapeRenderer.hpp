@@ -1,6 +1,6 @@
 #pragma once
 
-#include "KEngine/Graphics/GraphicsCommand.hpp"
+#include "KEngine/Interfaces/IGraphicsCommandRenderer.hpp"
 #include "KEngine/Graphics/SFML/SfmlHelper.hpp"
 
 #include <SFML/Graphics/RenderTarget.hpp>
@@ -12,7 +12,7 @@
 namespace ke
 {
     
-    class CircleShapeRenderer
+    class CircleShapeRenderer : public IGraphicsCommandRenderer
     {
     public:
 
@@ -22,84 +22,98 @@ namespace ke
             this->renderTarget = p_renderTarget;
         }
 
-        inline void render(const GraphicsCommand & command)
+        virtual void queueCommand(const GraphicsCommand & command) final
         {
-            // do culling
-            sf::Vector2f topLeft{ command.render.globalTransform.x, -command.render.globalTransform.y };
-            const auto shapeWidth = command.render.radius * 2;
-            topLeft.x -= shapeWidth;
-            topLeft.y -= shapeWidth;
-            auto shapeMaxGlobalBound = sf::FloatRect(topLeft, { shapeWidth * 2 , shapeWidth * 2 });
+            this->commands.push_back(command);
+        }
+
+        virtual void render() final
+        {
             auto view        = this->renderTarget->getView();
             auto viewCenter  = view.getCenter();
             auto viewSize    = view.getSize();
             auto viewTopLeft = sf::Vector2f(viewCenter.x - (viewSize.x) / 2, viewCenter.y - (viewSize.y) / 2);
             sf::FloatRect viewRect(viewTopLeft, viewSize);
-            if (!viewRect.intersects(shapeMaxGlobalBound))
-                return;
 
-            const sf::Vector2f sfPosition{ command.render.globalTransform.x, -command.render.globalTransform.y };
-            const auto sfOrigin       = ke::SfmlHelper::convert(command.render.origin);
-            const auto sfFillColor    = ke::SfmlHelper::convert(command.render.fillColor);
-            const auto sfOutlineColor = ke::SfmlHelper::convert(command.render.outlineColor);
+            this->drawCallCount = 0;
+            for (const auto & command : this->commands)
+            {
+                // do culling
+                sf::Vector2f topLeft{ command.render.globalTransform.x, -command.render.globalTransform.y };
+                const auto shapeWidth = command.render.radius * 2;
+                topLeft.x -= shapeWidth;
+                topLeft.y -= shapeWidth;
+                auto shapeMaxGlobalBound = sf::FloatRect(topLeft, { shapeWidth * 2 , shapeWidth * 2 });
 
-            // get the shape from cache.
-            auto it = shapeMap.find(command.render.id);
-            sf::CircleShape * shapePtr = nullptr;
-            if (it == shapeMap.end())
-            {
-                shape.setPosition(sfPosition);
-                shape.setFillColor(sfFillColor);
-                shape.setRadius(command.render.radius);
-                shape.setOrigin(sfOrigin);
-                shape.setOutlineColor(sfOutlineColor);
-                shape.setOutlineThickness(command.render.outlineThickness);
+                if (!viewRect.intersects(shapeMaxGlobalBound))
+                    continue;
 
-                shapeMap[command.render.id] = shape;
-                shapePtr = &shape;
-            }
-            else
-            {
-                shapePtr = &(it->second);
-            }
+                const sf::Vector2f sfPosition{ command.render.globalTransform.x, -command.render.globalTransform.y };
+                const auto sfOrigin = ke::SfmlHelper::convert(command.render.origin);
+                const auto sfFillColor = ke::SfmlHelper::convert(command.render.fillColor);
+                const auto sfOutlineColor = ke::SfmlHelper::convert(command.render.outlineColor);
 
-            // update states
-            if (sfPosition != shapePtr->getPosition())
-            {
-                shapePtr->setPosition(sfPosition);
-            }
-            if (sfOrigin != shapePtr->getOrigin())
-            {
-                shapePtr->setOrigin(sfOrigin);
-            }
-            if (command.render.radius != shapePtr->getRadius())
-            {
-                shapePtr->setRadius(command.render.radius);
-            }
-            if (command.render.outlineThickness != shapePtr->getOutlineThickness())
-            {
-                shapePtr->setOutlineThickness(command.render.outlineThickness);
-            }
-            if (sfFillColor != shapePtr->getFillColor())
-            {
-                shapePtr->setFillColor(sfFillColor);
-            }
-            if (sfOutlineColor != shapePtr->getOutlineColor())
-            {
-                shapePtr->setOutlineColor(sfOutlineColor);
-            }
-            
-            // do rendering.
-            renderTarget->draw(*shapePtr);
-            ++this->drawCallCount;
+                // get the shape from cache.
+                auto it = shapeMap.find(command.render.id);
+                sf::CircleShape * shapePtr = nullptr;
+                if (it == shapeMap.end())
+                {
+                    shape.setPosition(sfPosition);
+                    shape.setFillColor(sfFillColor);
+                    shape.setRadius(command.render.radius);
+                    shape.setOrigin(sfOrigin);
+                    shape.setOutlineColor(sfOutlineColor);
+                    shape.setOutlineThickness(command.render.outlineThickness);
+
+                    shapeMap[command.render.id] = shape;
+                    shapePtr = &shape;
+                }
+                else
+                {
+                    shapePtr = &(it->second);
+                }
+
+                // update states
+                if (sfPosition != shapePtr->getPosition())
+                {
+                    shapePtr->setPosition(sfPosition);
+                }
+                if (sfOrigin != shapePtr->getOrigin())
+                {
+                    shapePtr->setOrigin(sfOrigin);
+                }
+                if (command.render.radius != shapePtr->getRadius())
+                {
+                    shapePtr->setRadius(command.render.radius);
+                }
+                if (command.render.outlineThickness != shapePtr->getOutlineThickness())
+                {
+                    shapePtr->setOutlineThickness(command.render.outlineThickness);
+                }
+                if (sfFillColor != shapePtr->getFillColor())
+                {
+                    shapePtr->setFillColor(sfFillColor);
+                }
+                if (sfOutlineColor != shapePtr->getOutlineColor())
+                {
+                    shapePtr->setOutlineColor(sfOutlineColor);
+                }
+
+                // do rendering.
+                renderTarget->draw(*shapePtr);
+                ++this->drawCallCount;
+            }            
         }
 
-        inline size_t finaliseRender()
+        virtual void flush() final
         {
+            this->commands.clear();
             vertexArray.clear();
-            auto tmpDrawCallCount = this->drawCallCount;
-            this->drawCallCount = 0;
-            return tmpDrawCallCount;
+        }
+
+        virtual size_t getLastDrawCallCount() const final
+        {
+            return this->drawCallCount;
         }
 
     private:
@@ -111,7 +125,9 @@ namespace ke
 
         std::unordered_map<SceneNodeId, sf::CircleShape> shapeMap; // cache
 
-        size_t drawCallCount = 0;
+        mutable size_t drawCallCount = 0;
+
+        std::vector<GraphicsCommand> commands;
     };
 
 }

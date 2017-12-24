@@ -42,10 +42,15 @@ namespace ke
 
         /// <summary>
         /// Initalise the component with a JSON config resource file.
-        /// This member function is called by the EntityFactory at the time the component is created.
+        /// This member function is called by the EntityFactory at the time the component is created or by the
+        /// EntityManager during its update cycle.
         /// </summary>
         /// <returns>true on success.</returns>
-        virtual bool initialise(void) { return true; };
+        virtual bool initialise(void)
+        {
+            this->setInitialised();
+            return true;
+        };
 
         /// <summary>
         /// Carry out any post initialisation operations(e.g. operations that can't be done during initialisation).
@@ -88,8 +93,12 @@ namespace ke
             m_spOwnerEntity = p_spEntity;
         }
 
+        inline bool isInitialised() { return this->m_isInitialised; }
+        inline void setInitialised(bool initialised = true) { this->m_isInitialised = initialised; }
+
     protected:
         ke::EntitySptr m_spOwnerEntity;  // owner
+        bool m_isInitialised = false;
 
     }; // IEntityComponent class
 

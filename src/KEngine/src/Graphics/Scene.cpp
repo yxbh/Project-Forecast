@@ -1,5 +1,7 @@
 #include "KEngine/Graphics/Scene.hpp"
 
+#include "KEngine/Events/OtherGraphicsEvents.hpp"
+#include "KEngine/Core/EventManager.hpp"
 #include "KEngine/Log/Log.hpp"
 
 #include <cassert>
@@ -10,6 +12,12 @@ namespace ke
     Scene::Scene()
         : rootNode(ke::RootNode::create())
     {
+        ke::EventManager::registerListener<ke::SceneNodeDestroyRequestEvent>(this, &Scene::handleSceneNodeDestroyRequest);
+    }
+
+    Scene::~Scene()
+    {
+        ke::EventManager::deregisterListener<ke::SceneNodeDestroyRequestEvent>(this, &Scene::handleSceneNodeDestroyRequest);
     }
 
     bool Scene::addNode(ke::SceneNodeSptr node)
@@ -31,7 +39,7 @@ namespace ke
         assert(entityId != ke::INVALID_ENTITY_ID);
 
         this->entitySceneNodeMap.erase(entityId);
-        return this->rootNode->removeChild(entityId);
+        return this->rootNode->removeChildByEntityId(entityId);
     }
 
     ke::SceneNodeSptr Scene::findNode(ke::EntityId entityId)
@@ -43,6 +51,22 @@ namespace ke
         }
 
         return it->second;
+    }
+
+    void Scene::handleSceneNodeDestroyRequest(ke::EventSptr event)
+    {
+        if (event->getType() == ke::SceneNodeDestroyRequestEvent::TYPE)
+        {
+            auto request = static_cast<ke::SceneNodeDestroyRequestEvent*>(event.get());
+            auto node = request->getSceneNode();
+            if (this->rootNode)
+            {
+                this->rootNode->removeChildrenByEntityId(node->getEntityId(), true);
+                this->rootNode = (this->rootNode == node) ? nullptr : this->rootNode;
+            }
+            this->entitySceneNodeMap.erase(node->getEntityId());
+            this->cameraNode = (this->cameraNode == node) ? nullptr : this->cameraNode;
+        }
     }
 
 }

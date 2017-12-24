@@ -22,7 +22,11 @@ namespace pf
     class ProjectForecastAppLogic : public ke::BaseAppLogic
     {
     public:
+        ProjectForecastAppLogic();
+        virtual ~ProjectForecastAppLogic();
 
+    private:
+        void autoAddNewSceneNodeToCurrentViewSceneOnNodeCreate(ke::EventSptr event);
     };
 
 }

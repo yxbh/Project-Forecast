@@ -39,7 +39,12 @@ namespace ke
         /// <summary>
         /// Release ownership of the specified resource.
         /// </summary>
-        void release(ResourceSptr resource);
+        void releaseResource(ResourceSptr resource);
+        void releaseResource(const ke::String & resourceName);
+
+        void registerResource(ResourceSptr resource);
+
+        IResource * getResource(const ke::String & name);
 
         void registerResourceLoader(ke::ResourceType resourceType, ke::ResourceLoaderSptr loader);
 

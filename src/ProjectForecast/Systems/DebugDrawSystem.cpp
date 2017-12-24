@@ -70,18 +70,26 @@ R"(
 
             auto & position = actualEvent->getPosition();
             ke::Log::instance()->info("creating dot at ({}, {})", position.x, position.y);
-            for (auto i = 0; i < 50; ++i)
+            for (auto i = 0; i < 1; ++i)
             {
-                auto entity = ke::makeEntity(ke::Entity::newId());
+                auto entity = ke::App::instance()->getLogic()->getEntityManager()->newEntity().lock();
                 ke::Transform2D transform{ position.x, position.y };
-                auto renderComponent = ke::makeEntityComponent<ke::EntityRenderableCircleShapeComponent>(entity, transform, ke::Color::GREEN);
-                entity->addComponent(renderComponent);
+                //auto renderComponent = ke::makeEntityComponent<ke::EntityRenderableCircleShapeComponent>(entity, transform, ke::Color::GREEN);
+                //entity->addComponent(renderComponent);
+                auto textureId = std::hash<ke::String>()("bTile16Dead");
+                transform.scaleX = 1.0f;
+                transform.scaleY = 1.0f;
+                ke::Rect2DInt32 textureRect;
+                textureRect.bottom = 16;
+                textureRect.left   = 48;
+                textureRect.width  = 16;
+                textureRect.height = 16;
+                entity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(entity, textureId, transform, textureRect));
 
                 auto result = entity->initialise();
                 assert(result);
 
-                ke::App::instance()->getLogic()->getEntityManager()->addEntity(entity);
-                ke::App::instance()->getLogic()->getCurrentHumanView()->getScene()->addNode(renderComponent->getSceneNode()); // TODO: potentially remove this if we are going to go with the approach where renderable components broadcast events when a scene node is created.
+                //ke::App::instance()->getLogic()->getCurrentHumanView()->getScene()->addNode(renderComponent->getSceneNode()); // TODO: potentially remove this if we are going to go with the approach where renderable components broadcast events when a scene node is created.
 
                 //ke::Log::instance()->info("entity with scene node created.");
             }

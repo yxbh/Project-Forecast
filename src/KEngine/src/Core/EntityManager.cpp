@@ -12,6 +12,13 @@ namespace ke
         }
     }
 
+    ke::EntityWptr EntityManager::newEntity()
+    {
+        auto entity = ke::makeEntity(ke::Entity::newId());
+        this->addEntity(entity);
+        return entity;
+    }
+
     void EntityManager::removeEntity(ke::EntityId entityId)
     {
         auto entityIt = this->entityMap.find(entityId);

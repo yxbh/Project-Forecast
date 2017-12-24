@@ -130,6 +130,8 @@ namespace ke
         TagList                         m_Tags; /** */
         ke::String                      m_Name; /** An usually unique name. */
 
+        bool                            m_Initialised = false;
+
     }; // Entity class
 
     inline void Entity::setName(const ke::String & name) { m_Name = name; }

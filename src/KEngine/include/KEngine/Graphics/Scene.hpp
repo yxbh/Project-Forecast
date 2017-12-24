@@ -3,6 +3,7 @@
 #include "SceneNodes.hpp"
 
 #include "KEngine/Interfaces/IEntity.hpp"
+#include "KEngine/Interfaces/IEvent.hpp"
 #include "KEngine/Interfaces/IScene.hpp"
 #include "KEngine/Interfaces/ISceneNode.hpp"
 
@@ -17,6 +18,7 @@ namespace ke
         using EntitySceneNodeMap = std::unordered_map<ke::EntityId, SceneNodeSptr>;
         
         Scene();
+        virtual ~Scene();
 
         bool addNode(ke::SceneNodeSptr);
         bool removeNode(ke::EntityId);
@@ -30,6 +32,9 @@ namespace ke
         inline ke::ISceneNode * getCameraNode() { return this->cameraNode.get(); }
 
         inline ke::ISceneNode * getRootNode() { return this->rootNode.get(); }
+
+    private:
+        void handleSceneNodeDestroyRequest(ke::EventSptr event);
 
     protected:
         ke::SceneNodeSptr rootNode;

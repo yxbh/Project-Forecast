@@ -28,9 +28,27 @@ namespace ke
         return !threadedInProgressLoadingFutures.empty();
     }
 
-    void ResourceManager::release(ResourceSptr resource)
+    void ResourceManager::releaseResource(ResourceSptr resource)
     {
         this->allResources.erase(resource->getName());
+    }
+
+    void ResourceManager::releaseResource(const ke::String & resourceName)
+    {
+        this->allResources.erase(resourceName);
+    }
+
+    void ResourceManager::registerResource(ResourceSptr resource)
+    {
+        this->allResources.insert_or_assign(resource->getName(), resource);
+    }
+
+    IResource * ResourceManager::getResource(const ke::String & name)
+    {
+        return
+            this->allResources.find(name) != this->allResources.end() ?
+            this->allResources[name].get() :
+            nullptr;
     }
 
     void ResourceManager::loadFromManifest(ke::String manifestPath)

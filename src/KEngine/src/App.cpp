@@ -110,7 +110,6 @@ namespace ke
 
         // enter all the engine loops.
         this->enterLogicLoop();
-        this->enterGraphicsLoop();
         this->enterEventLoop();        
 
         this->onBeforeShutdown();
@@ -215,18 +214,6 @@ namespace ke
 
         ke::Log::instance()->info("KEngine event loop exited.");
 
-        // join render loop thread
-        if (this->graphicsLoopThread.joinable())
-        {
-            ke::Log::instance()->info("KEngine graphics loop thread joining ...");
-            this->graphicsLoopThread.join();
-            ke::Log::instance()->info("KEngine graphics loop thread joined");
-        }
-        else
-        {
-            ke::Log::instance()->warn("KEngine logic loop thread not joinable.");
-        }
-
         // join logic loop thread.
         if (this->logicLoopThread.joinable())
         {
@@ -251,12 +238,41 @@ namespace ke
             ke::EventManager::registerListener<ke::AppExitRequestedEvent>(this, &ke::App::handleAppExitRequest);
             ke::EventManager::registerListener<ke::GraphicsLoopSetupFailureEvent>(this, &ke::App::handleGraphicsLoopSetupFailure);
 
+            // 
+            // Setup window and render system.
+            // 
+            if (!this->mainWindow->setThreadCurrent(true))
+            {
+#if defined(USE_SDL)
+                Log::instance()->critical("Failure enabling SDL2 window on thread {}. Cannot start graphics loop. SDL2 error: {}",
+                    std::hash<std::thread::id>()(std::this_thread::get_id()),
+                    SDL_GetError());
+#elif defined(USE_SFML)
+                Log::instance()->critical("Failure enabling SFML window on thread {}. Cannot start graphics loop.",
+                    std::hash<std::thread::id>()(std::this_thread::get_id()));
+#endif
+                ke::EventManager::dispatchNow(ke::makeEvent<ke::GraphicsLoopSetupFailureEvent>());
+                return;
+            }
+
+            if (!this->renderSystem->initialise())
+            {
+                Log::instance()->critical("Failuring initialising render system on thread {}.",
+                    std::hash<std::thread::id>()(std::this_thread::get_id()));
+                return;
+            }
+
+            mainWindow->display();
+
+
             ke::Log::instance()->info("Entering KEngine logic loop ...");
 
             ke::StopWatch stopwatch;
             ke::Time cumulativeLoopTime;
             ke::HeartBeatGenerator heartBeat(ke::Time::milliseconds(5000));
-            ke::FrameRateCounter fpsCounter(1000);
+            ke::FrameRateCounter logicFpsCounter(1000);
+            ke::FrameRateCounter renderFpsCounter(500);
+            this->isGraphicsLoopRunning = true;
             this->isLogicLoopRunning = true;
 
             while(this->isLogicLoopRunning)
@@ -265,8 +281,8 @@ namespace ke
                 stopwatch.restart();
                 cumulativeLoopTime += frameTime;
 
-                fpsCounter.push(frameTime);
-                ::logicLoopFps.store((float)fpsCounter.getAverageFps(), std::memory_order_relaxed);
+                logicFpsCounter.push(frameTime);
+                ::logicLoopFps.store((float)logicFpsCounter.getAverageFps(), std::memory_order_relaxed);
                 ::logicLoopFrameTimeMs.store(frameTime.asNanoseconds()/1000000.0, std::memory_order_relaxed);
                 ::eventManagerEventCount.store(ke::EventManager::instance()->getEventCount(), std::memory_order_relaxed);
 
@@ -297,11 +313,28 @@ namespace ke
                 }
 
                 //
+                //
+                //
+                renderFpsCounter.push(frameTime);
+                ::graphicsLoopFps.store((float)renderFpsCounter.getAverageFps(), std::memory_order_relaxed);
+                ::renderLoopFrameTimeMs.store(frameTime.asMicroseconds() / 1000.0, std::memory_order_relaxed);
+                ke::EventManager::enqueue(ke::makeEvent<GraphicsLoopFrameEvent>(frameTime));
+
+                //
                 // prepare and dispatch render commands
                 //
                 this->renderSystem->prepareCommands(this->appLogic->getCurrentHumanView()->getScene());
                 auto cmdCount = this->renderSystem->dispatchCommands();
                 ::graphicsCommandCount.store(cmdCount, std::memory_order_relaxed);
+
+                this->renderSystem->updateOnRenderLoop(frameTime);
+
+                // process the oldest render command list from the render commands queue
+                // e.g. culling, ordering, etc...
+                // if queue is empty then interpolate before render.
+                this->renderSystem->processCommands(frameTime);
+                const auto drawCallCount = this->renderSystem->render();
+                ::graphicsDrawCallCount.store(drawCallCount > 0 ? drawCallCount : ::graphicsDrawCallCount.load(), std::memory_order_relaxed);
 
                 //
                 // debug/diagnostic stuff
@@ -315,6 +348,9 @@ namespace ke
                     std::this_thread::sleep_for(LOGIC_THREAD_SLEEP_DURATION);
             }
 
+            this->renderSystem->shutdown();
+            this->mainWindow->setThreadCurrent(false);
+
             // we only flag event loop for termination here as some logics may still require the event loop to be alive.
             this->isEventLoopRunning = false;
 
@@ -327,77 +363,6 @@ namespace ke
         });       
     }
 
-    void App::enterGraphicsLoop()
-    {
-        this->graphicsLoopThread = std::thread([this]() {
-
-            if (!this->mainWindow->setThreadCurrent(true))
-            {
-#if defined(USE_SDL)
-                Log::instance()->critical("Failure enabling SDL2 window on thread {}. Cannot start graphics loop. SDL2 error: {}",
-                    std::hash<std::thread::id>()(std::this_thread::get_id()),
-                    SDL_GetError());
-#elif defined(USE_SFML)
-                Log::instance()->critical("Failure enabling SFML window on thread {}. Cannot start graphics loop.",
-                    std::hash<std::thread::id>()(std::this_thread::get_id()));
-#endif
-                ke::EventManager::dispatchNow(ke::makeEvent<ke::GraphicsLoopSetupFailureEvent>());
-                return;
-            }
-
-            if (!this->renderSystem->initialise())
-            {
-                Log::instance()->critical("Failuring initialising render system on thread {}.",
-                    std::hash<std::thread::id>()(std::this_thread::get_id()));
-                return;
-            }
-
-            mainWindow->display();
-
-            ke::Log::instance()->info("Entering KEngine render loop ...");
-
-            ke::StopWatch stopwatch;
-            ke::HeartBeatGenerator heartBeat(ke::Time::milliseconds(5000));
-            ke::FrameRateCounter fpsCounter(500);
-            this->isGraphicsLoopRunning = true;
-
-            while (this->isGraphicsLoopRunning)
-            {
-                const auto frameTime = stopwatch.getElapsed();
-                stopwatch.restart();
-
-                fpsCounter.push(frameTime);
-                ::graphicsLoopFps.store((float)fpsCounter.getAverageFps(), std::memory_order_relaxed);
-                ::renderLoopFrameTimeMs.store(frameTime.asMicroseconds()/1000.0, std::memory_order_relaxed);
-
-                ke::EventManager::enqueue(ke::makeEvent<GraphicsLoopFrameEvent>(frameTime));
-
-                if (heartBeat)
-                {
-                    ke::Log::instance()->info("Render loop heart beat");
-                }
-
-                this->renderSystem->updateOnRenderLoop(frameTime);
-
-                // process the oldest render command list from the render commands queue
-                // e.g. culling, ordering, etc...
-                // if queue is empty then interpolate before render.
-                this->renderSystem->processCommands(frameTime);
-                const auto drawCallCount = this->renderSystem->render();
-                ::graphicsDrawCallCount.store(drawCallCount > 0 ? drawCallCount : ::graphicsDrawCallCount.load(), std::memory_order_relaxed);
-
-                if (frameTime < ke::Time::milliseconds(1))
-                    std::this_thread::sleep_for(::RENDER_THREAD_SLEEP_DURATION);
-            }
-
-            this->renderSystem->shutdown();
-            this->mainWindow->setThreadCurrent(false);
-
-            ke::Log::instance()->info("KEngine render loop exited.");
-
-        });
-    }
-
     void App::setLogic(ke::AppLogicUptr && p_appLogic)
     {
         this->appLogic = std::move(p_appLogic);
@@ -407,16 +372,16 @@ namespace ke
     {
         spdlog::set_async_mode(1048576); // magic number from spdlog repo.
 
+        ke::Log::instance()->info("Creating resource manager ...");
+        this->resourceManager = std::make_unique<ResourceManager>();
+        ke::Log::instance()->info("Creating resource manager ... DONE");
+
         ke::Log::instance()->info("Creating logic and views ...");
         this->createLogicAndViews();
         ke::Log::instance()->info("Creating logic and views ... DONE");
 
         assert(this->getLogic());
         assert(this->getLogic()->getCurrentHumanView());
-
-        ke::Log::instance()->info("Creating resource manager ...");
-        this->resourceManager = std::make_unique<ResourceManager>();
-        ke::Log::instance()->info("Creating resource manager ... DONE");
     }
 
     void App::cleanUpExec()

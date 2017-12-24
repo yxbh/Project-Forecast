@@ -30,4 +30,23 @@ namespace ke
         return this->states;
     }
 
+    ke::SceneNodeSptr SpriteNode::create(ke::EntityId entityId, size_t textureId, const ke::Transform2D & localTransform,
+        const ke::Rect2DInt32 & textureRect, ke::Color color)
+    {
+        auto newNode = ke::makeSceneNode<ke::SpriteNode>(entityId);
+        newNode->setLocalTransform(localTransform);
+        auto & states                = newNode->states;
+        states.type                  = ke::GraphicsCommand::Types::RenderSprite;
+        states.sprite.id             = newNode->getId();
+        states.sprite.textureId      = textureId;
+        states.sprite.textureRect    = textureRect;
+        states.sprite.color          = color;
+        return newNode;
+    }
+
+    GraphicsCommand SpriteNode::getGraphicsCommand() const
+    {
+        this->states.render.globalTransform = this->getGlobalTransform();
+        return this->states;
+    }
 }

@@ -344,12 +344,16 @@
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_StateMachine.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Time.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Views\HumanView.cpp" />
+    <ClCompile Include="..\..\..\..\ProjectForecast\AssetResources\TextureInfoResource.cpp" />
+    <ClCompile Include="..\..\..\..\ProjectForecast\EntityComponents\Components..cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\InputControllers\InputControllers.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\main.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\ProjectForecastApp.cpp" />
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\GMSAssetResourceManagementSystem.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\DebugDrawSystem.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\EntityTransformControlSystem.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\EventFeedbackSystem.cpp" />
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\GMSRoomManagementSystem.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\Views\HumanView.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -367,7 +371,9 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\SRDelegate.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\macros.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Point2D.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Rect2D.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\ScopeFunc.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Size2D.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\StopWatch.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Queues.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\String.hpp" />
@@ -396,11 +402,11 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\GraphicsLoopSetupFailureEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\LogicLoopFrameEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\LoopFrameEvent.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\OtherGraphicsEvents.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SDL2\SDL2Event.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEventTranslator.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\GraphicsCommand.hpp" />
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderCommands\TestRenderCommands.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderLayer.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderSystem.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\Scene.hpp" />
@@ -409,6 +415,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\CircleShapeRenderer.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\SfmlHelper.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\SfmlWindow.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\SpriteRenderer.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\Window.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\WindowFactory.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IApp.hpp" />
@@ -420,6 +427,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IEventManagerImpl.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IInputController.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IRenderCommand.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IGraphicsCommandRenderer.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IResource.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IResourceLoader.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IScene.hpp" />
@@ -431,13 +439,20 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\ImageResource.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\Loaders\ImageResourceLoader.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\ResourceManifestResource.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Utility\FileSystemHelper.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Views\HumanView.hpp" />
+    <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\GMSRoomResource.hpp" />
+    <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\TextureInfoResource.hpp" />
+    <ClInclude Include="..\..\..\..\ProjectForecast\EntityComponents\Components..hpp" />
+    <ClInclude Include="..\..\..\..\ProjectForecast\Events\GMSRoomLoadRequestEvent.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Events\RequestDrawDebugDotEvent.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\InputControllers\InputControllers.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\ProjectForecastApp.hpp" />
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\GMSAssetResourceManagementSystem.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Systems\DebugDrawSystem.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Systems\EntityTransformControlSystem.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Systems\EventFeedbackSystem.hpp" />
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\GMSRoomManagementSystem.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Views\HumanView.hpp" />
   </ItemGroup>
   <ItemGroup>

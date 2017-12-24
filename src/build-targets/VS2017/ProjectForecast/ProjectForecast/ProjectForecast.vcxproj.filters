@@ -27,9 +27,6 @@
     <Filter Include="KEngine\Header Files\Graphics\SFML">
       <UniqueIdentifier>{373b174b-e70b-4c67-b6e4-9ea943ea7dc4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="KEngine\Header Files\Graphics\RenderCommands">
-      <UniqueIdentifier>{c68ccef3-6ec7-4161-9bbf-79a268ad07fc}</UniqueIdentifier>
-    </Filter>
     <Filter Include="KEngine\Header Files\Common">
       <UniqueIdentifier>{bf5b1126-d226-4d74-a7d6-dcfe990f4334}</UniqueIdentifier>
     </Filter>
@@ -135,6 +132,12 @@
     </Filter>
     <Filter Include="KEngine\Header Files\Resources\Loaders">
       <UniqueIdentifier>{3f5b6a71-ba4d-4869-912d-4a453b32afb6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectForecast\AssetResources">
+      <UniqueIdentifier>{0acd45ff-0081-4a20-a47f-f64b2c55340a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectForecast\EntityComponents">
+      <UniqueIdentifier>{882c2144-0475-462e-a9b6-d0f6f9228ea8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -267,6 +270,18 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Resources\Loaders\ImageResourceLoader.cpp">
       <Filter>KEngine\Source Files\Resources\Loaders</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\AssetResources\TextureInfoResource.cpp">
+      <Filter>ProjectForecast\AssetResources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\GMSAssetResourceManagementSystem.cpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\GMSRoomManagementSystem.cpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\EntityComponents\Components..cpp">
+      <Filter>ProjectForecast\EntityComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManager.hpp">
@@ -367,9 +382,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EntityFactory.hpp">
       <Filter>KEngine\Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderCommands\TestRenderCommands.hpp">
-      <Filter>KEngine\Header Files\Graphics\RenderCommands</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderSystem.hpp">
       <Filter>KEngine\Header Files\Graphics</Filter>
@@ -526,6 +538,42 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\Loaders\ImageResourceLoader.hpp">
       <Filter>KEngine\Header Files\Resources\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\TextureInfoResource.hpp">
+      <Filter>ProjectForecast\AssetResources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Utility\FileSystemHelper.hpp">
+      <Filter>KEngine\Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\GMSRoomResource.hpp">
+      <Filter>ProjectForecast\AssetResources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Events\GMSRoomLoadRequestEvent.hpp">
+      <Filter>ProjectForecast\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Size2D.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\GMSAssetResourceManagementSystem.hpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\GMSRoomManagementSystem.hpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\EntityComponents\Components..hpp">
+      <Filter>ProjectForecast\EntityComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IGraphicsCommandRenderer.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\SpriteRenderer.hpp">
+      <Filter>KEngine\Header Files\Graphics\SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\OtherGraphicsEvents.hpp">
+      <Filter>KEngine\Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Rect2D.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -57,7 +57,6 @@ namespace ke
 
         inline ke::Transform2D & getLocalTransform()
         {
-            this->isGLobalTransformRecalculationRequired = false;
             return this->localTransform;
         }
 
@@ -68,7 +67,7 @@ namespace ke
                 const ke::Transform2D & parentGlobalTransform
                     = this->getParent() ? this->getParent()->getGlobalTransform() : ke::Transform2D();
                 this->globalTransform = this->localTransform + parentGlobalTransform;
-                this->isGLobalTransformRecalculationRequired = true;
+                this->isGLobalTransformRecalculationRequired = false;
             }
 
             return this->globalTransform;
@@ -81,9 +80,10 @@ namespace ke
         /// </summary>
         /// <param name="entityId"></param>
         /// <returns>true if a matching scene node was found and erased.</returns>
-        inline bool removeChild(ke::EntityId p_entityId)
+        inline bool removeChildByEntityId(ke::EntityId p_entityId)
         {
-            for (auto it = this->childrenNodes.begin(); it != this->childrenNodes.end(); ++it)
+            auto it = this->childrenNodes.begin();
+            while (it != this->childrenNodes.end())
             {
                 auto sceneNode = it->get();
                 if (sceneNode->getEntityId() != ke::INVALID_ENTITY_ID &&
@@ -92,31 +92,46 @@ namespace ke
                     it = this->childrenNodes.erase(it);
                     return true;
                 }
+                else
+                {
+                    ++it;
+                }
             }
 
             return false;
         }
 
         /// <summary>
-        /// Find and remove the all first level children that contains a matching entity ID.
+        /// Find and remove any child node that contains a matching entity ID.
         /// </summary>
         /// <param name="entityId"></param>
         /// <returns>true if matching scene nodes were found and erased.</returns>
-        inline bool removeChildren(ke::EntityId p_entityId)
+        inline bool removeChildrenByEntityId(ke::EntityId p_entityId, bool recursive = true)
         {
-            bool foundAndRemove = false;
-            for (auto it = this->childrenNodes.begin(); it != this->childrenNodes.end(); ++it)
+            bool foundAndRemoved = false;
+            auto it = this->childrenNodes.begin();
+            while (it != this->childrenNodes.end())
             {
                 auto sceneNode = it->get();
                 if (sceneNode->getEntityId() != ke::INVALID_ENTITY_ID &&
                     sceneNode->getEntityId() == p_entityId)
                 {
                     it = this->childrenNodes.erase(it);
-                    foundAndRemove = true;
+                    foundAndRemoved = true;
+                    continue;
                 }
+                else if (recursive)
+                {
+                    for (auto childNode : sceneNode->childrenNodes)
+                    {
+                        foundAndRemoved &= childNode->removeChildrenByEntityId(p_entityId, recursive);
+                    }
+                }
+
+                ++it;
             }
 
-            return foundAndRemove;
+            return foundAndRemoved;
         }
 
     protected:

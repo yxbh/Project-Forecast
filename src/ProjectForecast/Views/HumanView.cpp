@@ -81,16 +81,16 @@ namespace pf
             case ke::KeyboardKeyPressedEvent::TYPE:
             {
                 auto keyboardEvent = static_cast<ke::KeyboardKeyPressedEvent*>(event.get());
-
-                if (keyboardEvent->getDetail().keyCode == ke::Keyboard::Return)
-                {
-                    ke::Log::instance()->info("echo({}): {}", testTextBuffer.length(), testTextBuffer);
-                    testTextBuffer.clear();
-                }
-                else
-                {
-                    keyboardController->onKeyReleased(keyboardEvent->getDetail());
-                }
+                keyboardController->onKeyReleased(keyboardEvent->getDetail());
+                //if (keyboardEvent->getDetail().keyCode == ke::Keyboard::Return)
+                //{
+                //    ke::Log::instance()->info("echo({}): {}", testTextBuffer.length(), testTextBuffer);
+                //    testTextBuffer.clear();
+                //}
+                //else
+                //{
+                //    keyboardController->onKeyReleased(keyboardEvent->getDetail());
+                //}
                 break;
             }
 
@@ -103,13 +103,13 @@ namespace pf
 
             case ke::KeyboardTextEvent::TYPE:
             {
-                auto textEvent = static_cast<ke::KeyboardTextEvent*>(event.get());
-                // we only care about printing ASCII characters between 32 and 127.
-                if (textEvent->getDetail().unicode >= 32 &&
-                    textEvent->getDetail().unicode < 127)
-                {
-                    testTextBuffer = testTextBuffer + static_cast<char>(textEvent->getDetail().unicode);
-                }
+                //auto textEvent = static_cast<ke::KeyboardTextEvent*>(event.get());
+                //// we only care about printing ASCII characters between 32 and 127.
+                //if (textEvent->getDetail().unicode >= 32 &&
+                //    textEvent->getDetail().unicode < 127)
+                //{
+                //    testTextBuffer = testTextBuffer + static_cast<char>(textEvent->getDetail().unicode);
+                //}
                 break;
             }
 

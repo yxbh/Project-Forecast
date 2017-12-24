@@ -2,17 +2,20 @@
 
 #include "KEngine/Graphics/RenderLayer.hpp"
 #include "KEngine/Graphics/SFML/CircleShapeRenderer.hpp"
+#include "KEngine/Graphics/SFML/SpriteRenderer.hpp"
 
 #include "KEngine/Common/Libs/concurrentqueue.h"
 #include "KEngine/Common/Libs/readerwriterqueue.h"
 #include "KEngine/Core/EventManager.hpp"
 #include "KEngine/Events/AppEvents.hpp"
+#include "KEngine/Events/OtherGraphicsEvents.hpp"
 #include "KEngine/Log/Log.hpp"
 
 #include <SFML/Graphics.hpp>
 
 #include <cassert>
 #include <memory>
+#include <unordered_map>
 #include <queue>
 
 namespace
@@ -36,14 +39,17 @@ namespace
 
     static std::vector<ke::RenderLayer> renderLayers;
 
+    using TextureMapType = std::unordered_map<size_t, std::unique_ptr<sf::Texture>>;
+    static TextureMapType TextureStore;
+
     static ke::CircleShapeRenderer circleShapeRenderer;
+    static ke::SpriteRenderer spriteRenderer(&TextureStore);
 
 
     static bool graphicsCommandRenderTypeComparer(const ke::GraphicsCommand & lhs, const ke::GraphicsCommand & rhs)
     {
         return
-            lhs.type < rhs.type &&
-            lhs.render.textureId < rhs.render.textureId;
+            lhs.type < rhs.type;
     }
 }
 
@@ -64,12 +70,14 @@ namespace ke
     bool RenderSystem::initialise()
     {
         ke::EventManager::registerListener<ke::WindowResizedEvent>(this, &RenderSystem::receiveEvent);
+        ke::EventManager::registerListener<ke::TextureLoadViaFileRequestEvent>(this, &RenderSystem::receiveEvent);
         return true;
     }
 
     void RenderSystem::shutdown()
     {
         ke::EventManager::deregisterListener<ke::WindowResizedEvent>(this, &RenderSystem::receiveEvent);
+        ke::EventManager::deregisterListener<ke::TextureLoadViaFileRequestEvent>(this, &RenderSystem::receiveEvent);
     }
 
     void RenderSystem::update(ke::Time elapsedTime)
@@ -149,8 +157,9 @@ namespace ke
             return;
         }
 
-        sf::RenderWindow * renderTarget = static_cast<sf::RenderWindow*>(this->window.get()->get());
+        auto renderTarget = static_cast<sf::RenderWindow*>(this->window.get()->get());
         ::circleShapeRenderer.setRenderTarget(renderTarget);
+        ::spriteRenderer.setRenderTarget(renderTarget);
 
         // filter the commands to their respective processors.
         for (const auto & command : ::currentRenderThreadCmdList)
@@ -202,7 +211,7 @@ namespace ke
         sf::RenderWindow * renderTarget = static_cast<sf::RenderWindow*>(this->window.get()->get());
         ::drawCallCount = 0;
 
-        renderTarget->clear();
+        renderTarget->clear(sf::Color::White);
         for (const auto & layer : ::renderLayers)
         {
             for (const ke::GraphicsCommand & cmd : layer.graphicsCommands)
@@ -211,14 +220,26 @@ namespace ke
                 {
                 case ke::GraphicsCommand::Types::RenderCircleShape:
                 {
-                    ::circleShapeRenderer.render(cmd);
+                    ::circleShapeRenderer.queueCommand(cmd);
+                    break;
+                }
+
+                case ke::GraphicsCommand::Types::RenderSprite:
+                {
+                    ::spriteRenderer.queueCommand(cmd);
                     break;
                 }
 
                 }
             }
 
-            ::drawCallCount += ::circleShapeRenderer.finaliseRender();
+            ::circleShapeRenderer.render();
+            ::drawCallCount += ::circleShapeRenderer.getLastDrawCallCount();
+            ::circleShapeRenderer.flush();
+
+            ::spriteRenderer.render();
+            ::drawCallCount += ::spriteRenderer.getLastDrawCallCount();
+            ::spriteRenderer.flush();
 
         }
 
@@ -254,6 +275,26 @@ namespace ke
                 auto view = sfWindow->getView();
                 view.setSize({ static_cast<float>(newSize.width), static_cast<float>(newSize.height) });
                 sfWindow->setView(view);
+                break;
+            }
+
+            case ke::TextureLoadViaFileRequestEvent::TYPE:
+            {
+                auto textureLoadRequest = static_cast<ke::TextureLoadViaFileRequestEvent*>(event.get());
+                auto textureId = textureLoadRequest->getTextureId();
+                if (::TextureStore.find(textureId) == ::TextureStore.end())
+                {
+                    ke::Log::instance()->info("Loading texture {} from {}", textureLoadRequest->getTextureName(), textureLoadRequest->getTextureSourcePath());
+                    auto texture = std::make_unique<sf::Texture>();
+                    if (texture->loadFromFile(textureLoadRequest->getTextureSourcePath()))
+                    {
+                        ::TextureStore.insert_or_assign(textureId, std::move(texture));
+                    }
+                    else
+                    {
+                        ke::Log::instance()->error("Texture loading failed for: {}", textureLoadRequest->getTextureSourcePath());
+                    }
+                }
                 break;
             }
             }
