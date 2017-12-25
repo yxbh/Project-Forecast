@@ -8,10 +8,10 @@ namespace ke
         return ke::makeSceneNode<ke::RootNode>(ke::INVALID_ENTITY_ID);
     }
 
-    ke::SceneNodeSptr CircleShapeNode::create(ke::EntityId entityId, const ke::Transform2D & localTransform,
+    ke::SceneNodeSptr CircleShapeNode::create(ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform,
         ke::Color fillColor, float radius, ke::Color outlineColor, float outlineThickness)
     {
-        auto newNode = ke::makeSceneNode<ke::CircleShapeNode>(entityId);
+        auto newNode = ke::makeSceneNode<ke::CircleShapeNode>(sceneNodeId);
         newNode->setLocalTransform(localTransform);
         auto & states                  = newNode->states;
         states.type                    = ke::GraphicsCommand::Types::RenderCircleShape;
@@ -30,10 +30,10 @@ namespace ke
         return this->states;
     }
 
-    ke::SceneNodeSptr SpriteNode::create(ke::EntityId entityId, size_t textureId, const ke::Transform2D & localTransform,
+    ke::SceneNodeSptr SpriteNode::create(ke::SceneNodeId sceneNodeId, size_t textureId, const ke::Transform2D & localTransform,
         const ke::Rect2DInt32 & textureRect, ke::Color color)
     {
-        auto newNode = ke::makeSceneNode<ke::SpriteNode>(entityId);
+        auto newNode = ke::makeSceneNode<ke::SpriteNode>(sceneNodeId);
         newNode->setLocalTransform(localTransform);
         auto & states                = newNode->states;
         states.type                  = ke::GraphicsCommand::Types::RenderSprite;

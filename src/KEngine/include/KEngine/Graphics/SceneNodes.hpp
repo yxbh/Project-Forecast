@@ -33,7 +33,6 @@ namespace ke
         virtual ke::GraphicsCommand getGraphicsCommand() const override
         {
             ke::GraphicsCommand cmd;
-            cmd.render.id = this->getId();
             cmd.type = ke::GraphicsCommand::Types::RenderInvisible;
             return cmd;
         }
@@ -74,7 +73,7 @@ namespace ke
     class CircleShapeNode : public ke::SceneNode
     {
     public:
-        static ke::SceneNodeSptr create(ke::EntityId entityId, const ke::Transform2D & localTransform = {},
+        static ke::SceneNodeSptr create(ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform = {},
             ke::Color fillColor = ke::Color::GREEN, float radius = 5.0f,
             ke::Color outlineColor = ke::Color::TRANSPARENT, float outlineThickness = 0.0f);
 
@@ -89,7 +88,7 @@ namespace ke
     class SpriteNode : public ke::SceneNode
     {
     public:
-        static ke::SceneNodeSptr create(ke::EntityId entityId, size_t textureId,
+        static ke::SceneNodeSptr create(ke::SceneNodeId sceneNodeId, size_t textureId,
             const ke::Transform2D & localTransform, const ke::Rect2DInt32 & textureRect, ke::Color fillColor = ke::Color::WHITE);
 
         using SceneNode::SceneNode;

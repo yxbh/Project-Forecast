@@ -3,6 +3,7 @@
 #include "KEngine/Interfaces/IEvent.hpp"
 #include "KEngine/Interfaces/IWindow.hpp"
 #include "KEngine/Interfaces/ISystem.hpp"
+#include "KEngine/Interfaces/IGraphicsCommandRenderer.hpp"
 #include "KEngine/Graphics/Scene.hpp"
 #include "KEngine/Graphics/GraphicsCommand.hpp"
 #include "KEngine/Common/Time.hpp"
@@ -69,6 +70,9 @@ namespace ke
         ke::WindowSptr window;
 
         ke::ThreadSafeQueue<ke::EventSptr> events;
+
+        GraphicsCommandRendererUptr m_circleShapeRenderer;
+        GraphicsCommandRendererUptr m_spriteRenderer;
     };
 
     using RenderSystemUptr = std::unique_ptr<RenderSystem>;

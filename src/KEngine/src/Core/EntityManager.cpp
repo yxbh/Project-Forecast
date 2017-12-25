@@ -12,9 +12,20 @@ namespace ke
         }
     }
 
-    ke::EntityWptr EntityManager::newEntity()
+    ke::EntityWptr EntityManager::newEntity(ke::EntityId newEntityId)
     {
-        auto entity = ke::makeEntity(ke::Entity::newId());
+        if (newEntityId != ke::INVALID_ENTITY_ID)
+        {
+            if (!this->findEntityById(newEntityId).expired())
+            {
+                ke::Log::instance()->critical("The specified entity ID({}) for a new entity already exists in an existing entity.", newEntityId);
+            }
+        }
+        else
+        {
+            newEntityId = ke::Entity::newId();
+        }
+        auto entity = ke::makeEntity(newEntityId);
         this->addEntity(entity);
         return entity;
     }

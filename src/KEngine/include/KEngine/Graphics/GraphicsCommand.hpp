@@ -19,10 +19,10 @@ namespace ke::graphics
     struct TextureLoadCommandProperty
     {
         void * data = nullptr; // pointer to CPU image data.
-        std::uint16_t textureId = 0;
+        size_t textureId = 0;
     };
 
-    using IdType = std::uint32_t;
+    using IdType = size_t;
 
     struct RenderCommandProperty
     {

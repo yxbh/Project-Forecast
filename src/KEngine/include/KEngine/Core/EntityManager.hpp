@@ -23,7 +23,7 @@ namespace ke
         /// Return a usable Entity object that is currently managed by the EntityManager.
         /// </summary>
         /// <returns></returns>
-        ke::EntityWptr newEntity();
+        ke::EntityWptr newEntity(ke::EntityId newEntityId = ke::INVALID_ENTITY_ID);
 
         /// <summary>
         /// Add the given entity to the EntityManager.

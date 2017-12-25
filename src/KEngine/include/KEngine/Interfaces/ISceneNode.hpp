@@ -11,7 +11,7 @@
 
 namespace ke
 {
-    using SceneNodeId = std::uint32_t;
+    using SceneNodeId = size_t;
 
     class ISceneNode;
 

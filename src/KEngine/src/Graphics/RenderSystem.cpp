@@ -42,9 +42,6 @@ namespace
     using TextureMapType = std::unordered_map<size_t, std::unique_ptr<sf::Texture>>;
     static TextureMapType TextureStore;
 
-    static ke::CircleShapeRenderer circleShapeRenderer;
-    static ke::SpriteRenderer spriteRenderer(&TextureStore);
-
 
     static bool graphicsCommandRenderTypeComparer(const ke::GraphicsCommand & lhs, const ke::GraphicsCommand & rhs)
     {
@@ -60,6 +57,9 @@ namespace ke
     {
         assert(!::instance);
         ::instance = this;
+
+        this->m_circleShapeRenderer = std::make_unique<ke::CircleShapeRenderer>();
+        this->m_spriteRenderer      = std::make_unique<ke::SpriteRenderer>(&TextureStore);
     }
 
     RenderSystem::~RenderSystem()
@@ -157,9 +157,11 @@ namespace ke
             return;
         }
 
-        auto renderTarget = static_cast<sf::RenderWindow*>(this->window.get()->get());
-        ::circleShapeRenderer.setRenderTarget(renderTarget);
-        ::spriteRenderer.setRenderTarget(renderTarget);
+        auto renderTarget        = static_cast<sf::RenderWindow*>(this->window.get()->get());
+        auto circleShapeRenderer = static_cast<ke::CircleShapeRenderer*>(this->m_circleShapeRenderer.get());
+        auto spriteRenderer      = static_cast<ke::SpriteRenderer*>(this->m_spriteRenderer.get());
+        circleShapeRenderer->setRenderTarget(renderTarget);
+        spriteRenderer->setRenderTarget(renderTarget);
 
         // filter the commands to their respective processors.
         for (const auto & command : ::currentRenderThreadCmdList)
@@ -220,26 +222,26 @@ namespace ke
                 {
                 case ke::GraphicsCommand::Types::RenderCircleShape:
                 {
-                    ::circleShapeRenderer.queueCommand(cmd);
+                    this->m_circleShapeRenderer->queueCommand(cmd);
                     break;
                 }
 
                 case ke::GraphicsCommand::Types::RenderSprite:
                 {
-                    ::spriteRenderer.queueCommand(cmd);
+                    this->m_spriteRenderer->queueCommand(cmd);
                     break;
                 }
 
                 }
             }
 
-            ::circleShapeRenderer.render();
-            ::drawCallCount += ::circleShapeRenderer.getLastDrawCallCount();
-            ::circleShapeRenderer.flush();
+            this->m_circleShapeRenderer->render();
+            ::drawCallCount += this->m_circleShapeRenderer->getLastDrawCallCount();
+            this->m_circleShapeRenderer->flush();
 
-            ::spriteRenderer.render();
-            ::drawCallCount += ::spriteRenderer.getLastDrawCallCount();
-            ::spriteRenderer.flush();
+            this->m_spriteRenderer->render();
+            ::drawCallCount += this->m_spriteRenderer->getLastDrawCallCount();
+            this->m_spriteRenderer->flush();
 
         }
 
