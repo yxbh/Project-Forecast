@@ -117,12 +117,13 @@ namespace pf
                 transform.scaleX = tile.scale.x;
                 transform.scaleY = tile.scale.y;
                 ke::Rect2DInt32 textureRect;
-                textureRect.bottom = tile.sourcepos.y;
+                textureRect.top    = tile.sourcepos.y;
                 textureRect.left   = tile.sourcepos.x;
                 textureRect.width  = tile.size.width;
                 textureRect.height = tile.size.height;
-                auto tileEntity    = entityManager->newEntity().lock();
-                tileEntity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(tileEntity, textureId, transform, textureRect, tile.colour));
+                auto tileEntity    = entityManager->newEntity(tile.instanceid).lock();
+                tileEntity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(
+                    tileEntity, transform, tile.tiledepth, textureId, textureRect, tile.colour));
                 this->currentRoomEntities.push_back(tileEntity.get());
             }
 

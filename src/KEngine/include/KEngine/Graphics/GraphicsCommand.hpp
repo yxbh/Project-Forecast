@@ -24,14 +24,14 @@ namespace ke::graphics
 
     using IdType = size_t;
 
-    struct RenderCommandProperty
+    struct ShapeRenderCommandProperty
     {
         IdType id = 0;
 
+        std::int16_t depth = 0;
+
         Point2DFloat origin;
         Transform2D globalTransform;
-
-        std::uint8_t depth = 0;
 
         ke::Color fillColor;
         ke::Color outlineColor;
@@ -39,15 +39,26 @@ namespace ke::graphics
         float radius;
     };
 
+    struct LineRenderCommandProperty
+    {
+        IdType id = 0;
+
+        std::int16_t depth = 0;
+
+        Point2DFloat begin;
+        Point2DFloat end;
+
+        ke::Color color;
+    };
+
     struct SpriteRenderCommandProperty
     {
         IdType id = 0;
 
+        std::int16_t depth = 0;
+
         Point2DFloat origin;
         Transform2D globalTransform;
-
-        std::uint8_t depth = 0;
-
         Rect2DInt32 textureRect;
 
         size_t textureId = 0;
@@ -68,6 +79,7 @@ namespace ke
             SetViewContext,
             GenerateTexture,
             RenderInvisible,
+            RenderLine,
             RenderCircleShape,
             RenderSquareShape,
             RenderConvexShape,
@@ -78,10 +90,11 @@ namespace ke
 
         union
         {
-            ke::graphics::RenderCommandProperty render;
+            ke::graphics::LineRenderCommandProperty   line;
+            ke::graphics::ShapeRenderCommandProperty  shape;
             ke::graphics::SpriteRenderCommandProperty sprite;
-            ke::graphics::ViewContextCommandProperty view;
-            ke::graphics::TextureLoadCommandProperty texture;
+            ke::graphics::ViewContextCommandProperty  view;
+            ke::graphics::TextureLoadCommandProperty  texture;
         };
 
         GraphicsCommand() {}

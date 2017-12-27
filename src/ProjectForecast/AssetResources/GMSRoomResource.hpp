@@ -20,7 +20,7 @@ namespace pf
         ke::Colour colour{ke::Colour::WHITE};
         ke::String bg;
         size_t bg_hash;
-        int tiledepth;
+        std::int16_t tiledepth;
         int instanceid;
     };
 

@@ -26,6 +26,8 @@ namespace pf
         ke::App::instance()->getLogic()->getCurrentHumanView()->attachEntity(entity->getId());
 
 
+
+
         return true;
     }
 
@@ -80,11 +82,12 @@ R"(
                 transform.scaleX = 1.0f;
                 transform.scaleY = 1.0f;
                 ke::Rect2DInt32 textureRect;
-                textureRect.bottom = 16;
+                textureRect.top    = 16;
                 textureRect.left   = 48;
                 textureRect.width  = 16;
                 textureRect.height = 16;
-                entity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(entity, textureId, transform, textureRect));
+                std::int16_t depth = 50;
+                entity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(entity, transform, depth, textureId, textureRect));
 
                 auto result = entity->initialise();
                 assert(result);

@@ -8,7 +8,7 @@ namespace ke
     template <typename ValueType>
     struct Rect2D
     {
-        ValueType bottom = 0;
+        ValueType top = 0;
         ValueType left = 0;
         ValueType width = 0;
         ValueType height = 0;

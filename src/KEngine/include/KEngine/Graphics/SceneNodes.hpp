@@ -73,7 +73,8 @@ namespace ke
     class CircleShapeNode : public ke::SceneNode
     {
     public:
-        static ke::SceneNodeSptr create(ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform = {},
+        static ke::SceneNodeSptr create(ke::SceneNodeId sceneNodeId,
+            const ke::Transform2D & localTransform, std::int16_t depth,
             ke::Color fillColor = ke::Color::GREEN, float radius = 5.0f,
             ke::Color outlineColor = ke::Color::TRANSPARENT, float outlineThickness = 0.0f);
 
@@ -88,8 +89,8 @@ namespace ke
     class SpriteNode : public ke::SceneNode
     {
     public:
-        static ke::SceneNodeSptr create(ke::SceneNodeId sceneNodeId, size_t textureId,
-            const ke::Transform2D & localTransform, const ke::Rect2DInt32 & textureRect, ke::Color fillColor = ke::Color::WHITE);
+        static ke::SceneNodeSptr create(ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform,
+            std::int16_t depth, size_t textureId, const ke::Rect2DInt32 & textureRect, ke::Color fillColor = ke::Color::WHITE);
 
         using SceneNode::SceneNode;
 

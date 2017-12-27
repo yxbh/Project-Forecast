@@ -50,12 +50,13 @@ namespace ke
         KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(EntityRenderableCircleShapeComponent, 0x8617353F)
 
     public:
-        EntityRenderableCircleShapeComponent(ke::EntitySptr entity, const ke::Transform2D & localTransform, const ke::Color & fillColor,
-            float radius = 5.0f, const ke::Color & outlineColor = ke::Color::TRANSPARENT, float outlineThickness = 0.0f)
+        EntityRenderableCircleShapeComponent(ke::EntitySptr entity, const ke::Transform2D & localTransform, std::int16_t depth,
+            const ke::Color & fillColor, float radius = 5.0f, const ke::Color & outlineColor = ke::Color::TRANSPARENT,
+            float outlineThickness = 0.0f)
             : EntityRenderableComponent(entity)
         {
             this->sceneNode = ke::CircleShapeNode::create(entity->getId(), localTransform,
-                fillColor, radius, outlineColor, outlineThickness);
+                depth, fillColor, radius, outlineColor, outlineThickness);
         }
 
     };
@@ -65,11 +66,11 @@ namespace ke
         KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(SpriteDrawableComponent, 0xdc84005a)
 
     public:
-        SpriteDrawableComponent(ke::EntitySptr entity, size_t textureId, const ke::Transform2D & localTransform,
+        SpriteDrawableComponent(ke::EntitySptr entity, const ke::Transform2D & localTransform, std::int16_t depth, size_t textureId,
             const ke::Rect2DInt32 & textureRect, const ke::Color & color = ke::Color::WHITE)
             : EntityRenderableComponent(entity)
         {
-            this->sceneNode = ke::SpriteNode::create(entity->getId(), textureId, localTransform, textureRect, color);
+            this->sceneNode = ke::SpriteNode::create(entity->getId(), localTransform, depth, textureId, textureRect, color);
         }
 
     };

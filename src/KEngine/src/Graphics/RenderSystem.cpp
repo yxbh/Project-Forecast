@@ -1,6 +1,7 @@
 #include "KEngine/Graphics/RenderSystem.hpp"
 
 #include "KEngine/Graphics/RenderLayer.hpp"
+#include "KEngine/Graphics/SFML/LineRenderer.hpp"
 #include "KEngine/Graphics/SFML/CircleShapeRenderer.hpp"
 #include "KEngine/Graphics/SFML/SpriteRenderer.hpp"
 
@@ -58,6 +59,7 @@ namespace ke
         assert(!::instance);
         ::instance = this;
 
+        this->m_lineRenderer        = std::make_unique<ke::LineRenderer>();
         this->m_circleShapeRenderer = std::make_unique<ke::CircleShapeRenderer>();
         this->m_spriteRenderer      = std::make_unique<ke::SpriteRenderer>(&TextureStore);
     }
@@ -158,6 +160,7 @@ namespace ke
         }
 
         auto renderTarget        = static_cast<sf::RenderWindow*>(this->window.get()->get());
+        auto lineRenderer        = static_cast<ke::LineRenderer*>(this->m_lineRenderer.get());
         auto circleShapeRenderer = static_cast<ke::CircleShapeRenderer*>(this->m_circleShapeRenderer.get());
         auto spriteRenderer      = static_cast<ke::SpriteRenderer*>(this->m_spriteRenderer.get());
         circleShapeRenderer->setRenderTarget(renderTarget);
@@ -176,19 +179,20 @@ namespace ke
                 break;
             }
 
+            case GraphicsCommand::Types::RenderLine:
             case GraphicsCommand::Types::RenderCircleShape:
             case GraphicsCommand::Types::RenderSquareShape:
             case GraphicsCommand::Types::RenderConvexShape:
             case GraphicsCommand::Types::RenderSprite:
             {
-                while (command.render.depth >= ::renderLayers.size())
+                while (command.shape.depth >= ::renderLayers.size())
                 {
                     ke::RenderLayer newLayer;
                     newLayer.graphicsCommands.reserve(5000);
                     ::renderLayers.emplace_back(std::move(newLayer));
                 }
 
-                ::renderLayers[command.render.depth].graphicsCommands.push_back(command);
+                ::renderLayers[command.shape.depth].graphicsCommands.push_back(command);
                 break;
             }
 
@@ -220,6 +224,12 @@ namespace ke
             {
                 switch (cmd.type)
                 {
+                case ke::GraphicsCommand::Types::RenderLine:
+                {
+                    this->m_lineRenderer->queueCommand(cmd);
+                    break;
+                }
+
                 case ke::GraphicsCommand::Types::RenderCircleShape:
                 {
                     this->m_circleShapeRenderer->queueCommand(cmd);
@@ -234,6 +244,10 @@ namespace ke
 
                 }
             }
+
+            this->m_lineRenderer->render();
+            ::drawCallCount += this->m_lineRenderer->getLastDrawCallCount();
+            this->m_lineRenderer->flush();
 
             this->m_circleShapeRenderer->render();
             ::drawCallCount += this->m_circleShapeRenderer->getLastDrawCallCount();

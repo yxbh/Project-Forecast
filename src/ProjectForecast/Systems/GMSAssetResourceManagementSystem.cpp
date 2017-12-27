@@ -92,7 +92,7 @@ namespace pf
                 newTile.pos       = { tileJson["pos"]["x"].get<int>(), -tileJson["pos"]["y"].get<int>() };
                 newTile.bg        = tileJson["bg"].get<ke::String>();
                 newTile.bg_hash   = std::hash<ke::String>{}(newTile.bg);
-                newTile.sourcepos = { tileJson["sourcepos"]["x"].get<int>(), tileJson["sourcepos"]["y"].get<int>() }; // TODO: convert this to KEngine y-up coordinate system from GM:S' y-down coordinate system.
+                newTile.sourcepos = { tileJson["sourcepos"]["x"].get<int>(), tileJson["sourcepos"]["y"].get<int>() }; // sourcepos is y-down local image coordinates.
                 newTile.size      = { tileJson["size"]["width"].get<int>(), tileJson["size"]["height"].get<int>() };
                 newTile.scale     = { tileJson["scale"]["x"].get<float>(), tileJson["scale"]["y"].get<float>() };
                 auto colourStr    = tileJson["colour"].get<ke::String>();
@@ -104,7 +104,7 @@ namespace pf
                     static_cast<uint8_t>(std::stol(colourStr.substr(3, 2), nullptr, 16)),
                     static_cast<uint8_t>(std::stol(colourStr.substr(5, 2), nullptr, 16)),
                     static_cast<uint8_t>(std::stol(colourStr.substr(7, 2), nullptr, 16)) };
-                newTile.tiledepth  = tileJson["tiledepth"].get<int>();
+                newTile.tiledepth  = tileJson["tiledepth"].get<std::int16_t>();
                 newTile.instanceid = tileJson["instanceid"].get<int>();
                 roomResource->addTile(newTile);
             }

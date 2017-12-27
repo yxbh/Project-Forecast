@@ -39,8 +39,8 @@ namespace ke
             for (const auto & command : this->commands)
             {
                 // do culling
-                sf::Vector2f topLeft{ command.render.globalTransform.x, -command.render.globalTransform.y };
-                const auto shapeWidth = command.render.radius * 2;
+                sf::Vector2f topLeft{ command.shape.globalTransform.x, -command.shape.globalTransform.y };
+                const auto shapeWidth = command.shape.radius * 2;
                 topLeft.x -= shapeWidth;
                 topLeft.y -= shapeWidth;
                 auto shapeMaxGlobalBound = sf::FloatRect(topLeft, { shapeWidth * 2 , shapeWidth * 2 });
@@ -48,24 +48,24 @@ namespace ke
                 if (!viewRect.intersects(shapeMaxGlobalBound))
                     continue;
 
-                const sf::Vector2f sfPosition{ command.render.globalTransform.x, -command.render.globalTransform.y };
-                const auto sfOrigin = ke::SfmlHelper::convert(command.render.origin);
-                const auto sfFillColor = ke::SfmlHelper::convert(command.render.fillColor);
-                const auto sfOutlineColor = ke::SfmlHelper::convert(command.render.outlineColor);
+                const sf::Vector2f sfPosition{ command.shape.globalTransform.x, -command.shape.globalTransform.y };
+                const auto sfOrigin = ke::SfmlHelper::convert(command.shape.origin);
+                const auto sfFillColor = ke::SfmlHelper::convert(command.shape.fillColor);
+                const auto sfOutlineColor = ke::SfmlHelper::convert(command.shape.outlineColor);
 
                 // get the shape from cache.
-                auto it = shapeMap.find(command.render.id);
+                auto it = shapeMap.find(command.shape.id);
                 sf::CircleShape * shapePtr = nullptr;
                 if (it == shapeMap.end())
                 {
                     shape.setPosition(sfPosition);
                     shape.setFillColor(sfFillColor);
-                    shape.setRadius(command.render.radius);
+                    shape.setRadius(command.shape.radius);
                     shape.setOrigin(sfOrigin);
                     shape.setOutlineColor(sfOutlineColor);
-                    shape.setOutlineThickness(command.render.outlineThickness);
+                    shape.setOutlineThickness(command.shape.outlineThickness);
 
-                    shapeMap[command.render.id] = shape;
+                    shapeMap[command.shape.id] = shape;
                     shapePtr = &shape;
                 }
                 else
@@ -82,13 +82,13 @@ namespace ke
                 {
                     shapePtr->setOrigin(sfOrigin);
                 }
-                if (command.render.radius != shapePtr->getRadius())
+                if (command.shape.radius != shapePtr->getRadius())
                 {
-                    shapePtr->setRadius(command.render.radius);
+                    shapePtr->setRadius(command.shape.radius);
                 }
-                if (command.render.outlineThickness != shapePtr->getOutlineThickness())
+                if (command.shape.outlineThickness != shapePtr->getOutlineThickness())
                 {
-                    shapePtr->setOutlineThickness(command.render.outlineThickness);
+                    shapePtr->setOutlineThickness(command.shape.outlineThickness);
                 }
                 if (sfFillColor != shapePtr->getFillColor())
                 {

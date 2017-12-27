@@ -575,6 +575,9 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Rect2D.hpp">
       <Filter>KEngine\Header Files\Common</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\LineRenderer.hpp">
+      <Filter>KEngine\Header Files\Graphics\SFML</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\KEngine\include\KEngine\Common\Queues.inl">

@@ -71,7 +71,7 @@ namespace ke
                 sprite.setPosition(sfPosition);
                 sprite.setScale(command.sprite.globalTransform.scaleX, command.sprite.globalTransform.scaleY);
                 sf::IntRect textureRect;
-                textureRect.top    = command.sprite.textureRect.bottom;
+                textureRect.top    = command.sprite.textureRect.top;
                 textureRect.left   = command.sprite.textureRect.left;
                 textureRect.width  = command.sprite.textureRect.width;
                 textureRect.height = command.sprite.textureRect.height;
@@ -82,12 +82,16 @@ namespace ke
                 renderTarget->draw(sprite);
                 ++this->drawCallCount;
 
-                rectangleShape.setPosition(sfPosition);
-                rectangleShape.setSize({ (float)command.sprite.textureRect.width, (float)command.sprite.textureRect.height });
-                rectangleShape.setFillColor(sf::Color::Transparent);
-                rectangleShape.setOutlineColor(sf::Color::Green);
-                rectangleShape.setOutlineThickness(1.0f);
-                renderTarget->draw(rectangleShape);
+                if (this->drawBoundingBox)
+                {
+                    rectangleShape.setPosition(sfPosition);
+                    rectangleShape.setSize({ (float)command.sprite.textureRect.width, (float)command.sprite.textureRect.height });
+                    rectangleShape.setFillColor(sf::Color::Transparent);
+                    rectangleShape.setOutlineColor(sf::Color::Green);
+                    rectangleShape.setOutlineThickness(1.0f);
+                    renderTarget->draw(rectangleShape);
+                    ++this->drawCallCount;
+                }
             }
         }
 
@@ -103,6 +107,8 @@ namespace ke
 
     private:
         sf::RenderTarget * renderTarget;
+
+        bool drawBoundingBox = true;
 
         mutable size_t drawCallCount = 0;
 
