@@ -8,6 +8,7 @@ namespace ke
         return ke::makeSceneNode<ke::RootNode>(ke::INVALID_ENTITY_ID);
     }
 
+
     ke::SceneNodeSptr CircleShapeNode::create(ke::SceneNodeId sceneNodeId,
         const ke::Transform2D & localTransform, std::int16_t depth,
         ke::Color fillColor, float radius,
@@ -32,6 +33,7 @@ namespace ke
         return this->states;
     }
 
+
     ke::SceneNodeSptr SpriteNode::create(ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform,
         std::int16_t depth, size_t textureId, const ke::Rect2DInt32 & textureRect, ke::Color color)
     {
@@ -48,6 +50,27 @@ namespace ke
     }
 
     GraphicsCommand SpriteNode::getGraphicsCommand() const
+    {
+        this->states.shape.globalTransform = this->getGlobalTransform();
+        return this->states;
+    }
+
+
+    ke::SceneNodeSptr LineNode::create(ke::SceneNodeId sceneNodeId, const Point2DFloat & begin,
+        const Point2DFloat & end, std::int16_t depth, const ke::Color & color)
+    {
+        auto newNode = ke::makeSceneNode<ke::LineNode>(sceneNodeId);
+        auto & states       = newNode->states;
+        states.type         = ke::GraphicsCommand::Types::RenderLine;
+        states.line.id      = newNode->getId();
+        states.line.depth   = depth;
+        states.line.begin   = begin;
+        states.line.end     = end;
+        states.sprite.color = color;
+        return newNode;
+    }
+
+    GraphicsCommand LineNode::getGraphicsCommand() const
     {
         this->states.shape.globalTransform = this->getGlobalTransform();
         return this->states;

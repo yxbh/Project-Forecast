@@ -351,6 +351,7 @@
     <ClCompile Include="..\..\..\..\ProjectForecast\InputControllers\InputControllers.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\main.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\ProjectForecastApp.cpp" />
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\DebugSceneGridSystem.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\GMSAssetResourceManagementSystem.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\DebugDrawSystem.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\EntityTransformControlSystem.cpp" />
@@ -451,6 +452,7 @@
     <ClInclude Include="..\..\..\..\ProjectForecast\Events\RequestDrawDebugDotEvent.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\InputControllers\InputControllers.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\ProjectForecastApp.hpp" />
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\DebugSceneGridSystem.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Systems\GMSAssetResourceManagementSystem.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Systems\DebugDrawSystem.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Systems\EntityTransformControlSystem.hpp" />

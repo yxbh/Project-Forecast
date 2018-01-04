@@ -100,4 +100,18 @@ namespace ke
         mutable ke::GraphicsCommand states;
     };
 
+    class LineNode : public ke::SceneNode
+    {
+    public:
+        static ke::SceneNodeSptr create(ke::SceneNodeId sceneNodeId, const Point2DFloat & begin, const Point2DFloat & end,
+            std::int16_t depth, const ke::Color & color = ke::Color::WHITE);
+
+        using SceneNode::SceneNode;
+
+        virtual GraphicsCommand getGraphicsCommand() const final;
+
+    private:
+        mutable ke::GraphicsCommand states;
+    };
+
 }

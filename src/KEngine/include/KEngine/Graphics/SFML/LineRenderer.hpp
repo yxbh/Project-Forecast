@@ -31,14 +31,14 @@ namespace ke
 
         virtual void render() final
         {
+            this->drawCallCount = 0;
+
             if (this->commands.empty())
             {
                 return;
             }
 
             this->vertexArray.clear();
-            this->drawCallCount = 0;
-
             auto view = this->renderTarget->getView();
             auto viewCenter = view.getCenter();
             auto viewSize = view.getSize();
@@ -55,8 +55,8 @@ namespace ke
                 const auto shapeHeight         = std::abs(std::max(sfBegin.y, sfEnd.y) - sfBegin.y);
                 const auto shapeMaxGlobalBound = sf::FloatRect(topLeft, { shapeWidth, shapeHeight });
 
-                if (!viewRect.intersects(shapeMaxGlobalBound))
-                    continue;
+                //if (!viewRect.intersects(shapeMaxGlobalBound))
+                //    continue;
                 
                 this->vertexArray.emplace_back(sf::Vertex(sfBegin, SfmlHelper::convert(command.line.color)));
                 this->vertexArray.emplace_back(sf::Vertex(sfEnd, SfmlHelper::convert(command.line.color)));

@@ -282,6 +282,9 @@
     <ClCompile Include="..\..\..\..\ProjectForecast\EntityComponents\Components..cpp">
       <Filter>ProjectForecast\EntityComponents</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\DebugSceneGridSystem.cpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManager.hpp">
@@ -577,6 +580,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\LineRenderer.hpp">
       <Filter>KEngine\Header Files\Graphics\SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\DebugSceneGridSystem.hpp">
+      <Filter>ProjectForecast\Systems</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

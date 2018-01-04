@@ -5,6 +5,9 @@
 #include "KEngine/Core/Entity.hpp"
 #include "KEngine/Graphics/SceneNodes.hpp"
 #include "KEngine/Interfaces/IEntityComponent.hpp"
+
+#include "KEngine/Common/Point2D.hpp"
+
 #include <cassert>
 
 namespace ke
@@ -71,6 +74,20 @@ namespace ke
             : EntityRenderableComponent(entity)
         {
             this->sceneNode = ke::SpriteNode::create(entity->getId(), localTransform, depth, textureId, textureRect, color);
+        }
+
+    };
+
+    class LineDrawableComponent : public ke::EntityRenderableComponent
+    {
+        KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(LineDrawableComponent, 0x63917d41)
+
+    public:
+        LineDrawableComponent(ke::EntitySptr entity, const Point2DFloat & begin, const Point2DFloat & end,
+            std::int16_t depth, const ke::Color & color = ke::Color::WHITE)
+            : EntityRenderableComponent(entity)
+        {
+            this->sceneNode = ke::LineNode::create(entity->getId(), begin, end, depth, color);
         }
 
     };

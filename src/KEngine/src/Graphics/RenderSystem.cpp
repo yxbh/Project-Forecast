@@ -24,8 +24,6 @@ namespace
 
     static ke::RenderSystem * instance = nullptr;
 
-    static size_t drawCallCount = 0;
-
     template<typename Type>
     //using ConcurrentQueue = moodycamel::ConcurrentQueue<Type>;
     using ConcurrentQueue = moodycamel::ReaderWriterQueue<Type>;
@@ -94,7 +92,7 @@ namespace ke
         if (::commandGenThreadCmdListQueue.size_approx() == 0)
         {
             ::currentCommandGenThreadCmdList = GraphicsCommandList();
-            ::currentCommandGenThreadCmdList.reserve(4096);
+            ::currentCommandGenThreadCmdList.reserve(8192);
         }
         else
         {
@@ -163,6 +161,7 @@ namespace ke
         auto lineRenderer        = static_cast<ke::LineRenderer*>(this->m_lineRenderer.get());
         auto circleShapeRenderer = static_cast<ke::CircleShapeRenderer*>(this->m_circleShapeRenderer.get());
         auto spriteRenderer      = static_cast<ke::SpriteRenderer*>(this->m_spriteRenderer.get());
+        lineRenderer->setRenderTarget(renderTarget);
         circleShapeRenderer->setRenderTarget(renderTarget);
         spriteRenderer->setRenderTarget(renderTarget);
 
@@ -209,15 +208,16 @@ namespace ke
 
     size_t RenderSystem::render()
     {
+        auto renderTarget = static_cast<sf::RenderWindow*const>(this->window.get()->get());
+        size_t drawCallCount = 0;
+
+        renderTarget->clear(sf::Color::White);
+
         if (::renderLayers.size() == 0)
         {
             return 0;
         }
 
-        sf::RenderWindow * renderTarget = static_cast<sf::RenderWindow*>(this->window.get()->get());
-        ::drawCallCount = 0;
-
-        renderTarget->clear(sf::Color::White);
         for (const auto & layer : ::renderLayers)
         {
             for (const ke::GraphicsCommand & cmd : layer.graphicsCommands)
@@ -246,15 +246,15 @@ namespace ke
             }
 
             this->m_lineRenderer->render();
-            ::drawCallCount += this->m_lineRenderer->getLastDrawCallCount();
+            drawCallCount += this->m_lineRenderer->getLastDrawCallCount();
             this->m_lineRenderer->flush();
 
             this->m_circleShapeRenderer->render();
-            ::drawCallCount += this->m_circleShapeRenderer->getLastDrawCallCount();
+            drawCallCount += this->m_circleShapeRenderer->getLastDrawCallCount();
             this->m_circleShapeRenderer->flush();
 
             this->m_spriteRenderer->render();
-            ::drawCallCount += this->m_spriteRenderer->getLastDrawCallCount();
+            drawCallCount += this->m_spriteRenderer->getLastDrawCallCount();
             this->m_spriteRenderer->flush();
 
         }
@@ -262,7 +262,7 @@ namespace ke
         renderTarget->display();
         ::commandGenThreadCmdListQueue.enqueue(std::move(::currentRenderThreadCmdList));
 
-        return ::drawCallCount;
+        return drawCallCount;
     }
 
     void RenderSystem::updateOnRenderLoop(ke::Time elapsedTime)

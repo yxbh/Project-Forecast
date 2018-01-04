@@ -334,7 +334,7 @@ namespace ke
                 // if queue is empty then interpolate before render.
                 this->renderSystem->processCommands(frameTime);
                 const auto drawCallCount = this->renderSystem->render();
-                ::graphicsDrawCallCount.store(drawCallCount > 0 ? drawCallCount : ::graphicsDrawCallCount.load(), std::memory_order_relaxed);
+                ::graphicsDrawCallCount.store(drawCallCount, std::memory_order_relaxed);
 
                 //
                 // debug/diagnostic stuff

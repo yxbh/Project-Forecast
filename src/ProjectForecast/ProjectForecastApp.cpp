@@ -1,6 +1,7 @@
 #include "ProjectForecastApp.hpp"
 
 #include "Systems/DebugDrawSystem.hpp"
+#include "Systems/DebugSceneGridSystem.hpp"
 #include "Systems/EntityTransformControlSystem.hpp"
 #include "Systems/GMSRoomManagementSystem.hpp"
 #include "Systems/GMSAssetResourceManagementSystem.hpp"
@@ -32,6 +33,8 @@ namespace pf
         ret = systemManager->addSystem(std::make_unique<pf::EntityTransformControlSystem>());
         assert(ret);
         ret = systemManager->addSystem(std::make_unique<pf::DebugDrawSystem>());
+        assert(ret);
+        ret = systemManager->addSystem(std::make_unique<pf::DebugSceneGridSystem>());
         assert(ret);
         ret = systemManager->addSystem(std::make_unique<pf::GMSRoomManagementSystem>());
         assert(ret);
