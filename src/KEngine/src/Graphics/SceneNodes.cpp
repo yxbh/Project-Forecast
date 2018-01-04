@@ -60,19 +60,18 @@ namespace ke
         const Point2DFloat & end, std::int16_t depth, const ke::Color & color)
     {
         auto newNode = ke::makeSceneNode<ke::LineNode>(sceneNodeId);
-        auto & states       = newNode->states;
-        states.type         = ke::GraphicsCommand::Types::RenderLine;
-        states.line.id      = newNode->getId();
-        states.line.depth   = depth;
-        states.line.begin   = begin;
-        states.line.end     = end;
-        states.sprite.color = color;
+        auto & states     = newNode->states;
+        states.type       = ke::GraphicsCommand::Types::RenderLine;
+        states.line.id    = newNode->getId();
+        states.line.depth = depth;
+        states.line.begin = begin;
+        states.line.end   = end;
+        states.line.color = color;
         return newNode;
     }
 
     GraphicsCommand LineNode::getGraphicsCommand() const
     {
-        this->states.shape.globalTransform = this->getGlobalTransform();
         return this->states;
     }
 }
