@@ -1,16 +1,18 @@
 # ProjectForecast
-ProjectForecast is a work-in-progress experimental [Risk of Rain](http://riskofraingame.com/) clone. The source is written in modern C++ using [SDL2](https://www.libsdl.org/), [spdlog](https://github.com/gabime/spdlog) and a few other libraries and utilties.
+ProjectForecast is a work-in-progress experimental [Risk of Rain](http://riskofraingame.com/) clone. The source is written in modern C++ using [SFML](https://www.sfml-dev.org/), [SDL2](https://www.libsdl.org/), [spdlog](https://github.com/gabime/spdlog) and a few other libraries and utilties.
 
 The aim of the project is to produce a close recreation of the Risk of Rain game with much better performance (hopefully) and modability. There is no ETA.
 
 ## Building
 ### Windows (MSVC)
-A MSVC2015 target is provided under the `src/build-targets/VS2015` directory. The VC solution should compile out of the box.
+An up to date MSVC2017 target is provided under the `src/build-targets/VS2015` directory. The VC solution should compile out of the box. However the execution of built excutable may not as it may refer to local paths for resources as I am the only one developing this at the moment.
 
 ### OSX (QtCreator/qmake)
 A QtCreator(QMake) project file is provided in the repo under the `src/build-targets/QtCreator/ProjectForecast` directory.  
 Before building, run the \*.dmg files under the `src/lib/libs-osx` directory in the repo and copy the \*.framework files to the `/Library/Frameworks` directory on your OSX machine.  
 You should then be able to open .pro file in QtCreator, run qmake and build the project.
+
+The QtCreator project may not always be up to date as it is only used to test compilation on other compilers and OSes at this stage.
 
 ## Unit Tests
 To build and run the unit tests, first follow the instructions in the [Building](## Building) section above for the respective target platforms before following the following instructions.
