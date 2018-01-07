@@ -118,6 +118,25 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Common/Libs/atomicops.h \
     ../../../KEngine/include/KEngine/Common/Libs/concurrentqueue.h \
     ../../../KEngine/include/KEngine/Common/Libs/readerwriterqueue.h \
+    ../../../KEngine/include/KEngine/Common/Rect2D.hpp \
+    ../../../KEngine/include/KEngine/Common/Size2D.hpp \
+    ../../../KEngine/include/KEngine/Interfaces/IApp.hpp \
+    ../../../KEngine/include/KEngine/Interfaces/IAppView.hpp \
+    ../../../KEngine/include/KEngine/Interfaces/IEntity.hpp \
+    ../../../KEngine/include/KEngine/Interfaces/IEntityComponent.hpp \
+    ../../../KEngine/include/KEngine/Interfaces/IEntityComponentJsonLoader.hpp \
+    ../../../KEngine/include/KEngine/Interfaces/IEvent.hpp \
+    ../../../KEngine/include/KEngine/Interfaces/IEventManagerImpl.hpp \
+    ../../../KEngine/include/KEngine/Interfaces/IGraphicsCommandRenderer.hpp \
+    ../../../KEngine/include/KEngine/Interfaces/IInputController.hpp \
+    ../../../KEngine/include/KEngine/Interfaces/IRenderCommand.hpp \
+    ../../../KEngine/include/KEngine/Interfaces/IResource.hpp \
+    ../../../KEngine/include/KEngine/Interfaces/IResourceLoader.hpp \
+    ../../../KEngine/include/KEngine/Interfaces/IScene.hpp \
+    ../../../KEngine/include/KEngine/Interfaces/ISceneNode.hpp \
+    ../../../KEngine/include/KEngine/Interfaces/IStateMachine.hpp \
+    ../../../KEngine/include/KEngine/Interfaces/ISystem.hpp \
+    ../../../KEngine/include/KEngine/Interfaces/IWindow.hpp \
     ../../../KEngine/include/KEngine/Core/EventManager.hpp \
     ../../../KEngine/include/KEngine/Core/EventManagerImpl.hpp \
     ../../../KEngine/include/KEngine/Core/Entity.hpp \
@@ -129,20 +148,6 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Core/SystemManager.hpp \
     ../../../KEngine/include/KEngine/Core/Keyboard.hpp \
     ../../../KEngine/include/KEngine/Core/Mouse.hpp \
-    ../../../KEngine/include/KEngine/Interface/IApp.hpp \
-    ../../../KEngine/include/KEngine/Interface/IEvent.hpp \
-    ../../../KEngine/include/KEngine/Interface/IEventManagerImpl.hpp \
-    ../../../KEngine/include/KEngine/Interface/ISystem.hpp \
-    ../../../KEngine/include/KEngine/Interface/IWindow.hpp \
-    ../../../KEngine/include/KEngine/Interface/IEntity.hpp \
-    ../../../KEngine/include/KEngine/Interface/IEntityComponent.hpp \
-    ../../../KEngine/include/KEngine/Interface/IRenderCommand.hpp \
-    ../../../KEngine/include/KEngine/Interface/IStateMachine.hpp \
-    ../../../KEngine/include/KEngine/Interface/IEntityComponentJsonLoader.hpp \
-    ../../../KEngine/include/KEngine/Interface/IAppView.hpp \
-    ../../../KEngine/include/KEngine/Interface/IScene.hpp \
-    ../../../KEngine/include/KEngine/Interface/ISceneNode.hpp \
-    ../../../KEngine/include/KEngine/Interface/IInputController.hpp \
     ../../../KEngine/include/KEngine/Entity/Components/EntityRenderableComponents.hpp \
     ../../../KEngine/include/KEngine/Entity/Components/EntityCameraComponent.hpp \
     ../../../KEngine/include/KEngine/Entity/ComponentLoaders/EntityRenderableComponentLoader.hpp \
@@ -157,6 +162,7 @@ HEADERS += \
     ../../../KEngine/include/KEngine/Events/LoopFrameEvent.hpp \
     ../../../KEngine/include/KEngine/Events/GraphicsLoopSetupFailureEvent.hpp \
     ../../../KEngine/include/KEngine/Events/EntityTransformControlCommandEvents.hpp \
+    ../../../KEngine/include/KEngine/Events/OtherGraphicsEvents.hpp \
     ../../../KEngine/include/KEngine/Graphics/WindowFactory.hpp \
     ../../../KEngine/include/KEngine/Graphics/SFML/SfmlWindow.hpp \
     ../../../KEngine/include/KEngine/Graphics/SFML/CircleShapeRenderer.hpp \
@@ -172,6 +178,10 @@ HEADERS += \
     ../../../KEngine/include/KEngine/App.hpp \
     ../../../KEngine/include/KEngine/BaseAppLogic.hpp \
     ../../../KEngine/include/KEngine/Views/HumanView.hpp \
+    ../../../ProjectForecast/Systems/DebugSceneGridSystem.hpp \
+    ../../../ProjectForecast/Systems/GMSAssetResourceManagementSystem.hpp \
+    ../../../ProjectForecast/Systems/GMSRoomManagementSystem.hpp \
+    ../../../ProjectForecast/Events/GMSRoomLoadRequestEvent.hpp \
     ../../../ProjectForecast/ProjectForecastApp.hpp \
     ../../../ProjectForecast/Views/HumanView.hpp \
     ../../../ProjectForecast/Events/RequestDrawDebugDotEvent.hpp \
@@ -202,6 +212,7 @@ SOURCES += \
     ../../../KEngine/src/Graphics/RenderSystem.cpp \
     ../../../KEngine/src/Graphics/Scene.cpp \
     ../../../KEngine/src/Graphics/SceneNodes.cpp \
+    ../../../KEngine/src/Utility/FileSystemHelper.cpp \
     ../../../KEngine/src/Views/HumanView.cpp \
     ../../../KEngine/src/App.cpp \
     ../../../KEngine/src/BaseAppLogic.cpp \
@@ -221,7 +232,10 @@ SOURCES += \
     ../../../ProjectForecast/Systems/EventFeedbackSystem.cpp \
     ../../../ProjectForecast/Systems/EntityTransformControlSystem.cpp \
     ../../../ProjectForecast/InputControllers/InputControllers.cpp \
-    ../../../ProjectForecast/main.cpp
+    ../../../ProjectForecast/main.cpp \
+    ../../../ProjectForecast/Systems/DebugSceneGridSystem.cpp \
+    ../../../ProjectForecast/Systems/GMSAssetResourceManagementSystem.cpp \
+    ../../../ProjectForecast/Systems/GMSRoomManagementSystem.cpp
 #
 
 #
@@ -241,7 +255,7 @@ macx {
     #
     INCLUDEPATH += ../../../lib/libs-osx/SFML-2.4.1-osx-clang/include
     DEPENDPATH += ../../../lib/libs-osx/SFML-2.4.1-osx-clang/include
-    QMAKE_LFLAGS += -F../../../lib/libs-osx/SFML-2.4.1-osx-clang/Frameworks
+    `MAKE_LFLAGS += -F../../../lib/libs-osx/SFML-2.4.1-osx-clang/Frameworks
     LIBS += -framework SFML -framework sfml-system -framework sfml-window -framework sfml-graphics
     QMAKE_RPATHDIR += @executable_path/../../../ #this is pointing to the folder where the app file is.
     QMAKE_RPATHDIR += @executable_path/../Frameworks # this is pointing to inside the app file.
