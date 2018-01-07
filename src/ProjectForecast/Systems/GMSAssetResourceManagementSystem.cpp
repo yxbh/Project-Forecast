@@ -11,6 +11,7 @@
 
 #include <filesystem>
 #include <fstream>
+#include <limits>
 #include <utility>
 
 namespace
@@ -89,12 +90,18 @@ namespace pf
             for (const auto & tileJson : roomTilesJson)
             {
                 pf::GMSRoomTileInstance newTile;
+                newTile.instanceid = tileJson["instanceid"].get<int>();
+
+                // Here we make sure to convert the GM:S room coordinates to KEngine's world coordinates.
+                // I.e. y-down to y-up.
+                // Texture coordinates are the same at the moment at y-down. I.e. (0,0) at top left.
                 newTile.pos       = { tileJson["pos"]["x"].get<int>(), -tileJson["pos"]["y"].get<int>() };
                 newTile.bg        = tileJson["bg"].get<ke::String>();
                 newTile.bg_hash   = std::hash<ke::String>{}(newTile.bg);
                 newTile.sourcepos = { tileJson["sourcepos"]["x"].get<int>(), tileJson["sourcepos"]["y"].get<int>() }; // sourcepos is y-down local image coordinates.
                 newTile.size      = { tileJson["size"]["width"].get<int>(), tileJson["size"]["height"].get<int>() };
                 newTile.scale     = { tileJson["scale"]["x"].get<float>(), tileJson["scale"]["y"].get<float>() };
+
                 auto colourStr    = tileJson["colour"].get<ke::String>();
                 assert(colourStr.length() == 9);
                 assert(colourStr[0] == '#');
@@ -104,8 +111,14 @@ namespace pf
                     static_cast<uint8_t>(std::stol(colourStr.substr(3, 2), nullptr, 16)),
                     static_cast<uint8_t>(std::stol(colourStr.substr(5, 2), nullptr, 16)),
                     static_cast<uint8_t>(std::stol(colourStr.substr(7, 2), nullptr, 16)) };
+
+                // Here convert GM:S' depth system to KEngine's depth system.
+                // GM:S depth value: larger == further back.
+                // KEngine depth value: larger == further in front.
                 newTile.tiledepth  = tileJson["tiledepth"].get<std::int16_t>();
-                newTile.instanceid = tileJson["instanceid"].get<int>();
+                assert(newTile.tiledepth); // current assumption/observation is GM:S tile depth is always positive.
+                newTile.tiledepth = std::numeric_limits<decltype(newTile.tiledepth)>::max() - newTile.tiledepth;
+
                 roomResource->addTile(newTile);
             }
 

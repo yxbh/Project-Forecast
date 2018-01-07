@@ -6,6 +6,8 @@
 #include "KEngine/Core/EventManager.hpp"
 #include "KEngine/Log/Log.hpp"
 
+#include <limits>
+
 namespace pf
 {
 
@@ -20,7 +22,7 @@ namespace pf
         static const ke::Point2DFloat xlineEnd{ 0, -5000.f };
         static const ke::Point2DFloat ylineBegin{ 5000.f, 0 };
         static const ke::Point2DFloat ylineEnd{ -5000.f, 0 };
-        static const int16_t depth = 50;
+        std::int16_t depth = std::numeric_limits<std::int16_t>::max();
         static const auto lineColour = ke::Color::BLUE;
         xlineEntity->addComponent(ke::makeEntityComponent<ke::LineDrawableComponent>(xlineEntity, xlineBegin, xlineEnd, depth, lineColour));
         ylineEntity->addComponent(ke::makeEntityComponent<ke::LineDrawableComponent>(ylineEntity, ylineBegin, ylineEnd, depth, lineColour));
