@@ -21,7 +21,7 @@ namespace pf
         ke::String bg;
         size_t bg_hash;
         std::int16_t tiledepth;
-        int instanceid;
+        unsigned instanceid;
     };
 
     struct GMSRoomBackgroundInfo

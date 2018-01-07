@@ -90,7 +90,7 @@ namespace pf
             for (const auto & tileJson : roomTilesJson)
             {
                 pf::GMSRoomTileInstance newTile;
-                newTile.instanceid = tileJson["instanceid"].get<int>();
+                newTile.instanceid = tileJson["instanceid"].get<unsigned>();
 
                 // Here we make sure to convert the GM:S room coordinates to KEngine's world coordinates.
                 // I.e. y-down to y-up.
@@ -116,8 +116,9 @@ namespace pf
                 // GM:S depth value: larger == further back.
                 // KEngine depth value: larger == further in front.
                 newTile.tiledepth  = tileJson["tiledepth"].get<std::int16_t>();
-                assert(newTile.tiledepth); // current assumption/observation is GM:S tile depth is always positive.
+                assert(newTile.tiledepth >= 0); // current assumption/observation is GM:S tile depth is always positive.
                 newTile.tiledepth = std::numeric_limits<decltype(newTile.tiledepth)>::max() - newTile.tiledepth;
+                assert(newTile.tiledepth >= 0);
 
                 roomResource->addTile(newTile);
             }
