@@ -24,6 +24,16 @@ namespace ke::graphics
 
     using IdType = size_t;
 
+    /// <summary>
+    /// A header struct that maps the common properties of all *RenderCommandProperty classes.
+    /// </summary>
+    struct RenderCommandPropertyHeader
+    {
+        IdType id = 0;
+
+        std::int16_t depth = 0;
+    };
+
     struct ShapeRenderCommandProperty
     {
         IdType id = 0;
@@ -90,6 +100,7 @@ namespace ke
 
         union
         {
+            ke::graphics::LineRenderCommandProperty   render;
             ke::graphics::LineRenderCommandProperty   line;
             ke::graphics::ShapeRenderCommandProperty  shape;
             ke::graphics::SpriteRenderCommandProperty sprite;

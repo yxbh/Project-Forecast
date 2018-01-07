@@ -184,14 +184,15 @@ namespace ke
             case GraphicsCommand::Types::RenderConvexShape:
             case GraphicsCommand::Types::RenderSprite:
             {
-                while (command.shape.depth >= ::renderLayers.size())
+                assert(command.render.depth);
+                while (command.render.depth >= ::renderLayers.size())
                 {
                     ke::RenderLayer newLayer;
                     newLayer.graphicsCommands.reserve(5000);
                     ::renderLayers.emplace_back(std::move(newLayer));
                 }
 
-                ::renderLayers[command.shape.depth].graphicsCommands.push_back(command);
+                ::renderLayers[command.render.depth].graphicsCommands.push_back(command);
                 break;
             }
 

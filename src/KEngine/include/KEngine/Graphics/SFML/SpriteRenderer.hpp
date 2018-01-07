@@ -45,11 +45,11 @@ namespace ke
             for (const auto & command : this->commands)
             {
                 // do culling
-                const auto shapeWidth  = static_cast<float>(command.sprite.textureRect.width);
-                const auto shapeHeight = static_cast<float>(command.sprite.textureRect.height);
+                const auto spriteWidth  = static_cast<float>(command.sprite.textureRect.width) * command.sprite.globalTransform.scaleX;
+                const auto spriteHeight = static_cast<float>(command.sprite.textureRect.height) * command.sprite.globalTransform.scaleY;
                 const sf::Vector2f sfPosition{ command.sprite.globalTransform.x, -command.sprite.globalTransform.y };
                 sf::Vector2f topLeft{ sfPosition };
-                auto maxGlobalBound = sf::FloatRect(topLeft, { shapeWidth , shapeHeight });
+                auto maxGlobalBound = sf::FloatRect(topLeft, { spriteWidth , spriteHeight });
 
                 if (!viewRect.intersects(maxGlobalBound))
                     continue;
@@ -85,7 +85,7 @@ namespace ke
                 if (this->drawBoundingBox)
                 {
                     rectangleShape.setPosition(sfPosition);
-                    rectangleShape.setSize({ (float)command.sprite.textureRect.width, (float)command.sprite.textureRect.height });
+                    rectangleShape.setSize({ spriteWidth, spriteHeight });
                     rectangleShape.setFillColor(sf::Color::Transparent);
                     rectangleShape.setOutlineColor(sf::Color::Green);
                     rectangleShape.setOutlineThickness(1.0f);

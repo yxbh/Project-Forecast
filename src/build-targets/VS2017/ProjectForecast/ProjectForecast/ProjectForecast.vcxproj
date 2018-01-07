@@ -345,6 +345,7 @@
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_FrameRateCounter.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_StateMachine.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Time.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Utility\FileSystemHelper.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Views\HumanView.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\AssetResources\TextureInfoResource.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\EntityComponents\Components..cpp" />

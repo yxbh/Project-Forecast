@@ -3,7 +3,6 @@
 #include "KEngine/Interfaces/IResource.hpp"
 #include "KEngine/Common/Json.hpp"
 
-#include <filesystem>
 #include <memory>
 
 namespace sf

@@ -285,6 +285,9 @@
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\DebugSceneGridSystem.cpp">
       <Filter>ProjectForecast\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Utility\FileSystemHelper.cpp">
+      <Filter>KEngine\Source Files\Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManager.hpp">
