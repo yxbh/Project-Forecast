@@ -6,6 +6,7 @@
 #include <SFML/Graphics/RenderTarget.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Texture.hpp>
 
 #include <cassert>
 #include <vector>
@@ -39,7 +40,7 @@ namespace ke
             auto viewTopLeft = sf::Vector2f(viewCenter.x - (viewSize.x) / 2, viewCenter.y - (viewSize.y) / 2);
             sf::FloatRect viewRect(viewTopLeft, viewSize);
 
-            sf::Texture * currentTexture;
+            sf::Texture * currentTexture = nullptr;
             size_t currentTextureId = 0;
             this->drawCallCount = 0;
             for (const auto & command : this->commands)
@@ -65,6 +66,7 @@ namespace ke
                     }
                     else
                     {
+                        // if texture doesn't exist we don't draw it obviously.
                         continue;
                     }
                 }
@@ -73,11 +75,10 @@ namespace ke
                 sf::IntRect textureRect;
                 textureRect.top    = command.sprite.textureRect.top;
                 textureRect.left   = command.sprite.textureRect.left;
-                textureRect.width  = command.sprite.textureRect.width;
-                textureRect.height = command.sprite.textureRect.height;
+                textureRect.width  = command.sprite.textureRect.width == 0 ? currentTexture->getSize().x : command.sprite.textureRect.width;
+                textureRect.height = command.sprite.textureRect.height == 0 ? currentTexture->getSize().y : command.sprite.textureRect.height;
                 sprite.setTextureRect(textureRect);
-                const auto & color = command.sprite.color;
-                sprite.setColor({ color.r, color.g, color.b, color.a });
+                sprite.setColor(ke::SfmlHelper::convert(command.sprite.color));
 
                 renderTarget->draw(sprite);
                 ++this->drawCallCount;

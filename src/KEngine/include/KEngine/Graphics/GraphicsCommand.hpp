@@ -23,6 +23,7 @@ namespace ke::graphics
     };
 
     using IdType = size_t;
+    using DepthType = int32_t;
 
     /// <summary>
     /// A header struct that maps the common properties of all *RenderCommandProperty classes.
@@ -31,15 +32,11 @@ namespace ke::graphics
     {
         IdType id = 0;
 
-        std::int16_t depth = 0;
+        DepthType depth = 0;
     };
 
-    struct ShapeRenderCommandProperty
+    struct ShapeRenderCommandProperty : public RenderCommandPropertyHeader
     {
-        IdType id = 0;
-
-        std::int16_t depth = 0;
-
         Point2DFloat origin;
         Transform2D globalTransform;
 
@@ -49,24 +46,16 @@ namespace ke::graphics
         float radius;
     };
 
-    struct LineRenderCommandProperty
+    struct LineRenderCommandProperty : public RenderCommandPropertyHeader
     {
-        IdType id = 0;
-
-        std::int16_t depth = 0;
-
         Point2DFloat begin;
         Point2DFloat end;
 
         ke::Color color;
     };
 
-    struct SpriteRenderCommandProperty
+    struct SpriteRenderCommandProperty : public RenderCommandPropertyHeader
     {
-        IdType id = 0;
-
-        std::int16_t depth = 0;
-
         Point2DFloat origin;
         Transform2D globalTransform;
         Rect2DInt32 textureRect;

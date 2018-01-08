@@ -71,6 +71,8 @@ namespace ke
 
         ke::ThreadSafeQueue<ke::EventSptr> events;
 
+        GraphicsCommandList orderedRenderCommandList;
+
         GraphicsCommandRendererUptr m_lineRenderer;
         GraphicsCommandRendererUptr m_circleShapeRenderer;
         GraphicsCommandRendererUptr m_spriteRenderer;

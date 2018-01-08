@@ -150,7 +150,7 @@ namespace pf
                 transform.y = static_cast<float>(bgInfo.pos.y);
                 transform.scaleX = 1.0f;
                 transform.scaleY = 1.0f;
-                static const std::int16_t depth = 0;
+                static const ke::graphics::DepthType depth = 0;
                 ke::Rect2DInt32 textureRect;
                 textureRect.top    = 0;
                 textureRect.left   = 0;

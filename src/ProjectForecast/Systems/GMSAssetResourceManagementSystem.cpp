@@ -115,10 +115,7 @@ namespace pf
                 // Here convert GM:S' depth system to KEngine's depth system.
                 // GM:S depth value: larger == further back.
                 // KEngine depth value: larger == further in front.
-                newTile.tiledepth  = tileJson["tiledepth"].get<std::int16_t>();
-                assert(newTile.tiledepth >= 0); // current assumption/observation is GM:S tile depth is always positive.
-                newTile.tiledepth = std::numeric_limits<decltype(newTile.tiledepth)>::max() - newTile.tiledepth;
-                assert(newTile.tiledepth >= 0);
+                newTile.tiledepth = -tileJson["tiledepth"].get<ke::graphics::DepthType>();
 
                 roomResource->addTile(newTile);
             }

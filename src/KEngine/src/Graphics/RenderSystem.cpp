@@ -36,8 +36,6 @@ namespace
     static ConcurrentQueue<GraphicsCommandList> commandGenThreadCmdListQueue;
     static ConcurrentQueue<GraphicsCommandList> renderThreadCmdListQueue;
 
-    static std::vector<ke::RenderLayer> renderLayers;
-
     using TextureMapType = std::unordered_map<size_t, std::unique_ptr<sf::Texture>>;
     static TextureMapType TextureStore;
 
@@ -46,6 +44,12 @@ namespace
     {
         return
             lhs.type < rhs.type;
+    }
+
+    static bool graphicsRenderCommandRenderTypeComparer(const ke::GraphicsCommand & lhs, const ke::GraphicsCommand & rhs)
+    {
+        return
+            lhs.render.depth < rhs.render.depth;
     }
 }
 
@@ -69,6 +73,7 @@ namespace ke
 
     bool RenderSystem::initialise()
     {
+        this->orderedRenderCommandList.reserve(10240);
         ke::EventManager::registerListener<ke::WindowResizedEvent>(this, &RenderSystem::receiveEvent);
         ke::EventManager::registerListener<ke::TextureLoadViaFileRequestEvent>(this, &RenderSystem::receiveEvent);
         return true;
@@ -142,7 +147,6 @@ namespace ke
     {
         KE_UNUSED(elapsedTime);
         if (::renderThreadCmdListQueue.size_approx() == 0) return;
-        for (auto & layer : ::renderLayers) layer.graphicsCommands.clear();
 
         GraphicsCommandList throwAway;
         while (::renderThreadCmdListQueue.size_approx() > 2)
@@ -166,6 +170,7 @@ namespace ke
         spriteRenderer->setRenderTarget(renderTarget);
 
         // filter the commands to their respective processors.
+        this->orderedRenderCommandList.clear();
         for (const auto & command : ::currentRenderThreadCmdList)
         {
             switch (command.type)
@@ -184,27 +189,15 @@ namespace ke
             case GraphicsCommand::Types::RenderConvexShape:
             case GraphicsCommand::Types::RenderSprite:
             {
-                assert(command.render.depth);
-                while (command.render.depth >= ::renderLayers.size())
-                {
-                    ke::RenderLayer newLayer;
-                    newLayer.graphicsCommands.reserve(5000);
-                    ::renderLayers.emplace_back(std::move(newLayer));
-                }
-
-                ::renderLayers[command.render.depth].graphicsCommands.push_back(command);
+                this->orderedRenderCommandList.push_back(command);
                 break;
             }
 
             } // switch command type.
         } // for each command.
 
-        for (auto & renderLayer : ::renderLayers)
-        {
-            std::sort(
-                renderLayer.graphicsCommands.begin(), renderLayer.graphicsCommands.end(),
-                ::graphicsCommandRenderTypeComparer);
-        }
+        std::sort(this->orderedRenderCommandList.begin(), this->orderedRenderCommandList.end(),
+            ::graphicsRenderCommandRenderTypeComparer);
     }
 
     size_t RenderSystem::render()
@@ -214,50 +207,55 @@ namespace ke
 
         renderTarget->clear(sf::Color::White);
 
-        if (::renderLayers.size() == 0)
+        if (this->orderedRenderCommandList.size() == 0)
         {
             return 0;
         }
 
-        for (const auto & layer : ::renderLayers)
+
+        unsigned long currentDepthValue = this->orderedRenderCommandList[0].render.depth;
+        auto lastDepthValue = currentDepthValue;
+        for (const ke::GraphicsCommand & cmd : this->orderedRenderCommandList)
         {
-            for (const ke::GraphicsCommand & cmd : layer.graphicsCommands)
+            switch (cmd.type)
             {
-                switch (cmd.type)
-                {
-                case ke::GraphicsCommand::Types::RenderLine:
-                {
-                    this->m_lineRenderer->queueCommand(cmd);
-                    break;
-                }
-
-                case ke::GraphicsCommand::Types::RenderCircleShape:
-                {
-                    this->m_circleShapeRenderer->queueCommand(cmd);
-                    break;
-                }
-
-                case ke::GraphicsCommand::Types::RenderSprite:
-                {
-                    this->m_spriteRenderer->queueCommand(cmd);
-                    break;
-                }
-
-                }
+            case ke::GraphicsCommand::Types::RenderLine:
+            {
+                this->m_lineRenderer->queueCommand(cmd);
+                break;
             }
 
-            this->m_lineRenderer->render();
-            drawCallCount += this->m_lineRenderer->getLastDrawCallCount();
-            this->m_lineRenderer->flush();
+            case ke::GraphicsCommand::Types::RenderCircleShape:
+            {
+                this->m_circleShapeRenderer->queueCommand(cmd);
+                break;
+            }
 
-            this->m_circleShapeRenderer->render();
-            drawCallCount += this->m_circleShapeRenderer->getLastDrawCallCount();
-            this->m_circleShapeRenderer->flush();
+            case ke::GraphicsCommand::Types::RenderSprite:
+            {
+                this->m_spriteRenderer->queueCommand(cmd);
+                break;
+            }
 
-            this->m_spriteRenderer->render();
-            drawCallCount += this->m_spriteRenderer->getLastDrawCallCount();
-            this->m_spriteRenderer->flush();
+            }
 
+            currentDepthValue = cmd.render.depth;
+            if (lastDepthValue != currentDepthValue)
+            {
+                this->m_lineRenderer->render();
+                drawCallCount += this->m_lineRenderer->getLastDrawCallCount();
+                this->m_lineRenderer->flush();
+
+                this->m_circleShapeRenderer->render();
+                drawCallCount += this->m_circleShapeRenderer->getLastDrawCallCount();
+                this->m_circleShapeRenderer->flush();
+
+                this->m_spriteRenderer->render();
+                drawCallCount += this->m_spriteRenderer->getLastDrawCallCount();
+                this->m_spriteRenderer->flush();
+
+                lastDepthValue = currentDepthValue;
+            }
         }
 
         renderTarget->display();
