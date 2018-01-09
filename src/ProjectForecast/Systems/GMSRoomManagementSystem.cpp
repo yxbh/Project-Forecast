@@ -105,6 +105,8 @@ namespace pf
                 }                
             }
 
+            ke::EventManager::enqueue(ke::makeEvent<ke::SetClearColourRequestEvent>(this->currentRoomResource->getColour()));
+
             // Instantiate tile entities.
             std::unordered_set<ke::String> tileTextureNames;
             auto entityManager = ke::App::instance()->getLogic()->getEntityManager();
@@ -140,10 +142,14 @@ namespace pf
             }
 
             // Instantiate background entities.
-            std::unordered_set<ke::String> backgroundTextureNames;
+            std::unordered_set<TextureInfoResource*> backgroundTextureInfos;
             for (const auto & bgInfo : this->currentRoomResource->getBackgroundInfos())
             {
-                backgroundTextureNames.insert(bgInfo.bg);
+                if (!bgInfo.enabled)
+                {
+                    continue;
+                }
+
                 auto textureId = bgInfo.bg_hash;
                 ke::Transform2D transform;
                 transform.x = static_cast<float>(bgInfo.pos.x);
@@ -151,26 +157,89 @@ namespace pf
                 transform.scaleX = 1.0f;
                 transform.scaleY = 1.0f;
                 static const ke::graphics::DepthType depth = 0;
-                ke::Rect2DInt32 textureRect;
-                textureRect.top    = 0;
-                textureRect.left   = 0;
-                textureRect.width  = 0;
-                textureRect.height = 0;
-                auto bgEntity = entityManager->newEntity().lock();
-                bgEntity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(
-                    bgEntity, transform, depth, textureId, textureRect));
-                this->currentRoomEntities.push_back(bgEntity.get());
+
+                auto textureInfo = dynamic_cast<TextureInfoResource*>(resourceManager->getResource(bgInfo.bg));
+                if (textureInfo)
+                {
+                    backgroundTextureInfos.insert(textureInfo);
+
+                    const auto & texWidth  = textureInfo->getTextureSize().width;
+                    const auto & texHeight = textureInfo->getTextureSize().height;
+                    assert(texWidth);
+                    assert(texHeight);
+                    ke::Rect2DInt32 textureRect;
+                    textureRect.top    = 0;
+                    textureRect.left   = 0;
+                    textureRect.width  = texWidth;
+                    textureRect.height = texHeight;
+
+                    auto bgEntity = entityManager->newEntity().lock();
+                    bgEntity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(
+                        bgEntity, transform, depth, textureId, textureRect));
+                    this->currentRoomEntities.push_back(bgEntity.get());
+
+                    //
+                    // Here we add additional background instances if tiling in any directions are enabled.
+                    // We use the starting position of the first background position as an origin and tile additionals
+                    // instances both ways from the origin.
+                    //
+
+                    if (bgInfo.tilex)
+                    {
+                        for (transform.x -= texWidth;
+                            transform.x >= -this->currentRoomResource->getSize().width - texWidth;
+                            transform.x -= texWidth)
+                        {
+                            bgEntity = entityManager->newEntity().lock();
+                            bgEntity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(
+                                bgEntity, transform, depth, textureId, textureRect));
+                            this->currentRoomEntities.push_back(bgEntity.get());
+                        }
+
+                        for (transform.x = static_cast<float>(bgInfo.pos.x) + texWidth;
+                            transform.x <= this->currentRoomResource->getSize().width + texWidth;
+                            transform.x += texWidth)
+                        {
+                            bgEntity = entityManager->newEntity().lock();
+                            bgEntity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(
+                                bgEntity, transform, depth, textureId, textureRect));
+                            this->currentRoomEntities.push_back(bgEntity.get());
+                        }
+                    }
+
+                    if (bgInfo.tiley)
+                    {
+                        transform.x = static_cast<float>(bgInfo.pos.x); // reset x position value.
+
+                        for (transform.y -= texHeight;
+                            transform.y >= -this->currentRoomResource->getSize().height - texHeight;
+                            transform.y -= texHeight)
+                        {
+                            bgEntity = entityManager->newEntity().lock();
+                            bgEntity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(
+                                bgEntity, transform, depth, textureId, textureRect));
+                            this->currentRoomEntities.push_back(bgEntity.get());
+                        }
+
+                        for (transform.y = static_cast<float>(bgInfo.pos.y) + texHeight;
+                            transform.y <= this->currentRoomResource->getSize().height + texHeight;
+                            transform.y += texHeight)
+                        {
+                            bgEntity = entityManager->newEntity().lock();
+                            bgEntity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(
+                                bgEntity, transform, depth, textureId, textureRect));
+                            this->currentRoomEntities.push_back(bgEntity.get());
+                        }
+                    }
+                }
+                
             }
 
             // Load background textures.
-            for (const auto & bgTextureName : backgroundTextureNames)
+            for (const auto & textureInfo : backgroundTextureInfos)
             {
-                auto textureInfo = dynamic_cast<TextureInfoResource*>(resourceManager->getResource(bgTextureName));
-                if (textureInfo)
-                {
-                    ke::EventManager::enqueue(ke::makeEvent<ke::TextureLoadViaFileRequestEvent>(
-                        textureInfo->getName(), textureInfo->getTextureId(), textureInfo->getSourcePath()));
-                }
+                ke::EventManager::enqueue(ke::makeEvent<ke::TextureLoadViaFileRequestEvent>(
+                    textureInfo->getName(), textureInfo->getTextureId(), textureInfo->getSourcePath()));
             }
         }
 

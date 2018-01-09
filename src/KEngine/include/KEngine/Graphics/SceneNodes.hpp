@@ -74,7 +74,7 @@ namespace ke
     {
     public:
         static ke::SceneNodeSptr create(ke::SceneNodeId sceneNodeId,
-            const ke::Transform2D & localTransform, std::int16_t depth,
+            const ke::Transform2D & localTransform, std::int32_t depth,
             ke::Color fillColor = ke::Color::GREEN, float radius = 5.0f,
             ke::Color outlineColor = ke::Color::TRANSPARENT, float outlineThickness = 0.0f);
 
@@ -90,7 +90,7 @@ namespace ke
     {
     public:
         static ke::SceneNodeSptr create(ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform,
-            std::int16_t depth, size_t textureId, const ke::Rect2DInt32 & textureRect, ke::Color fillColor = ke::Color::WHITE);
+            std::int32_t depth, size_t textureId, const ke::Rect2DInt32 & textureRect, ke::Color fillColor = ke::Color::WHITE);
 
         using SceneNode::SceneNode;
 
@@ -104,7 +104,7 @@ namespace ke
     {
     public:
         static ke::SceneNodeSptr create(ke::SceneNodeId sceneNodeId, const Point2DFloat & begin, const Point2DFloat & end,
-            std::int16_t depth, const ke::Color & color = ke::Color::WHITE);
+            std::int32_t depth, const ke::Color & color = ke::Color::WHITE);
 
         using SceneNode::SceneNode;
 

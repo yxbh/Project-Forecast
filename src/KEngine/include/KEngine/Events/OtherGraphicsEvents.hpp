@@ -8,6 +8,25 @@
 namespace ke
 {
 
+    class SetClearColourRequestEvent : public IEvent
+    {
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(SetClearColourRequestEvent, 0x4bf2d20);
+
+    public:
+        SetClearColourRequestEvent(const ke::Colour & p_colour) : colour(p_colour) {}
+
+        virtual ke::EventSptr makeCopy() const final
+        {
+            return ke::makeEvent<SetClearColourRequestEvent>(this->colour);
+        }
+
+        const ke::Colour & getColour() const { return this->colour; }
+
+    private:
+        ke::Colour colour;
+    };
+
+
     class SceneNodeCreatedEvent : public IEvent
     {
         KE_DEFINE_EVENT_COMMON_PROPERTIES(SceneNodeCreatedEvent, 0x887f89b2);

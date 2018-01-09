@@ -1,6 +1,7 @@
 #pragma once
 
 #include <KEngine/Interfaces/IResource.hpp>
+#include <KEngine/Common/Dimension2D.hpp>
 
 namespace pf
 {
@@ -10,11 +11,17 @@ namespace pf
         KE_DEFINE_RESOURCE_COMMON_PROPERTIES(TextureInfoResource, "TextureInfoResource"/*0x9bd52b62*/);
     
     public:
+        using DimensionType = ke::Dimension2DUInt32;
+
         inline void setTextureId(size_t id) { this->textureId = id; }
         inline size_t getTextureId() const { return this->textureId; }
+
+        inline void setTextureSize(const DimensionType & p_size) { this->textureSize = p_size; }
+        inline const DimensionType & getTextureSize() const { return this->textureSize; }
     
     private:
         size_t textureId;
+        DimensionType textureSize;
 
     };
 

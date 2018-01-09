@@ -46,13 +46,17 @@ namespace ke
             for (const auto & command : this->commands)
             {
                 // do culling
-                const auto spriteWidth  = static_cast<float>(command.sprite.textureRect.width) * command.sprite.globalTransform.scaleX;
-                const auto spriteHeight = static_cast<float>(command.sprite.textureRect.height) * command.sprite.globalTransform.scaleY;
-                const sf::Vector2f sfPosition{ command.sprite.globalTransform.x, -command.sprite.globalTransform.y };
+                const auto & textureRect = command.sprite.textureRect;
+                const auto & transform   = command.sprite.globalTransform;
+                const auto spriteWidth   = static_cast<float>(textureRect.width) * transform.scaleX;
+                const auto spriteHeight  = static_cast<float>(textureRect.height) * transform.scaleY;
+                const sf::Vector2f sfPosition{ transform.x, -transform.y };
                 sf::Vector2f topLeft{ sfPosition };
                 auto maxGlobalBound = sf::FloatRect(topLeft, { spriteWidth , spriteHeight });
 
-                if (!viewRect.intersects(maxGlobalBound))
+                // We cull the command if its texture rect is trivial and it's outside our view.
+                if (!viewRect.intersects(maxGlobalBound) &&
+                    textureRect.height != 0 && textureRect.width != 0)
                     continue;
 
                 // setup sprite for rendering.
@@ -71,13 +75,13 @@ namespace ke
                     }
                 }
                 sprite.setPosition(sfPosition);
-                sprite.setScale(command.sprite.globalTransform.scaleX, command.sprite.globalTransform.scaleY);
-                sf::IntRect textureRect;
-                textureRect.top    = command.sprite.textureRect.top;
-                textureRect.left   = command.sprite.textureRect.left;
-                textureRect.width  = command.sprite.textureRect.width == 0 ? currentTexture->getSize().x : command.sprite.textureRect.width;
-                textureRect.height = command.sprite.textureRect.height == 0 ? currentTexture->getSize().y : command.sprite.textureRect.height;
-                sprite.setTextureRect(textureRect);
+                sprite.setScale(transform.scaleX, transform.scaleY);
+                sf::IntRect sfTextureRect;
+                sfTextureRect.top    = textureRect.top;
+                sfTextureRect.left   = textureRect.left;
+                sfTextureRect.width  = textureRect.width == 0 ? currentTexture->getSize().x : textureRect.width;
+                sfTextureRect.height = textureRect.height == 0 ? currentTexture->getSize().y : textureRect.height;
+                sprite.setTextureRect(sfTextureRect);
                 sprite.setColor(ke::SfmlHelper::convert(command.sprite.color));
 
                 renderTarget->draw(sprite);

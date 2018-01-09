@@ -76,6 +76,8 @@ namespace ke
         GraphicsCommandRendererUptr m_lineRenderer;
         GraphicsCommandRendererUptr m_circleShapeRenderer;
         GraphicsCommandRendererUptr m_spriteRenderer;
+
+        ke::Colour clearColour;
     };
 
     using RenderSystemUptr = std::unique_ptr<RenderSystem>;

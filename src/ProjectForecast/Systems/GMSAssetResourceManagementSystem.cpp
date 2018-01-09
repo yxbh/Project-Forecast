@@ -9,6 +9,8 @@
 #include <KEngine/Utility/FileSystemHelper.hpp>
 #include <KEngine/Log/Log.hpp>
 
+#include <SFML/Graphics/Image.hpp>
+
 #include <filesystem>
 #include <fstream>
 #include <limits>
@@ -30,6 +32,8 @@ namespace pf
 
         ke::Log::instance()->info("Scanning texture assets...");
         fs::path texturesRootDirPath = fs::path{ ProjectForecastExecAssetPath } / "textures";
+        sf::Image tempImage;
+        std::hash<ke::String> hasher;
         for (const auto & texDirPath : ke::FileSystemHelper::getChildPaths(texturesRootDirPath))
         {
             ke::Log::instance()->info("Discovered texture asset: {}", texDirPath.string());
@@ -37,11 +41,20 @@ namespace pf
             auto textureFilePaths = ke::FileSystemHelper::getFilePaths(texDirPath);
             if (textureFilePaths.size() == 1)
             {
-                auto texPath = textureFilePaths[0];
+                auto texPath         = textureFilePaths[0];
                 auto textureResource = std::make_shared<TextureInfoResource>();                
                 textureResource->setName(texPath.stem().string());
-                textureResource->setTextureId(std::hash<ke::String>()(textureResource->getName()));
+                textureResource->setTextureId(hasher(textureResource->getName()));
                 textureResource->setSourcePath(texPath.string());
+
+                // retrieve size
+                bool ret = tempImage.loadFromFile(texPath.string());
+                assert(ret);
+                TextureInfoResource::DimensionType dimension;
+                dimension.width  = tempImage.getSize().x;
+                dimension.height = tempImage.getSize().y;
+                textureResource->setTextureSize(dimension);
+
                 ke::App::instance()->getResourceManager()->registerResource(textureResource);
             }
             else
@@ -65,6 +78,25 @@ namespace pf
             roomFileStream >> roomJson;
 
             //
+            // Load general room info.
+            //
+            GMSRoomResource::SizeType roomSize;
+            roomSize.width  = roomJson["size"]["width"].get<unsigned>();
+            roomSize.height = roomJson["size"]["height"].get<unsigned>();
+            roomResource->setSize(roomSize);
+            roomResource->setSpeed(roomJson["speed"].get<int>());
+            auto roomColourStr = roomJson["colour"].get<ke::String>();
+            assert(roomColourStr.length() == 9);
+            assert(roomColourStr[0] == '#');
+            ke::Colour roomColour = {
+                // assume colour is in hex RGBA starting with the '#' symbol.
+                static_cast<uint8_t>(std::stol(roomColourStr.substr(1, 2), nullptr, 16)),
+                static_cast<uint8_t>(std::stol(roomColourStr.substr(3, 2), nullptr, 16)),
+                static_cast<uint8_t>(std::stol(roomColourStr.substr(5, 2), nullptr, 16)),
+                static_cast<uint8_t>(std::stol(roomColourStr.substr(7, 2), nullptr, 16)) };
+            roomResource->setColour(roomColour);
+
+            //
             // load background info
             //
             auto roomBackgroundsJson = roomJson["bgs"];
@@ -79,7 +111,7 @@ namespace pf
                 backgroundInfo.speed      = { backgroundJson["speed"]["x"].get<int>(), -backgroundJson["speed"]["y"].get<int>() };
                 backgroundInfo.stretch    = backgroundJson["stretch"].get<bool>();
                 backgroundInfo.bg         = backgroundJson.value("bg", "");
-                backgroundInfo.bg_hash    = std::hash<ke::String>{}(backgroundInfo.bg);
+                backgroundInfo.bg_hash    = hasher(backgroundInfo.bg);
                 roomResource->addBackgroundInfo(backgroundInfo);
             }
 
@@ -97,7 +129,7 @@ namespace pf
                 // Texture coordinates are the same at the moment at y-down. I.e. (0,0) at top left.
                 newTile.pos       = { tileJson["pos"]["x"].get<int>(), -tileJson["pos"]["y"].get<int>() };
                 newTile.bg        = tileJson["bg"].get<ke::String>();
-                newTile.bg_hash   = std::hash<ke::String>{}(newTile.bg);
+                newTile.bg_hash   = hasher(newTile.bg);
                 newTile.sourcepos = { tileJson["sourcepos"]["x"].get<int>(), tileJson["sourcepos"]["y"].get<int>() }; // sourcepos is y-down local image coordinates.
                 newTile.size      = { tileJson["size"]["width"].get<int>(), tileJson["size"]["height"].get<int>() };
                 newTile.scale     = { tileJson["scale"]["x"].get<float>(), tileJson["scale"]["y"].get<float>() };

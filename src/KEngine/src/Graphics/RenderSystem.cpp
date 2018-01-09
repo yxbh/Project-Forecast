@@ -61,6 +61,8 @@ namespace ke
         assert(!::instance);
         ::instance = this;
 
+        this->clearColour = ke::Colour::WHITE;
+
         this->m_lineRenderer        = std::make_unique<ke::LineRenderer>();
         this->m_circleShapeRenderer = std::make_unique<ke::CircleShapeRenderer>();
         this->m_spriteRenderer      = std::make_unique<ke::SpriteRenderer>(&TextureStore);
@@ -76,6 +78,7 @@ namespace ke
         this->orderedRenderCommandList.reserve(10240);
         ke::EventManager::registerListener<ke::WindowResizedEvent>(this, &RenderSystem::receiveEvent);
         ke::EventManager::registerListener<ke::TextureLoadViaFileRequestEvent>(this, &RenderSystem::receiveEvent);
+        ke::EventManager::registerListener<ke::SetClearColourRequestEvent>(this, &RenderSystem::receiveEvent);
         return true;
     }
 
@@ -205,7 +208,7 @@ namespace ke
         auto renderTarget = static_cast<sf::RenderWindow*const>(this->window.get()->get());
         size_t drawCallCount = 0;
 
-        renderTarget->clear(sf::Color::White);
+        renderTarget->clear(ke::SfmlHelper::convert(this->clearColour));
 
         if (this->orderedRenderCommandList.size() == 0)
         {
@@ -290,6 +293,13 @@ namespace ke
                 auto view = sfWindow->getView();
                 view.setSize({ static_cast<float>(newSize.width), static_cast<float>(newSize.height) });
                 sfWindow->setView(view);
+                break;
+            }
+
+            case ke::SetClearColourRequestEvent::TYPE:
+            {
+                auto colourEvent = static_cast<ke::SetClearColourRequestEvent*>(event.get());
+                this->clearColour = colourEvent->getColour();
                 break;
             }
 

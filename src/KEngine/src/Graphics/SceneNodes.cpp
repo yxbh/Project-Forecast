@@ -10,7 +10,7 @@ namespace ke
 
 
     ke::SceneNodeSptr CircleShapeNode::create(ke::SceneNodeId sceneNodeId,
-        const ke::Transform2D & localTransform, std::int16_t depth,
+        const ke::Transform2D & localTransform, std::int32_t depth,
         ke::Color fillColor, float radius,
         ke::Color outlineColor, float outlineThickness)
     {
@@ -35,7 +35,7 @@ namespace ke
 
 
     ke::SceneNodeSptr SpriteNode::create(ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform,
-        std::int16_t depth, size_t textureId, const ke::Rect2DInt32 & textureRect, ke::Color color)
+        std::int32_t depth, size_t textureId, const ke::Rect2DInt32 & textureRect, ke::Color color)
     {
         auto newNode = ke::makeSceneNode<ke::SpriteNode>(sceneNodeId);
         newNode->setLocalTransform(localTransform);
@@ -57,7 +57,7 @@ namespace ke
 
 
     ke::SceneNodeSptr LineNode::create(ke::SceneNodeId sceneNodeId, const Point2DFloat & begin,
-        const Point2DFloat & end, std::int16_t depth, const ke::Color & color)
+        const Point2DFloat & end, std::int32_t depth, const ke::Color & color)
     {
         auto newNode = ke::makeSceneNode<ke::LineNode>(sceneNodeId);
         auto & states     = newNode->states;
