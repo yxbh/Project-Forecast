@@ -78,6 +78,7 @@ namespace ke
         GraphicsCommandRendererUptr m_spriteRenderer;
 
         ke::Colour clearColour;
+        bool clearFinalRenderTarget = true;
     };
 
     using RenderSystemUptr = std::unique_ptr<RenderSystem>;

@@ -208,7 +208,10 @@ namespace ke
         auto renderTarget = static_cast<sf::RenderWindow*const>(this->window.get()->get());
         size_t drawCallCount = 0;
 
-        renderTarget->clear(ke::SfmlHelper::convert(this->clearColour));
+        if (this->clearFinalRenderTarget)
+        {
+            renderTarget->clear(ke::SfmlHelper::convert(this->clearColour));
+        }
 
         if (this->orderedRenderCommandList.size() == 0)
         {
