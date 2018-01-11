@@ -76,6 +76,16 @@ namespace ke
             return ke::makeEvent<ke::WindowResizedEvent>(newSize);
         }
 
+        case sf::Event::EventType::GainedFocus:
+        {
+            return ke::makeEvent<ke::WindowFocusGainedEvent>();
+        }
+
+        case sf::Event::EventType::LostFocus:
+        {
+            return ke::makeEvent<ke::WindowFocusLostEvent>();
+        }
+
         default: return nullptr;
         } // switch sf::Event type.
     }

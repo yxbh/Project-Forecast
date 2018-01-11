@@ -143,6 +143,7 @@ namespace pf
 
             // Instantiate background entities.
             std::unordered_set<TextureInfoResource*> backgroundTextureInfos;
+            ke::graphics::DepthType depth = std::numeric_limits<int>::min();
             for (const auto & bgInfo : this->currentRoomResource->getBackgroundInfos())
             {
                 if (!bgInfo.enabled)
@@ -156,7 +157,6 @@ namespace pf
                 transform.y = static_cast<float>(bgInfo.pos.y);
                 transform.scaleX = 1.0f;
                 transform.scaleY = 1.0f;
-                static const ke::graphics::DepthType depth = 0;
 
                 auto textureInfo = dynamic_cast<TextureInfoResource*>(resourceManager->getResource(bgInfo.bg));
                 if (textureInfo)
@@ -172,6 +172,7 @@ namespace pf
                     textureRect.left   = 0;
                     textureRect.width  = texWidth;
                     textureRect.height = texHeight;
+                    ++depth;
 
                     auto bgEntity = entityManager->newEntity().lock();
                     bgEntity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(

@@ -36,6 +36,10 @@ namespace ke::sfml
 
         virtual void * get() final;
 
+        virtual bool hasFocus() const final;
+
+        virtual void requestFocus() final;
+
     private:
         SfmlWindow();
 

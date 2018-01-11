@@ -84,7 +84,7 @@ R"(
                 textureRect.left   = 48;
                 textureRect.width  = 16;
                 textureRect.height = 16;
-                std::int16_t depth = std::numeric_limits<std::int16_t>::max();
+                int depth = std::numeric_limits<int>::max();
                 entity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(entity, transform, depth, textureId, textureRect));
 
                 auto result = entity->initialise();

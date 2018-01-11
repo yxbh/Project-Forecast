@@ -135,4 +135,40 @@ namespace ke
 
     };
 
+
+    class WindowFocusGainedEvent : public ke::IEvent
+    {
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(WindowFocusGainedEvent, 0xb71bddfc)
+
+    public:
+        WindowFocusGainedEvent()
+        {}
+
+        virtual ke::EventSptr makeCopy() const final
+        {
+            return ke::makeEvent<WindowFocusGainedEvent>();
+        }
+
+    private:
+
+    };
+
+
+    class WindowFocusLostEvent : public ke::IEvent
+    {
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(WindowFocusLostEvent, 0x25eb40d9)
+
+    public:
+        WindowFocusLostEvent()
+        {}
+
+        virtual ke::EventSptr makeCopy() const final
+        {
+            return ke::makeEvent<WindowFocusLostEvent>();
+        }
+
+    private:
+
+    };
+
 }

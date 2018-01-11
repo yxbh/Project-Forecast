@@ -50,4 +50,14 @@ namespace ke::sfml
         return this->window.get();
     }
 
+    bool SfmlWindow::hasFocus() const
+    {
+        return this->window->hasFocus();
+    }
+
+    void SfmlWindow::requestFocus()
+    {
+        this->window->requestFocus();
+    }
+
 }

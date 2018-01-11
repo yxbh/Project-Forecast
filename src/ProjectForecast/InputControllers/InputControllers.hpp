@@ -1,6 +1,7 @@
 #pragma once
 
 #include "KEngine/Interfaces/IEntity.hpp"
+#include "KEngine/Interfaces/IEvent.hpp"
 #include "KEngine/Interfaces/IInputController.hpp"
 
 namespace pf
@@ -18,8 +19,8 @@ namespace pf
     class KeyboardInputController : public ke::IKeyboardInputController
     {
     public:
-        KeyboardInputController(ke::EntityId p_entityId = ke::INVALID_ENTITY_ID)
-            : entityId(p_entityId) {}
+        KeyboardInputController(ke::EntityId p_entityId = ke::INVALID_ENTITY_ID);
+        virtual ~KeyboardInputController();
 
         inline void attachEntity(ke::EntityId p_entityId)
         {
@@ -30,8 +31,11 @@ namespace pf
         virtual bool onKeyPressed(const ke::Keyboard::KeyInfo & keyInfo) override;
         virtual bool onKeyReleased(const ke::Keyboard::KeyInfo & keyInfo) override;
 
+        void processEvent(ke::EventSptr event);
+
     private:
         ke::EntityId entityId;
+        bool isWindowInFocus = true;
     };
 
 

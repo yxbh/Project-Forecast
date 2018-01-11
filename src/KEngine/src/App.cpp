@@ -104,6 +104,7 @@ namespace ke
             return ke::ExitCodes::FAILURE_WINDOW_CREATION;
         }
         this->mainWindow->setThreadCurrent(false);// disable window on this thread so can be made thread current on render thread.
+        this->mainWindow->requestFocus();
 
         this->renderSystem = std::make_unique<ke::RenderSystem>();
         this->renderSystem->setWindow(this->mainWindow);
@@ -172,6 +173,8 @@ namespace ke
                 case sf::Event::EventType::KeyReleased:
                 case sf::Event::EventType::TextEntered:
                 case sf::Event::EventType::Resized:
+                case sf::Event::EventType::GainedFocus:
+                case sf::Event::EventType::LostFocus:
                 {
                     auto keEvent = SfmlEventTranslator::translate(event, sfWindow);
                     if (keEvent)

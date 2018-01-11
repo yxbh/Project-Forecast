@@ -37,6 +37,12 @@ namespace ke
         /// </summary>
         /// <returns></returns>
         virtual void * get() = 0;
+
+        virtual bool hasFocus() const = 0;
+
+        inline bool isInFocus() const { return this->hasFocus(); }
+
+        virtual void requestFocus() = 0;
     };
 
     inline IWindow::~IWindow() {}
