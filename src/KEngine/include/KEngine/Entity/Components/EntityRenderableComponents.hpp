@@ -93,4 +93,22 @@ namespace ke
 
     };
 
+    class TiledSpriteDrawablwComponent : public ke::EntityRenderableComponent
+    {
+        KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(TiledSpriteDrawablwComponent, 0x2a68065e)
+
+    public:
+        TiledSpriteDrawablwComponent(ke::EntitySptr entity, const ke::Transform2D & localTransform, std::int32_t depth, size_t textureId,
+            const ke::Rect2DInt32 & textureRect, const ke::Color & color = ke::Color::WHITE, bool tileXDirection = false, bool tileYDirection = false);
+
+    private:
+        static const int32_t MIN_TILE_X_BOUND;
+        static const int32_t MAX_TILE_X_BOUND;
+        static const int32_t MIN_TILE_Y_BOUND;
+        static const int32_t MAX_TILE_Y_BOUND;
+
+        bool m_tileX = false;
+        bool m_tileY = false;
+    };
+
 }

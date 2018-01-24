@@ -42,6 +42,26 @@ namespace ke
 
 
     /// <summary>
+    /// A container node purely for holding other scene nodes.
+    /// </summary>
+    class InvisibleContainerNode : public ke::SceneNode
+    {
+    public:
+        static ke::SceneNodeSptr create(ke::SceneNodeId sceneNodeId,
+            const ke::Transform2D & localTransform = {});
+
+        using SceneNode::SceneNode;
+
+        virtual ke::GraphicsCommand getGraphicsCommand() const override
+        {
+            ke::GraphicsCommand cmd;
+            cmd.type = ke::GraphicsCommand::Types::RenderInvisible;
+            return cmd;
+        }
+    };
+
+
+    /// <summary>
     /// 
     /// </summary>
     class CameraNode : public ke::SceneNode

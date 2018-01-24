@@ -175,63 +175,11 @@ namespace pf
                     ++depth;
 
                     auto bgEntity = entityManager->newEntity().lock();
-                    bgEntity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(
-                        bgEntity, transform, depth, textureId, textureRect));
+                    auto drawableComponent = ke::makeEntityComponent<ke::TiledSpriteDrawablwComponent>(
+                        bgEntity, transform, depth, textureId, textureRect, ke::Color::WHITE, bgInfo.tilex, bgInfo.tiley);
+                    bgEntity->addComponent(drawableComponent);
                     this->currentRoomEntities.push_back(bgEntity.get());
-
-                    //
-                    // Here we add additional background instances if tiling in any directions are enabled.
-                    // We use the starting position of the first background position as an origin and tile additionals
-                    // instances both ways from the origin.
-                    //
-
-                    if (bgInfo.tilex)
-                    {
-                        for (transform.x -= texWidth;
-                            transform.x >= -this->currentRoomResource->getSize().width - texWidth;
-                            transform.x -= texWidth)
-                        {
-                            bgEntity = entityManager->newEntity().lock();
-                            bgEntity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(
-                                bgEntity, transform, depth, textureId, textureRect));
-                            this->currentRoomEntities.push_back(bgEntity.get());
-                        }
-
-                        for (transform.x = static_cast<float>(bgInfo.pos.x) + texWidth;
-                            transform.x <= this->currentRoomResource->getSize().width + texWidth;
-                            transform.x += texWidth)
-                        {
-                            bgEntity = entityManager->newEntity().lock();
-                            bgEntity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(
-                                bgEntity, transform, depth, textureId, textureRect));
-                            this->currentRoomEntities.push_back(bgEntity.get());
-                        }
-                    }
-
-                    if (bgInfo.tiley)
-                    {
-                        transform.x = static_cast<float>(bgInfo.pos.x); // reset x position value.
-
-                        for (transform.y -= texHeight;
-                            transform.y >= -this->currentRoomResource->getSize().height - texHeight;
-                            transform.y -= texHeight)
-                        {
-                            bgEntity = entityManager->newEntity().lock();
-                            bgEntity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(
-                                bgEntity, transform, depth, textureId, textureRect));
-                            this->currentRoomEntities.push_back(bgEntity.get());
-                        }
-
-                        for (transform.y = static_cast<float>(bgInfo.pos.y) + texHeight;
-                            transform.y <= this->currentRoomResource->getSize().height + texHeight;
-                            transform.y += texHeight)
-                        {
-                            bgEntity = entityManager->newEntity().lock();
-                            bgEntity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(
-                                bgEntity, transform, depth, textureId, textureRect));
-                            this->currentRoomEntities.push_back(bgEntity.get());
-                        }
-                    }
+                    this->currentRoomBgEntities.push_back(bgEntity.get());
                 }
                 
             }
@@ -252,6 +200,7 @@ namespace pf
         auto entityManager = ke::App::instance()->getLogic()->getEntityManager();
         for (auto entity : this->currentRoomEntities) entityManager->removeEntity(entity->getId());
         this->currentRoomEntities.clear();
+        this->currentRoomBgEntities.clear();
     }
 
 }

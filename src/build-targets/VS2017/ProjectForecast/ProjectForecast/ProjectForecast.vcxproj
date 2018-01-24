@@ -324,6 +324,7 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Core\StateMachine.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Core\SystemManager.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\dump.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Entity\Components\EntityRenderableComponents.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Entity\EntityComponentLoaders\EntityRenderComponentLoader.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Events\SFML\SfmlEventTranslator.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\RenderSystem.cpp" />

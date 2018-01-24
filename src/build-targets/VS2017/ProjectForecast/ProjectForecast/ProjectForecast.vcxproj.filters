@@ -139,6 +139,9 @@
     <Filter Include="ProjectForecast\EntityComponents">
       <UniqueIdentifier>{882c2144-0475-462e-a9b6-d0f6f9228ea8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="KEngine\Source Files\Entity\Components">
+      <UniqueIdentifier>{1b57781c-10ac-4aed-b9ef-180f60882c00}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Events.cpp">
@@ -287,6 +290,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\KEngine\src\Utility\FileSystemHelper.cpp">
       <Filter>KEngine\Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Entity\Components\EntityRenderableComponents.cpp">
+      <Filter>KEngine\Source Files\Entity\Components</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

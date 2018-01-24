@@ -6,6 +6,7 @@
 #include "KEngine/Common/Transform2D.hpp"
 #include "KEngine/Graphics/GraphicsCommand.hpp"
 
+#include <atomic>
 #include <memory>
 #include <vector>
 
@@ -57,6 +58,7 @@ namespace ke
 
         inline ke::Transform2D & getLocalTransform()
         {
+            this->isGLobalTransformRecalculationRequired = true;
             return this->localTransform;
         }
 
@@ -134,15 +136,15 @@ namespace ke
             return foundAndRemoved;
         }
 
-    protected:
-        inline void setEntityId(ke::EntityId p_entityId) { this->entityId = p_entityId; }
-
         static SceneNodeId newId()
         {
-            static SceneNodeId lastId = 0;
+            static std::atomic<SceneNodeId> lastId = 0;
             return ++lastId;
         }
 
+    protected:
+        inline void setEntityId(ke::EntityId p_entityId) { this->entityId = p_entityId; }
+        
         SceneNodeId id = 0;
         ke::EntityId entityId = ke::INVALID_ENTITY_ID;
         ke::Transform2D localTransform; // transform relative to its parent.

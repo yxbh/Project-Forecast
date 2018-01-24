@@ -9,6 +9,15 @@ namespace ke
     }
 
 
+    ke::SceneNodeSptr InvisibleContainerNode::create(ke::SceneNodeId sceneNodeId,
+        const ke::Transform2D & localTransform)
+    {
+        auto newNode = ke::makeSceneNode<ke::InvisibleContainerNode>(sceneNodeId);
+        newNode->setLocalTransform(localTransform);
+        return newNode;
+    }
+
+
     ke::SceneNodeSptr CircleShapeNode::create(ke::SceneNodeId sceneNodeId,
         const ke::Transform2D & localTransform, std::int32_t depth,
         ke::Color fillColor, float radius,
@@ -16,8 +25,8 @@ namespace ke
     {
         auto newNode = ke::makeSceneNode<ke::CircleShapeNode>(sceneNodeId);
         newNode->setLocalTransform(localTransform);
-        auto & states                  = newNode->states;
-        states.type                    = ke::GraphicsCommand::Types::RenderCircleShape;
+        auto & states                 = newNode->states;
+        states.type                   = ke::GraphicsCommand::Types::RenderCircleShape;
         states.shape.id               = newNode->getId();
         states.shape.radius           = radius;
         states.shape.origin           = { radius, radius };

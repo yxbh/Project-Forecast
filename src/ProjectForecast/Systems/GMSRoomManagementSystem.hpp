@@ -33,6 +33,7 @@ namespace pf
 
         pf::GMSRoomResource * currentRoomResource;
         std::vector<ke::Entity*> currentRoomEntities;
+        std::vector<ke::Entity*> currentRoomBgEntities;
 
         std::atomic_bool isLoadingRoom = false;
 
