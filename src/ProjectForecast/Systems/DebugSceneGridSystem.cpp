@@ -22,7 +22,7 @@ namespace pf
         static const ke::Point2DFloat xlineEnd{ 0, -5000.f };
         static const ke::Point2DFloat ylineBegin{ 5000.f, 0 };
         static const ke::Point2DFloat ylineEnd{ -5000.f, 0 };
-        static const auto depth = std::numeric_limits<unsigned>::max();
+        static const auto depth = std::numeric_limits<ke::graphics::DepthType>::max();
         static const auto lineColour = ke::Color::BLUE;
         xlineEntity->addComponent(ke::makeEntityComponent<ke::LineDrawableComponent>(xlineEntity, xlineBegin, xlineEnd, depth, lineColour));
         ylineEntity->addComponent(ke::makeEntityComponent<ke::LineDrawableComponent>(ylineEntity, ylineBegin, ylineEnd, depth, lineColour));

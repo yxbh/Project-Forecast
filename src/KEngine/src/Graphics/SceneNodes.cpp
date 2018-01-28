@@ -17,6 +17,10 @@ namespace ke
         return newNode;
     }
 
+    ke::CameraNode::Sptr CameraNode::create(ke::SceneNodeId newSceneNodeId)
+    {
+        return ke::makeSceneNode<ke::CameraNode>(newSceneNodeId);
+    }
 
     ke::SceneNodeSptr CircleShapeNode::create(ke::SceneNodeId sceneNodeId,
         const ke::Transform2D & localTransform, std::int32_t depth,

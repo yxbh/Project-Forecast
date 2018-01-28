@@ -71,7 +71,7 @@ namespace ke
         using Sptr = std::shared_ptr<CameraNode>;
         using Wptr = std::weak_ptr<CameraNode>;
 
-        static ke::SceneNodeSptr create();
+        static ke::CameraNode::Sptr create(ke::SceneNodeId newSceneNodeId = ke::ISceneNode::newId());
 
         using SceneNode::SceneNode;
 
@@ -80,10 +80,12 @@ namespace ke
             ke::GraphicsCommand cmd;
             cmd.type = ke::GraphicsCommand::Types::SetViewContext;
             cmd.view.transform = this->getGlobalTransform();
+            cmd.view.dimension = this->getDimension();
             return cmd;
         }
 
         inline const ke::Dimension2DUInt32 & getDimension() const { return this->dimension; }
+        inline void setDimension(const ke::Dimension2DUInt32 & newDimension) { this->dimension = newDimension; }
 
     protected:
         ke::Dimension2DUInt32 dimension;

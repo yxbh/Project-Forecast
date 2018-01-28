@@ -1,6 +1,7 @@
 #pragma once
 
 #include "KEngine/Common/String.hpp"
+#include "KEngine/Common/Dimension2D.hpp"
 
 #include <memory>
 
@@ -43,6 +44,8 @@ namespace ke
         inline bool isInFocus() const { return this->hasFocus(); }
 
         virtual void requestFocus() = 0;
+
+        virtual ke::Dimension2DUInt32 getDimension() const = 0;
     };
 
     inline IWindow::~IWindow() {}

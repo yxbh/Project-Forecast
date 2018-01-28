@@ -294,6 +294,9 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Entity\Components\EntityRenderableComponents.cpp">
       <Filter>KEngine\Source Files\Entity\Components</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\PlayerCameraControlSystem.cpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManager.hpp">
@@ -591,6 +594,9 @@
       <Filter>KEngine\Header Files\Graphics\SFML</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\ProjectForecast\Systems\DebugSceneGridSystem.hpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\PlayerCameraControlSystem.hpp">
       <Filter>ProjectForecast\Systems</Filter>
     </ClInclude>
   </ItemGroup>

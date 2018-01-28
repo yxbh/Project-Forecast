@@ -35,24 +35,18 @@ namespace pf
     void GMSRoomManagementSystem::update(ke::Time elapsedTime)
     {
         KE_UNUSED(elapsedTime);
-
-        //static bool Loaded = false;
-
-        //if (Loaded) return;
-        //ke::Log::instance()->info("Loading GMS room...");
-
-        //namespace fs =  std::experimental::filesystem::v1;
-
-        //fs::path rootPath{ ProjectForecastExecAssetsRoot };
-        //fs::recursive_directory_iterator recursive_dir_itr{ rootPath, fs::directory_options::follow_directory_symlink }, end;
-
-        //for (; recursive_dir_itr != end; ++recursive_dir_itr)
-        //{
-        //    ke::Log::instance()->info("Found asset: " + recursive_dir_itr->path().string());
-        //}
-
-        //Loaded = true;
-        //ke::Log::instance()->info("Loading GMS room... DONE");
+        auto currentHumanView = ke::App::instance()->getLogic()->getCurrentHumanView();
+        if (currentHumanView)
+        {
+            auto currentCameraNode = dynamic_cast<ke::CameraNode*>(currentHumanView->getScene()->getCameraNode());
+            if (currentCameraNode)
+            {
+                if (this->currentLevelName == "Desolate Forest")
+                {
+                    this->updateRorLevelBg_DesolateForest(currentCameraNode);
+                }
+            }
+        }
     }
 
     void GMSRoomManagementSystem::handleGMSRoomLoadRequest(ke::EventSptr event)
@@ -143,7 +137,7 @@ namespace pf
 
             // Instantiate background entities.
             std::unordered_set<TextureInfoResource*> backgroundTextureInfos;
-            ke::graphics::DepthType depth = std::numeric_limits<int>::min();
+            ke::graphics::DepthType depth = std::numeric_limits<ke::graphics::DepthType>::min();
             for (const auto & bgInfo : this->currentRoomResource->getBackgroundInfos())
             {
                 if (!bgInfo.enabled)
@@ -201,6 +195,58 @@ namespace pf
         for (auto entity : this->currentRoomEntities) entityManager->removeEntity(entity->getId());
         this->currentRoomEntities.clear();
         this->currentRoomBgEntities.clear();
+    }
+
+    void GMSRoomManagementSystem::updateRorLevelBg_DesolateForest(ke::CameraNode * cameraNode)
+    {
+        const auto cameraViewDimension = cameraNode->getDimension();
+        const auto cameraViewTransform = cameraNode->getGlobalTransform();
+        for (int i = 0; i < this->currentRoomBgEntities.size(); ++i)
+        {
+            auto entity = this->currentRoomBgEntities[i];
+            auto bgComponent = entity->getComponent<ke::TiledSpriteDrawablwComponent>(ke::TiledSpriteDrawablwComponent::TYPE).lock();
+            auto node = bgComponent->getSceneNode();
+            switch (i)
+            {
+            case 0: // bStars
+            {
+                node->setLocalTransform(cameraViewTransform);
+                break;
+            }
+            case 1: // bPlanets
+            {
+                ke::Transform2D newTransform;
+                newTransform.x = cameraViewTransform.x - cameraViewDimension.width * 0.666666666666667;
+                newTransform.y = cameraViewTransform.y - cameraViewDimension.height * 0.142857142857143;
+                node->setLocalTransform(newTransform);
+                break;
+            }
+            case 2: // bClouds1
+            {
+                ke::Transform2D newTransform;
+                newTransform.x = cameraViewTransform.x / 1.1 - 140;
+                newTransform.y = cameraViewTransform.y / 1.07 - 60;
+                node->setLocalTransform(newTransform);
+                break;
+            }
+            case 3: // bClouds2
+            {
+                ke::Transform2D newTransform;
+                newTransform.x = cameraViewTransform.x / 1.2;
+                newTransform.y = cameraViewTransform.y / 1.1 - 106;
+                node->setLocalTransform(newTransform);
+                break;
+            }
+            case 4: // bMountains
+            {
+                ke::Transform2D newTransform;
+                newTransform.x = cameraViewTransform.x;
+                newTransform.y = cameraViewTransform.y - cameraViewDimension.height - 153;
+                node->setLocalTransform(newTransform);
+                break;
+            }
+            }
+        }
     }
 
 }

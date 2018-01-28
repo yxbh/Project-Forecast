@@ -76,16 +76,21 @@ namespace ke
     bool RenderSystem::initialise()
     {
         this->orderedRenderCommandList.reserve(10240);
-        ke::EventManager::registerListener<ke::WindowResizedEvent>(this, &RenderSystem::receiveEvent);
+        //ke::EventManager::registerListener<ke::WindowResizedEvent>(this, &RenderSystem::receiveEvent);
         ke::EventManager::registerListener<ke::TextureLoadViaFileRequestEvent>(this, &RenderSystem::receiveEvent);
         ke::EventManager::registerListener<ke::SetClearColourRequestEvent>(this, &RenderSystem::receiveEvent);
+
+        // do an initial broadcast of the window's size.
+        ke::EventManager::enqueue(ke::makeEvent<ke::WindowResizedEvent>(this->window->getDimension()));
+
         return true;
     }
 
     void RenderSystem::shutdown()
     {
-        ke::EventManager::deregisterListener<ke::WindowResizedEvent>(this, &RenderSystem::receiveEvent);
+        //ke::EventManager::deregisterListener<ke::WindowResizedEvent>(this, &RenderSystem::receiveEvent);
         ke::EventManager::deregisterListener<ke::TextureLoadViaFileRequestEvent>(this, &RenderSystem::receiveEvent);
+        ke::EventManager::deregisterListener<ke::SetClearColourRequestEvent>(this, &RenderSystem::receiveEvent);
     }
 
     void RenderSystem::update(ke::Time elapsedTime)
@@ -119,8 +124,9 @@ namespace ke
         ::currentCommandGenThreadCmdList.clear();
 
         // generate view command.
-        assert(scene->getCameraNode());
-        ::currentCommandGenThreadCmdList.push_back(scene->getCameraNode()->getGraphicsCommand());
+        auto cameraNode = scene->getCameraNode();
+        assert(cameraNode);
+        ::currentCommandGenThreadCmdList.push_back(cameraNode->getGraphicsCommand());
 
         // generate command from scene tree.
         std::queue<ke::ISceneNode*> nodes;
@@ -180,8 +186,10 @@ namespace ke
             {
             case GraphicsCommand::Types::SetViewContext:
             {
+                sf::RenderWindow * sfWindow = static_cast<sf::RenderWindow*>(this->window.get()->get());
                 auto view = renderTarget->getView();
                 view.setCenter(static_cast<float>(command.view.transform.x), static_cast<float>(-command.view.transform.y));
+                view.setSize(static_cast<float>(command.view.dimension.width), static_cast<float>(command.view.dimension.height));
                 renderTarget->setView(view);
                 break;
             }
@@ -288,16 +296,16 @@ namespace ke
             auto event = events.pop();
             switch (event->getType())
             {
-            case ke::WindowResizedEvent::TYPE:
-            {
-                auto resizedEvent = static_cast<ke::WindowResizedEvent*>(event.get());
-                const auto & newSize = resizedEvent->getNewSize();
-                sf::RenderWindow * sfWindow = static_cast<sf::RenderWindow*>(this->window.get()->get());
-                auto view = sfWindow->getView();
-                view.setSize({ static_cast<float>(newSize.width), static_cast<float>(newSize.height) });
-                sfWindow->setView(view);
-                break;
-            }
+            //case ke::WindowResizedEvent::TYPE:
+            //{
+            //    auto resizedEvent = static_cast<ke::WindowResizedEvent*>(event.get());
+            //    const auto & newSize = resizedEvent->getNewSize();
+            //    sf::RenderWindow * sfWindow = static_cast<sf::RenderWindow*>(this->window.get()->get());
+            //    auto view = sfWindow->getView();
+            //    view.setSize({ static_cast<float>(newSize.width), static_cast<float>(newSize.height) });
+            //    sfWindow->setView(view);
+            //    break;
+            //}
 
             case ke::SetClearColourRequestEvent::TYPE:
             {

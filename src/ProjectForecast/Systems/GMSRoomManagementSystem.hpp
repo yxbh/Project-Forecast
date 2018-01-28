@@ -9,6 +9,13 @@
 #include <atomic>
 #include <vector>
 
+namespace ke
+{
+    // forward delcarations
+
+    class CameraNode;
+}
+
 namespace pf
 {
 
@@ -31,11 +38,15 @@ namespace pf
     private:
         void unloadCurrentEntities();
 
+        void updateRorLevelBg_DesolateForest(ke::CameraNode * cameraNode);
+
         pf::GMSRoomResource * currentRoomResource;
         std::vector<ke::Entity*> currentRoomEntities;
         std::vector<ke::Entity*> currentRoomBgEntities;
 
         std::atomic_bool isLoadingRoom = false;
+
+        ke::String currentLevelName = "Desolate Forest";
 
     };
 

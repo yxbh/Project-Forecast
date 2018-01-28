@@ -1,6 +1,7 @@
 #pragma once
 
 #include "KEngine/Common/Color.hpp"
+#include "KEngine/Common/Dimension2D.hpp"
 #include "KEngine/Common/Point2D.hpp"
 #include "KEngine/Common/Rect2D.hpp"
 #include "KEngine/Common/Transform2D.hpp"
@@ -13,7 +14,7 @@ namespace ke::graphics
     struct ViewContextCommandProperty
     {
         ke::Transform2D transform;
-        ke::Point2DInt32 dimension;
+        ke::Dimension2DUInt32 dimension;
     };
 
     struct TextureLoadCommandProperty

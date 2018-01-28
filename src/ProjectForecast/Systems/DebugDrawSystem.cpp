@@ -3,7 +3,6 @@
 #include "KEngine/App.hpp"
 #include "../Events/RequestDrawDebugDotEvent.hpp"
 #include "KEngine/Entity/Components/EntityRenderableComponents.hpp"
-#include "KEngine/Entity/Components/EntityCameraComponent.hpp"
 #include "KEngine/Common/Transform2D.hpp"
 #include "KEngine/Core/Entity.hpp"
 #include "KEngine/Core/EventManager.hpp"
@@ -18,14 +17,6 @@ namespace pf
     {
         ke::EventManager::registerListener<pf::RequestDrawDebugDotEvent>(this, &DebugDrawSystem::handleDebugDrawRequest);
 
-
-        auto entity = ke::App::instance()->getLogic()->getEntityManager()->newEntity().lock();
-        auto cameraComponent = ke::makeEntityComponent<ke::EntityCameraComponent>(entity);
-        cameraComponent->setCameraNode(ke::makeSceneNode<ke::CameraNode>(entity->getId()));
-        entity->addComponent(cameraComponent);
-        ke::App::instance()->getLogic()->getCurrentHumanView()->getScene()->setCameraNode(cameraComponent->getCameraNode());
-        ke::App::instance()->getLogic()->getCurrentHumanView()->attachEntity(entity->getId());
-
         return true;
     }
 
@@ -36,7 +27,7 @@ namespace pf
 
     void DebugDrawSystem::update(ke::Time elapsedTime)
     {
-
+        KE_UNUSED(elapsedTime);
     }
 
     void DebugDrawSystem::handleDebugDrawRequest(ke::EventSptr event)
@@ -84,7 +75,7 @@ R"(
                 textureRect.left   = 48;
                 textureRect.width  = 16;
                 textureRect.height = 16;
-                int depth = std::numeric_limits<int>::max();
+                ke::graphics::DepthType depth = std::numeric_limits<ke::graphics::DepthType>::max();
                 entity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(entity, transform, depth, textureId, textureRect));
 
                 auto result = entity->initialise();

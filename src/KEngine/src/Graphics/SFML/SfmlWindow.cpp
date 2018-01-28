@@ -24,6 +24,15 @@ namespace ke::sfml
         return this->windowTitle;
     }
 
+    ke::Dimension2DUInt32 SfmlWindow::getDimension() const
+    {
+        const auto sfDimension = this->window->getSize();
+        ke::Dimension2DUInt32 dimension;
+        dimension.width = sfDimension.x;
+        dimension.height = sfDimension.y;
+        return dimension;
+    }
+
     std::uint32_t SfmlWindow::getWidth() const
     {
         return this->window->getSize().x;

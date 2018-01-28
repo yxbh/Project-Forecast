@@ -5,6 +5,7 @@
 #include "Systems/EntityTransformControlSystem.hpp"
 #include "Systems/GMSRoomManagementSystem.hpp"
 #include "Systems/GMSAssetResourceManagementSystem.hpp"
+#include "Systems/PlayerCameraControlSystem.hpp"
 
 #include "Views/HumanView.hpp"
 
@@ -31,6 +32,8 @@ namespace pf
         assert(systemManager);
         bool ret = false;
         ret = systemManager->addSystem(std::make_unique<pf::EntityTransformControlSystem>());
+        assert(ret);
+        ret = systemManager->addSystem(std::make_unique<pf::PlayerCameraControlSystem>());
         assert(ret);
         ret = systemManager->addSystem(std::make_unique<pf::DebugDrawSystem>());
         assert(ret);

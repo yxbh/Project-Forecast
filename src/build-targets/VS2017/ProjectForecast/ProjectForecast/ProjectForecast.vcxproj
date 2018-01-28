@@ -359,6 +359,7 @@
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\EntityTransformControlSystem.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\EventFeedbackSystem.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\GMSRoomManagementSystem.cpp" />
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\PlayerCameraControlSystem.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\Views\HumanView.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -460,6 +461,7 @@
     <ClInclude Include="..\..\..\..\ProjectForecast\Systems\EntityTransformControlSystem.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Systems\EventFeedbackSystem.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Systems\GMSRoomManagementSystem.hpp" />
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\PlayerCameraControlSystem.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Views\HumanView.hpp" />
   </ItemGroup>
   <ItemGroup>

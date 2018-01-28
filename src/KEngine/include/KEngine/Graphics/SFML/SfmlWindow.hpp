@@ -27,6 +27,8 @@ namespace ke::sfml
 
         virtual ke::String getTitle() const final;
 
+        virtual ke::Dimension2DUInt32 getDimension() const final;
+
         virtual std::uint32_t getWidth() const final;
         virtual std::uint32_t getHeight() const final;
 
