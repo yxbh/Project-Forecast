@@ -22,6 +22,7 @@ namespace pf
         ke::EventManager::registerListener<ke::SfmlEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::registerListener<ke::MouseButtonPressedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::registerListener<ke::MouseButtonReleasedEvent>(this, &HumanView::handleWindowEvent);
+        ke::EventManager::registerListener<ke::MouseWheelScrolledEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::registerListener<ke::KeyboardKeyPressedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::registerListener<ke::KeyboardKeyReleasedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::registerListener<ke::KeyboardTextEvent>(this, &HumanView::handleWindowEvent);
@@ -33,6 +34,7 @@ namespace pf
         ke::EventManager::deregisterListener<ke::SfmlEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::deregisterListener<ke::MouseButtonPressedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::deregisterListener<ke::MouseButtonReleasedEvent>(this, &HumanView::handleWindowEvent);
+        ke::EventManager::deregisterListener<ke::MouseWheelScrolledEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::deregisterListener<ke::KeyboardKeyPressedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::deregisterListener<ke::KeyboardKeyReleasedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::deregisterListener<ke::KeyboardTextEvent>(this, &HumanView::handleWindowEvent);
@@ -75,6 +77,13 @@ namespace pf
             {
                 auto mouseEvent = std::static_pointer_cast<ke::MouseButtonReleasedEvent>(event);
                 mouseController->onButtonReleased(mouseEvent->getDetail());
+                break;
+            }
+
+            case ke::MouseWheelScrolledEvent::TYPE:
+            {
+                auto mouseWheelEvent = std::static_pointer_cast<ke::MouseWheelScrolledEvent>(event);
+                mouseController->onWheelScrolled(mouseWheelEvent->getDetail());
                 break;
             }
 

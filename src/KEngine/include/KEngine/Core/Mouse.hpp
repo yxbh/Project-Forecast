@@ -30,9 +30,23 @@ namespace ke
             ButtonCount ///< Keep last -- the total number of mouse buttons
         };
 
+        enum ScrollWheel : std::uint8_t
+        {
+            Vertical,
+            Horizontal
+        };
+
         struct ButtonInfo
         {
             Button button;
+            Point2DInt32 screenPosition;
+            Point2DFloat worldPosition;
+        };
+
+        struct ScrollWheelInfo
+        {
+            ScrollWheel scrollWhell;
+            float delta;
             Point2DInt32 screenPosition;
             Point2DFloat worldPosition;
         };

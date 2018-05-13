@@ -2,6 +2,7 @@
 
 #include "../Events/RequestDrawDebugDotEvent.hpp"
 #include "../Events/GMSRoomLoadRequestEvent.hpp"
+#include "../Events/OtherGraphicsEvents.hpp"
 
 #include "KEngine/Common/Transform2D.hpp"
 #include "KEngine/Core/EventManager.hpp"
@@ -31,6 +32,16 @@ namespace pf
     bool MouseInputController::onButtonReleased(const ke::Mouse::ButtonInfo & buttonInfo)
     {
         KE_UNUSED(buttonInfo);
+        return false;
+    }
+
+    bool MouseInputController::onWheelScrolled(const ke::Mouse::ScrollWheelInfo & scrollWheelInfo)
+    {
+        if (scrollWheelInfo.scrollWhell == ke::Mouse::ScrollWheel::Vertical)
+        {
+            ke::EventManager::enqueue(ke::makeEvent<ke::CameraViewZoomDeltaRequestEvent>(scrollWheelInfo.delta));
+            return true;
+        }
         return false;
     }
 

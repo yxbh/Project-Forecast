@@ -113,6 +113,32 @@ namespace ke
         }
     };
 
+    class MouseWheelScrolledEvent : public IEvent
+    {
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(MouseWheelScrolledEvent, 0x5b2703ac)
+
+    public:
+        using ScreenPositionType = Point2DInt32;
+        using WorldPositionType = Point2DFloat;
+
+        MouseWheelScrolledEvent(const ke::Mouse::ScrollWheelInfo & eventInfo) : detail(eventInfo) {}
+
+        inline void setDetail(const ke::Mouse::ScrollWheelInfo & eventInfo) { this->detail = eventInfo; }
+        inline const ke::Mouse::ScrollWheelInfo & getDetail() const { return this->detail; }
+
+        inline const ScreenPositionType & getScreenPosition() const { return this->detail.screenPosition; }
+        inline const WorldPositionType & getWorldnPosition() const { return this->detail.worldPosition; }
+
+        virtual ke::EventSptr makeCopy() const final
+        {
+            return ke::makeEvent<MouseWheelScrolledEvent>(this->detail);
+        }
+
+    protected:
+        ke::Mouse::ScrollWheelInfo detail;
+
+    };
+
 
     class WindowResizedEvent : public ke::IEvent
     {

@@ -31,6 +31,7 @@ namespace ke
         /// <param name="button"></param>
         /// <returns>true if the button release was handled.</returns>
         virtual bool onButtonReleased(const ke::Mouse::ButtonInfo & buttonInfo) = 0;
+        virtual bool onWheelScrolled(const ke::Mouse::ScrollWheelInfo & scrollWheelInfo) = 0;
         virtual bool onPointerMoved() = 0;
     };
 

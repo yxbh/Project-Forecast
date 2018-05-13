@@ -62,12 +62,12 @@ namespace ke
             return this->localTransform;
         }
 
-        inline const ke::Transform2D & getGlobalTransform() const
+        inline const ke::Transform2D & getGlobalTransform(bool p_forceRecalculate = true) const
         {
-            if (this->isGLobalTransformRecalculationRequired)
+            if (this->isGLobalTransformRecalculationRequired || p_forceRecalculate)
             {
                 const ke::Transform2D & parentGlobalTransform
-                    = this->getParent() ? this->getParent()->getGlobalTransform() : ke::Transform2D();
+                    = this->getParent() ? this->getParent()->getGlobalTransform(false) : ke::Transform2D();
                 this->globalTransform = this->localTransform + parentGlobalTransform;
                 this->isGLobalTransformRecalculationRequired = false;
             }

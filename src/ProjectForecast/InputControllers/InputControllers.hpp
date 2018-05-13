@@ -13,6 +13,7 @@ namespace pf
         virtual void update(ke::Time elapsedTime) override;
         virtual bool onButtonPressed(const ke::Mouse::ButtonInfo & buttonInfo) override;
         virtual bool onButtonReleased(const ke::Mouse::ButtonInfo & buttonInfo) override;
+        virtual bool onWheelScrolled(const ke::Mouse::ScrollWheelInfo & scrollWheelInfo) override;
         virtual bool onPointerMoved() override;
     };
 

@@ -10,7 +10,7 @@ namespace ke
     class Transform2D
     {
     public:
-        using PointType = float;
+        using PointType = double;
 
         PointType x = 0;
         PointType y = 0;
