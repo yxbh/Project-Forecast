@@ -15,27 +15,47 @@ namespace ke
         case sf::Event::MouseButtonPressed:
         {
             assert(renderWindow);
-            auto sfWorldCoord = renderWindow->mapPixelToCoords(
+            const auto sfWorldCoord = renderWindow->mapPixelToCoords(
                 { event.mouseButton.x, event.mouseButton.y },
                 renderWindow->getView());
-            ke::Mouse::ButtonInfo eventInfo{
+            ke::Mouse::ButtonInfo eventInfo
+            {
                 ke::Mouse::mapInternalApiButtonToKeButton(event.mouseButton.button),
                 { event.mouseButton.x , event.mouseButton.y },
-                { sfWorldCoord.x , -sfWorldCoord.y } };
+                { sfWorldCoord.x , -sfWorldCoord.y }
+            };
             return ke::makeEvent<ke::MouseButtonPressedEvent>(eventInfo);
         }
 
         case sf::Event::MouseButtonReleased:
         {
             assert(renderWindow);
-            auto sfWorldCoord = renderWindow->mapPixelToCoords(
-            { event.mouseButton.x, event.mouseButton.y },
+            const auto sfWorldCoord = renderWindow->mapPixelToCoords(
+                { event.mouseButton.x, event.mouseButton.y },
                 renderWindow->getView());
-            ke::Mouse::ButtonInfo eventInfo{
+            ke::Mouse::ButtonInfo eventInfo
+            {
                 ke::Mouse::mapInternalApiButtonToKeButton(event.mouseButton.button),
                 { event.mouseButton.x , event.mouseButton.y },
-                { sfWorldCoord.x , -sfWorldCoord.y } };
+                { sfWorldCoord.x , -sfWorldCoord.y }
+            };
             return ke::makeEvent<ke::MouseButtonReleasedEvent>(eventInfo);
+        }
+
+        case sf::Event::EventType::MouseWheelScrolled:
+        {
+            assert(renderWindow);
+            const auto sfWorldCoord = renderWindow->mapPixelToCoords(
+                { event.mouseButton.x, event.mouseButton.y },
+                renderWindow->getView());
+            ke::Mouse::ScrollWheelInfo eventInfo
+            {
+                event.mouseWheelScroll.wheel == sf::Mouse::VerticalWheel ? ke::Mouse::ScrollWheel::Vertical : ke::Mouse::ScrollWheel::Horizontal,
+                event.mouseWheelScroll.delta,
+                { event.mouseWheelScroll.x , event.mouseWheelScroll.y },
+                { sfWorldCoord.x , -sfWorldCoord.y }
+            };
+            return ke::makeEvent<ke::MouseWheelScrolledEvent>(eventInfo);
         }
 
         case sf::Event::KeyPressed:

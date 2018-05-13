@@ -8,6 +8,25 @@
 namespace ke
 {
 
+    class CameraViewZoomDeltaRequestEvent : public IEvent
+    {
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(CameraViewZoomDeltaRequestEvent, 0x6f01ac02);
+
+    public:
+        CameraViewZoomDeltaRequestEvent(float p_zoomDelta) : deltaZoom(p_zoomDelta) {}
+
+        virtual ke::EventSptr makeCopy() const final
+        {
+            return ke::makeEvent<CameraViewZoomDeltaRequestEvent>(this->deltaZoom);
+        }
+
+        const float getDeltaZoom() const { return this->deltaZoom; }
+
+    private:
+        float deltaZoom;
+    };
+
+
     class SetClearColourRequestEvent : public IEvent
     {
         KE_DEFINE_EVENT_COMMON_PROPERTIES(SetClearColourRequestEvent, 0x4bf2d20);
