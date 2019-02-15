@@ -39,7 +39,11 @@ namespace ke
             for (const auto & command : this->commands)
             {
                 // do culling
-                sf::Vector2f topLeft{ command.shape.globalTransform.x, -command.shape.globalTransform.y };
+                sf::Vector2f topLeft
+                {
+                    static_cast<float>(command.shape.globalTransform.x),
+                    static_cast<float>(-command.shape.globalTransform.y)
+                };
                 const auto shapeWidth = command.shape.radius * 2;
                 topLeft.x -= shapeWidth;
                 topLeft.y -= shapeWidth;
@@ -48,7 +52,11 @@ namespace ke
                 if (!viewRect.intersects(shapeMaxGlobalBound))
                     continue;
 
-                const sf::Vector2f sfPosition{ command.shape.globalTransform.x, -command.shape.globalTransform.y };
+                const sf::Vector2f sfPosition
+                {
+                    static_cast<float>(command.shape.globalTransform.x),
+                    static_cast<float>(-command.shape.globalTransform.y)
+                };
                 const auto sfOrigin = ke::SfmlHelper::convert(command.shape.origin);
                 const auto sfFillColor = ke::SfmlHelper::convert(command.shape.fillColor);
                 const auto sfOutlineColor = ke::SfmlHelper::convert(command.shape.outlineColor);

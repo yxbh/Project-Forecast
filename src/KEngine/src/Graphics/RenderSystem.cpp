@@ -186,10 +186,11 @@ namespace ke
             {
             case GraphicsCommand::Types::SetViewContext:
             {
-                sf::RenderWindow * sfWindow = static_cast<sf::RenderWindow*>(this->window.get()->get());
+                using SfFloatType = float;
                 auto view = renderTarget->getView();
-                view.setCenter(static_cast<float>(command.view.transform.x), static_cast<float>(-command.view.transform.y));
-                view.setSize(static_cast<float>(command.view.dimension.width), static_cast<float>(command.view.dimension.height));
+                view.setCenter(static_cast<SfFloatType>(command.view.transform.x), static_cast<SfFloatType>(-command.view.transform.y));
+                view.setSize(static_cast<SfFloatType>(command.view.dimension.width), static_cast<SfFloatType>(command.view.dimension.height));
+                view.zoom(command.view.viewZoom);
                 renderTarget->setView(view);
                 break;
             }

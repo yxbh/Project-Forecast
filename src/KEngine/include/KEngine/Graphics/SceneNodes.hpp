@@ -81,14 +81,18 @@ namespace ke
             cmd.type = ke::GraphicsCommand::Types::SetViewContext;
             cmd.view.transform = this->getGlobalTransform();
             cmd.view.dimension = this->getDimension();
+            cmd.view.viewZoom = this->getViewZoom();
             return cmd;
         }
 
         inline const ke::Dimension2DUInt32 & getDimension() const { return this->dimension; }
         inline void setDimension(const ke::Dimension2DUInt32 & newDimension) { this->dimension = newDimension; }
+        inline float getViewZoom() const { return this->viewZoom; }
+        inline void setViewZoom(float p_newViewZoom) { this->viewZoom = p_newViewZoom; }
 
     protected:
         ke::Dimension2DUInt32 dimension;
+        float viewZoom = 1.0f;
     };
 
 

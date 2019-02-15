@@ -51,7 +51,7 @@ namespace pf
 
     void DebugSceneGridSystem::update(ke::Time elapsedTime)
     {
-
+        KE_UNUSED(elapsedTime);
     }
 
     void DebugSceneGridSystem::handleRequest(ke::EventSptr event)

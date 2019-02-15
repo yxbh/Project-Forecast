@@ -50,7 +50,11 @@ namespace ke
                 const auto & transform   = command.sprite.globalTransform;
                 const auto spriteWidth   = static_cast<float>(textureRect.width) * transform.scaleX;
                 const auto spriteHeight  = static_cast<float>(textureRect.height) * transform.scaleY;
-                const sf::Vector2f sfPosition{ transform.x, -transform.y };
+                const sf::Vector2f sfPosition
+                {
+                    static_cast<float>(transform.x),
+                    static_cast<float>(-transform.y)
+                };
                 sf::Vector2f topLeft{ sfPosition };
                 auto maxGlobalBound = sf::FloatRect(topLeft, { spriteWidth , spriteHeight });
 

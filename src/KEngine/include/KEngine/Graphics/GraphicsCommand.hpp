@@ -15,6 +15,7 @@ namespace ke::graphics
     {
         ke::Transform2D transform;
         ke::Dimension2DUInt32 dimension;
+        float viewZoom = 1.0f;
     };
 
     struct TextureLoadCommandProperty

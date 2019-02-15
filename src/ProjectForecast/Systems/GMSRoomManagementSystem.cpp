@@ -69,9 +69,9 @@ namespace pf
         if (this->currentRoomResource)
         {
             ke::Log::instance()->info("Unloading GM:S room: {} ...", this->currentRoomResource->getName());
+            auto entityManager = ke::App::instance()->getLogic()->getEntityManager();
             for (auto entity : this->currentRoomEntities)
             {
-                auto entityManager = ke::App::instance()->getLogic()->getEntityManager();
                 entityManager->removeEntity(entity->getId());
             }
             this->currentRoomEntities.clear();
@@ -109,8 +109,8 @@ namespace pf
                 tileTextureNames.insert(tile.bg);
                 auto textureId = tile.bg_hash;
                 ke::Transform2D transform;
-                transform.x      = static_cast<float>(tile.pos.x);
-                transform.y      = static_cast<float>(tile.pos.y);
+                transform.x      = static_cast<ke::Transform2D::PointType>(tile.pos.x);
+                transform.y      = static_cast<ke::Transform2D::PointType>(tile.pos.y);
                 transform.scaleX = tile.scale.x;
                 transform.scaleY = tile.scale.y;
                 ke::Rect2DInt32 textureRect;
@@ -147,8 +147,8 @@ namespace pf
 
                 auto textureId = bgInfo.bg_hash;
                 ke::Transform2D transform;
-                transform.x = static_cast<float>(bgInfo.pos.x);
-                transform.y = static_cast<float>(bgInfo.pos.y);
+                transform.x = static_cast<ke::Transform2D::PointType>(bgInfo.pos.x);
+                transform.y = static_cast<ke::Transform2D::PointType>(bgInfo.pos.y);
                 transform.scaleX = 1.0f;
                 transform.scaleY = 1.0f;
 
@@ -201,6 +201,9 @@ namespace pf
     {
         const auto cameraViewDimension = cameraNode->getDimension();
         const auto cameraViewTransform = cameraNode->getGlobalTransform();
+        ke::Point2DDouble cameraTopLeftPos;
+        cameraTopLeftPos.x = cameraViewTransform.x - cameraViewDimension.width / 2;
+        cameraTopLeftPos.y = cameraViewTransform.y + cameraViewDimension.height / 2;
         for (int i = 0; i < this->currentRoomBgEntities.size(); ++i)
         {
             auto entity = this->currentRoomBgEntities[i];
@@ -216,32 +219,32 @@ namespace pf
             case 1: // bPlanets
             {
                 ke::Transform2D newTransform;
-                newTransform.x = cameraViewTransform.x - cameraViewDimension.width * 0.666666666666667;
-                newTransform.y = cameraViewTransform.y - cameraViewDimension.height * 0.142857142857143;
+                newTransform.x = cameraTopLeftPos.x + cameraViewDimension.width * 0.666666666666667;
+                newTransform.y = cameraTopLeftPos.y - cameraViewDimension.height * 0.142857142857143;
                 node->setLocalTransform(newTransform);
                 break;
             }
             case 2: // bClouds1
             {
                 ke::Transform2D newTransform;
-                newTransform.x = cameraViewTransform.x / 1.1 - 140;
-                newTransform.y = cameraViewTransform.y / 1.07 - 60;
+                newTransform.x = cameraTopLeftPos.x / 1.1 + 140;
+                newTransform.y = cameraTopLeftPos.y / 1.07 - 60;
                 node->setLocalTransform(newTransform);
                 break;
             }
             case 3: // bClouds2
             {
                 ke::Transform2D newTransform;
-                newTransform.x = cameraViewTransform.x / 1.2;
-                newTransform.y = cameraViewTransform.y / 1.1 - 106;
+                newTransform.x = cameraTopLeftPos.x / 1.2;
+                newTransform.y = cameraTopLeftPos.y / 1.1 - 106;
                 node->setLocalTransform(newTransform);
                 break;
             }
             case 4: // bMountains
             {
                 ke::Transform2D newTransform;
-                newTransform.x = cameraViewTransform.x;
-                newTransform.y = cameraViewTransform.y - cameraViewDimension.height - 153;
+                newTransform.x = cameraTopLeftPos.x;
+                newTransform.y = cameraTopLeftPos.y - cameraViewDimension.height + 153;
                 node->setLocalTransform(newTransform);
                 break;
             }

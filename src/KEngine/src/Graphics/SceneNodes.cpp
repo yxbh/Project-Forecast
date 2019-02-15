@@ -37,6 +37,7 @@ namespace ke
         states.shape.outlineThickness = outlineThickness;
         states.shape.fillColor        = fillColor;
         states.shape.outlineColor     = outlineColor;
+        states.shape.depth            = depth;
         return newNode;
     }
 

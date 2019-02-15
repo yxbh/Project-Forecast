@@ -3,10 +3,10 @@
 namespace ke
 {
 
-    int32_t const TiledSpriteDrawablwComponent::MIN_TILE_X_BOUND = -2000;
-    int32_t const TiledSpriteDrawablwComponent::MAX_TILE_X_BOUND = 4000;
-    int32_t const TiledSpriteDrawablwComponent::MIN_TILE_Y_BOUND = -4000;
-    int32_t const TiledSpriteDrawablwComponent::MAX_TILE_Y_BOUND = 4000;
+    int32_t const TiledSpriteDrawablwComponent::MIN_TILE_X_BOUND = -3000;
+    int32_t const TiledSpriteDrawablwComponent::MAX_TILE_X_BOUND = 3000;
+    int32_t const TiledSpriteDrawablwComponent::MIN_TILE_Y_BOUND = -2000;
+    int32_t const TiledSpriteDrawablwComponent::MAX_TILE_Y_BOUND = 2000;
 
     TiledSpriteDrawablwComponent::TiledSpriteDrawablwComponent(ke::EntitySptr entity, const ke::Transform2D & localTransform, std::int32_t depth, size_t textureId,
         const ke::Rect2DInt32 & textureRect, const ke::Color & color, bool tileXDirection, bool tileYDirection)
@@ -31,7 +31,7 @@ namespace ke
         {
             for (int32_t y = tile_y_start; y <= tile_y_end; y += textureRect.height)
             {
-                ke::Transform2D transform{ static_cast<float>(x), static_cast<float>(y) };
+                ke::Transform2D transform{ static_cast<ke::Transform2D::PointType>(x), static_cast<ke::Transform2D::PointType>(y) };
                 auto spriteNode = ke::SpriteNode::create(ISceneNode::newId(), transform, depth, textureId, textureRect, color);
                 this->sceneNode->addChild(spriteNode);
             }
