@@ -374,8 +374,6 @@ namespace ke
 
     void App::initExec()
     {
-        spdlog::set_async_mode(1048576); // magic number from spdlog repo.
-
         ke::Log::instance()->info("Creating resource manager ...");
         this->resourceManager = std::make_unique<ResourceManager>();
         ke::Log::instance()->info("Creating resource manager ... DONE");

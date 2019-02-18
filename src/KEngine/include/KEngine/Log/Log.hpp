@@ -1,6 +1,8 @@
 #pragma once
 
 #include <spdlog/spdlog.h>
+#include <spdlog/async.h>
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 /// <summary>
 /// Reference: https://github.com/gabime/spdlog/wiki
@@ -18,13 +20,14 @@ namespace ke
     {
     public:
         /// <summary>
-        /// Obtain the logger object. Do not call this before calling ke::App::exec().
+        /// Obtain the logger object.
         /// </summary>
         /// <returns>The logger instance.</returns>
         static auto instance() -> auto
         {
             static auto logger = ke::log::stdout_color_mt("General"); // logger object is only constructed when this function is called.
-            return logger.get();
+            static auto loggerQuickPtr = logger.get();
+            return loggerQuickPtr;
         }
     };
 }
