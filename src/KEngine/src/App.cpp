@@ -199,10 +199,11 @@ namespace ke
             const auto memO = std::memory_order_relaxed;
             using LLU = unsigned long long;
             std::snprintf(::windowTitleTextBuffer, sizeof(::windowTitleTextBuffer),
-                "KEngine - FPS(%4.1f, %4.1f[%4.1f/ms], %4.1f[%4.1f/ms]), GraphicsCommands(%llu), DrawCalls(%llu), Events(%llu).",
+                "KEngine - FPS(%4.1f, %4.1f[%4.1f/ms], %4.1f[%4.1f/ms]), Entities(%llu), GraphicsCommands(%llu), DrawCalls(%llu), Events(%llu).",
                 ::eventLoopFps.load(memO),
                 ::logicLoopFps.load(memO), ::logicLoopFrameTimeMs.load(memO),
                 ::graphicsLoopFps.load(memO), ::renderLoopFrameTimeMs.load(memO),
+                (LLU)this->getLogic()->getEntityManager()->getEntityCount(),
                 (LLU)::graphicsCommandCount.load(memO), (LLU)::graphicsDrawCallCount.load(memO),
                 (LLU)::eventManagerEventCount.load(memO));
             this->mainWindow->setTitle(::windowTitleTextBuffer);
