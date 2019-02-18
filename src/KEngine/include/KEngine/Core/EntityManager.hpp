@@ -35,6 +35,11 @@ namespace ke
         void removeEntity(ke::EntityId entityId);
         ke::EntityWptr findEntityById(ke::EntityId entityId);
 
+        /// <summary>
+        /// Get the number of entities currently being managed.
+        /// </summary>
+        inline std::size_t getEntityCount(void) const { return this->entityMap.size(); }
+
     private:
         std::unordered_map<ke::EntityId, ke::EntitySptr> entityMap;
     };
