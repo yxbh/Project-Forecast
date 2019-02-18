@@ -2,7 +2,9 @@
 
 #include "KEngine/Common/Point2D.hpp"
 
+#if defined(USE_SFML)
 #include <SFML/Window/Mouse.hpp>
+#endif
 
 #include <cstdint>
 
