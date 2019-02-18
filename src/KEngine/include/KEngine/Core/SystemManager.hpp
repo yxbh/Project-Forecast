@@ -38,6 +38,11 @@ namespace ke
         /// <param name="elapsedTime"></param>
         void update(ke::Time elapsedTime);
 
+        /// <summary>
+        /// Get the number of systems being managed by the manager.
+        /// </summary>
+        inline std::size_t getSystemCount(void) const { return this->systems.size(); }
+
     private:
         SystemMap systemsMap;
         SystemList systems;
