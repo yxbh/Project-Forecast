@@ -1,7 +1,11 @@
 #include "KEngine/Utility/FileSystemHelper.hpp"
 
+#include <algorithm>
+
 namespace ke
 {
+
+    static constexpr size_t VEC_RESERVE_MIN = 4096;
 
     bool FileSystemHelper::countFiles(const fs::path & directoryPath, bool recursive)
     {
@@ -30,15 +34,17 @@ namespace ke
         }
 
         PathContainer paths;
+        paths.reserve(VEC_RESERVE_MIN);
+        auto is_file = [](const fs::directory_entry & dt) { return fs::is_regular_file(dt.path()); };
         if (recursive)
         {
             fs::recursive_directory_iterator itr{ directoryPath }, end;
-            std::for_each(itr, end, [&paths](const fs::directory_entry & cur) { if (fs::is_regular_file(cur.path())) paths.push_back(cur.path()); });
+            std::copy_if(itr, end, std::back_inserter(paths), is_file);
         }
         else
         {
             fs::directory_iterator itr{ directoryPath }, end;
-            std::for_each(itr, end, [&paths](const fs::directory_entry & cur) { if (fs::is_regular_file(cur.path())) paths.push_back(cur.path()); });
+            std::copy_if(itr, end, std::back_inserter(paths), is_file);
         }
         return paths;
     }
@@ -50,18 +56,13 @@ namespace ke
             throw std::invalid_argument("FileSystemHelper::getChildPaths(), path is not a directory.");
         }
 
-        PathContainer paths;
         if (recursive)
         {
             fs::recursive_directory_iterator itr{ directoryPath }, end;
-            std::for_each(itr, end, [&paths](const fs::directory_entry & cur) { paths.push_back(cur.path()); });
+            return PathContainer(itr, end);
         }
-        else
-        {
-            fs::directory_iterator itr{ directoryPath }, end;
-            std::for_each(itr, end, [&paths](const fs::directory_entry & cur) { paths.push_back(cur.path()); });
-        }
-        return paths;
+        fs::directory_iterator itr{ directoryPath }, end;
+        return PathContainer(itr, end);
     }
 
 }
