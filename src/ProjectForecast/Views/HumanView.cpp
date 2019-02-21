@@ -90,7 +90,7 @@ namespace pf
             case ke::KeyboardKeyPressedEvent::TYPE:
             {
                 auto keyboardEvent = static_cast<ke::KeyboardKeyPressedEvent*>(event.get());
-                keyboardController->onKeyReleased(keyboardEvent->getDetail());
+                keyboardController->onKeyPressed(keyboardEvent->getDetail());
                 //if (keyboardEvent->getDetail().keyCode == ke::Keyboard::Return)
                 //{
                 //    ke::Log::instance()->info("echo({}): {}", testTextBuffer.length(), testTextBuffer);
@@ -106,7 +106,7 @@ namespace pf
             case ke::KeyboardKeyReleasedEvent::TYPE:
             {
                 auto keyboardEvent = std::static_pointer_cast<ke::KeyboardKeyReleasedEvent>(event);
-                keyboardController->onKeyPressed(keyboardEvent->getDetail());
+                keyboardController->onKeyReleased(keyboardEvent->getDetail());
                 break;
             }
 
