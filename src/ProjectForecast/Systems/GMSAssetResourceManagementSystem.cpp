@@ -11,9 +11,12 @@
 
 #include <SFML/Graphics/Image.hpp>
 
+#include <algorithm>
+#include <execution>
 #include <filesystem>
 #include <fstream>
 #include <limits>
+#include <mutex>
 #include <utility>
 
 namespace
@@ -65,9 +68,10 @@ namespace pf
         }
 
         ke::Log::instance()->info("Scanning GM:S room assets...");
-        fs::path gmsRoomsRootDirPath = fs::path{ ProjectForecastExecAssetPath } / "rooms";
-        for (const auto & gmsRoomPath : ke::FileSystemHelper::getFilePaths(gmsRoomsRootDirPath))
-        {
+        const auto gmsRoomsRootDirPath = fs::path{ ProjectForecastExecAssetPath } / "rooms";
+        const auto gmsRoomPaths = ke::FileSystemHelper::getFilePaths(gmsRoomsRootDirPath);
+        std::mutex gmsRoomLoadMutex;
+        std::for_each(std::execution::par, std::begin(gmsRoomPaths), std::end(gmsRoomPaths), [&](const auto & gmsRoomPath) {
             ke::Log::instance()->info("Discovered GM:S room asset: {}", gmsRoomPath.string());
             auto roomResource = std::make_shared<GMSRoomResource>();
             roomResource->setName(gmsRoomPath.stem().string());
@@ -152,8 +156,9 @@ namespace pf
                 roomResource->addTile(newTile);
             }
 
+            std::scoped_lock lock(gmsRoomLoadMutex);
             ke::App::instance()->getResourceManager()->registerResource(roomResource);
-        }
+        });
 
         ke::Log::instance()->info("Scanning assets... DONE");
         return true;
