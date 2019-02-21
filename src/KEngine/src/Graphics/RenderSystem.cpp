@@ -78,6 +78,7 @@ namespace ke
         this->orderedRenderCommandList.reserve(10240);
         //ke::EventManager::registerListener<ke::WindowResizedEvent>(this, &RenderSystem::receiveEvent);
         ke::EventManager::registerListener<ke::TextureLoadViaFileRequestEvent>(this, &RenderSystem::receiveEvent);
+        ke::EventManager::registerListener<ke::TexturesBulkLoadViaFilesRequestEvent>(this, &RenderSystem::receiveEvent);
         ke::EventManager::registerListener<ke::SetClearColourRequestEvent>(this, &RenderSystem::receiveEvent);
 
         // do an initial broadcast of the window's size.
@@ -90,6 +91,7 @@ namespace ke
     {
         //ke::EventManager::deregisterListener<ke::WindowResizedEvent>(this, &RenderSystem::receiveEvent);
         ke::EventManager::deregisterListener<ke::TextureLoadViaFileRequestEvent>(this, &RenderSystem::receiveEvent);
+        ke::EventManager::deregisterListener<ke::TexturesBulkLoadViaFilesRequestEvent>(this, &RenderSystem::receiveEvent);
         ke::EventManager::deregisterListener<ke::SetClearColourRequestEvent>(this, &RenderSystem::receiveEvent);
     }
 
@@ -330,6 +332,30 @@ namespace ke
                     else
                     {
                         ke::Log::instance()->error("Texture loading failed for: {}", textureLoadRequest->getTextureSourcePath());
+                    }
+                }
+                break;
+            }
+
+            case ke::TexturesBulkLoadViaFilesRequestEvent::TYPE:
+            {
+                auto textureLoadRequest = static_cast<ke::TexturesBulkLoadViaFilesRequestEvent*>(event.get());
+                ke::Log::instance()->info("Loading {} textures...", textureLoadRequest->getAllTextureInfo().size());
+                for (const auto & textureInfo : textureLoadRequest->getAllTextureInfo())
+                {
+                    const auto & [textureName, textureId, textureSrcPath] = textureInfo;
+                    if (::TextureStore.find(textureId) == ::TextureStore.end())
+                    {
+                        ke::Log::instance()->info("Loading texture {} from {}", textureName, textureSrcPath);
+                        auto texture = std::make_unique<sf::Texture>();
+                        if (texture->loadFromFile(textureSrcPath))
+                        {
+                            ::TextureStore.insert_or_assign(textureId, std::move(texture));
+                        }
+                        else
+                        {
+                            ke::Log::instance()->error("Texture loading failed for: {}", textureSrcPath);
+                        }
                     }
                 }
                 break;
