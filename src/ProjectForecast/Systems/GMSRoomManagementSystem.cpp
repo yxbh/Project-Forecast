@@ -86,6 +86,8 @@ namespace pf
         this->currentRoomResource = dynamic_cast<GMSRoomResource*>(resourceManager->getResource(request->getRoomName()));
         if (this->currentRoomResource != nullptr)
         {
+            auto textureLoadRequestEvent = ke::makeEvent<ke::TexturesBulkLoadViaFilesRequestEvent>();
+
             for (const auto & bgInfo : this->currentRoomResource->getBackgroundInfos())
             {
                 if (bgInfo.bg.length() != 0)
@@ -93,8 +95,7 @@ namespace pf
                     auto textureInfo = dynamic_cast<TextureInfoResource*>(resourceManager->getResource(bgInfo.bg));
                     if (textureInfo)
                     {
-                        ke::EventManager::enqueue(ke::makeEvent<ke::TextureLoadViaFileRequestEvent>(
-                            textureInfo->getName(), textureInfo->getTextureId(), textureInfo->getSourcePath()));
+                        textureLoadRequestEvent->addTextureInfo(textureInfo->getName(), textureInfo->getTextureId(), textureInfo->getSourcePath());
                     }
                 }                
             }
@@ -130,8 +131,7 @@ namespace pf
                 auto textureInfo = dynamic_cast<TextureInfoResource*>(resourceManager->getResource(tileTextureName));
                 if (textureInfo)
                 {
-                    ke::EventManager::enqueue(ke::makeEvent<ke::TextureLoadViaFileRequestEvent>(
-                        textureInfo->getName(), textureInfo->getTextureId(), textureInfo->getSourcePath()));
+                    textureLoadRequestEvent->addTextureInfo(textureInfo->getName(), textureInfo->getTextureId(), textureInfo->getSourcePath());
                 }
             }
 
@@ -181,9 +181,9 @@ namespace pf
             // Load background textures.
             for (const auto & textureInfo : backgroundTextureInfos)
             {
-                ke::EventManager::enqueue(ke::makeEvent<ke::TextureLoadViaFileRequestEvent>(
-                    textureInfo->getName(), textureInfo->getTextureId(), textureInfo->getSourcePath()));
+                textureLoadRequestEvent->addTextureInfo(textureInfo->getName(), textureInfo->getTextureId(), textureInfo->getSourcePath());
             }
+            ke::EventManager::enqueue(textureLoadRequestEvent);
         }
 
         this->isLoadingRoom = false;
