@@ -8,6 +8,7 @@
 #include <KEngine/App.hpp>
 #include <KEngine/Core/EventManager.hpp>
 #include <KEngine/Log/Log.hpp>
+#include <KEngine/Common/ScopeFunc.hpp>
 
 #include <filesystem>
 #include <unordered_set>
@@ -64,6 +65,7 @@ namespace pf
             return;
         }
         this->isLoadingRoom = true;
+        KE_MAKE_SCOPEFUNC([this]() { isLoadingRoom = false; });
 
         this->unloadCurrentEntities();
         if (this->currentRoomResource)
@@ -75,10 +77,17 @@ namespace pf
                 entityManager->removeEntity(entity->getId());
             }
             this->currentRoomEntities.clear();
+            this->currentRoomResource = nullptr;
             /*for (const auto & bgInfo : this->currentRoomResource->getBackgroundInfos())
             {
                 ke::EventManager::enqueue(ke::makeEvent<ke::TextureUnloadRequestEvent>(bgInfo.bg, bgInfo.bg_hash));
             }*/
+        }
+
+        if (request->getRoomName().empty())
+        {
+            // We interpret an empty room name as a room unload only request.
+            return;
         }
 
         ke::Log::instance()->info("Loading GM:S room: {}", request->getRoomName());
@@ -185,8 +194,6 @@ namespace pf
             }
             ke::EventManager::enqueue(textureLoadRequestEvent);
         }
-
-        this->isLoadingRoom = false;
     }
 
     void GMSRoomManagementSystem::unloadCurrentEntities()
