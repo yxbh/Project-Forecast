@@ -35,7 +35,7 @@ namespace ke
 
         PathContainer paths;
         paths.reserve(VEC_RESERVE_MIN);
-        auto is_file = [](const fs::directory_entry & dt) { return fs::is_regular_file(dt.path()); };
+        auto is_file = [](const fs::directory_entry & dt) { return fs::is_regular_file(dt); };
         if (recursive)
         {
             fs::recursive_directory_iterator itr{ directoryPath }, end;
