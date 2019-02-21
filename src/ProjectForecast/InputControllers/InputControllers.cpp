@@ -110,10 +110,18 @@ namespace pf
 
     bool KeyboardInputController::onKeyReleased(const ke::Keyboard::KeyInfo & keyInfo)
     {
-        if (keyInfo.keyCode == ke::Keyboard::Add)
+        switch (keyInfo.keyCode)
+        {
+        case ke::Keyboard::Add:
         {
             ke::EventManager::enqueue(ke::makeEvent<pf::GMSRoomLoadRequestEvent>("r1_1_1"));
             return true;
+        }
+        case ke::Keyboard::Subtract:
+        {
+            ke::EventManager::enqueue(ke::makeEvent<pf::GMSRoomLoadRequestEvent>("")); // empty room name for unloading room only.
+            return true;
+        }
         }
         return false;
     }
