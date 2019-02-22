@@ -111,14 +111,14 @@ namespace ke
         /// <returns>true if matching scene nodes were found and erased.</returns>
         inline bool removeChildrenByEntityId(ke::EntityId p_entityId, bool p_recursive = true)
         {
-            bool foundAndRemoved = false;
             auto removeItr = std::remove_if(std::begin(this->childrenNodes), std::end(this->childrenNodes), [p_entityId](auto node)
             {
                 return node->getEntityId() != ke::INVALID_ENTITY_ID &&
                        node->getEntityId() == p_entityId;
             });
-            foundAndRemoved = removeItr != std::end(this->childrenNodes);
+            bool foundAndRemoved = removeItr != std::end(this->childrenNodes);
             this->childrenNodes.erase(removeItr, std::end(this->childrenNodes));
+
             if (!foundAndRemoved && p_recursive)
             {
                 for (auto childNode : this->childrenNodes)
