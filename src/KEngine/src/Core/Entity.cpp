@@ -32,12 +32,14 @@ namespace ke
     {}
 
     Entity::Entity(ke::Entity && p_rrEntity)
-        : m_ComponentSPMap(std::move(p_rrEntity.m_ComponentSPMap))
+        : m_Components(std::move(p_rrEntity.m_Components))
+        , m_ComponentSPMap(std::move(p_rrEntity.m_ComponentSPMap))
         , m_EntityID(std::move(p_rrEntity.getId()))
     {}
 
     Entity & Entity::operator=(ke::Entity && p_rrEntity)
     {
+        m_Components = std::move(p_rrEntity.m_Components);
         m_ComponentSPMap = std::move(p_rrEntity.m_ComponentSPMap);
         m_EntityID = p_rrEntity.getId();
         return *this;
@@ -53,6 +55,12 @@ namespace ke
         assert(p_spEntityComponent != nullptr); // should not be null.
         const auto result = m_ComponentSPMap.insert(std::make_pair(p_spEntityComponent->getType(), p_spEntityComponent));
         assert(result.second); // fails if insertion failed.
+        if (result.second)
+        {
+            ke::Log::instance()->error("Attempted to add entity component of duplicate type: {}", p_spEntityComponent->getType());
+            return;
+        }
+        m_Components.push_back(p_spEntityComponent);
     }
 
     bool Entity::initialise(void)
@@ -83,7 +91,8 @@ namespace ke
             this->m_Initialised = this->initialise();
         }
 
-        for (auto & it : m_ComponentSPMap)  it.second->update(p_ElapsedTime);
+        for (auto & it : m_Components)
+            it->update(p_ElapsedTime);
     }
 
 }

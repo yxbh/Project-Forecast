@@ -15,7 +15,7 @@ namespace ke
     /// This class is not copyable.
     /// 
     /// Entity holds strong reference to it's Components and the components also hold strong references to
-    /// the entity.Therefore Destory() must be called before destorying an entity instance otherwise the
+    /// the entity. Therefore Destory() must be called before destorying an entity instance otherwise the
     /// Entity cannnot be destoryed due to circular reference from the entity components, and the components
     /// won't be able to destory themselves either.
     /// 
@@ -61,7 +61,11 @@ namespace ke
         /// <summary>
         /// Destory the Entity. Breaks the circular/strong references to the Entity's components.
         /// </summary>
-        inline void destory(void) { m_ComponentSPMap.clear(); }
+        inline void destory(void)
+        {
+            m_Components.clear();
+            m_ComponentSPMap.clear();
+        }
 
         /// <summary>
         /// Initialise the entity and all of its components.
@@ -97,7 +101,7 @@ namespace ke
         /// Get the number of components that are current held by the Entity.
         /// </summary>
         /// <returns>a value indidcating the number of compoonents that are held by the Entity.</returns>
-        inline std::size_t getComponentCount(void) const { return m_ComponentSPMap.size(); }
+        inline std::size_t getComponentCount(void) const { return m_Components.size(); }
 
         /// <summary>
         /// Check if this Entity has the specified tag.
@@ -124,6 +128,7 @@ namespace ke
         std::weak_ptr<ComponentClassType> getComponent();
 
     private:
+        ke::EntityComponentSPList       m_Components;
         ke::EntityComponentSPMap        m_ComponentSPMap; // <EntityComponentType, EntityComponent>
         ke::EntityId                    m_EntityID;
 

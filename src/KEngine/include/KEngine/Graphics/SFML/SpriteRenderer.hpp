@@ -19,7 +19,13 @@ namespace ke
     public:
         using TextureMapType = std::unordered_map<size_t, std::unique_ptr<sf::Texture>>;
 
-        SpriteRenderer(TextureMapType* textureStore) : textureStore(textureStore) {}
+        SpriteRenderer(TextureMapType* textureStore)
+            : textureStore(textureStore)
+        {
+            this->rectangleShape.setFillColor(sf::Color::Transparent);
+            this->rectangleShape.setOutlineColor(sf::Color::Green);
+            this->rectangleShape.setOutlineThickness(1.0f);
+        }
 
         inline void setRenderTarget(sf::RenderTarget * p_renderTarget)
         {
@@ -88,17 +94,17 @@ namespace ke
                 sprite.setTextureRect(sfTextureRect);
                 sprite.setColor(ke::SfmlHelper::convert(command.sprite.color));
 
-                renderTarget->draw(sprite);
+                this->renderTarget->draw(sprite);
                 ++this->drawCallCount;
 
                 if (this->drawBoundingBox)
                 {
-                    rectangleShape.setPosition(sfPosition);
-                    rectangleShape.setSize({ spriteWidth, spriteHeight });
-                    rectangleShape.setFillColor(sf::Color::Transparent);
-                    rectangleShape.setOutlineColor(sf::Color::Green);
-                    rectangleShape.setOutlineThickness(1.0f);
-                    renderTarget->draw(rectangleShape);
+                    this->rectangleShape.setPosition(sfPosition);
+                    if (const auto & size = this->rectangleShape.getSize(); size.x != spriteWidth && size.y != spriteHeight)
+                    {
+                        this->rectangleShape.setSize({ spriteWidth, spriteHeight });
+                    }
+                    this->renderTarget->draw(rectangleShape);
                     ++this->drawCallCount;
                 }
             }
@@ -107,6 +113,7 @@ namespace ke
         virtual void flush() final
         {
             this->commands.clear();
+            this->commands.reserve(8192);
         }
 
         virtual size_t getLastDrawCallCount() const final

@@ -15,6 +15,7 @@
 #include <SFML/Graphics.hpp>
 
 #include <cassert>
+#include <functional>
 #include <memory>
 #include <unordered_map>
 #include <queue>
@@ -107,7 +108,6 @@ namespace ke
         if (::commandGenThreadCmdListQueue.size_approx() == 0)
         {
             ::currentCommandGenThreadCmdList = GraphicsCommandList();
-            ::currentCommandGenThreadCmdList.reserve(8192);
         }
         else
         {
@@ -124,25 +124,26 @@ namespace ke
         }
 
         ::currentCommandGenThreadCmdList.clear();
+        ::currentCommandGenThreadCmdList.reserve(8192);
 
-        // generate view command.
+        // Generate view command.
         auto cameraNode = scene->getCameraNode();
         assert(cameraNode);
         ::currentCommandGenThreadCmdList.push_back(cameraNode->getGraphicsCommand());
 
-        // generate command from scene tree.
-        std::queue<ke::ISceneNode*> nodes;
-        nodes.push(scene->getRootNode());
-        while (nodes.size())
+        // Generate command from scene tree.
+        //
+        // We use a recursive searcher to grab the graphics command minimise mem allocation
+        // and keep most things on the stack to improve performance (especially in debug mode).
+        std::function<void(ke::ISceneNode *)> graphicCmdGetter = [&](ke::ISceneNode * node)
         {
-            auto node = nodes.front();
-            nodes.pop();
             ::currentCommandGenThreadCmdList.push_back(node->getGraphicsCommand());
             for (auto child : node->getChildren())
             {
-                nodes.push(child.get());
+                graphicCmdGetter(child.get());
             }
-        }
+        };
+        graphicCmdGetter(scene->getRootNode());
 
         return ::currentCommandGenThreadCmdList.size();
     }
@@ -182,6 +183,7 @@ namespace ke
 
         // filter the commands to their respective processors.
         this->orderedRenderCommandList.clear();
+        this->orderedRenderCommandList.reserve(8192);
         for (const auto & command : ::currentRenderThreadCmdList)
         {
             switch (command.type)
