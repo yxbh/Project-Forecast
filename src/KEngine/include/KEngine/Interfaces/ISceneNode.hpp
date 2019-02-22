@@ -6,6 +6,7 @@
 #include "KEngine/Common/Transform2D.hpp"
 #include "KEngine/Graphics/GraphicsCommand.hpp"
 
+#include <algorithm>
 #include <atomic>
 #include <memory>
 #include <vector>
@@ -108,29 +109,22 @@ namespace ke
         /// </summary>
         /// <param name="entityId"></param>
         /// <returns>true if matching scene nodes were found and erased.</returns>
-        inline bool removeChildrenByEntityId(ke::EntityId p_entityId, bool recursive = true)
+        inline bool removeChildrenByEntityId(ke::EntityId p_entityId, bool p_recursive = true)
         {
             bool foundAndRemoved = false;
-            auto it = this->childrenNodes.begin();
-            while (it != this->childrenNodes.end())
+            auto removeItr = std::remove_if(std::begin(this->childrenNodes), std::end(this->childrenNodes), [p_entityId](auto node)
             {
-                auto sceneNode = it->get();
-                if (sceneNode->getEntityId() != ke::INVALID_ENTITY_ID &&
-                    sceneNode->getEntityId() == p_entityId)
+                return node->getEntityId() != ke::INVALID_ENTITY_ID &&
+                       node->getEntityId() == p_entityId;
+            });
+            foundAndRemoved = removeItr != std::end(this->childrenNodes);
+            this->childrenNodes.erase(removeItr, std::end(this->childrenNodes));
+            if (!foundAndRemoved && p_recursive)
+            {
+                for (auto childNode : this->childrenNodes)
                 {
-                    it = this->childrenNodes.erase(it);
-                    foundAndRemoved = true;
-                    continue;
+                    foundAndRemoved |= childNode->removeChildrenByEntityId(p_entityId, p_recursive);
                 }
-                else if (recursive)
-                {
-                    for (auto childNode : sceneNode->childrenNodes)
-                    {
-                        foundAndRemoved &= childNode->removeChildrenByEntityId(p_entityId, recursive);
-                    }
-                }
-
-                ++it;
             }
 
             return foundAndRemoved;
