@@ -55,7 +55,7 @@ namespace ke
         assert(p_spEntityComponent != nullptr); // should not be null.
         const auto result = m_ComponentSPMap.insert(std::make_pair(p_spEntityComponent->getType(), p_spEntityComponent));
         assert(result.second); // fails if insertion failed.
-        if (result.second)
+        if (!result.second)
         {
             ke::Log::instance()->error("Attempted to add entity component of duplicate type: {0:#x}", p_spEntityComponent->getType());
             return;
