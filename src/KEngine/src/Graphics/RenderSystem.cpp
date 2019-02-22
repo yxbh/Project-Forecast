@@ -229,6 +229,21 @@ namespace ke
             return 0;
         }
 
+        auto renderAndFlushAll = [&]()
+        {
+            this->m_lineRenderer->render();
+            drawCallCount += this->m_lineRenderer->getLastDrawCallCount();
+            this->m_lineRenderer->flush();
+
+            this->m_circleShapeRenderer->render();
+            drawCallCount += this->m_circleShapeRenderer->getLastDrawCallCount();
+            this->m_circleShapeRenderer->flush();
+
+            this->m_spriteRenderer->render();
+            drawCallCount += this->m_spriteRenderer->getLastDrawCallCount();
+            this->m_spriteRenderer->flush();
+        };
+
 
         unsigned long currentDepthValue = this->orderedRenderCommandList[0].render.depth;
         auto lastDepthValue = currentDepthValue;
@@ -259,21 +274,11 @@ namespace ke
             currentDepthValue = cmd.render.depth;
             if (lastDepthValue != currentDepthValue)
             {
-                this->m_lineRenderer->render();
-                drawCallCount += this->m_lineRenderer->getLastDrawCallCount();
-                this->m_lineRenderer->flush();
-
-                this->m_circleShapeRenderer->render();
-                drawCallCount += this->m_circleShapeRenderer->getLastDrawCallCount();
-                this->m_circleShapeRenderer->flush();
-
-                this->m_spriteRenderer->render();
-                drawCallCount += this->m_spriteRenderer->getLastDrawCallCount();
-                this->m_spriteRenderer->flush();
-
+                renderAndFlushAll();
                 lastDepthValue = currentDepthValue;
             }
         }
+        renderAndFlushAll();
 
         renderTarget->display();
         ::commandGenThreadCmdListQueue.enqueue(std::move(::currentRenderThreadCmdList));
