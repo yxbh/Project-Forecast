@@ -147,7 +147,7 @@ namespace ke
 		if (it_exitState == this->states.cend())
 		{
 #if defined(KE_DEBUG)
-			ke::Log::instance()->warn("The state machine does not contain a state of type {} ", exitStateExitCode);
+			ke::Log::instance()->warn("The state machine does not contain a state of type {0:#x} ", exitStateExitCode);
 #endif
 			return false;
 		}
@@ -156,7 +156,7 @@ namespace ke
 		if (it_startState == this->states.cend())
 		{
 #if defined(KE_DEBUG)
-			ke::Log::instance()->warn("The state machine does not contain a state of type {} ", startStateType);
+			ke::Log::instance()->warn("The state machine does not contain a state of type {0:#x} ", startStateType);
 #endif
 			return false;
 		}

@@ -271,6 +271,11 @@ namespace ke
                 break;
             }
 
+            default:
+            {
+                ke::Log::instance()->critical("Unsupported graphics command type: {0:#x}", cmd.type);
+                assert(!cmd.type);
+            }
             }
 
             currentDepthValue = cmd.render.depth;

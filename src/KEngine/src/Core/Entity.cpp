@@ -57,7 +57,7 @@ namespace ke
         assert(result.second); // fails if insertion failed.
         if (result.second)
         {
-            ke::Log::instance()->error("Attempted to add entity component of duplicate type: {}", p_spEntityComponent->getType());
+            ke::Log::instance()->error("Attempted to add entity component of duplicate type: {0:#x}", p_spEntityComponent->getType());
             return;
         }
         m_Components.push_back(p_spEntityComponent);
