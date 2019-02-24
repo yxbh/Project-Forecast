@@ -11,7 +11,7 @@ namespace ke
 {
 
 #ifdef _MSC_VER
-    namespace fs = std::experimental::filesystem::v1;
+    namespace fs = std::filesystem;
 #elif defined(__clang__)
     namespace fs = std::filesystem;
 #endif

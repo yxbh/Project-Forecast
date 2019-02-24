@@ -31,7 +31,7 @@ namespace pf
     bool GMSAssetResourceManagementSystem::initialise()
     {
         ke::Log::instance()->info("Scanning assets...");
-        namespace fs = std::experimental::filesystem::v1;
+        namespace fs = std::filesystem;
 
         ke::Log::instance()->info("Scanning texture assets...");
         fs::path texturesRootDirPath = fs::path{ ProjectForecastExecAssetPath } / "textures";
