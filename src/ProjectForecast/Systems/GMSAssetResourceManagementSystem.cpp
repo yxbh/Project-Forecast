@@ -71,7 +71,7 @@ namespace pf
         const auto gmsRoomsRootDirPath = fs::path{ ProjectForecastExecAssetPath } / "rooms";
         const auto gmsRoomPaths = ke::FileSystemHelper::getFilePaths(gmsRoomsRootDirPath);
         std::mutex gmsRoomLoadMutex;
-        std::for_each(std::execution::par, std::begin(gmsRoomPaths), std::end(gmsRoomPaths), [&](const auto & gmsRoomPath) {
+        std::for_each(std::execution::par_unseq, std::begin(gmsRoomPaths), std::end(gmsRoomPaths), [&](const auto & gmsRoomPath) {
             ke::Log::instance()->info("Discovered GM:S room asset: {}", gmsRoomPath.string());
             auto roomResource = std::make_shared<GMSRoomResource>();
             roomResource->setName(gmsRoomPath.stem().string());
