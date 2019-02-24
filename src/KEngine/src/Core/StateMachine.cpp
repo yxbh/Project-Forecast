@@ -16,7 +16,7 @@ namespace ke
         if (!currentState)
         {
             this->currentState = this->startState;
-			this->currentState->onEnter();
+            this->currentState->onEnter();
         }
 
         this->status = Status::Running;
@@ -83,8 +83,8 @@ namespace ke
     void StateMachine::finishState(IState * state, int stateExitCode)
     {
         assert(this->currentState == state);
-		assert(this->startState);
-		assert(this->endState);
+        assert(this->startState);
+        assert(this->endState);
 
         this->isCurrentStateExitRequested = true;
         this->currentStateExitCode = stateExitCode;
@@ -92,81 +92,81 @@ namespace ke
 
     void StateMachine::addState(StateSptr state)
     {
-		assert(state);
-		assert(state->getType() != ke::INVALID_STATE_MACHINE_STATE_TYPE);
+        assert(state);
+        assert(state->getType() != ke::INVALID_STATE_MACHINE_STATE_TYPE);
 #if defined(KE_DEBUG)
-		for (auto existingState : this->states)
-		{
-			if (existingState->getType() == state->getType())
-			{
-				ke::Log::instance()->error("A start state instance of {} already exists in this state machine.", state->getName());
-			}
-		}
+        for (auto existingState : this->states)
+        {
+            if (existingState->getType() == state->getType())
+            {
+                ke::Log::instance()->error("A start state instance of {} already exists in this state machine.", state->getName());
+            }
+        }
 #endif
         this->states.insert(state);
     }
 
     void StateMachine::addStartState(StateSptr state)
     {
-		assert(state);
-		assert(state->getType() != ke::INVALID_STATE_MACHINE_STATE_TYPE);
+        assert(state);
+        assert(state->getType() != ke::INVALID_STATE_MACHINE_STATE_TYPE);
 #if defined(KE_DEBUG)
-		for (auto existingState : this->states)
-		{
-			if (existingState->getType() == state->getType())
-			{
-				ke::Log::instance()->error("A state instance of {} already exists in this state machine.", state->getName());
-			}
-		}
+        for (auto existingState : this->states)
+        {
+            if (existingState->getType() == state->getType())
+            {
+                ke::Log::instance()->error("A state instance of {} already exists in this state machine.", state->getName());
+            }
+        }
 #endif
         this->states.insert(state);
-		this->startState = state.get();
+        this->startState = state.get();
     }
 
     void StateMachine::addEndState(StateSptr state)
     {
-		assert(state);
-		assert(state->getType() != ke::INVALID_STATE_MACHINE_STATE_TYPE);
+        assert(state);
+        assert(state->getType() != ke::INVALID_STATE_MACHINE_STATE_TYPE);
 #if defined(KE_DEBUG)
-		for (auto existingState : this->states)
-		{
-			if (existingState->getType() == state->getType())
-			{
-				ke::Log::instance()->error("An end state instance of {} already exists in this state machine.", state->getName());
-			}
-		}
+        for (auto existingState : this->states)
+        {
+            if (existingState->getType() == state->getType())
+            {
+                ke::Log::instance()->error("An end state instance of {} already exists in this state machine.", state->getName());
+            }
+        }
 #endif
         this->states.insert(state);
-		this->endState = state.get();
+        this->endState = state.get();
     }
 
     bool StateMachine::addStateTransition(StateMachineStateType exitStateType, StateMachineStateExitCodeType exitStateExitCode, StateMachineStateType startStateType)
     {
-		auto it_exitState = std::find_if(this->states.cbegin(), this->states.cend(),
-								[exitStateType](ke::IStateMachine::StateSptr state) { return state->getType() == exitStateType; });
-		if (it_exitState == this->states.cend())
-		{
+        auto it_exitState = std::find_if(this->states.cbegin(), this->states.cend(),
+                                [exitStateType](ke::IStateMachine::StateSptr state) { return state->getType() == exitStateType; });
+        if (it_exitState == this->states.cend())
+        {
 #if defined(KE_DEBUG)
-			ke::Log::instance()->warn("The state machine does not contain a state of type {0:#x} ", exitStateExitCode);
+            ke::Log::instance()->warn("The state machine does not contain a state of type {0:#x} ", exitStateExitCode);
 #endif
-			return false;
-		}
-		auto it_startState = std::find_if(this->states.cbegin(), this->states.cend(),
-								[startStateType](ke::IStateMachine::StateSptr state) { return state->getType() == startStateType; });
-		if (it_startState == this->states.cend())
-		{
+            return false;
+        }
+        auto it_startState = std::find_if(this->states.cbegin(), this->states.cend(),
+                                [startStateType](ke::IStateMachine::StateSptr state) { return state->getType() == startStateType; });
+        if (it_startState == this->states.cend())
+        {
 #if defined(KE_DEBUG)
-			ke::Log::instance()->warn("The state machine does not contain a state of type {0:#x} ", startStateType);
+            ke::Log::instance()->warn("The state machine does not contain a state of type {0:#x} ", startStateType);
 #endif
-			return false;
-		}
-		stateTransitionMap[exitStateExitCode][exitStateExitCode] = (*it_startState).get();
+            return false;
+        }
+        stateTransitionMap[exitStateExitCode][exitStateExitCode] = (*it_startState).get();
         return true;
     }
 
-	IStateMachine::IState * StateMachine::getCurrentState()
-	{
-		return this->currentState;
-	}
+    IStateMachine::IState * StateMachine::getCurrentState()
+    {
+        return this->currentState;
+    }
 
 }
