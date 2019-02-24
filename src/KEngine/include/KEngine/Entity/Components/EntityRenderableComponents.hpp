@@ -1,9 +1,7 @@
 #pragma once
 
-#include "KEngine/Events/OtherGraphicsEvents.hpp"
-#include "KEngine/Core/EventManager.hpp"
-#include "KEngine/Core/Entity.hpp"
-#include "KEngine/Graphics/SceneNodes.hpp"
+#include "KEngine/Interfaces/IEntity.hpp"
+#include "KEngine/Interfaces/ISceneNode.hpp"
 #include "KEngine/Interfaces/IEntityComponent.hpp"
 
 #include "KEngine/Common/Point2D.hpp"
@@ -21,17 +19,9 @@ namespace ke
     public:
         using IEntityComponent::IEntityComponent;
 
-        virtual ~EntityRenderableComponent()
-        {
-            ke::EventManager::enqueue(ke::makeEvent<ke::SceneNodeDestroyRequestEvent>(this->sceneNode));
-        }
+        virtual ~EntityRenderableComponent(void);
 
-        virtual bool initialise()
-        {
-            ke::EventManager::enqueue(ke::makeEvent<ke::SceneNodeCreatedEvent>(this->sceneNode));
-            this->setInitialised();
-            return true;
-        }
+        virtual bool initialise(void);
 
         inline void setSceneNode(ke::SceneNodeSptr p_sceneNode)
         {
@@ -56,12 +46,7 @@ namespace ke
     public:
         EntityRenderableCircleShapeComponent(ke::EntitySptr entity, const ke::Transform2D & localTransform, std::int32_t depth,
             const ke::Color & fillColor, float radius = 5.0f, const ke::Color & outlineColor = ke::Color::TRANSPARENT,
-            float outlineThickness = 0.0f)
-            : EntityRenderableComponent(entity)
-        {
-            this->sceneNode = ke::CircleShapeNode::create(entity->getId(), localTransform,
-                depth, fillColor, radius, outlineColor, outlineThickness);
-        }
+            float outlineThickness = 0.0f);
 
     };
 
@@ -71,11 +56,7 @@ namespace ke
 
     public:
         SpriteDrawableComponent(ke::EntitySptr entity, const ke::Transform2D & localTransform, std::int32_t depth, size_t textureId,
-            const ke::Rect2DInt32 & textureRect, const ke::Color & color = ke::Color::WHITE)
-            : EntityRenderableComponent(entity)
-        {
-            this->sceneNode = ke::SpriteNode::create(entity->getId(), localTransform, depth, textureId, textureRect, color);
-        }
+            const ke::Rect2DInt32 & textureRect, const ke::Color & color = ke::Color::WHITE);
 
     };
 
@@ -85,11 +66,7 @@ namespace ke
 
     public:
         LineDrawableComponent(ke::EntitySptr entity, const Point2DFloat & begin, const Point2DFloat & end,
-            std::int32_t depth, const ke::Color & color = ke::Color::WHITE)
-            : EntityRenderableComponent(entity)
-        {
-            this->sceneNode = ke::LineNode::create(entity->getId(), begin, end, depth, color);
-        }
+            std::int32_t depth, const ke::Color & color = ke::Color::WHITE);
 
     };
 
