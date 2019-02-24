@@ -25,7 +25,12 @@ namespace ke
         /// <returns>The logger instance.</returns>
         static auto instance() -> auto
         {
-            static auto logger = ke::log::stdout_color_mt<ke::log::async_factory>("General"); // logger object is only constructed when this function is called.
+#ifdef RUN_UNIT_TESTS
+            using log_factory = ke::log::default_factory;
+#else
+            using log_factory = ke::log::async_factory;
+#endif // RUN_UNIT_TESTS
+            static auto logger = ke::log::stdout_color_mt<log_factory>("General"); // logger object is only constructed when this function is called.
             static auto loggerQuickPtr = logger.get();
             return loggerQuickPtr;
         }
