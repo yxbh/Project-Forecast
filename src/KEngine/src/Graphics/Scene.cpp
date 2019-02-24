@@ -20,26 +20,48 @@ namespace ke
         ke::EventManager::deregisterListener<ke::SceneNodeDestroyRequestEvent>(this, &Scene::handleSceneNodeDestroyRequest);
     }
 
-    bool Scene::addNode(ke::SceneNodeSptr node)
+    bool Scene::addNode(ke::SceneNodeSptr p_node)
     {
-        assert(node->getEntityId());
+        assert(p_node->getEntityId());
 #if defined(KE_DEBUG)
-        if (this->entitySceneNodeMap.find(node->getEntityId()) != this->entitySceneNodeMap.end())
+        if (this->entitySceneNodeMap.find(p_node->getEntityId()) != this->entitySceneNodeMap.end())
         {
-            ke::Log::instance()->error("A scene node associated with entity ID({}) already exists in the entity scenenode map.", node->getEntityId());
+            ke::Log::instance()->error("A scene node associated with entity ID({}) already exists in the entity scenenode map.", p_node->getEntityId());
         }
 #endif
 
-        this->entitySceneNodeMap[node->getEntityId()] = node;
-        return this->rootNode->addChild(node);
+        this->entitySceneNodeMap[p_node->getEntityId()] = p_node;
+        return this->rootNode->addChild(p_node);
     }
 
-    bool Scene::removeNode(ke::EntityId entityId)
+    bool Scene::removeNode(ke::SceneNodeSptr p_node)
     {
-        assert(entityId != ke::INVALID_ENTITY_ID);
+        assert(nullptr != p_node);
 
-        this->entitySceneNodeMap.erase(entityId);
-        return this->rootNode->removeChildByEntityId(entityId);
+        bool nodeRemoved = false;
+        if (this->rootNode)
+        {
+            if (this->rootNode == p_node)
+            {
+                this->rootNode = nullptr;
+                nodeRemoved = true;
+            }
+            if (!nodeRemoved)
+            {
+                nodeRemoved = this->rootNode->removeNode(p_node.get());
+            }
+        }
+        if (this->cameraNode == p_node)
+        {
+            this->cameraNode = nullptr;
+            nodeRemoved = true;
+        }
+        if (nodeRemoved)
+        {
+            this->entitySceneNodeMap.erase(p_node->getEntityId());
+        }
+
+        return nodeRemoved;
     }
 
     ke::SceneNodeSptr Scene::findNode(ke::EntityId entityId)
@@ -59,13 +81,7 @@ namespace ke
         {
             auto request = static_cast<ke::SceneNodeDestroyRequestEvent*>(event.get());
             auto node = request->getSceneNode();
-            if (this->rootNode)
-            {
-                this->rootNode->removeNode(node.get());
-                this->rootNode = (this->rootNode == node) ? nullptr : this->rootNode;
-            }
-            this->entitySceneNodeMap.erase(node->getEntityId());
-            this->cameraNode = (this->cameraNode == node) ? nullptr : this->cameraNode;
+            this->removeNode(node);
         }
     }
 

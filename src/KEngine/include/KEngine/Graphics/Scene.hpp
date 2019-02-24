@@ -21,7 +21,7 @@ namespace ke
         virtual ~Scene();
 
         bool addNode(ke::SceneNodeSptr);
-        bool removeNode(ke::EntityId);
+        bool removeNode(ke::SceneNodeSptr);
         ke::SceneNodeSptr findNode(ke::EntityId);
 
         inline void setCameraNode(std::shared_ptr<ke::CameraNode> p_cameraNode)
