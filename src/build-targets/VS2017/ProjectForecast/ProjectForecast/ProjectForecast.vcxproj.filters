@@ -297,6 +297,9 @@
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\PlayerCameraControlSystem.cpp">
       <Filter>ProjectForecast\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_SystemManager.cpp">
+      <Filter>KEngine\Source Files\UnitTest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManager.hpp">
