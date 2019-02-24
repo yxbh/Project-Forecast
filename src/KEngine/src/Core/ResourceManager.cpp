@@ -54,7 +54,7 @@ namespace ke
     void ResourceManager::loadFromManifest(ke::String manifestPath)
     {
         // filesystem safety checks.
-        namespace fs = std::experimental::filesystem;
+        namespace fs = std::filesystem;
         if (!fs::exists(manifestPath))
         {
             ke::Log::instance()->error("Manifest path does not exist at: '{}'.", manifestPath);
