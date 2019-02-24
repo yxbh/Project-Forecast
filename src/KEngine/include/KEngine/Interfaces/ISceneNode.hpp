@@ -6,8 +6,10 @@
 #include "KEngine/Common/Transform2D.hpp"
 #include "KEngine/Graphics/GraphicsCommand.hpp"
 
+#include <cassert>
 #include <algorithm>
 #include <atomic>
+#include <execution>
 #include <memory>
 #include <vector>
 
@@ -83,22 +85,26 @@ namespace ke
         /// </summary>
         /// <param name="entityId"></param>
         /// <returns>true if a matching scene node was found and erased.</returns>
-        inline bool removeChildByEntityId(ke::EntityId p_entityId)
+        [[deprecated]]
+        inline bool removeChildByEntityId(ke::EntityId p_entityId, bool p_recursive = true)
         {
-            auto it = this->childrenNodes.begin();
-            while (it != this->childrenNodes.end())
+            for (std::size_t i = 0; i < this->childrenNodes.size(); ++i)
             {
-                auto sceneNode = it->get();
+                auto sceneNode = this->childrenNodes[i];
                 if (sceneNode->getEntityId() != ke::INVALID_ENTITY_ID &&
                     sceneNode->getEntityId() == p_entityId)
                 {
-                    it = this->childrenNodes.erase(it);
+                    this->childrenNodes[i] = this->childrenNodes.back();
+                    this->childrenNodes.pop_back();
                     return true;
                 }
-                else
-                {
-                    ++it;
-                }
+            }
+
+            if (p_recursive)
+            {
+                for (auto & childNode : this->childrenNodes)
+                    if (childNode->removeChildByEntityId(p_entityId, p_recursive))
+                        return true;
             }
 
             return false;
@@ -109,6 +115,7 @@ namespace ke
         /// </summary>
         /// <param name="entityId"></param>
         /// <returns>true if matching scene nodes were found and erased.</returns>
+        [[deprecated]]
         inline bool removeChildrenByEntityId(ke::EntityId p_entityId, bool p_recursive = true)
         {
             auto removeItr = std::remove_if(std::begin(this->childrenNodes), std::end(this->childrenNodes), [p_entityId](auto node)
@@ -128,6 +135,33 @@ namespace ke
             }
 
             return foundAndRemoved;
+        }
+
+        /// <summary>
+        /// Find and remove the given child node.
+        /// This function will search recursively.
+        /// </summary>
+        /// <param name="p_node"></param>
+        /// <returns>true if the matching scene node was found and erased.</returns>
+        inline bool removeNode(const ke::ISceneNode * p_node)
+        {
+            assert(p_node != this);
+            auto findItr = std::find_if(std::execution::par_unseq, std::begin(this->childrenNodes), std::end(this->childrenNodes), [&](auto & n)
+            {
+                return n.get() == p_node;
+            });
+            if (findItr != std::end(this->childrenNodes))
+            {
+                *findItr = this->childrenNodes.back();
+                this->childrenNodes.pop_back();
+                return true;
+            }
+
+            for (auto & childNode : this->childrenNodes)
+                if (childNode->removeNode(p_node))
+                    return true;
+
+            return false;
         }
 
         static SceneNodeId newId()
