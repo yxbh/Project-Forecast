@@ -61,7 +61,7 @@ namespace ke
             auto node = request->getSceneNode();
             if (this->rootNode)
             {
-                this->rootNode->removeChildrenByEntityId(node->getEntityId(), true);
+                this->rootNode->removeNode(node.get());
                 this->rootNode = (this->rootNode == node) ? nullptr : this->rootNode;
             }
             this->entitySceneNodeMap.erase(node->getEntityId());
