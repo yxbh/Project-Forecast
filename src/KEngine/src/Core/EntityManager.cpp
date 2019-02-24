@@ -16,9 +16,10 @@ namespace ke
     {
         if (newEntityId != ke::INVALID_ENTITY_ID)
         {
-            if (!this->findEntityById(newEntityId).expired())
+            if (auto entity = this->findEntityById(newEntityId); !entity.expired())
             {
                 ke::Log::instance()->critical("The specified entity ID({}) for a new entity already exists in an existing entity.", newEntityId);
+                assert(entity.expired());
             }
         }
         else
