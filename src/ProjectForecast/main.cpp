@@ -7,9 +7,7 @@
 
 #include "ProjectForecastApp.hpp"
 
-#include <chrono>
 #include <iostream>
-#include <thread>
 
 int main(int argc, char ** argv)
 {
