@@ -46,6 +46,11 @@ namespace ke
         virtual void requestFocus() = 0;
 
         virtual ke::Dimension2DUInt32 getDimension() const = 0;
+
+        virtual std::uint32_t getWidth() const = 0;
+        virtual std::uint32_t getHeight() const = 0;
+        virtual int getPositionX() const = 0;
+        virtual int getPositionY() const = 0;
     };
 
     inline IWindow::~IWindow() {}

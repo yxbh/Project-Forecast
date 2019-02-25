@@ -19,7 +19,7 @@ namespace ke::sfml
 
     class SfmlWindow : public ke::IWindow
     {
-        friend class ke::WindowFactory;
+        friend class ::ke::WindowFactory;
     public:
         virtual ~SfmlWindow();
 
@@ -31,6 +31,8 @@ namespace ke::sfml
 
         virtual std::uint32_t getWidth() const final;
         virtual std::uint32_t getHeight() const final;
+        virtual int getPositionX() const final;
+        virtual int getPositionY() const final;
 
         virtual void setTitle(const ke::String & title) final;
 

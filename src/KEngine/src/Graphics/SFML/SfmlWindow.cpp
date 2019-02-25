@@ -43,6 +43,16 @@ namespace ke::sfml
         return this->window->getSize().y;
     }
 
+    int SfmlWindow::getPositionX() const
+    {
+        return this->window->getPosition().x;
+    }
+
+    int SfmlWindow::getPositionY() const
+    {
+        return this->window->getPosition().y;
+    }
+
     void SfmlWindow::setTitle(const ke::String & p_title)
     {
         this->windowTitle = p_title;
