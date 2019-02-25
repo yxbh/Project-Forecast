@@ -21,8 +21,13 @@
 
 #include "KEngine/Graphics/WindowFactory.hpp"
 
+#ifdef USE_SDL
 #include <SDL.h>
+#endif // USE_SDL
+#ifdef USE_SFML
 #include <SFML/Graphics/RenderWindow.hpp>
+#endif // USE_SFML
+
 
 #include <atomic>
 #include <cstdio>

@@ -1,7 +1,11 @@
 #include "KEngine/Graphics/WindowFactory.hpp"
 
+#if defined(USE_SDL)
 #include "KEngine/Graphics/SDL2/SDL2Window.hpp"
+#elif defined(USE_SFML)
 #include "KEngine/Graphics/SFML/SfmlWindow.hpp"
+#endif
+
 #include "KEngine/Log/Log.hpp"
 
 namespace ke::priv
