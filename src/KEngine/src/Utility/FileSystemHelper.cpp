@@ -1,6 +1,7 @@
 #include "KEngine/Utility/FileSystemHelper.hpp"
 
 #include <algorithm>
+#include <cassert>
 
 namespace ke
 {
@@ -9,6 +10,7 @@ namespace ke
 
     bool FileSystemHelper::countFiles(const fs::path & directoryPath, bool recursive)
     {
+        assert(fs::exists(directoryPath));
         if (!fs::is_directory(directoryPath))
         {
             throw std::invalid_argument("FileSystemHelper::countFiles(), path is not a directory.");
@@ -28,6 +30,7 @@ namespace ke
 
     FileSystemHelper::PathContainer FileSystemHelper::getFilePaths(const fs::path & directoryPath, bool recursive)
     {
+        assert(fs::exists(directoryPath));
         if (!fs::is_directory(directoryPath))
         {
             throw std::invalid_argument("FileSystemHelper::getFilePaths(), path is not a directory.");
@@ -51,6 +54,7 @@ namespace ke
 
     FileSystemHelper::PathContainer FileSystemHelper::getChildPaths(const fs::path & directoryPath, bool recursive)
     {
+        assert(fs::exists(directoryPath));
         if (!fs::is_directory(directoryPath))
         {
             throw std::invalid_argument("FileSystemHelper::getChildPaths(), path is not a directory.");
