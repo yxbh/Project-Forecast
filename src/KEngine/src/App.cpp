@@ -58,7 +58,7 @@ namespace
 
     static std::atomic<size_t> eventManagerEventCount = { 0 };
 
-    static char windowTitleTextBuffer[256] = {};
+    static char windowTitleTextBuffer[512] = {};
 
 }
 
@@ -131,6 +131,9 @@ namespace ke
         }
         this->mainWindow->setThreadCurrent(false);// disable window on this thread so can be made thread current on render thread.
         this->mainWindow->requestFocus();
+        Log::instance()->info("Created window(w:{}, h:{}) at ({}, {})",
+            this->mainWindow->getWidth(), this->mainWindow->getHeight(),
+            this->mainWindow->getPositionX(), this->mainWindow->getPositionY());
 
         this->renderSystem = std::make_unique<ke::RenderSystem>();
         this->renderSystem->setWindow(this->mainWindow);
@@ -225,7 +228,7 @@ namespace ke
             const auto memO = std::memory_order_relaxed;
             using LLU = unsigned long long;
             std::snprintf(::windowTitleTextBuffer, sizeof(::windowTitleTextBuffer),
-                "KEngine - FPS(%4.1f, %4.1f[%4.1f/ms], %4.1f[%4.1f/ms]), Entities(%llu), GraphicsCommands(%llu), DrawCalls(%llu), Events(%llu).",
+                "KEngine - FPS(Event:%4.1f, Logic:%4.1f[%4.1f/ms], Graphic:%4.1f[%4.1f/ms]), Entities(%llu), GraphicsCommands(%llu), DrawCalls(%llu), Events(%llu).",
                 ::eventLoopFps.load(memO),
                 ::logicLoopFps.load(memO), ::logicLoopFrameTimeMs.load(memO),
                 ::graphicsLoopFps.load(memO), ::renderLoopFrameTimeMs.load(memO),
