@@ -12,6 +12,7 @@ namespace pf
     class ProjectForecastApp : public ke::App
     {
     public:
+        ProjectForecastApp(const int p_argc, char ** const p_argv);
     protected:
         virtual void createLogicAndViews() final;
     };

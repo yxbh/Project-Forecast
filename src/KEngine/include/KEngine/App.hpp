@@ -7,7 +7,10 @@
 #include "KEngine/Graphics/RenderSystem.hpp"
 #include "KEngine/BaseAppLogic.hpp"
 
+#include "Common/Libs/cxxopts.hpp"
+
 #include <atomic>
+#include <functional>
 #include <utility>
 #include <thread>
 
@@ -24,7 +27,7 @@ namespace ke
     class App : public ke::priv::IApp
     {
     public:
-        App();
+        App(const int p_argc, char ** const p_argv);
         virtual ~App();
 
         /// <summary>
@@ -39,10 +42,18 @@ namespace ke
 
         inline ke::ResourceManager * getResourceManager() const { return this->resourceManager.get(); }
 
+        inline const cxxopts::ParseResult getCommandLineArguments(void) const { return this->cmdArgs(); }
+        inline const cxxopts::OptionValue getCommandLineArgValue(const ke::String & p_cmdOption) const { return this->cmdArgs()[p_cmdOption]; }
+        inline bool hasCommandLineArgValue(const ke::String & p_cmdOption) const { return this->getCommandLineArguments().count(p_cmdOption); }
+
         inline static ke::App * instance() { return App::sGlobalAppInstance; }
 
     protected:
         static ke::App * sGlobalAppInstance;
+
+        using CmdArgsAccessor = std::function<const cxxopts::ParseResult(void)>;
+        CmdArgsAccessor   cmdArgs;
+        cxxopts::Options  cmdOptions;
 
         /// <summary>
         /// Implement this to create the logic and views for the application.

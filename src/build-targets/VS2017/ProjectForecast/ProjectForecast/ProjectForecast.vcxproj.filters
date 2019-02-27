@@ -602,6 +602,15 @@
     <ClInclude Include="..\..\..\..\ProjectForecast\Systems\PlayerCameraControlSystem.hpp">
       <Filter>ProjectForecast\Systems</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\cxxopts.hpp">
+      <Filter>KEngine\Header Files\Common\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\CommandLineOptions.hpp">
+      <Filter>KEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\CommandLineOptions.hpp">
+      <Filter>ProjectForecast</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\KEngine\include\KEngine\Common\Queues.inl">

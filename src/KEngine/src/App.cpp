@@ -21,6 +21,8 @@
 
 #include "KEngine/Graphics/WindowFactory.hpp"
 
+#include "KEngine/CommandLineOptions.hpp"
+
 #ifdef USE_SDL
 #include <SDL.h>
 #endif // USE_SDL
@@ -64,10 +66,22 @@ namespace ke
 {
     ke::App * App::sGlobalAppInstance = nullptr;
 
-    App::App()
+    App::App(const int p_argc, char ** const p_argv)
+        : cmdOptions("KEngine", "A 2D game engine.")
     {
         assert(!App::sGlobalAppInstance);
         App::sGlobalAppInstance = this;
+
+        this->cmdOptions.add_options("KEngine")
+            (ke::cli::DummyPath, "Set dummy path.", cxxopts::value<std::string>()->default_value(".///////////////////////////////"))
+            (ke::cli::MainWindowWidth, "Set width of main window.", cxxopts::value<unsigned>()->default_value("1600"))
+            (ke::cli::MainWindowHeight, "Set height of main window.", cxxopts::value<unsigned>()->default_value("900"))
+            (ke::cli::MainWindowPosX, "Set X coordinate of main window.", cxxopts::value<int>()->default_value("0"))
+            (ke::cli::MainWindowPosY, "Set Y coordinate of main window.", cxxopts::value<int>()->default_value("0"));
+        this->cmdArgs = [this, p_argc, p_argv]()
+        {
+            return cmdOptions.parse(const_cast<int&>(p_argc), const_cast<char**&>(p_argv));
+        };
     }
 
     App::~App()
@@ -98,7 +112,14 @@ namespace ke
 #endif
 
         Log::instance()->info("Creating application main window ...");
-        this->mainWindow = ke::WindowFactory::newWindow();
+        auto configs = this->getCommandLineArguments();
+        this->mainWindow = ke::WindowFactory::newWindow(
+            configs[ke::cli::MainWindowWidth].as<unsigned>(),
+            configs[ke::cli::MainWindowHeight].as<unsigned>(),
+            configs[ke::cli::MainWindowPosX].as<int>(),
+            configs[ke::cli::MainWindowPosY].as<int>(),
+            "KEngine"
+        );
         if (nullptr == mainWindow)
         {
 #if defined(USE_SDL)

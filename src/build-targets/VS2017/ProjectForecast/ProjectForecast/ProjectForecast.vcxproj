@@ -368,6 +368,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\App.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\BaseAppLogic.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\CommandLineOptions.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Color.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Delegate.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Dimension2D.hpp" />
@@ -375,6 +376,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Json.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\atomicops.h" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\concurrentqueue.h" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\cxxopts.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\json.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\readerwriterqueue.h" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\SRDelegate.hpp" />
@@ -453,6 +455,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Views\HumanView.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\GMSRoomResource.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\TextureInfoResource.hpp" />
+    <ClInclude Include="..\..\..\..\ProjectForecast\CommandLineOptions.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\EntityComponents\Components..hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Events\GMSRoomLoadRequestEvent.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Events\RequestDrawDebugDotEvent.hpp" />

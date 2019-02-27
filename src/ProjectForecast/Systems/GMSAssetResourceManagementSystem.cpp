@@ -3,6 +3,8 @@
 #include "../AssetResources/TextureInfoResource.hpp"
 #include "../AssetResources/GMSRoomResource.hpp"
 
+#include "../CommandLineOptions.hpp"
+
 #include <KEngine/Events/OtherGraphicsEvents.hpp>
 #include <KEngine/App.hpp>
 #include <KEngine/Core/EventManager.hpp>
@@ -19,11 +21,6 @@
 #include <mutex>
 #include <utility>
 
-namespace
-{
-    static const auto ProjectForecastExecAssetsRoot = "D:/workspace/ProjectForecastExecAssetsRoot";
-    static const auto ProjectForecastExecAssetPath = "D:/workspace/ProjectForecastExecAssetsRoot/assets";
-}
 
 namespace pf
 {
@@ -34,7 +31,8 @@ namespace pf
         namespace fs = std::filesystem;
 
         ke::Log::instance()->info("Scanning texture assets...");
-        fs::path texturesRootDirPath = fs::path{ ProjectForecastExecAssetPath } / "textures";
+        const auto assetDirPath = ke::App::instance()->getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto texturesRootDirPath = fs::path{ assetDirPath } / "textures";
         sf::Image tempImage;
         std::hash<ke::String> hasher;
         for (const auto & texDirPath : ke::FileSystemHelper::getChildPaths(texturesRootDirPath))
@@ -68,7 +66,7 @@ namespace pf
         }
 
         ke::Log::instance()->info("Scanning GM:S room assets...");
-        const auto gmsRoomsRootDirPath = fs::path{ ProjectForecastExecAssetPath } / "rooms";
+        const auto gmsRoomsRootDirPath = fs::path{ assetDirPath } / "rooms";
         const auto gmsRoomPaths = ke::FileSystemHelper::getFilePaths(gmsRoomsRootDirPath);
         std::mutex gmsRoomLoadMutex;
         std::for_each(std::execution::par_unseq, std::begin(gmsRoomPaths), std::end(gmsRoomPaths), [&](const auto & gmsRoomPath) {

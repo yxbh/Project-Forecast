@@ -11,12 +11,9 @@
 
 int main(int argc, char ** argv)
 {
-    KE_UNUSED(argc);
-    KE_UNUSED(argv);
-
     std::cout << u8"hello world" << std::endl;
 
-    pf::ProjectForecastApp app;
+    pf::ProjectForecastApp app(argc, argv);
     const int result = app.exec();
     ke::Log::instance()->info("Exit code: {}", result);
     return result;

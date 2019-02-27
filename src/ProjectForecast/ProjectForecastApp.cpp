@@ -8,6 +8,7 @@
 #include "Systems/PlayerCameraControlSystem.hpp"
 
 #include "Views/HumanView.hpp"
+#include "CommandLineOptions.hpp"
 
 #include <KEngine/Events/OtherGraphicsEvents.hpp>
 
@@ -18,6 +19,12 @@
 
 namespace pf
 {
+    ProjectForecastApp::ProjectForecastApp(const int p_argc, char ** const p_argv)
+        : ke::App(p_argc, p_argv)
+    {
+        this->cmdOptions.add_options("ProjectForecast")
+            (pf::cli::ExecAssetsPath, "Set asset folder path.", cxxopts::value<ke::String>()->default_value("./assets/"));
+    }
 
     void ProjectForecastApp::createLogicAndViews()
     {
