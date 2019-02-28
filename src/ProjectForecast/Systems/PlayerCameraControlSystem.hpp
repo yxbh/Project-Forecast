@@ -3,6 +3,7 @@
 #include <KEngine/Interfaces/IEntity.hpp>
 #include <KEngine/Interfaces/ISystem.hpp>
 #include <KEngine/Interfaces/IEvent.hpp>
+#include <KEngine/Common/Dimension2D.hpp>
 
 
 namespace ke
@@ -33,6 +34,8 @@ namespace pf
         void PlayerCameraControlSystem::handleCameraViewZoomRequest(ke::EventSptr event);
 
     private:
+        ke::Dimension2DUInt32 windowSizeCache;
+        int currentZoomFactorIdx;
 
     };
 
