@@ -38,7 +38,8 @@ namespace pf
     private:
         void unloadCurrentEntities();
 
-        void updateRorLevelBg_DesolateForest(ke::CameraNode * cameraNode);
+        void updateRorLevelBg_DesolateForest(ke::CameraNode * p_cameraNode);
+        void updateRorLevelBg_DryLake(ke::CameraNode * p_cameraNode);
 
         pf::GMSRoomResource * currentRoomResource;
         std::vector<ke::Entity*> currentRoomEntities;

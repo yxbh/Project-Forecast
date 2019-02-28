@@ -46,6 +46,10 @@ namespace pf
                 {
                     this->updateRorLevelBg_DesolateForest(currentCameraNode);
                 }
+                else if (this->currentLevelName == "Dry Lake")
+                {
+                    this->updateRorLevelBg_DryLake(currentCameraNode);
+                }
             }
         }
     }
@@ -204,10 +208,10 @@ namespace pf
         this->currentRoomBgEntities.clear();
     }
 
-    void GMSRoomManagementSystem::updateRorLevelBg_DesolateForest(ke::CameraNode * cameraNode)
+    void GMSRoomManagementSystem::updateRorLevelBg_DesolateForest(ke::CameraNode * p_cameraNode)
     {
-        const auto cameraViewDimension = cameraNode->getDimension();
-        const auto cameraViewTransform = cameraNode->getGlobalTransform();
+        const auto cameraViewDimension = p_cameraNode->getViewDimension();
+        const auto cameraViewTransform = p_cameraNode->getGlobalTransform();
         ke::Point2DDouble cameraTopLeftPos;
         cameraTopLeftPos.x = cameraViewTransform.x - cameraViewDimension.width / 2;
         cameraTopLeftPos.y = cameraViewTransform.y + cameraViewDimension.height / 2;
@@ -257,6 +261,11 @@ namespace pf
             }
             }
         }
+    }
+
+    void GMSRoomManagementSystem::updateRorLevelBg_DryLake(ke::CameraNode * p_cameraNode)
+    {
+        return this->updateRorLevelBg_DesolateForest(p_cameraNode);
     }
 
 }
