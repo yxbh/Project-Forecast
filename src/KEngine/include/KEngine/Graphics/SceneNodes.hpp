@@ -80,19 +80,19 @@ namespace ke
             ke::GraphicsCommand cmd;
             cmd.type = ke::GraphicsCommand::Types::SetViewContext;
             cmd.view.transform = this->getGlobalTransform();
-            cmd.view.dimension = this->getDimension();
-            cmd.view.viewZoom = this->getViewZoom();
+            cmd.view.dimension = this->getViewDimension();
             return cmd;
         }
 
-        inline const ke::Dimension2DUInt32 & getDimension() const { return this->dimension; }
-        inline void setDimension(const ke::Dimension2DUInt32 & newDimension) { this->dimension = newDimension; }
-        inline float getViewZoom() const { return this->viewZoom; }
-        inline void setViewZoom(float p_newViewZoom) { this->viewZoom = p_newViewZoom; }
+        /// <summary>
+        /// Get the view size of the camera.
+        /// </summary>
+        /// <returns></returns>
+        inline const ke::Dimension2DUInt32 & getViewDimension() const { return this->dimension; }
+        inline void setViewDimension(const ke::Dimension2DUInt32 & newDimension) { this->dimension = newDimension; }
 
     protected:
         ke::Dimension2DUInt32 dimension;
-        float viewZoom = 1.0f;
     };
 
 
