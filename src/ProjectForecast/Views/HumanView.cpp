@@ -47,12 +47,12 @@ namespace pf
         static_cast<pf::KeyboardInputController*>(this->keyboardController.get())->attachEntity(entityId);
     }
 
-    void HumanView::update(ke::Time elapsedTime)
+    void HumanView::update(ke::Time p_elapsedTime)
     {
         assert(mouseController);
         assert(keyboardController);
-        mouseController->update(elapsedTime);
-        keyboardController->update(elapsedTime);
+        this->mouseController->update(p_elapsedTime);
+        this->keyboardController->update(p_elapsedTime);
     }
 
     void HumanView::handleWindowEvent(ke::EventSptr event)
