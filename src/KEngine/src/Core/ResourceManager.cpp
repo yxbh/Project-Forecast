@@ -30,21 +30,25 @@ namespace ke
 
     void ResourceManager::releaseResource(ResourceSptr resource)
     {
+        std::unique_lock lock(this->allResourcesMutex);
         this->allResources.erase(resource->getName());
     }
 
     void ResourceManager::releaseResource(const ke::String & resourceName)
     {
+        std::unique_lock lock(this->allResourcesMutex);
         this->allResources.erase(resourceName);
     }
 
     void ResourceManager::registerResource(ResourceSptr resource)
     {
+        std::unique_lock lock(this->allResourcesMutex);
         this->allResources.insert_or_assign(resource->getName(), resource);
     }
 
     IResource * ResourceManager::getResource(const ke::String & name)
     {
+        std::shared_lock lock(this->allResourcesMutex);
         return
             this->allResources.find(name) != this->allResources.end() ?
             this->allResources[name].get() :
@@ -115,6 +119,7 @@ namespace ke
                 ke::Log::instance()->warn("Overwriting resource named '{}'.", resourceName);
             }
 
+            std::unique_lock lock(this->allResourcesMutex);
             this->allResources[resourceName] = resourceLoaderItr->second->load(resourceJson);
         }
     }

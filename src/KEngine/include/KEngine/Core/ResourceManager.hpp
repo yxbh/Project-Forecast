@@ -8,6 +8,7 @@
 
 #include <forward_list>
 #include <memory>
+#include <shared_mutex>
 #include <unordered_map>
 
 namespace ke
@@ -59,6 +60,8 @@ namespace ke
 
         ResourceLoaderMap resourceLoaders;
         ResourceMap allResources;
+        std::shared_mutex allResourcesMutex;
+
     };
 
     inline ResourceManager::~ResourceManager() {}
