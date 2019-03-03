@@ -9,14 +9,15 @@ namespace ke
 {
 
     /// <summary>
-    /// 
+    ///  A concrete base class for implementing scene nodes.
     /// </summary>
     class SceneNode : public ke::ISceneNode
+    /// 
     {
     public:
         using ISceneNode::ISceneNode;
 
-    protected:
+        virtual void update(const ke::Time & p_elapsedTime) override;
     };
 
 
@@ -112,19 +113,6 @@ namespace ke
         mutable ke::GraphicsCommand states;
     };
 
-    class SpriteNode : public ke::SceneNode
-    {
-    public:
-        static ke::SceneNodeSptr create(ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform,
-            std::int32_t depth, size_t textureId, const ke::Rect2DInt32 & textureRect, ke::Color fillColor = ke::Color::WHITE);
-
-        using SceneNode::SceneNode;
-
-        virtual GraphicsCommand getGraphicsCommand() const final;
-
-    private:
-        mutable ke::GraphicsCommand states;
-    };
 
     class LineNode : public ke::SceneNode
     {
@@ -140,4 +128,44 @@ namespace ke
         mutable ke::GraphicsCommand states;
     };
 
+
+    class SpriteNode : public ke::SceneNode
+    {
+    public:
+        static ke::SceneNodeSptr create(ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform,
+            std::int32_t depth, size_t textureId, const ke::Rect2DInt32 & textureRect, ke::Color fillColor = ke::Color::WHITE);
+
+        using SceneNode::SceneNode;
+
+        virtual GraphicsCommand getGraphicsCommand() const final;
+
+    private:
+        mutable ke::GraphicsCommand states;
+    };
+
+
+    class AnimatedSpriteNode : public ke::SceneNode
+    {
+    public:
+        using TextureRectContainer = std::vector<Rect2DInt32>;
+
+        static ke::SceneNodeSptr create(
+            ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform, std::int32_t depth,
+            size_t textureId, const TextureRectContainer & textureRect, ke::Time frameDuration,
+            ke::Color fillColor = ke::Color::WHITE);
+
+        using SceneNode::SceneNode;
+
+        virtual GraphicsCommand getGraphicsCommand() const final;
+
+        virtual void update(const ke::Time & p_timeDelta) override;
+
+    private:
+        mutable ke::GraphicsCommand states;
+
+        std::size_t currentFrame;
+        TextureRectContainer frameRects;
+        ke::Time frameDuration;
+        ke::Time frameTimeCounter;
+    };
 }

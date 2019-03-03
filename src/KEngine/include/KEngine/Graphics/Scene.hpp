@@ -1,11 +1,11 @@
 #pragma once
 
-#include "SceneNodes.hpp"
-
 #include "KEngine/Interfaces/IEntity.hpp"
 #include "KEngine/Interfaces/IEvent.hpp"
 #include "KEngine/Interfaces/IScene.hpp"
 #include "KEngine/Interfaces/ISceneNode.hpp"
+
+#include "KEngine/Common/Time.hpp"
 
 #include <unordered_map>
 
@@ -20,14 +20,13 @@ namespace ke
         Scene();
         virtual ~Scene();
 
+        virtual void update(ke::Time p_elapsedTime);
+
         bool addNode(ke::SceneNodeSptr);
         bool removeNode(ke::SceneNodeSptr);
         ke::SceneNodeSptr findNode(ke::EntityId);
 
-        inline void setCameraNode(std::shared_ptr<ke::CameraNode> p_cameraNode)
-        {
-            this->cameraNode = p_cameraNode;
-        }
+        void setCameraNode(ke::SceneNodeSptr p_cameraNode);
 
         inline ke::ISceneNode * getCameraNode() { return this->cameraNode.get(); }
 

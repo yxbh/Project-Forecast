@@ -67,11 +67,9 @@ namespace pf
         auto newSceneNodeEvent = dynamic_cast<ke::SceneNodeCreatedEvent*>(event.get());
         if (newSceneNodeEvent)
         {
-            auto currentView = this->getCurrentHumanView();
-            if (currentView)
+            if (auto currentView = this->getCurrentHumanView(); currentView)
             {
-                auto scene = currentView->getScene();
-                if (scene)
+                if (auto scene = currentView->getScene(); scene)
                 {
                     scene->addNode(newSceneNodeEvent->getSceneNode());
                 }

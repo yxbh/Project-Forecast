@@ -3,6 +3,7 @@
 #include "../Events/GMSRoomLoadRequestEvent.hpp"
 #include "../AssetResources/TextureInfoResource.hpp"
 
+#include <KEngine/Graphics/SceneNodes.hpp>
 #include <KEngine/Entity/Components/EntityRenderableComponents.hpp>
 #include <KEngine/Events/OtherGraphicsEvents.hpp>
 #include <KEngine/App.hpp>

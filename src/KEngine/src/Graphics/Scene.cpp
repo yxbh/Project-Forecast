@@ -1,5 +1,7 @@
 #include "KEngine/Graphics/Scene.hpp"
 
+#include "KEngine/Graphics/SceneNodes.hpp"
+
 #include "KEngine/Events/OtherGraphicsEvents.hpp"
 #include "KEngine/Core/EventManager.hpp"
 #include "KEngine/Log/Log.hpp"
@@ -18,6 +20,11 @@ namespace ke
     Scene::~Scene()
     {
         ke::EventManager::deregisterListener<ke::SceneNodeDestroyRequestEvent>(this, &Scene::handleSceneNodeDestroyRequest);
+    }
+
+    void Scene::update(ke::Time p_elapsedTime)
+    {
+        this->rootNode->update(p_elapsedTime); // NOTE: camera node is not updated if it is not attached in the scene.
     }
 
     bool Scene::addNode(ke::SceneNodeSptr p_node)
@@ -73,6 +80,12 @@ namespace ke
         }
 
         return it->second;
+    }
+
+    void Scene::setCameraNode(ke::SceneNodeSptr p_cameraNode)
+    {
+        assert(nullptr != std::dynamic_pointer_cast<ke::CameraNode>(p_cameraNode));
+        this->cameraNode = p_cameraNode;
     }
 
     void Scene::handleSceneNodeDestroyRequest(ke::EventSptr event)

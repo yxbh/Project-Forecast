@@ -53,6 +53,7 @@ namespace pf
         assert(keyboardController);
         this->mouseController->update(p_elapsedTime);
         this->keyboardController->update(p_elapsedTime);
+        this->getScene()->update(p_elapsedTime);
     }
 
     void HumanView::handleWindowEvent(ke::EventSptr event)

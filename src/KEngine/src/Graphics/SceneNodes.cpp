@@ -1,7 +1,18 @@
 #include "KEngine/Graphics/SceneNodes.hpp"
 
+#include <algorithm>
+
+
 namespace ke
 {
+    void SceneNode::update(const ke::Time & p_elapsedTime)
+    {
+        for (auto child : this->getChildren())
+        {
+            child->update(p_elapsedTime);
+        }
+    }
+
 
     ke::SceneNodeSptr ke::RootNode::create()
     {
@@ -48,28 +59,6 @@ namespace ke
     }
 
 
-    ke::SceneNodeSptr SpriteNode::create(ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform,
-        std::int32_t depth, size_t textureId, const ke::Rect2DInt32 & textureRect, ke::Color color)
-    {
-        auto newNode = ke::makeSceneNode<ke::SpriteNode>(sceneNodeId);
-        newNode->setLocalTransform(localTransform);
-        auto & states                = newNode->states;
-        states.type                  = ke::GraphicsCommand::Types::RenderSprite;
-        states.sprite.id             = newNode->getId();
-        states.sprite.depth          = depth;
-        states.sprite.textureId      = textureId;
-        states.sprite.textureRect    = textureRect;
-        states.sprite.color          = color;
-        return newNode;
-    }
-
-    GraphicsCommand SpriteNode::getGraphicsCommand() const
-    {
-        this->states.shape.globalTransform = this->getGlobalTransform();
-        return this->states;
-    }
-
-
     ke::SceneNodeSptr LineNode::create(ke::SceneNodeId sceneNodeId, const Point2DFloat & begin,
         const Point2DFloat & end, std::int32_t depth, const ke::Color & color)
     {
@@ -87,5 +76,65 @@ namespace ke
     GraphicsCommand LineNode::getGraphicsCommand() const
     {
         return this->states;
+    }
+
+
+    ke::SceneNodeSptr SpriteNode::create(ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform,
+        std::int32_t depth, size_t textureId, const ke::Rect2DInt32 & textureRect, ke::Color color)
+    {
+        auto newNode = ke::makeSceneNode<ke::SpriteNode>(sceneNodeId);
+        newNode->setLocalTransform(localTransform);
+        auto & states = newNode->states;
+        states.type = ke::GraphicsCommand::Types::RenderSprite;
+        states.sprite.id = newNode->getId();
+        states.sprite.depth = depth;
+        states.sprite.textureId = textureId;
+        states.sprite.textureRect = textureRect;
+        states.sprite.color = color;
+        return newNode;
+    }
+
+    GraphicsCommand SpriteNode::getGraphicsCommand() const
+    {
+        this->states.shape.globalTransform = this->getGlobalTransform();
+        return this->states;
+    }
+
+
+    ke::SceneNodeSptr AnimatedSpriteNode::create(
+        ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform, std::int32_t depth,
+        size_t textureId, const TextureRectContainer & textureRects, ke::Time frameDuration, ke::Color color)
+    {
+        assert(textureRects.size());
+        auto newNode = ke::makeSceneNode<ke::AnimatedSpriteNode>(sceneNodeId);
+        newNode->setLocalTransform(localTransform);
+        newNode->frameDuration = frameDuration;
+        auto & states = newNode->states;
+        states.type = ke::GraphicsCommand::Types::RenderSprite;
+        states.sprite.id = newNode->getId();
+        states.sprite.depth = depth;
+        states.sprite.textureId = textureId;
+        states.sprite.textureRect = textureRects[0];
+        states.sprite.color = color;
+        return newNode;
+    }
+
+    GraphicsCommand AnimatedSpriteNode::getGraphicsCommand() const
+    {
+        this->states.shape.globalTransform = this->getGlobalTransform();
+        states.sprite.textureRect = this->frameRects[this->currentFrame];
+        return this->states;
+    }
+
+    void AnimatedSpriteNode::update(const ke::Time & p_timeDelta)
+    {
+        this->frameTimeCounter += p_timeDelta;
+        while (this->frameTimeCounter >= this->frameDuration)
+        {
+            this->frameTimeCounter -= this->frameDuration;
+            this->currentFrame = (this->currentFrame + 1) % this->frameRects.size();
+        }
+
+        this->SceneNode::update(p_timeDelta);
     }
 }

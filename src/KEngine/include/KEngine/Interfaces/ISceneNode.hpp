@@ -43,6 +43,12 @@ namespace ke
         inline ISceneNode * getParent() const { return this->parentNode; }
         inline const SceneNodeList & getChildren() const { return this->childrenNodes; }
 
+        /// <summary>
+        /// Update the scene node with the given time delta (i.e. time passed since last update).
+        /// </summary>
+        /// <param name="p_elapsedTime">Time passed since last update.</param>
+        virtual void update(const ke::Time & p_elapsedTime) = 0;
+
         inline bool addChild(ke::SceneNodeSptr childNode)
         {
             this->childrenNodes.push_back(childNode);
