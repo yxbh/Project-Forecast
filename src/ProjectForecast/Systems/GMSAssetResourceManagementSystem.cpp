@@ -18,7 +18,6 @@
 #include <filesystem>
 #include <fstream>
 #include <limits>
-#include <mutex>
 #include <utility>
 
 
@@ -68,7 +67,6 @@ namespace pf
         ke::Log::instance()->info("Scanning GM:S room assets...");
         const auto gmsRoomsRootDirPath = fs::path{ assetDirPath } / "rooms";
         const auto gmsRoomPaths = ke::FileSystemHelper::getFilePaths(gmsRoomsRootDirPath);
-        std::mutex gmsRoomLoadMutex;
         std::for_each(std::execution::par_unseq, std::begin(gmsRoomPaths), std::end(gmsRoomPaths), [&](const auto & gmsRoomPath) {
             ke::Log::instance()->info("Discovered GM:S room asset: {}", gmsRoomPath.string());
             auto roomResource = std::make_shared<GMSRoomResource>();
@@ -154,7 +152,6 @@ namespace pf
                 roomResource->addTile(newTile);
             }
 
-            std::scoped_lock lock(gmsRoomLoadMutex);
             ke::App::instance()->getResourceManager()->registerResource(roomResource);
         });
 
