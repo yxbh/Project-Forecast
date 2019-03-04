@@ -5,7 +5,7 @@
 namespace pf
 {
     /// <summary>
-    /// An entity builder for instantiating 
+    /// An entity builder for instantiating a waterfall entity.
     /// </summary>
     class RorObjWaterfallBuilder : public ke::IEntityBuilder
     {
