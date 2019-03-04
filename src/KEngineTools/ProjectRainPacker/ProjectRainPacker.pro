@@ -33,9 +33,9 @@ include($$PWD/qtpropertybrowser/qtpropertybrowser.pri)
 # Organisation, product & copyright details.
 #
 QMAKE_TARGET_COMPANY = Infinity Box Studio
-QMAKE_TARGET_PRODUCT = Overwatch Player Log
-QMAKE_TARGET_DESCRIPTION = Overwatch Player Log is a simple utility application that allows you to record your favourite (or not!) players that you have met in Overwatch.
-QMAKE_TARGET_COPYRIGHT = Copyright (C) 2016 Benjamin Huang.
+QMAKE_TARGET_PRODUCT = RainPacker
+QMAKE_TARGET_DESCRIPTION = KEngine resource manifest generator.
+QMAKE_TARGET_COPYRIGHT = Copyright (C) 2019 Benjamin Huang.
 #
 
 #
