@@ -69,32 +69,34 @@ namespace pf
         std::hash<ke::String> hasher;
         for (const auto & texDirPath : ke::FileSystemHelper::getChildPaths(texturesRootDirPath))
         {
-            ke::Log::instance()->info("Discovered texture asset: {}", texDirPath.string());
-
-            auto textureFilePaths = ke::FileSystemHelper::getFilePaths(texDirPath);
-            if (textureFilePaths.size() == 1)
+            if (fs::is_directory(texDirPath))
             {
-                auto texPath = textureFilePaths[0];
-                auto textureResource = std::make_shared<TextureInfoResource>();
-                textureResource->setName(texPath.stem().string());
-                textureResource->setTextureId(hasher(textureResource->getName()));
-                textureResource->setSourcePath(texPath.string());
+                ke::Log::instance()->info("Discovered texture asset: {}", texDirPath.string());
 
-                // retrieve size
-                bool ret = tempImage.loadFromFile(texPath.string());
-                assert(ret);
-                TextureInfoResource::DimensionType dimension;
-                dimension.width = tempImage.getSize().x;
-                dimension.height = tempImage.getSize().y;
-                textureResource->setTextureSize(dimension);
+                auto textureFilePaths = ke::FileSystemHelper::getFilePaths(texDirPath);
+                if (textureFilePaths.size() == 1)
+                {
+                    auto texPath = textureFilePaths[0];
+                    auto textureResource = std::make_shared<TextureInfoResource>();
+                    textureResource->setName(texPath.stem().string());
+                    textureResource->setTextureId(hasher(textureResource->getName()));
+                    textureResource->setSourcePath(texPath.string());
 
-                ke::App::instance()->getResourceManager()->registerResource(textureResource);
+                    // retrieve size
+                    bool ret = tempImage.loadFromFile(texPath.string());
+                    assert(ret);
+                    TextureInfoResource::DimensionType dimension;
+                    dimension.width = tempImage.getSize().x;
+                    dimension.height = tempImage.getSize().y;
+                    textureResource->setTextureSize(dimension);
+
+                    ke::App::instance()->getResourceManager()->registerResource(textureResource);
+                }
+                else
+                {
+                    // ignore when there're multiple texture files in a single dir for now.
+                }
             }
-            else
-            {
-                // ignore when there're multiple texture files in a single dir for now.
-            }
-
         }
     }
 
