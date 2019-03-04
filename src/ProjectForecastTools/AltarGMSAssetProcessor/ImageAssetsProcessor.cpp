@@ -143,17 +143,17 @@ namespace ke
 
             Sprite sprite;
             sprite.name                 = fileInfo.baseName();
-            sprite.dimension.width      = jsonObjSize["width"].toInt();
-            sprite.dimension.height     = jsonObjSize["height"].toInt();
-            sprite.boundingBox.top      = jsonObjBbox["top"].toInt();
-            sprite.boundingBox.left     = jsonObjBbox["left"].toInt();
-            sprite.boundingBox.bottom   = jsonObjBbox["bottom"].toInt();
-            sprite.boundingBox.right    = jsonObjBbox["right"].toInt();
-            sprite.boundingBoxMode      = jsonValBboxmode.toInt();
+            sprite.dimension.width      = static_cast<unsigned>(jsonObjSize["width"].toInt());
+            sprite.dimension.height     = static_cast<unsigned>(jsonObjSize["height"].toInt());
+            sprite.boundingBox.top      = static_cast<unsigned>(jsonObjBbox["top"].toInt());
+            sprite.boundingBox.left     = static_cast<unsigned>(jsonObjBbox["left"].toInt());
+            sprite.boundingBox.bottom   = static_cast<unsigned>(jsonObjBbox["bottom"].toInt());
+            sprite.boundingBox.right    = static_cast<unsigned>(jsonObjBbox["right"].toInt());
+            sprite.boundingBoxMode      = static_cast<unsigned>(jsonValBboxmode.toInt());
             sprite.separateMasks        = jsonValSepmasks.toBool();
-            sprite.origin.x             = jsonObjOrigin["x"].toInt();
-            sprite.origin.y             = jsonObjOrigin["y"].toInt();
-            for (auto jsonVal : jsonArrTextures) sprite.texpageIds.push_back(jsonVal.toInt());
+            sprite.origin.x             = static_cast<unsigned>(jsonObjOrigin["x"].toInt());
+            sprite.origin.y             = static_cast<unsigned>(jsonObjOrigin["y"].toInt());
+            for (auto jsonVal : jsonArrTextures) sprite.texpageIds.push_back(static_cast<unsigned>(jsonVal.toInt()));
 
             sprites.push_back(sprite);
         }
@@ -180,18 +180,18 @@ namespace ke
             const auto jsonValSheetid = jsonObjRoot["sheetid"];
 
             Texpage texpage;
-            texpage.id = fileInfo.baseName().toInt();
-            texpage.sourcePosition.x            = jsonObjSrc["x"].toInt();
-            texpage.sourcePosition.y            = jsonObjSrc["y"].toInt();
-            texpage.sourceDimension.width       = jsonObjSrc["width"].toInt();
-            texpage.sourceDimension.height      = jsonObjSrc["height"].toInt();
-            texpage.destinationPosition.x       = jsonObjDest["x"].toInt();
-            texpage.destinationPosition.y       = jsonObjDest["y"].toInt();
-            texpage.destinationDimension.width  = jsonObjDest["width"].toInt();
-            texpage.destinationDimension.height = jsonObjDest["height"].toInt();
-            texpage.dimension.width             = jsonObjSize["width"].toInt();
-            texpage.dimension.height            = jsonObjSize["height"].toInt();
-            texpage.textureId = jsonValSheetid.toInt();
+            texpage.id                          = static_cast<unsigned>(fileInfo.baseName().toInt());
+            texpage.sourcePosition.x            = static_cast<unsigned>(jsonObjSrc["x"].toInt());
+            texpage.sourcePosition.y            = static_cast<unsigned>(jsonObjSrc["y"].toInt());
+            texpage.sourceDimension.width       = static_cast<unsigned>(jsonObjSrc["width"].toInt());
+            texpage.sourceDimension.height      = static_cast<unsigned>(jsonObjSrc["height"].toInt());
+            texpage.destinationPosition.x       = static_cast<unsigned>(jsonObjDest["x"].toInt());
+            texpage.destinationPosition.y       = static_cast<unsigned>(jsonObjDest["y"].toInt());
+            texpage.destinationDimension.width  = static_cast<unsigned>(jsonObjDest["width"].toInt());
+            texpage.destinationDimension.height = static_cast<unsigned>(jsonObjDest["height"].toInt());
+            texpage.dimension.width             = static_cast<unsigned>(jsonObjSize["width"].toInt());
+            texpage.dimension.height            = static_cast<unsigned>(jsonObjSize["height"].toInt());
+            texpage.textureId                   = static_cast<unsigned>(jsonValSheetid.toInt());
 
             texpages.push_back(texpage);
         }
@@ -206,7 +206,7 @@ namespace ke
             updateProgress("Processing: " + fileInfo.absoluteFilePath());
 
             Texture texture;
-            texture.id = fileInfo.baseName().toInt();
+            texture.id = static_cast<unsigned>(fileInfo.baseName().toInt());
             texture.texture = QImage(fileInfo.absoluteFilePath());
 
             textures.push_back(texture);
