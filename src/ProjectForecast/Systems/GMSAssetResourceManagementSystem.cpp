@@ -3,6 +3,7 @@
 #include "../AssetResources/TextureInfoResource.hpp"
 #include "../AssetResources/GMSRoomResource.hpp"
 #include "../AssetResources/GMSObjectResource.hpp"
+#include "../AssetResources/OtherGMSResources.hpp"
 
 #include "../CommandLineOptions.hpp"
 
@@ -18,6 +19,7 @@
 #include <filesystem>
 #include <fstream>
 #include <limits>
+#include <mutex>
 #include <utility>
 
 namespace fs = std::filesystem;
@@ -45,8 +47,9 @@ namespace pf
     {
         ke::Log::instance()->info("Scanning assets...");
         this->loadTextureAssets();
-        this->loadRoomAssets();
+        this->loadSpriteAssets();
         this->loadObjectAssets();
+        this->loadRoomAssets();
         ke::Log::instance()->info("Scanning assets... DONE");
         return true;
     }
@@ -67,13 +70,13 @@ namespace pf
         const auto texturesRootDirPath = fs::path{ assetDirPath } / "textures";
         sf::Image tempImage;
         std::hash<ke::String> hasher;
-        for (const auto & texDirPath : ke::FileSystemHelper::getChildPaths(texturesRootDirPath))
+        for (const auto & path : ke::FileSystemHelper::getChildPaths(texturesRootDirPath))
         {
-            if (fs::is_directory(texDirPath))
+            if (fs::is_directory(path)) // is a texture directory.
             {
-                ke::Log::instance()->info("Discovered texture asset: {}", texDirPath.string());
+                ke::Log::instance()->info("Discovered texture asset: {}", path.string());
 
-                auto textureFilePaths = ke::FileSystemHelper::getFilePaths(texDirPath);
+                auto textureFilePaths = ke::FileSystemHelper::getFilePaths(path);
                 if (textureFilePaths.size() == 1)
                 {
                     auto texPath = textureFilePaths[0];
@@ -97,7 +100,95 @@ namespace pf
                     // ignore when there're multiple texture files in a single dir for now.
                 }
             }
+            else if (fs::is_regular_file(path) && path.extension() == "png") // is a png texture.
+            {
+                ke::Log::instance()->info("Discovered texture asset: {}", path.string());
+
+                auto textureResource = std::make_shared<TextureInfoResource>();
+                textureResource->setName("texture_" + path.stem().string());
+                textureResource->setTextureId(std::stoi(textureResource->getName()));
+                textureResource->setSourcePath(path.string());
+
+                // retrieve size
+                bool ret = tempImage.loadFromFile(path.string());
+                assert(ret);
+                TextureInfoResource::DimensionType dimension;
+                dimension.width = tempImage.getSize().x;
+                dimension.height = tempImage.getSize().y;
+                textureResource->setTextureSize(dimension);
+
+                ke::App::instance()->getResourceManager()->registerResource(textureResource);
+            }
         }
+    }
+
+    void GMSAssetResourceManagementSystem::loadSpriteAssets(void)
+    {
+        ke::Log::instance()->info("Scanning texpage assets...");
+        const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto texpageRootDirPath = fs::path{ assetDirPath } / "texpage";
+        std::mutex texpagesMutex;
+        std::unordered_map<unsigned, std::shared_ptr<pf::GMSTexpageResource>> texpages; // <texpage_id, texpage>
+        const auto texpagePaths = ke::FileSystemHelper::getChildPaths(texpageRootDirPath);
+        std::for_each(std::execution::par_unseq, std::begin(texpagePaths), std::end(texpagePaths), [&](const auto & path)
+        {
+            if (!path.has_extension() || path.extension() != ".json") return;
+
+            ke::Log::instance()->info("Discovered GM:S texpage asset: {}", path.string());
+
+            std::ifstream texpageFileStream{ path };
+            ke::json texpageJson;
+            texpageFileStream >> texpageJson;
+
+            auto texpage = std::make_shared<pf::GMSTexpageResource>("texpage_" + path.stem().string(), path.string());
+
+            texpage->id = std::stoi(path.stem().string());
+            texpage->sourcePosition.x            = texpageJson["src"]["x"].get<unsigned>();
+            texpage->sourcePosition.y            = texpageJson["src"]["y"].get<unsigned>();
+            texpage->sourceDimension.width       = texpageJson["src"]["width"].get<unsigned>();
+            texpage->sourceDimension.height      = texpageJson["src"]["height"].get<unsigned>();
+            texpage->destinationPosition.x       = texpageJson["dest"]["x"].get<unsigned>();
+            texpage->destinationPosition.y       = texpageJson["dest"]["y"].get<unsigned>();
+            texpage->destinationDimension.width  = texpageJson["dest"]["width"].get<unsigned>();
+            texpage->destinationDimension.height = texpageJson["dest"]["height"].get<unsigned>();
+            texpage->dimension.width             = texpageJson["size"]["width"].get<unsigned>();
+            texpage->dimension.height            = texpageJson["size"]["height"].get<unsigned>();
+            texpage->textureId                   = texpageJson["sheetid"].get<unsigned>();
+
+            std::scoped_lock lock(texpagesMutex);
+            texpages[texpage->id] = texpage;
+        });
+
+        ke::Log::instance()->info("Scanning sprite assets...");
+        const auto spriteRootDirPath = fs::path{ assetDirPath } / "sprite";
+        const auto spritePaths = ke::FileSystemHelper::getChildPaths(spriteRootDirPath);
+        std::for_each(std::execution::par_unseq, std::begin(spritePaths), std::end(spritePaths), [&](const auto & path)
+        {
+            if (!path.has_extension() || path.extension() != ".json") return;
+
+            ke::Log::instance()->info("Discovered GM:S sprite asset: {}", path.string());
+            std::ifstream spriteFileStream{ path };
+            ke::json spriteJson;
+            spriteFileStream >> spriteJson;
+
+            auto sprite = std::make_shared<pf::GMSSpriteResource>(path.stem().string(), path.string());
+
+            sprite->dimension.width     = spriteJson["size"]["width"].get<unsigned>();
+            sprite->dimension.height    = spriteJson["size"]["height"].get<unsigned>();
+            sprite->boundingBox.top     = spriteJson["bounding"]["top"].get<unsigned>();
+            sprite->boundingBox.left    = spriteJson["bounding"]["left"].get<unsigned>();
+            sprite->boundingBox.bottom  = spriteJson["bounding"]["bottom"].get<unsigned>();
+            sprite->boundingBox.right   = spriteJson["bounding"]["right"].get<unsigned>();
+            sprite->boundingBoxMode     = spriteJson["bboxmode"].get<unsigned>();
+            sprite->separateMasks       = spriteJson["sepmasks"].get<bool>();
+            sprite->origin.x            = spriteJson["origin"]["x"].get<unsigned>();
+            sprite->origin.y            = spriteJson["origin"]["y"].get<unsigned>();
+            for (const auto & textureJson : spriteJson["textures"])
+            {
+                sprite->texpageIds.push_back(textureJson.get<unsigned>());
+            }
+        });
+        // TODO: load and register sprite resources
     }
 
     void GMSAssetResourceManagementSystem::loadRoomAssets(void)
@@ -107,8 +198,12 @@ namespace pf
         const auto gmsRoomsRootDirPath = fs::path{ assetDirPath } / "rooms";
         const auto gmsRoomPaths = ke::FileSystemHelper::getFilePaths(gmsRoomsRootDirPath);
         std::hash<ke::String> hasher;
-        std::for_each(std::execution::par_unseq, std::begin(gmsRoomPaths), std::end(gmsRoomPaths), [&](const auto & gmsRoomPath) {
+        std::for_each(std::execution::par_unseq, std::begin(gmsRoomPaths), std::end(gmsRoomPaths), [&](const auto & gmsRoomPath)
+        {
+            if (!gmsRoomPath.has_extension() || gmsRoomPath.extension() != ".json") return;
+
             ke::Log::instance()->info("Discovered GM:S room asset: {}", gmsRoomPath.string());
+
             auto roomResource = std::make_shared<GMSRoomResource>();
             roomResource->setName(gmsRoomPath.stem().string());
             roomResource->setSourcePath(gmsRoomPath.string());
@@ -204,7 +299,10 @@ namespace pf
         const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
         const auto gmsObjectRootDirPath = fs::path{ assetDirPath } / "object";
         const auto gmsObjectPaths = ke::FileSystemHelper::getFilePaths(gmsObjectRootDirPath);
-        std::for_each(std::execution::par_unseq, std::begin(gmsObjectPaths), std::end(gmsObjectPaths), [&](const auto & gmsObjectPath) {
+        std::for_each(std::execution::par_unseq, std::begin(gmsObjectPaths), std::end(gmsObjectPaths), [&](const auto & gmsObjectPath)
+        {
+            if (!gmsObjectPath.has_extension() || gmsObjectPath.extension() != "json") return;
+
             ke::Log::instance()->info("Discovered GM:S object asset: {}", gmsObjectPath.string());
 
             std::ifstream objectFileStream{ gmsObjectPath };

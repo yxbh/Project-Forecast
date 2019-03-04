@@ -42,6 +42,7 @@ namespace ke
 
     void ResourceManager::registerResource(ResourceSptr resource)
     {
+        assert(resource->getName().length());
         std::unique_lock lock(this->allResourcesMutex);
         this->allResources.insert_or_assign(resource->getName(), resource);
     }

@@ -6,7 +6,7 @@ namespace pf
 {
 
     /// <summary>
-    /// 
+    /// A resource manager that manages GM:S specific resources such as those output by Altar.
     /// </summary>
     class GMSAssetResourceManagementSystem : public ke::ISystem
     {
@@ -21,6 +21,7 @@ namespace pf
 
     private:
         void loadTextureAssets(void);
+        void loadSpriteAssets(void);
         void loadRoomAssets(void);
         void loadObjectAssets(void);
     };

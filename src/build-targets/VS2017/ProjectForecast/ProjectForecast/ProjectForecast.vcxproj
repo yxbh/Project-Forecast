@@ -460,6 +460,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Views\HumanView.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\GMSObjectResource.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\GMSRoomResource.hpp" />
+    <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\OtherGMSResources.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\TextureInfoResource.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\CommandLineOptions.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\EntityComponents\Components..hpp" />
