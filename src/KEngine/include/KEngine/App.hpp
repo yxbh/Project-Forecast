@@ -42,18 +42,19 @@ namespace ke
 
         inline ke::ResourceManager * getResourceManager() const { return this->resourceManager.get(); }
 
-        inline const cxxopts::ParseResult getCommandLineArguments(void) const { return this->cmdArgs(); }
-        inline const cxxopts::OptionValue getCommandLineArgValue(const ke::String & p_cmdOption) const { return this->cmdArgs()[p_cmdOption]; }
-        inline bool hasCommandLineArgValue(const ke::String & p_cmdOption) const { return this->getCommandLineArguments().count(p_cmdOption); }
-
         inline static ke::App * instance() { return App::sGlobalAppInstance; }
+
+        static cxxopts::ParseResult & getCommandLineArguments(void);
+        static const cxxopts::OptionValue getCommandLineArgValue(const ke::String & p_cmdOption);
+        static bool hasCommandLineArgValue(const ke::String & p_cmdOption);
 
     protected:
         static ke::App * sGlobalAppInstance;
 
-        using CmdArgsAccessor = std::function<const cxxopts::ParseResult(void)>;
-        CmdArgsAccessor   cmdArgs;
+        // CLI stuff.
         cxxopts::Options  cmdOptions;
+        int argc;
+        char ** argv;
 
         /// <summary>
         /// Implement this to create the logic and views for the application.

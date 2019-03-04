@@ -63,7 +63,7 @@ namespace pf
     void GMSAssetResourceManagementSystem::loadTextureAssets(void)
     {
         ke::Log::instance()->info("Scanning texture assets...");
-        const auto assetDirPath = ke::App::instance()->getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
         const auto texturesRootDirPath = fs::path{ assetDirPath } / "textures";
         sf::Image tempImage;
         std::hash<ke::String> hasher;
@@ -101,7 +101,7 @@ namespace pf
     void GMSAssetResourceManagementSystem::loadRoomAssets(void)
     {
         ke::Log::instance()->info("Scanning GM:S room assets...");
-        const auto assetDirPath = ke::App::instance()->getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
         const auto gmsRoomsRootDirPath = fs::path{ assetDirPath } / "rooms";
         const auto gmsRoomPaths = ke::FileSystemHelper::getFilePaths(gmsRoomsRootDirPath);
         std::hash<ke::String> hasher;
@@ -199,7 +199,7 @@ namespace pf
     void GMSAssetResourceManagementSystem::loadObjectAssets(void)
     {
         ke::Log::instance()->info("Scanning GM:S object assets...");
-        const auto assetDirPath = ke::App::instance()->getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
         const auto gmsObjectRootDirPath = fs::path{ assetDirPath } / "object";
         const auto gmsObjectPaths = ke::FileSystemHelper::getFilePaths(gmsObjectRootDirPath);
         std::for_each(std::execution::par_unseq, std::begin(gmsObjectPaths), std::end(gmsObjectPaths), [&](const auto & gmsObjectPath) {

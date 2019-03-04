@@ -67,7 +67,7 @@ namespace ke
     ke::App * App::sGlobalAppInstance = nullptr;
 
     App::App(const int p_argc, char ** const p_argv)
-        : cmdOptions("KEngine", "A 2D game engine.")
+        : cmdOptions("KEngine", "A 2D game engine."), argc(p_argc), argv(p_argv)
     {
         assert(!App::sGlobalAppInstance);
         App::sGlobalAppInstance = this;
@@ -78,10 +78,6 @@ namespace ke
             (ke::cli::MainWindowHeight, "Set height of main window.", cxxopts::value<unsigned>()->default_value("900"))
             (ke::cli::MainWindowPosX, "Set X coordinate of main window.", cxxopts::value<int>()->default_value("0"))
             (ke::cli::MainWindowPosY, "Set Y coordinate of main window.", cxxopts::value<int>()->default_value("0"));
-        this->cmdArgs = [this, p_argc, p_argv]()
-        {
-            return cmdOptions.parse(const_cast<int&>(p_argc), const_cast<char**&>(p_argv));
-        };
     }
 
     App::~App()
@@ -444,4 +440,22 @@ namespace ke
         this->isEventLoopRunning = false;
     }
 
+
+    cxxopts::ParseResult & App::getCommandLineArguments(void)
+    {
+        auto app = App::instance();
+        assert(app);
+        static cxxopts::ParseResult s_parseResult = app->cmdOptions.parse(app->argc, app->argv);
+        return s_parseResult;
+    }
+
+    const cxxopts::OptionValue App::getCommandLineArgValue(const ke::String & p_cmdOption)
+    {
+        return App::getCommandLineArguments()[p_cmdOption];
+    }
+
+    bool App::hasCommandLineArgValue(const ke::String & p_cmdOption)
+    {
+        return App::getCommandLineArguments().count(p_cmdOption);
+    }
 }
