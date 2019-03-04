@@ -49,10 +49,12 @@ namespace ke
     IResource * ResourceManager::getResource(const ke::String & name)
     {
         std::shared_lock lock(this->allResourcesMutex);
-        return
-            this->allResources.find(name) != this->allResources.end() ?
-            this->allResources[name].get() :
-            nullptr;
+        if (auto itr = this->allResources.find(name); itr != this->allResources.end())
+        {
+            return itr->second.get();
+        }
+        ke::Log::instance()->error("Requesting non-existing resource: {}", name);
+        return nullptr;
     }
 
     void ResourceManager::loadFromManifest(ke::String manifestPath)

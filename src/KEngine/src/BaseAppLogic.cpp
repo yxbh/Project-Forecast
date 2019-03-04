@@ -1,14 +1,14 @@
 #include "KEngine/BaseAppLogic.hpp"
 
 #include "KEngine/Entity/Components/EntityRenderableComponents.hpp"
-#include "KEngine/Entity/ComponentLoaders/EntityRenderableComponentLoader.hpp"
+#include "KEngine/Entity/ComponentBuilders/EntityRenderableComponentBuilder.hpp"
 
 namespace ke
 {
 
     BaseAppLogic::BaseAppLogic()
     {
-        this->entityFactory.registerComponentJsonLoader<ke::EntityRenderableComponentLoader>(ke::EntityRenderableComponent::NAME);
+        this->entityFactory.registerComponentBuilder<ke::EntityRenderableComponentBuilder>(ke::EntityRenderableComponent::NAME);
     }
 
     void BaseAppLogic::onUpdate(ke::Time elapsedTime)

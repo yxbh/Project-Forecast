@@ -1,5 +1,6 @@
 #pragma once
 
+#include <KEngine/Interfaces/IEntity.hpp>
 #include <KEngine/Interfaces/IResource.hpp>
 #include <KEngine/Common/Point2D.hpp>
 #include <KEngine/Common/Size2D.hpp>
@@ -13,7 +14,6 @@ namespace pf
 
     struct GMSRoomTileInstance
     {
-    public:
         ke::Point2DInt32 pos;
         ke::Point2DInt32 sourcepos;
         ke::Size2DInt32 size;
@@ -27,7 +27,6 @@ namespace pf
 
     struct GMSRoomBackgroundInfo
     {
-    public:
         bool enabled;
         bool foreground;
         ke::Point2DInt32 pos{ 0,0 };
@@ -39,6 +38,16 @@ namespace pf
         size_t bg_hash;
     };
 
+    struct GMSRoomObjectInstance
+    {
+        ke::String obj;
+        ke::EntityId instanceid;
+        ke::Point2DInt32 pos;
+        ke::Point2DFloat scale{ 1.0f, 1.0f };
+        float rotation{ 0.0f };
+        ke::Colour colour;
+    };
+
     class GMSRoomResource : public ke::IResource
     {
         KE_DEFINE_RESOURCE_COMMON_PROPERTIES(GMSRoomResource, "GMSRoomResource");
@@ -46,6 +55,7 @@ namespace pf
     public:
         using BackgroundInfoContainer = std::vector<GMSRoomBackgroundInfo>;
         using TileInstanceContainer   = std::vector<GMSRoomTileInstance>;
+        using ObjectInstanceContainer = std::vector<GMSRoomObjectInstance>;
         using SizeType                = ke::Dimension2DInt32;
         using SpeedType               = int32_t;
 
@@ -54,6 +64,9 @@ namespace pf
 
         inline const TileInstanceContainer & getTiles() const { return this->tiles; }
         inline void addTile(const GMSRoomTileInstance & tile) { this->tiles.push_back(tile); }
+
+        inline const ObjectInstanceContainer & getObjects() const { return this->objects; }
+        inline void addObject(const GMSRoomObjectInstance & object) { this->objects.push_back(object); }
 
         inline const SizeType getSize() const { return this->size; }
         inline void setSize(const SizeType & p_size) { this->size = p_size; }
@@ -67,10 +80,12 @@ namespace pf
     private:
         BackgroundInfoContainer backgrounds;
         TileInstanceContainer tiles;
+        ObjectInstanceContainer objects;
         SizeType size;
         SpeedType speed;
         ke::Colour colour;
 
+        friend class GMSAssetResourceManagementSystem;
     };
 
 }

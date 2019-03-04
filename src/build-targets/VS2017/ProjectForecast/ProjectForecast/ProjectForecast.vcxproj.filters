@@ -91,9 +91,6 @@
     <Filter Include="KEngine\Header Files\Entity\Components">
       <UniqueIdentifier>{7cc19a3a-f088-4c3c-b3f7-af8a956dcee2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="KEngine\Header Files\Entity\ComponentLoaders">
-      <UniqueIdentifier>{9c0bb24f-8421-4619-89f7-2dc5d2d9ae75}</UniqueIdentifier>
-    </Filter>
     <Filter Include="KEngine\Source Files\Entity">
       <UniqueIdentifier>{33200075-e21f-4b6d-b8d9-ee1f390e9a88}</UniqueIdentifier>
     </Filter>
@@ -141,6 +138,18 @@
     </Filter>
     <Filter Include="KEngine\Source Files\Entity\Components">
       <UniqueIdentifier>{1b57781c-10ac-4aed-b9ef-180f60882c00}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectForecast\EntityFactory">
+      <UniqueIdentifier>{b574377e-fbf2-440f-8e19-44d42549f20a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Entity\Builders">
+      <UniqueIdentifier>{6cd6cf80-b542-4226-8776-837d7c0faf32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Entity\Builders">
+      <UniqueIdentifier>{5441ddd6-6630-406c-8723-c2bdba0873f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Entity\ComponentBuilders">
+      <UniqueIdentifier>{9c0bb24f-8421-4619-89f7-2dc5d2d9ae75}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -300,6 +309,15 @@
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_SystemManager.cpp">
       <Filter>KEngine\Source Files\UnitTest</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Entity\Builders\JsonEntityBuilder.cpp">
+      <Filter>KEngine\Source Files\Entity\Builders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjWaterfallBuilder.cpp">
+      <Filter>ProjectForecast\EntityFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\EntityFactorySystem.cpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManager.hpp">
@@ -449,9 +467,6 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Dimension2D.hpp">
       <Filter>KEngine\Header Files\Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\ComponentLoaders\EntityRenderableComponentLoader.hpp">
-      <Filter>KEngine\Header Files\Entity\ComponentLoaders</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\Components\EntityRenderableComponents.hpp">
       <Filter>KEngine\Header Files\Entity\Components</Filter>
     </ClInclude>
@@ -510,9 +525,6 @@
       <Filter>KEngine\Header Files\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IEntityComponent.hpp">
-      <Filter>KEngine\Header Files\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IEntityComponentJsonLoader.hpp">
       <Filter>KEngine\Header Files\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IEvent.hpp">
@@ -610,6 +622,27 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\ProjectForecast\CommandLineOptions.hpp">
       <Filter>ProjectForecast</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IEntityBuilder.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\Builders\JsonEntityBuilder.hpp">
+      <Filter>KEngine\Header Files\Entity\Builders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjWaterfallBuilder.hpp">
+      <Filter>ProjectForecast\EntityFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IEntityComponentBuilder.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\ComponentBuilders\EntityRenderableComponentBuilder.hpp">
+      <Filter>KEngine\Header Files\Entity\ComponentBuilders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\EntityFactorySystem.hpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\GMSObjectResource.hpp">
+      <Filter>ProjectForecast\AssetResources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

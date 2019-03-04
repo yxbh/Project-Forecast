@@ -14,11 +14,15 @@ namespace pf
 
     public:
 
-        virtual bool initialise() final;
-        virtual void shutdown() final;
+        virtual bool initialise(void) final;
+        virtual void shutdown(void) final;
 
         virtual void update(ke::Time elapsedTime) final;
 
+    private:
+        void loadTextureAssets(void);
+        void loadRoomAssets(void);
+        void loadObjectAssets(void);
     };
 
 }

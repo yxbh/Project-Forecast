@@ -1,9 +1,9 @@
-#include "KEngine/Entity/ComponentLoaders/EntityRenderableComponentLoader.hpp"
+#include "KEngine/Entity/ComponentBuilders/EntityRenderableComponentBuilder.hpp"
 
 namespace ke
 {
 
-    ke::EntityComponentSptr EntityRenderableComponentLoader::loadComponent(const ke::json & jsonObject)
+    ke::EntityComponentSptr EntityRenderableComponentBuilder::build(const std::any & p_jsonObject)
     {
         // TODO:
         return nullptr;

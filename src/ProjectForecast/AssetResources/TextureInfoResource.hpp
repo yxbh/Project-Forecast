@@ -8,7 +8,7 @@ namespace pf
 
     class TextureInfoResource : public ke::IResource
     {
-        KE_DEFINE_RESOURCE_COMMON_PROPERTIES(TextureInfoResource, "TextureInfoResource"/*0x9bd52b62*/);
+        KE_DEFINE_RESOURCE_COMMON_PROPERTIES(TextureInfoResource, "TextureInfoResource");
     
     public:
         using DimensionType = ke::Dimension2DUInt32;

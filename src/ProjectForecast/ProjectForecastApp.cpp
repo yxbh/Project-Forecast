@@ -1,7 +1,10 @@
 #include "ProjectForecastApp.hpp"
 
+#include "EntityFactory/RorObjWaterfallBuilder.hpp"
+
 #include "Systems/DebugDrawSystem.hpp"
 #include "Systems/DebugSceneGridSystem.hpp"
+#include "Systems/EntityFactorySystem.hpp"
 #include "Systems/EntityTransformControlSystem.hpp"
 #include "Systems/GMSRoomManagementSystem.hpp"
 #include "Systems/GMSAssetResourceManagementSystem.hpp"
@@ -38,6 +41,8 @@ namespace pf
         auto systemManager = this->getLogic()->getSystemManager();
         assert(systemManager);
         bool ret = false;
+        ret = systemManager->addSystem(std::make_unique<pf::EntityFactorySystem>());
+        assert(ret);
         ret = systemManager->addSystem(std::make_unique<pf::EntityTransformControlSystem>());
         assert(ret);
         ret = systemManager->addSystem(std::make_unique<pf::PlayerCameraControlSystem>());

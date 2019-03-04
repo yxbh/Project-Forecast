@@ -189,7 +189,17 @@ namespace pf
                     this->currentRoomEntities.push_back(bgEntity.get());
                     this->currentRoomBgEntities.push_back(bgEntity.get());
                 }
-                
+            }
+
+            // Instantiate room objects.
+            auto entityFactory = ke::App::instance()->getLogic()->getEntityFactory();
+            for (const auto & objInfo : this->currentRoomResource->getObjects())
+            {
+                auto e = entityFactory->createNew(objInfo.obj, objInfo);
+                if (e)
+                {
+                    this->currentRoomEntities.push_back(e);
+                }
             }
 
             // Load background textures.

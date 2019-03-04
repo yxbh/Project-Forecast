@@ -5,11 +5,6 @@
 
 #include <algorithm>
 
-namespace
-{
-    static const int JSON_SPACE_INDENTATION = 2;
-}
-
 namespace ke
 {
 
@@ -18,97 +13,53 @@ namespace ke
         // register internal KEngine loaders here.
     }
 
-    bool EntityFactory::registerComponentJsonLoader(const ke::String & entityComponentName, EntityComponentJsonLoaderSptr loader)
+    bool EntityFactory::registerEntityBuilder(const ke::String & p_entityTypeName, ke::EntityBuilderUptr && p_builder)
     {
-        bool isLoaderForNameAlreadyExists = this->creators.find(entityComponentName) != this->creators.end();
+        bool alreadyExists = this->entityBuilders.find(p_entityTypeName) != this->entityBuilders.end();
+
+        if (alreadyExists)
+        {
+            ke::Log::instance()->warn("Loader for component named {} already registered. It will be overrided.", p_entityTypeName);
+        }
+
+        this->entityBuilders[p_entityTypeName] = std::move(p_builder);
+
+        return !alreadyExists;
+    }
+
+    bool EntityFactory::registerComponentBuilder(const ke::String & p_entityComponentName, EntityComponentLoaderUptr && loader)
+    {
+        bool isLoaderForNameAlreadyExists = this->entityComponentBuilders.find(p_entityComponentName) != this->entityComponentBuilders.end();
         
         if (isLoaderForNameAlreadyExists)
         {
-            ke::Log::instance()->warn("JSON loader for component named {} already registered. It will be overrided.", entityComponentName);
+            ke::Log::instance()->warn("Loader for component named {} already registered. It will be overrided.", p_entityComponentName);
         }
 
-        this->creators[entityComponentName] = loader;
+        this->entityComponentBuilders[p_entityComponentName] = std::move(loader);
 
         return !isLoaderForNameAlreadyExists;
     }
 
-    ke::EntitySptr EntityFactory::createNew(const ke::Json & entityJsonObject) const
+    ke::Entity * EntityFactory::createNew(const ke::String & p_name, const std::any p_parameters) const
     {
-        // validate JSON object type
-        auto jsonObjectTypeIt = entityJsonObject.find("type");
-        if (jsonObjectTypeIt == entityJsonObject.end())
+        if (auto itr = this->entityBuilders.find(p_name); itr != this->entityBuilders.end())
         {
-            Log::instance()->error("Invalid JSON object received by EntityFactory::createNew. Content: {}", entityJsonObject.dump(JSON_SPACE_INDENTATION));
-            return nullptr;
+            auto builder = itr->second.get();
+            return builder->build(p_parameters);
         }
-        auto typeValue = (*jsonObjectTypeIt).get<std::string>();
-        if (typeValue != "entity")
+        ke::Log::instance()->error("EntityFactory does not have an entity builder for {}", p_name);
+        return nullptr;
+    }
+
+    ke::IEntityComponentBuilder * EntityFactory::getComponentBuilder(const ke::String & p_componentName)
+    {
+        if (auto itr = this->entityComponentBuilders.find(p_componentName); itr != this->entityComponentBuilders.end())
         {
-            Log::instance()->error("Invalid JSON object type received by EntityFactory::createNew. Type given: '{}'", typeValue);
-            return nullptr;
+            return itr->second.get();
         }
-
-        // set the entity name if it exists.
-        ke::EntitySptr newEntity = ke::makeEntity(ke::Entity::newId());
-        if (entityJsonObject.find("name") != entityJsonObject.end())
-        {
-            newEntity->setName(entityJsonObject["name"]);
-        }
-
-        // look for components array
-        auto componentsArrayIt = entityJsonObject.find("components");
-        if (componentsArrayIt == entityJsonObject.end())
-        {
-            Log::instance()->warn("Entity JSON object does not contain a components array.");
-            return newEntity;
-        }
-
-        auto componentsArray = *componentsArrayIt;
-        for (auto & entityComponentJsonObj : componentsArray)
-        {
-            // validate entity component JSON object type
-            jsonObjectTypeIt = entityComponentJsonObj.find("type");
-            if (jsonObjectTypeIt == entityComponentJsonObj.end())
-            {
-                Log::instance()->warn("JSON object in entity component array for entity named '{}' does not have an object type. Component ignored.");
-                continue;
-            }
-            typeValue = (*jsonObjectTypeIt).get<std::string>();
-            if (typeValue != "entity_component")
-            {
-                Log::instance()->error("Unexpected JSON object type '{}' in entity component array for entity named '{}'.", typeValue, newEntity->getName());
-                return nullptr;
-            }
-            auto componentTypeNameIt = entityComponentJsonObj.find("component_name");
-            if (componentTypeNameIt == entityComponentJsonObj.end())
-            {
-                Log::instance()->error("Missing 'type_name' key value pair in entity component JSON object in entity component array for entity named '{}' does not have an object type.", newEntity->getName());
-                return nullptr;
-            }
-            auto typeNameValue = (*componentTypeNameIt).get<std::string>();
-            if (typeNameValue.length() == 0)
-            {
-                Log::instance()->error("Empty 'type_name' value in entity component JSON object in entity component array for entity named '{}' does not have an object type.", newEntity->getName());
-                return nullptr;
-            }
-
-            auto entityComponentJsonLoaderIt = this->creators.find(typeNameValue);
-            if (entityComponentJsonLoaderIt == this->creators.end())
-            {
-                Log::instance()->error("No matching entity component loader available for entity component type '{}' in entity component JSON object in entity component array for entity named '{}' does not have an object type. Ignored.", typeNameValue, newEntity->getName());
-                continue;
-            }
-
-            auto entityComponent = (*entityComponentJsonLoaderIt).second->loadComponent(entityComponentJsonObj);
-            newEntity->addComponent(entityComponent);
-        }
-
-        if (!newEntity->initialise())
-        {
-            ke::Log::instance()->error("Entity initilisation failure.");
-        }
-
-        return newEntity;
+        ke::Log::instance()->error("EntityFactory does not have an entity component builder for {}", p_componentName);
+        return nullptr;
     }
 
 }
