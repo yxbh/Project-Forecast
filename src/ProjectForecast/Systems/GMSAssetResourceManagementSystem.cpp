@@ -74,12 +74,12 @@ namespace pf
         {
             if (fs::is_directory(path)) // is a texture directory.
             {
-                ke::Log::instance()->info("Discovered texture asset: {}", path.string());
-
                 auto textureFilePaths = ke::FileSystemHelper::getFilePaths(path);
                 if (textureFilePaths.size() == 1)
                 {
-                    auto texPath = textureFilePaths[0];
+                    const auto & texPath = textureFilePaths[0];
+                    ke::Log::instance()->info("Loading texture asset: {}", texPath.string());
+
                     auto textureResource = std::make_shared<TextureInfoResource>();
                     textureResource->setName(texPath.stem().string());
                     textureResource->setTextureId(hasher(textureResource->getName()));
@@ -102,7 +102,7 @@ namespace pf
             }
             else if (fs::is_regular_file(path) && path.extension() == "png") // is a png texture.
             {
-                ke::Log::instance()->info("Discovered texture asset: {}", path.string());
+                ke::Log::instance()->info("Loading texture asset: {}", path.string());
 
                 auto textureResource = std::make_shared<TextureInfoResource>();
                 textureResource->setName("texture_" + path.stem().string());
@@ -134,7 +134,7 @@ namespace pf
         {
             if (!path.has_extension() || path.extension() != ".json") return;
 
-            ke::Log::instance()->info("Discovered GM:S texpage asset: {}", path.string());
+            ke::Log::instance()->info("Loading GM:S texpage asset: {}", path.string());
 
             std::ifstream texpageFileStream{ path };
             ke::json texpageJson;
@@ -166,7 +166,7 @@ namespace pf
         {
             if (!path.has_extension() || path.extension() != ".json") return;
 
-            ke::Log::instance()->info("Discovered GM:S sprite asset: {}", path.string());
+            ke::Log::instance()->info("Loading GM:S sprite asset: {}", path.string());
             std::ifstream spriteFileStream{ path };
             ke::json spriteJson;
             spriteFileStream >> spriteJson;
@@ -202,7 +202,7 @@ namespace pf
         {
             if (!gmsRoomPath.has_extension() || gmsRoomPath.extension() != ".json") return;
 
-            ke::Log::instance()->info("Discovered GM:S room asset: {}", gmsRoomPath.string());
+            ke::Log::instance()->info("Loading GM:S room asset: {}", gmsRoomPath.string());
 
             auto roomResource = std::make_shared<GMSRoomResource>();
             roomResource->setName(gmsRoomPath.stem().string());
@@ -303,7 +303,7 @@ namespace pf
         {
             if (!gmsObjectPath.has_extension() || gmsObjectPath.extension() != "json") return;
 
-            ke::Log::instance()->info("Discovered GM:S object asset: {}", gmsObjectPath.string());
+            ke::Log::instance()->info("Loading GM:S object asset: {}", gmsObjectPath.string());
 
             std::ifstream objectFileStream{ gmsObjectPath };
             ke::json objectJson;
