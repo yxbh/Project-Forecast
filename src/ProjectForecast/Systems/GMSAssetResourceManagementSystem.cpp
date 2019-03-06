@@ -229,6 +229,8 @@ namespace pf
             const auto & roomBackgroundsJson = roomJson["bgs"];
             for (const auto & backgroundJson : roomBackgroundsJson)
             {
+                // Here we make sure to convert the GM:S room coordinates to KEngine's world coordinates.
+                // I.e. y-down to y-up.
                 GMSRoomBackgroundInfo backgroundInfo;
                 backgroundInfo.enabled    = backgroundJson["enabled"].get<bool>();
                 backgroundInfo.foreground = backgroundJson["foreground"].get<bool>();
@@ -278,6 +280,8 @@ namespace pf
             roomResource->objects.reserve(roomObjsJson.size());
             for (const auto & objJson : roomObjsJson)
             {
+                // Here we make sure to convert the GM:S room coordinates to KEngine's world coordinates.
+                // I.e. y-down to y-up.
                 pf::GMSRoomObjectInstance obj;
                 obj.instanceid = objJson["instanceid"].get<ke::EntityId>();
                 obj.obj        = objJson["obj"].get<ke::String>();
