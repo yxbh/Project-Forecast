@@ -44,6 +44,23 @@ namespace ke
     {
         assert(resource->getName().length());
         std::unique_lock lock(this->allResourcesMutex);
+        if (this->allResources.count(resource->getName())) // TODO: replace with contains() from C++20.
+        {
+            // Check and log if we are replacing an existing resource.
+            // We use warn level at the moment as replacing an existing resource could be an error.
+            // Although in the future we may support hot reloading or custom resource override (i.e. mods) so
+            // warn level may be too severe for that.
+            auto oldResource = this->allResources[resource->getName()];
+            if (oldResource->getSourcePath() == resource->getSourcePath())
+            {
+                ke::Log::instance()->warn("Replacing resource with matching name \"{}\" from same source path: {}", resource->getSourcePath());
+            }
+            else
+            {
+                ke::Log::instance()->warn("Resource with name \"{}\" already exists. It will be replaced.\nOld source path: {}\nNew source path: {}",
+                    resource->getName(), oldResource->getSourcePath(), resource->getSourcePath());
+            }
+        }
         this->allResources.insert_or_assign(resource->getName(), resource);
     }
 
