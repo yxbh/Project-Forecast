@@ -46,7 +46,9 @@ namespace pf
     bool GMSAssetResourceManagementSystem::initialise()
     {
         ke::Log::instance()->info("Scanning assets...");
+        this->loadTexpageAssets();
         this->loadTextureAssets();
+        this->loadBgAssets();
         this->loadSpriteAssets();
         this->loadObjectAssets();
         this->loadRoomAssets();
@@ -63,72 +65,14 @@ namespace pf
         KE_UNUSED(elapsedTime);
     }
 
-    void GMSAssetResourceManagementSystem::loadTextureAssets(void)
+    void GMSAssetResourceManagementSystem::loadTexpageAssets(void)
     {
-        ke::Log::instance()->info("Scanning texture assets...");
-        const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
-        const auto texturesRootDirPath = fs::path{ assetDirPath } / "textures";
-        sf::Image tempImage;
-        std::hash<ke::String> hasher;
-        for (const auto & path : ke::FileSystemHelper::getChildPaths(texturesRootDirPath))
-        {
-            if (fs::is_directory(path)) // is a texture directory.
-            {
-                auto textureFilePaths = ke::FileSystemHelper::getFilePaths(path);
-                if (textureFilePaths.size() == 1)
-                {
-                    const auto & texPath = textureFilePaths[0];
-                    ke::Log::instance()->info("Loading texture asset: {}", texPath.string());
-
-                    auto textureResource = std::make_shared<TextureInfoResource>();
-                    textureResource->setName(texPath.stem().string());
-                    textureResource->setTextureId(hasher(textureResource->getName()));
-                    textureResource->setSourcePath(texPath.string());
-
-                    // retrieve size
-                    bool ret = tempImage.loadFromFile(texPath.string());
-                    assert(ret);
-                    TextureInfoResource::DimensionType dimension;
-                    dimension.width = tempImage.getSize().x;
-                    dimension.height = tempImage.getSize().y;
-                    textureResource->setTextureSize(dimension);
-
-                    ke::App::instance()->getResourceManager()->registerResource(textureResource);
-                }
-                else
-                {
-                    // ignore when there're multiple texture files in a single dir for now.
-                }
-            }
-            else if (fs::is_regular_file(path) && path.extension() == "png") // is a png texture.
-            {
-                ke::Log::instance()->info("Loading texture asset: {}", path.string());
-
-                auto textureResource = std::make_shared<TextureInfoResource>();
-                textureResource->setName("texture_" + path.stem().string());
-                textureResource->setTextureId(std::stoi(textureResource->getName()));
-                textureResource->setSourcePath(path.string());
-
-                // retrieve size
-                bool ret = tempImage.loadFromFile(path.string());
-                assert(ret);
-                TextureInfoResource::DimensionType dimension;
-                dimension.width = tempImage.getSize().x;
-                dimension.height = tempImage.getSize().y;
-                textureResource->setTextureSize(dimension);
-
-                ke::App::instance()->getResourceManager()->registerResource(textureResource);
-            }
-        }
-    }
-
-    void GMSAssetResourceManagementSystem::loadSpriteAssets(void)
-    {
-        ke::Log::instance()->info("Scanning texpage assets...");
+        ke::Log::instance()->info("Scanning GM:S texpage assets...");
         const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
         const auto texpageRootDirPath = fs::path{ assetDirPath } / "texpage";
+        auto texpageMapResource = std::make_shared<pf::TexpageMapResource>("texpages", __FILE__);
         std::mutex texpagesMutex;
-        std::unordered_map<unsigned, std::shared_ptr<pf::GMSTexpageResource>> texpages; // <texpage_id, texpage>
+        auto & texpages = texpageMapResource->texpages; // <texpage_id, texpage>
         const auto texpagePaths = ke::FileSystemHelper::getChildPaths(texpageRootDirPath);
         std::for_each(std::execution::par_unseq, std::begin(texpagePaths), std::end(texpagePaths), [&](const auto & path)
         {
@@ -153,13 +97,110 @@ namespace pf
             texpage->destinationDimension.height = texpageJson["dest"]["height"].get<unsigned>();
             texpage->dimension.width             = texpageJson["size"]["width"].get<unsigned>();
             texpage->dimension.height            = texpageJson["size"]["height"].get<unsigned>();
-            texpage->textureId                   = texpageJson["sheetid"].get<unsigned>();
+            texpage->sheetid                     = texpageJson["sheetid"].get<unsigned>();
 
             std::scoped_lock lock(texpagesMutex);
             texpages[texpage->id] = texpage;
         });
+        ke::App::instance()->getResourceManager()->registerResource(texpageMapResource);
+    }
 
-        ke::Log::instance()->info("Scanning sprite assets...");
+    void GMSAssetResourceManagementSystem::loadTextureAssets(void)
+    {
+        ke::Log::instance()->info("Scanning texture assets...");
+        const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto texturesRootDirPath = fs::path{ assetDirPath } / "textures";
+        sf::Image tempImage;
+        std::hash<ke::String> hasher;
+        static constexpr char * RSRC_PREFIX = "texture_";
+        for (const auto & path : ke::FileSystemHelper::getChildPaths(texturesRootDirPath))
+        {
+            if (fs::is_directory(path)) // is a texture directory.
+            {
+                auto textureFilePaths = ke::FileSystemHelper::getFilePaths(path);
+                if (textureFilePaths.size() == 1)
+                {
+                    // This loads the unpacked textures.
+
+                    //const auto & texPath = textureFilePaths[0];
+                    //ke::Log::instance()->info("Loading texture asset: {}", texPath.string());
+
+                    //auto textureResource = std::make_shared<TextureInfoResource>();
+                    //textureResource->setName(RSRC_PREFIX + texPath.stem().string());
+                    //textureResource->setTextureId(hasher(textureResource->getName()));
+                    //textureResource->setSourcePath(texPath.string());
+
+                    //// retrieve size
+                    //bool ret = tempImage.loadFromFile(texPath.string());
+                    //assert(ret);
+                    //TextureInfoResource::DimensionType dimension;
+                    //dimension.width = tempImage.getSize().x;
+                    //dimension.height = tempImage.getSize().y;
+                    //textureResource->setTextureSize(dimension);
+
+                    //ke::App::instance()->getResourceManager()->registerResource(textureResource);
+                }
+                else
+                {
+                    // ignore when there're multiple texture files in a single dir for now.
+                }
+            }
+            else if (fs::is_regular_file(path) && path.extension() == ".png") // is a png texture.
+            {
+                // This loads the GM:S packed texture sheets.
+
+                ke::Log::instance()->info("Loading texture asset: {}", path.string());
+
+                auto textureResource = std::make_shared<TextureInfoResource>();
+                textureResource->setName(RSRC_PREFIX + path.stem().string());
+                textureResource->setTextureId(std::stoi(path.stem().string()));
+                textureResource->setSourcePath(path.string());
+
+                // retrieve size
+                bool ret = tempImage.loadFromFile(path.string());
+                assert(ret);
+                TextureInfoResource::DimensionType dimension;
+                dimension.width = tempImage.getSize().x;
+                dimension.height = tempImage.getSize().y;
+                textureResource->setTextureSize(dimension);
+
+                ke::App::instance()->getResourceManager()->registerResource(textureResource);
+            }
+        }
+    }
+
+    void GMSAssetResourceManagementSystem::loadBgAssets(void)
+    {
+        ke::Log::instance()->info("Scanning GM:S bg assets...");
+        const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto bgRootDirPath = fs::path{ assetDirPath } / "bg";
+        const auto bgPaths = ke::FileSystemHelper::getChildPaths(bgRootDirPath);
+        auto resourceManager = ke::App::instance()->getResourceManager();
+        const auto texpageMapResource = std::dynamic_pointer_cast<pf::TexpageMapResource>(resourceManager->getResource("texpages"));
+        assert(texpageMapResource);
+        std::for_each(std::execution::par_unseq, std::cbegin(bgPaths), std::cend(bgPaths), [&](const auto & path)
+        {
+            if (!path.has_extension() || path.extension() != ".json") return;
+
+            ke::Log::instance()->info("Loading GM:S bg asset: {}", path.string());
+            std::ifstream bgFileStream{ path };
+            ke::json bgJson;
+            bgFileStream >> bgJson;
+
+            auto bgResource = std::make_shared<pf::GMSBgResource>(path.stem().string(), path.string());
+            bgResource->texture = bgJson["texture"].get<unsigned>();
+
+            // find and attach the associated texpage resource
+            bgResource->texpageResource = texpageMapResource->texpages[bgResource->texture];
+
+            resourceManager->registerResource(bgResource);
+        });
+    }
+
+    void GMSAssetResourceManagementSystem::loadSpriteAssets(void)
+    {
+        ke::Log::instance()->info("Scanning GM:S sprite assets...");
+        const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
         const auto spriteRootDirPath = fs::path{ assetDirPath } / "sprite";
         const auto spritePaths = ke::FileSystemHelper::getChildPaths(spriteRootDirPath);
         std::for_each(std::execution::par_unseq, std::begin(spritePaths), std::end(spritePaths), [&](const auto & path)
@@ -197,7 +238,6 @@ namespace pf
         const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
         const auto gmsRoomsRootDirPath = fs::path{ assetDirPath } / "rooms";
         const auto gmsRoomPaths = ke::FileSystemHelper::getFilePaths(gmsRoomsRootDirPath);
-        std::hash<ke::String> hasher;
         std::for_each(std::execution::par_unseq, std::begin(gmsRoomPaths), std::end(gmsRoomPaths), [&](const auto & gmsRoomPath)
         {
             if (!gmsRoomPath.has_extension() || gmsRoomPath.extension() != ".json") return;
@@ -223,6 +263,10 @@ namespace pf
             auto roomColourStr = roomJson["colour"].get<ke::String>();
             roomResource->setColour(::gmsColourStrToColour(roomColourStr));
 
+            auto resourceManager = ke::App::instance()->getResourceManager();
+            const auto texpagesResource = std::dynamic_pointer_cast<pf::TexpageMapResource>(resourceManager->getResource("texpages"));
+            assert(texpagesResource);
+
             //
             // load background info
             //
@@ -240,7 +284,17 @@ namespace pf
                 backgroundInfo.speed      = { backgroundJson["speed"]["x"].get<int>(), -backgroundJson["speed"]["y"].get<int>() };
                 backgroundInfo.stretch    = backgroundJson["stretch"].get<bool>();
                 backgroundInfo.bg         = backgroundJson.value("bg", "");
-                backgroundInfo.bg_hash    = hasher(backgroundInfo.bg);
+
+                // Get the matching bg resource and adjust for texture sheet offset.
+                if (backgroundInfo.bg.length())
+                {
+                    auto resourceManager = ke::App::instance()->getResourceManager();
+                    auto resource = std::dynamic_pointer_cast<pf::GMSBgResource>(resourceManager->getResource(backgroundInfo.bg));
+                    assert(resource);
+                    backgroundInfo.sourcepos = resource->texpageResource.lock()->sourcePosition;
+                    backgroundInfo.size      = resource->texpageResource.lock()->sourceDimension;
+                }
+
                 roomResource->addBackgroundInfo(backgroundInfo);
             }
 
@@ -259,8 +313,7 @@ namespace pf
                 // Texture coordinates are the same at the moment at y-down. I.e. (0,0) at top left.
                 newTile.pos       = { tileJson["pos"]["x"].get<int>(), -tileJson["pos"]["y"].get<int>() };
                 newTile.bg        = tileJson["bg"].get<ke::String>();
-                newTile.bg_hash   = hasher(newTile.bg);
-                newTile.sourcepos = { tileJson["sourcepos"]["x"].get<int>(), tileJson["sourcepos"]["y"].get<int>() }; // sourcepos is y-down local image coordinates.
+                newTile.sourcepos = { tileJson["sourcepos"]["x"].get<unsigned>(), tileJson["sourcepos"]["y"].get<unsigned>() }; // sourcepos is y-down local image coordinates.
                 newTile.size      = { tileJson["size"]["width"].get<int>(), tileJson["size"]["height"].get<int>() };
                 newTile.scale     = { tileJson["scale"]["x"].get<float>(), tileJson["scale"]["y"].get<float>() };
                 newTile.colour    = ::gmsColourStrToColour(tileJson["colour"].get<ke::String>());
@@ -269,6 +322,12 @@ namespace pf
                 // GM:S depth value: larger == further back.
                 // KEngine depth value: larger == further in front.
                 newTile.tiledepth = -tileJson["tiledepth"].get<ke::graphics::DepthType>();
+
+                // Get the matching bg resource and adjust for texture sheet offset.
+                auto resourceManager = ke::App::instance()->getResourceManager();
+                auto resource = std::dynamic_pointer_cast<pf::GMSBgResource>(resourceManager->getResource(newTile.bg));
+                assert(resource);
+                newTile.sourcepos += resource->texpageResource.lock()->sourcePosition;
 
                 roomResource->addTile(newTile);
             }

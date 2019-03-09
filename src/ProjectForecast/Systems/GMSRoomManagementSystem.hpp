@@ -7,6 +7,7 @@
 #include <KEngine/Interfaces/IEvent.hpp>
 
 #include <atomic>
+#include <memory>
 #include <vector>
 
 namespace ke
@@ -41,7 +42,7 @@ namespace pf
         void updateRorLevelBg_DesolateForest(ke::CameraNode * p_cameraNode);
         void updateRorLevelBg_DryLake(ke::CameraNode * p_cameraNode);
 
-        pf::GMSRoomResource * currentRoomResource;
+        std::shared_ptr<pf::GMSRoomResource> currentRoomResource;
         std::vector<ke::Entity*> currentRoomEntities;
         std::vector<ke::Entity*> currentRoomBgEntities;
 

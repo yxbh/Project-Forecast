@@ -4,6 +4,8 @@
 #include <KEngine/Common/Point2D.hpp>
 #include <KEngine/Common/Dimension2D.hpp>
 
+#include <memory>
+#include <unordered_map>
 #include <vector>
 
 namespace pf
@@ -22,7 +24,7 @@ namespace pf
             this->sourcePath = p_sourcePath;
         };
 
-        ke::Point2DUInt32 sourcePosition;
+        ke::Point2DUInt32 sourcePosition; // texture sheet coordinate.
         ke::Dimension2DUInt32 sourceDimension;
 
         ke::Point2DUInt32 destinationPosition;
@@ -30,10 +32,29 @@ namespace pf
 
         ke::Dimension2DUInt32 dimension;
 
-        unsigned textureId;
+        unsigned sheetid; // the GM:S texture sheet name (i.e. "textures" folder content).
         unsigned id;
 
 
+        friend class GMSAssetResourceManagementSystem;
+    };
+
+
+    /// <summary>
+    /// A container class which holds a mapping of GM:S texpage ID to <see cref="GMSTexpageResource"/>.
+    /// </summary>
+    class TexpageMapResource : public ke::IResource
+    {
+        KE_DEFINE_RESOURCE_COMMON_PROPERTIES(TexpageMapResource, "TexpageMapResource");
+
+    public:
+        TexpageMapResource(const ke::String & p_name, const ke::String & p_sourcePath)
+        {
+            this->name = p_name;
+            this->sourcePath = p_sourcePath;
+        };
+
+        std::unordered_map<unsigned, std::shared_ptr<GMSTexpageResource>> texpages; // <texpage_id, texpage>
         friend class GMSAssetResourceManagementSystem;
     };
 
@@ -56,6 +77,26 @@ namespace pf
         unsigned id;
 
         friend class GMSAssetResourceManagementSystem;
+    };
+
+
+    /// <summary>
+    /// A resource representing a GM:S bg object.
+    /// </summary>
+    class GMSBgResource : public ke::IResource
+    {
+        KE_DEFINE_RESOURCE_COMMON_PROPERTIES(GMSBgResource, "GMSBgResource");
+
+    public:
+        GMSBgResource(const ke::String & p_name, const ke::String & p_sourcePath)
+        {
+            this->name = p_name;
+            this->sourcePath = p_sourcePath;
+        };
+
+        unsigned texture; // it is really the texpage name/id.
+
+        std::weak_ptr<GMSTexpageResource> texpageResource;
     };
 
 

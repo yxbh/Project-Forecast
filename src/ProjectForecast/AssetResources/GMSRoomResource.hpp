@@ -14,19 +14,24 @@ namespace pf
 
     struct GMSRoomTileInstance
     {
+        // GM:S info
+
         ke::Point2DInt32 pos;
-        ke::Point2DInt32 sourcepos;
+        ke::Point2DUInt32 sourcepos;
         ke::Size2DInt32 size;
         ke::Point2DFloat scale{ 1.0f, 1.0f };
         ke::Colour colour{ke::Colour::WHITE};
         ke::String bg;
-        size_t bg_hash;
         int32_t tiledepth;
         size_t instanceid;
+
+        // custom info
     };
 
     struct GMSRoomBackgroundInfo
     {
+        // GM:S info
+
         bool enabled;
         bool foreground;
         ke::Point2DInt32 pos{ 0,0 };
@@ -35,11 +40,18 @@ namespace pf
         ke::Point2DInt32 speed{ 0,0 };
         bool stretch{ false };
         ke::String bg;
-        size_t bg_hash;
+
+        
+        // custom info
+
+        ke::Point2DUInt32 sourcepos;
+        ke::Dimension2DUInt32 size;
     };
 
     struct GMSRoomObjectInstance
     {
+        // GM:S info
+
         ke::String obj;
         ke::EntityId instanceid;
         ke::Point2DInt32 pos;

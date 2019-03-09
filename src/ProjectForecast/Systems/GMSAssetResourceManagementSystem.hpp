@@ -20,7 +20,9 @@ namespace pf
         virtual void update(ke::Time elapsedTime) final;
 
     private:
+        void loadTexpageAssets(void);
         void loadTextureAssets(void);
+        void loadBgAssets(void);
         void loadSpriteAssets(void);
         void loadRoomAssets(void);
         void loadObjectAssets(void);

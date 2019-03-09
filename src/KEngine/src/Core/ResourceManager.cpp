@@ -64,12 +64,12 @@ namespace ke
         this->allResources.insert_or_assign(resource->getName(), resource);
     }
 
-    IResource * ResourceManager::getResource(const ke::String & name)
+    ResourceSptr ResourceManager::getResource(const ke::String & name)
     {
         std::shared_lock lock(this->allResourcesMutex);
         if (auto itr = this->allResources.find(name); itr != this->allResources.end())
         {
-            return itr->second.get();
+            return itr->second;
         }
         ke::Log::instance()->error("Requesting non-existing resource: {}", name);
         return nullptr;

@@ -351,13 +351,13 @@ namespace ke
             case ke::TexturesBulkLoadViaFilesRequestEvent::TYPE:
             {
                 auto textureLoadRequest = static_cast<ke::TexturesBulkLoadViaFilesRequestEvent*>(event.get());
-                ke::Log::instance()->info("Loading {} textures...", textureLoadRequest->getAllTextureInfo().size());
+                ke::Log::instance()->info("Loading {} textures ...", textureLoadRequest->getAllTextureInfo().size());
                 for (const auto & textureInfo : textureLoadRequest->getAllTextureInfo())
                 {
                     const auto & [textureName, textureId, textureSrcPath] = textureInfo;
-                    if (::TextureStore.find(textureId) == ::TextureStore.end())
+                    if (::TextureStore.find(textureId) == ::TextureStore.end())  // load if not in store.
                     {
-                        ke::Log::instance()->info("Loading texture {} from {}", textureName, textureSrcPath);
+                        ke::Log::instance()->info("Loading texture {}(id:{}) from {}", textureName, textureId, textureSrcPath);
                         auto texture = std::make_unique<sf::Texture>();
                         if (texture->loadFromFile(textureSrcPath))
                         {

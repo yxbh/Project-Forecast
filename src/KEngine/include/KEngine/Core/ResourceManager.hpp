@@ -50,7 +50,7 @@ namespace ke
         /// </summary>
         /// <param name="name">Resource name.</param>
         /// <returns>resource if a resource with the given name exists. nullptr is returned otherwise.</returns>
-        IResource * getResource(const ke::String & name);
+        ResourceSptr getResource(const ke::String & name);
 
         void registerResourceLoader(ke::ResourceType resourceType, ke::ResourceLoaderSptr loader);
 
