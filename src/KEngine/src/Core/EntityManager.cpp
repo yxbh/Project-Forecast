@@ -2,6 +2,19 @@
 
 #include "KEngine/Log/Log.hpp"
 
+#include <chrono>
+#include <random>
+#include <type_traits>
+
+namespace ke::priv
+{
+    static auto & getEntityIdGeneratorInstance()
+    {
+        static auto generator = std::mt19937_64(std::chrono::system_clock::now().time_since_epoch().count());
+        return generator;
+    }
+}
+
 namespace ke
 {
     void EntityManager::update(ke::Time elapsedTime)
@@ -24,7 +37,7 @@ namespace ke
         }
         else
         {
-            newEntityId = ke::Entity::newId();
+            newEntityId = ke::EntityManager::newId();
         }
         auto entity = ke::makeEntity(newEntityId);
         this->addEntity(entity);
@@ -55,4 +68,11 @@ namespace ke
         return entityIt == this->entityMap.end() ? nullptr : (*entityIt).second;
     }
 
+    const ke::EntityId EntityManager::newId(void) const
+    {
+        auto & generator = ke::priv::getEntityIdGeneratorInstance();
+        std::remove_reference<decltype(generator)>::type::result_type temp = generator();
+        while (temp == INVALID_ENTITY_ID && this->entityMap.find(temp) != this->entityMap.end()) temp = generator();
+        return temp;
+    }
 }

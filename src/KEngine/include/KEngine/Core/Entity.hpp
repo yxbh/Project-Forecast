@@ -27,12 +27,6 @@ namespace ke
     public:
         using TagList = std::unordered_set<ke::String>;
 
-        /// <summary>
-        /// Generate a new ID for uniquely identifying an Entity.
-        /// </summary>
-        /// <returns>a new EntityId.</returns>
-        static ke::EntityId newId();
-
         Entity(const ke::EntityId = INVALID_ENTITY_ID);
         Entity(const Entity &) = delete;
         Entity(ke::Entity && p_rrEntity);

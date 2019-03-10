@@ -40,6 +40,12 @@ namespace ke
         /// </summary>
         inline std::size_t getEntityCount(void) const { return this->entityMap.size(); }
 
+        /// <summary>
+        /// Generate a new ID for uniquely identifying an Entity.
+        /// </summary>
+        /// <returns>a new EntityId.</returns>
+        const ke::EntityId newId(void) const;
+
     private:
         std::unordered_map<ke::EntityId, ke::EntitySptr> entityMap;
     };

@@ -2,6 +2,7 @@
 
 #include "KEngine/Core/EntityFactory.hpp"
 #include "KEngine/Core/Entity.hpp"
+#include "KEngine/App.hpp"
 #include "KEngine/Log/Log.hpp"
 #include "KEngine/Common/Json.hpp"
 
@@ -32,7 +33,9 @@ namespace ke
         }
 
         // set the entity name if it exists.
-        ke::EntitySptr newEntity = ke::makeEntity(ke::Entity::newId());
+        auto entityManager = ke::App::instance()->getLogic()->getEntityManager();
+        auto newEntity = entityManager->newEntity(entityManager->newId()).lock();
+        assert(newEntity);
         if (entityJsonObject.find("name") != entityJsonObject.end())
         {
             newEntity->setName(entityJsonObject["name"]);

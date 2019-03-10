@@ -3,30 +3,9 @@
 #include "KEngine/Log/Log.hpp"
 
 #include <cassert>
-#include <chrono>
-#include <random>
-#include <type_traits>
-
-namespace ke::priv
-{
-    static auto & getEntityIdGeneratorInstance()
-    {
-        static auto generator = std::mt19937_64(std::chrono::system_clock::now().time_since_epoch().count());
-        return generator;
-    }
-}
 
 namespace ke
 {
-
-    ke::EntityId Entity::newId()
-    {
-        auto & generator = ke::priv::getEntityIdGeneratorInstance();
-        std::remove_reference<decltype(generator)>::type::result_type temp = generator();
-        while (temp == INVALID_ENTITY_ID) temp = generator();
-        return temp;
-    }
-
     Entity::Entity(const ke::EntityId p_ID)
         : m_EntityID(p_ID)
     {}
