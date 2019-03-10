@@ -2,6 +2,7 @@
 
 #include "../InputControllers/InputControllers.hpp"
 
+#include "KEngine/Graphics/Scene.hpp"
 #include "KEngine/Core/EventManager.hpp"
 #include "KEngine/Events/AppEvents.hpp"
 #include "KEngine/Events/SFML/SfmlEvent.hpp"

@@ -1,5 +1,8 @@
 #include "KEngine/Views/HumanView.hpp"
 
+#include "KEngine/Graphics/Scene.hpp"
+
+
 namespace ke
 {
 

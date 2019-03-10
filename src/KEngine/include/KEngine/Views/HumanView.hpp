@@ -2,7 +2,7 @@
 
 #include "KEngine/Interfaces/IAppView.hpp"
 #include "KEngine/Interfaces/IEntity.hpp"
-#include "KEngine/Graphics/Scene.hpp"
+#include "KEngine/Interfaces/IScene.hpp"
 
 namespace ke
 {
