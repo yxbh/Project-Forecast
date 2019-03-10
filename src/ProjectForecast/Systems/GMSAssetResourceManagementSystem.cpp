@@ -68,12 +68,12 @@ namespace pf
     void GMSAssetResourceManagementSystem::loadTexpageAssets(void)
     {
         ke::Log::instance()->info("Scanning GM:S texpage assets...");
-        const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
-        const auto texpageRootDirPath = fs::path{ assetDirPath } / "texpage";
-        auto texpageMapResource = std::make_shared<pf::TexpageMapResource>("texpages", __FILE__);
+        const auto assetDirPath         = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto texpageRootDirPath   = fs::path{ assetDirPath } / "texpage";
+        auto texpageMapResource         = std::make_shared<pf::TexpageMapResource>("texpages", __FILE__);
+        auto & texpages                 = texpageMapResource->texpages; // <texpage_id, texpage>
+        const auto texpagePaths         = ke::FileSystemHelper::getChildPaths(texpageRootDirPath);
         std::mutex texpagesMutex;
-        auto & texpages = texpageMapResource->texpages; // <texpage_id, texpage>
-        const auto texpagePaths = ke::FileSystemHelper::getChildPaths(texpageRootDirPath);
         std::for_each(std::execution::par_unseq, std::begin(texpagePaths), std::end(texpagePaths), [&](const auto & path)
         {
             if (!path.has_extension() || path.extension() != ".json") return;
@@ -172,10 +172,10 @@ namespace pf
     void GMSAssetResourceManagementSystem::loadBgAssets(void)
     {
         ke::Log::instance()->info("Scanning GM:S bg assets...");
-        const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
-        const auto bgRootDirPath = fs::path{ assetDirPath } / "bg";
-        const auto bgPaths = ke::FileSystemHelper::getChildPaths(bgRootDirPath);
-        auto resourceManager = ke::App::instance()->getResourceManager();
+        const auto assetDirPath     = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto bgRootDirPath    = fs::path{ assetDirPath } / "bg";
+        const auto bgPaths          = ke::FileSystemHelper::getChildPaths(bgRootDirPath);
+        auto resourceManager        = ke::App::instance()->getResourceManager();
         const auto texpageMapResource = std::dynamic_pointer_cast<pf::TexpageMapResource>(resourceManager->getResource("texpages"));
         assert(texpageMapResource);
         std::for_each(std::execution::par_unseq, std::cbegin(bgPaths), std::cend(bgPaths), [&](const auto & path)
@@ -200,9 +200,10 @@ namespace pf
     void GMSAssetResourceManagementSystem::loadSpriteAssets(void)
     {
         ke::Log::instance()->info("Scanning GM:S sprite assets...");
-        const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
-        const auto spriteRootDirPath = fs::path{ assetDirPath } / "sprite";
-        const auto spritePaths = ke::FileSystemHelper::getChildPaths(spriteRootDirPath);
+        const auto assetDirPath         = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto spriteRootDirPath    = fs::path{ assetDirPath } / "sprite";
+        const auto spritePaths          = ke::FileSystemHelper::getChildPaths(spriteRootDirPath);
+        auto resourceManager            = ke::App::instance()->getResourceManager();
         std::for_each(std::execution::par_unseq, std::begin(spritePaths), std::end(spritePaths), [&](const auto & path)
         {
             if (!path.has_extension() || path.extension() != ".json") return;
@@ -235,9 +236,9 @@ namespace pf
     void GMSAssetResourceManagementSystem::loadRoomAssets(void)
     {
         ke::Log::instance()->info("Scanning GM:S room assets...");
-        const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
-        const auto gmsRoomsRootDirPath = fs::path{ assetDirPath } / "rooms";
-        const auto gmsRoomPaths = ke::FileSystemHelper::getFilePaths(gmsRoomsRootDirPath);
+        const auto assetDirPath         = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto gmsRoomsRootDirPath  = fs::path{ assetDirPath } / "rooms";
+        const auto gmsRoomPaths         = ke::FileSystemHelper::getFilePaths(gmsRoomsRootDirPath);
         std::for_each(std::execution::par_unseq, std::begin(gmsRoomPaths), std::end(gmsRoomPaths), [&](const auto & gmsRoomPath)
         {
             if (!gmsRoomPath.has_extension() || gmsRoomPath.extension() != ".json") return;
@@ -359,9 +360,10 @@ namespace pf
     void GMSAssetResourceManagementSystem::loadObjectAssets(void)
     {
         ke::Log::instance()->info("Scanning GM:S object assets...");
-        const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto assetDirPath         = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
         const auto gmsObjectRootDirPath = fs::path{ assetDirPath } / "object";
-        const auto gmsObjectPaths = ke::FileSystemHelper::getFilePaths(gmsObjectRootDirPath);
+        const auto gmsObjectPaths       = ke::FileSystemHelper::getFilePaths(gmsObjectRootDirPath);
+        auto resourceManager            = ke::App::instance()->getResourceManager();
         std::for_each(std::execution::par_unseq, std::begin(gmsObjectPaths), std::end(gmsObjectPaths), [&](const auto & gmsObjectPath)
         {
             if (!gmsObjectPath.has_extension() || gmsObjectPath.extension() != "json") return;
