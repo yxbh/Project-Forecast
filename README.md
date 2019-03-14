@@ -1,7 +1,16 @@
 # ProjectForecast
-ProjectForecast is a work-in-progress experimental [Risk of Rain](http://riskofraingame.com/) clone. The source is written in modern C++ using [SFML](https://www.sfml-dev.org/), [SDL2](https://www.libsdl.org/), [spdlog](https://github.com/gabime/spdlog) and a few other libraries and utilties.
+ProjectForecast is a work-in-progress experimental [Risk of Rain](http://riskofraingame.com/) (RoR) clone. The source is written in modern C++ using [SFML](https://www.sfml-dev.org/), [SDL2](https://www.libsdl.org/), [spdlog](https://github.com/gabime/spdlog) and a few other libraries and utilties.
 
 The aim of the project is to produce a close recreation of the Risk of Rain game with much better performance (hopefully) and modability. There is no ETA.
+
+The clone is being developed with the WIP KEngine game engine. KEngine is my own little custom game framework that is being built in parallel to ProjectForecast. The engine design takes influence from the Game Coding Complete 4th Edition book.
+
+## Folder Structure
+The `src/KEngine` folder contains all KEngine specific source code (as the name implies). All RoR specific implementation stuff are in the `src/ProjectForecast` folder.
+
+To build the source, MSVS solutions and QtCreator project files are available under the `/src/build-targets` folder. See the [Building](#Building) section.
+
+Third party dependencies such as library source and binary files are stored under `src/lib`. Folder content changes are minimised at a best effort level to reduce load on the repo.
 
 ## Building
 ### Windows (MSVC)
