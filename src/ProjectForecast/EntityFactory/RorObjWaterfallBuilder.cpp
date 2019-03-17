@@ -38,26 +38,29 @@ namespace pf
             //
             // Compute the waterfall width and height.
             //
-            std::istringstream gmlCodeStream(roomObjInfo.codeResource->code);
-            std::string temp;
             int waterfallWidth = objectResource->spriteResource->dimension.width;
             int waterfallHeight = objectResource->spriteResource->dimension.height;
-            bool foundHeight = false, foundWidth = false;
-            while (std::getline(gmlCodeStream, temp, '\n'))
+            if (roomObjInfo.codeResource)
             {
-                static const auto HEIGHT_STR = "self.height_b = ";
-                static const auto WIDTH_STR = "self.width_b = ";
-                auto & line = temp;
-                ke::trim(line);
-                if (std::string_view(line.c_str(), std::strlen(HEIGHT_STR)) == HEIGHT_STR)
+                std::istringstream gmlCodeStream(roomObjInfo.codeResource->code);
+                std::string temp;
+                bool foundHeight = false, foundWidth = false;
+                while (std::getline(gmlCodeStream, temp, '\n'))
                 {
-                    waterfallHeight = std::stoi(std::string_view(line.c_str() + std::strlen(HEIGHT_STR)).data());
-                    foundHeight = true;
-                }
-                else if (std::string_view(line.c_str(), std::strlen(WIDTH_STR)) == WIDTH_STR)
-                {
-                    waterfallWidth = std::stoi(std::string_view(line.c_str() + std::strlen(WIDTH_STR)).data());
-                    foundWidth = true;
+                    static const auto HEIGHT_STR = "self.height_b = ";
+                    static const auto WIDTH_STR = "self.width_b = ";
+                    auto & line = temp;
+                    ke::trim(line);
+                    if (std::string_view(line.c_str(), std::strlen(HEIGHT_STR)) == HEIGHT_STR)
+                    {
+                        waterfallHeight = std::stoi(std::string_view(line.c_str() + std::strlen(HEIGHT_STR)).data());
+                        foundHeight = true;
+                    }
+                    else if (std::string_view(line.c_str(), std::strlen(WIDTH_STR)) == WIDTH_STR)
+                    {
+                        waterfallWidth = std::stoi(std::string_view(line.c_str() + std::strlen(WIDTH_STR)).data());
+                        foundWidth = true;
+                    }
                 }
             }
 
@@ -81,13 +84,18 @@ namespace pf
                 assert(spriteResource->texpageResources.size());
                 for (const auto & texpageResource : spriteResource->texpageResources)
                 {
+                    // NOTE: not sure if this is the best way to handle non-zero dest coordinates
+                    // in a texpage file but it works for now.
                     const auto & destPos = texpageResource->destinationPosition;
-                    frameOrigins.emplace_back(spriteResource->origin);
+                    auto origin = spriteResource->origin;
+                    origin.x += destPos.x;
+                    origin.y -= destPos.y;
+                    frameOrigins.emplace_back(origin);
                     frameTextureIds.push_back(texpageResource->sheetid);
 
                     ke::Rect2DInt32 rect;
-                    rect.left   = texpageResource->sourcePosition.x - destPos.x;
-                    rect.top    = texpageResource->sourcePosition.y - destPos.y;
+                    rect.left   = texpageResource->sourcePosition.x;
+                    rect.top    = texpageResource->sourcePosition.y;
                     rect.width  = texpageResource->sourceDimension.width;
                     rect.height = texpageResource->sourceDimension.height;
                     frameRects.push_back(rect);
@@ -135,7 +143,7 @@ namespace pf
                     currentParentNode->addChild(makeWaterfallMidNode({ currentWidth + 10, 0 }));
                     if (currentHeight == waterfallHeight)
                     {
-                        currentParentNode->addChild(makeWaterfallSplashNode({ currentWidth + 10, 0 }));
+                        currentParentNode->addChild(makeWaterfallSplashNode({ currentWidth + 10, heightDelta }));
                     }
                     currentWidth += 10;
                 }
