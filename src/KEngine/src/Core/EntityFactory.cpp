@@ -41,7 +41,7 @@ namespace ke
         return !isLoaderForNameAlreadyExists;
     }
 
-    ke::Entity * EntityFactory::createNew(const ke::String & p_name, const std::any p_parameters) const
+    ke::Entity * EntityFactory::createNew(const ke::String & p_name, const std::any & p_parameters) const
     {
         if (auto itr = this->entityBuilders.find(p_name); itr != this->entityBuilders.end())
         {

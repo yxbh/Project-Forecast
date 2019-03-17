@@ -23,6 +23,7 @@ namespace pf
         void loadTexpageAssets(void);
         void loadTextureAssets(void);
         void loadBgAssets(void);
+        void loadCodeAssets(void);
         void loadSpriteAssets(void);
         void loadRoomAssets(void);
         void loadObjectAssets(void);

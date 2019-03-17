@@ -13,7 +13,7 @@
 
 namespace pf
 {
-    static constexpr float g_zoomFactors[] = { 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f, 2.0f, 3.0f, 4.0f };
+    static constexpr float g_zoomFactors[] = { 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f, 2.0f, 3.0f, 4.0f, 5.f, 6.f };
     static constexpr std::size_t g_zoomFactorsCount = sizeof(g_zoomFactors) / sizeof(g_zoomFactors[0]);
 
 

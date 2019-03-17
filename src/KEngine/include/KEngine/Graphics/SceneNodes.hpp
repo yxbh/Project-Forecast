@@ -132,7 +132,8 @@ namespace ke
     class SpriteNode : public ke::SceneNode
     {
     public:
-        static ke::SceneNodeSptr create(ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform,
+        static ke::SceneNodeSptr create(
+            ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform, const ke::Point2DInt32 & origin,
             std::int32_t depth, size_t textureId, const ke::Rect2DInt32 & textureRect, ke::Color fillColor = ke::Color::WHITE);
 
         using SceneNode::SceneNode;
@@ -147,12 +148,15 @@ namespace ke
     class AnimatedSpriteNode : public ke::SceneNode
     {
     public:
-        using TextureRectContainer = std::vector<Rect2DInt32>;
+        using Origin                = ke::Point2DInt32;
+        using OriginContainer       = std::vector<Origin>;
+        using TextureIdContainer    = std::vector<unsigned>;
+        using TextureRectContainer  = std::vector<Rect2DInt32>;
 
         static ke::SceneNodeSptr create(
-            ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform, std::int32_t depth,
-            size_t textureId, const TextureRectContainer & textureRect, ke::Time frameDuration,
-            ke::Color fillColor = ke::Color::WHITE);
+            ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform, OriginContainer && frameOrigins,
+            std::int32_t depth, TextureIdContainer && frameTextureIds, TextureRectContainer && textureRects,
+            ke::Time frameDuration, ke::Color fillColor = ke::Color::WHITE);
 
         using SceneNode::SceneNode;
 
@@ -163,7 +167,9 @@ namespace ke
     private:
         mutable ke::GraphicsCommand states;
 
-        std::size_t currentFrame;
+        std::size_t currentFrame = 0;
+        OriginContainer origins;
+        TextureIdContainer frameTextureIds;
         TextureRectContainer frameRects;
         ke::Time frameDuration;
         ke::Time frameTimeCounter;

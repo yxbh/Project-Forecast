@@ -14,10 +14,9 @@ namespace ke
     class RenderLayer
     {
     public:
-        using DepthType = std::int16_t;
         using GraphicsCommandList = std::vector<GraphicsCommand>;
 
-        DepthType depth;
+        ke::graphics::DepthType depth;
         GraphicsCommandList graphicsCommands;
     };
 

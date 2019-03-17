@@ -55,8 +55,10 @@ namespace ke
         KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(SpriteDrawableComponent, 0xdc84005a)
 
     public:
-        SpriteDrawableComponent(ke::EntitySptr entity, const ke::Transform2D & localTransform, std::int32_t depth, size_t textureId,
-            const ke::Rect2DInt32 & textureRect, const ke::Color & color = ke::Color::WHITE);
+        SpriteDrawableComponent(
+            ke::EntitySptr entity, const ke::Transform2D & localTransform, const ke::Point2DInt32 & origin,
+            std::int32_t depth, size_t textureId, const ke::Rect2DInt32 & textureRect,
+            const ke::Color & color = ke::Color::WHITE);
 
     };
 
@@ -75,8 +77,10 @@ namespace ke
         KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(TiledSpriteDrawablwComponent, 0x2a68065e)
 
     public:
-        TiledSpriteDrawablwComponent(ke::EntitySptr entity, const ke::Transform2D & localTransform, std::int32_t depth, size_t textureId,
-            const ke::Rect2DInt32 & textureRect, const ke::Color & color = ke::Color::WHITE, bool tileXDirection = false, bool tileYDirection = false);
+        TiledSpriteDrawablwComponent(
+            ke::EntitySptr entity, const ke::Transform2D & localTransform, const ke::Point2DInt32 & origin,
+            std::int32_t depth, size_t textureId, const ke::Rect2DInt32 & textureRect,
+            const ke::Color & color = ke::Color::WHITE, bool tileXDirection = false, bool tileYDirection = false);
 
     private:
         static const int32_t MIN_TILE_X_BOUND;

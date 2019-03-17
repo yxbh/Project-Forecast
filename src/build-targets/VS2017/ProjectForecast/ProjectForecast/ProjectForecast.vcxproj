@@ -457,6 +457,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\Loaders\ImageResourceLoader.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\ResourceManifestResource.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Utility\FileSystemHelper.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Utility\StringHelper.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Views\HumanView.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\GMSObjectResource.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\GMSRoomResource.hpp" />

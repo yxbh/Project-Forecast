@@ -1,7 +1,5 @@
 #pragma once
 
-#include "../AssetResources/GMSRoomResource.hpp"
-
 #include <KEngine/Interfaces/IEntity.hpp>
 #include <KEngine/Interfaces/ISystem.hpp>
 #include <KEngine/Interfaces/IEvent.hpp>
@@ -19,6 +17,9 @@ namespace ke
 
 namespace pf
 {
+    // Forward declarations.
+    class GMSRoomResource;
+
 
     /// <summary>
     /// 

@@ -84,6 +84,7 @@ namespace ke
                         continue;
                     }
                 }
+                sprite.setOrigin(command.sprite.origin.x, command.sprite.origin.y);
                 sprite.setPosition(sfPosition);
                 sprite.setScale(transform.scaleX, transform.scaleY);
                 sf::IntRect sfTextureRect;
@@ -99,10 +100,14 @@ namespace ke
 
                 if (this->drawBoundingBox)
                 {
+                    this->rectangleShape.setOrigin(command.sprite.origin.x, command.sprite.origin.y);
                     this->rectangleShape.setPosition(sfPosition);
-                    if (const auto & size = this->rectangleShape.getSize(); size.x != spriteWidth && size.y != spriteHeight)
+                    this->rectangleShape.setScale(transform.scaleX, transform.scaleY);
+                    if (const auto & size = this->rectangleShape.getSize();
+                        size.x != textureRect.width || size.y != textureRect.height)
                     {
-                        this->rectangleShape.setSize({ spriteWidth, spriteHeight });
+                        this->rectangleShape.setSize(
+                            { static_cast<float>(textureRect.width), static_cast<float>(textureRect.height) });
                     }
                     this->renderTarget->draw(rectangleShape);
                     ++this->drawCallCount;

@@ -4,6 +4,10 @@
 
 namespace pf
 {
+    // forward declaration
+    class GMSSpriteResource;
+
+
     /// <summary>
     /// A resource class that represents a GM:S object.
     /// This resource is used to instantiate KEngine entities (i.e. GM:S object instances).
@@ -19,6 +23,9 @@ namespace pf
             this->sourcePath = p_sourcePath;
         };
 
+
+        // GMS:S asset info
+
         ke::String sprite;
         bool visible;
         bool solid;
@@ -26,6 +33,11 @@ namespace pf
         bool persist;
         bool sensor;
         ke::String colshape;
+
+
+        // custom asset info
+
+        std::shared_ptr<GMSSpriteResource> spriteResource;
 
 
         friend class GMSAssetResourceManagementSystem;

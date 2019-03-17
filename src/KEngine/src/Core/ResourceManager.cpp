@@ -42,7 +42,7 @@ namespace ke
 
     void ResourceManager::registerResource(ResourceSptr resource)
     {
-        assert(resource->getName().length());
+        assert(!resource->getName().empty());
         std::unique_lock lock(this->allResourcesMutex);
         if (this->allResources.count(resource->getName())) // TODO: replace with contains() from C++20.
         {
@@ -66,6 +66,7 @@ namespace ke
 
     ResourceSptr ResourceManager::getResource(const ke::String & name)
     {
+        assert(!name.empty());
         std::shared_lock lock(this->allResourcesMutex);
         if (auto itr = this->allResources.find(name); itr != this->allResources.end())
         {

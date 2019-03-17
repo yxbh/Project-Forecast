@@ -1,8 +1,10 @@
 #include "GMSRoomManagementSystem.hpp"
 
 #include "../Events/GMSRoomLoadRequestEvent.hpp"
-#include "../AssetResources/TextureInfoResource.hpp"
+#include "../AssetResources/GMSRoomResource.hpp"
+#include "../AssetResources/GMSObjectResource.hpp"
 #include "../AssetResources/OtherGMSResources.hpp"
+#include "../AssetResources/TextureInfoResource.hpp"
 
 #include <KEngine/Graphics/SceneNodes.hpp>
 #include <KEngine/Entity/Components/EntityRenderableComponents.hpp>
@@ -121,7 +123,7 @@ namespace pf
             ke::EventManager::enqueue(ke::makeEvent<ke::SetClearColourRequestEvent>(this->currentRoomResource->getColour()));
 
             // Instantiate tile entities.
-            std::unordered_set<std::shared_ptr<TextureInfoResource>> textureInfos;
+            std::unordered_set<unsigned> sheetIds;
             auto entityManager = ke::App::instance()->getLogic()->getEntityManager();
             for (const auto & tile : this->currentRoomResource->getTiles())
             {
@@ -129,10 +131,8 @@ namespace pf
                 if (bgResource)
                 {
                     const auto texpageResource = texpagesResource->texpages[bgResource->texture].get();
-                    const auto textureInfo = std::dynamic_pointer_cast<pf::TextureInfoResource>(resourceManager->getResource("texture_" + std::to_string(texpageResource->sheetid)));
-                    assert(textureInfo);
-                    textureInfos.insert(textureInfo);
-                    const auto textureId = textureInfo->getTextureId();
+                    const auto textureId = texpageResource->sheetid;
+                    sheetIds.insert(textureId);
                     
                     ke::Transform2D transform;
                     transform.x      = static_cast<ke::Transform2D::PointType>(tile.pos.x);
@@ -144,10 +144,12 @@ namespace pf
                     textureRect.left   = tile.sourcepos.x;
                     textureRect.width  = tile.size.width;
                     textureRect.height = tile.size.height;
+                    const ke::Point2DInt32 origin{ 0,0 };
 
                     auto tileEntity    = entityManager->newEntity(tile.instanceid).lock();
+                    tileEntity->setName(tile.bg);
                     tileEntity->addComponent(ke::makeEntityComponent<ke::SpriteDrawableComponent>(
-                        tileEntity, transform, tile.tiledepth, textureId, textureRect, tile.colour));
+                        tileEntity, transform, origin, tile.tiledepth, textureId, textureRect, tile.colour));
 
                     this->currentRoomEntities.push_back(tileEntity.get());
                 }
@@ -164,8 +166,7 @@ namespace pf
                 if (bgResource)
                 {
                     const auto texpageResource  = texpagesResource->texpages[bgResource->texture].get();
-                    const auto textureInfo      = std::dynamic_pointer_cast<pf::TextureInfoResource>(resourceManager->getResource("texture_" + std::to_string(texpageResource->sheetid)));
-                    const auto textureId        = textureInfo->getTextureId();
+                    const auto textureId        = texpageResource->sheetid;
 
                     ke::Transform2D transform;
                     transform.x         = static_cast<ke::Transform2D::PointType>(bgInfo.pos.x);
@@ -173,22 +174,18 @@ namespace pf
                     transform.scaleX    = 1.0f;
                     transform.scaleY    = 1.0f;
 
-                    backgroundTextureInfos.insert(textureInfo);
-
-                    const auto & texWidth  = textureInfo->getTextureSize().width;
-                    const auto & texHeight = textureInfo->getTextureSize().height;
-                    assert(texWidth);
-                    assert(texHeight);
                     ke::Rect2DInt32 textureRect;
                     textureRect.top     = bgInfo.sourcepos.y;
                     textureRect.left    = bgInfo.sourcepos.x;
                     textureRect.width   = bgInfo.size.width;
                     textureRect.height  = bgInfo.size.height;
                     ++depth;
+                    const ke::Point2DInt32 origin{ 0,0 };
 
                     auto bgEntity = entityManager->newEntity().lock();
+                    bgEntity->setName(bgInfo.bg);
                     auto drawableComponent = ke::makeEntityComponent<ke::TiledSpriteDrawablwComponent>(
-                        bgEntity, transform, depth, textureId, textureRect, ke::Color::WHITE, bgInfo.tilex, bgInfo.tiley);
+                        bgEntity, transform, origin, depth, textureId, textureRect, ke::Color::WHITE, bgInfo.tilex, bgInfo.tiley);
                     bgEntity->addComponent(drawableComponent);
 
                     this->currentRoomEntities.push_back(bgEntity.get());
@@ -196,28 +193,37 @@ namespace pf
                 }                    
             }
 
-            // Load background textures.
-            for (const auto & textureInfo : textureInfos)
-            {
-                textureLoadRequestEvent->addTextureInfo(textureInfo->getName(), textureInfo->getTextureId(), textureInfo->getSourcePath());
-            }
-            ke::EventManager::enqueue(textureLoadRequestEvent);
-
             // Instantiate room objects.
             auto entityFactory = ke::App::instance()->getLogic()->getEntityFactory();
             for (const auto & objInfo : this->currentRoomResource->getObjects())
             {
-                // TODO: uncomment this when GM:S object loading is complete.
-                //auto e = entityFactory->createNew(objInfo.obj, objInfo);
-                //if (e)
-                //{
-                //    this->currentRoomEntities.push_back(e);
-                //}
-                //else
-                //{
-                //    ke::Log::instance()->error("Failed to create instance of: {}", objInfo.obj);
-                //}
+                auto e = entityFactory->createNew(objInfo.obj, objInfo);
+                if (e)
+                {
+                    this->currentRoomEntities.push_back(e);
+
+                    // Compute texture to load.
+                    const auto objectResource = std::static_pointer_cast<GMSObjectResource>(resourceManager->getResource(objInfo.obj));
+                    const auto spriteResource = objectResource->spriteResource;
+                    for (const auto texpageResource : spriteResource->texpageResources)
+                    {
+                        sheetIds.insert(texpageResource->sheetid);
+                    }
+                }
+                else
+                {
+                    ke::Log::instance()->error("Failed to create instance of: {}", objInfo.obj);
+                }
             }
+
+            // Load textures.
+            for (const auto sheetId : sheetIds)
+            {
+                const auto textureInfo = std::dynamic_pointer_cast<pf::TextureInfoResource>(resourceManager->getResource("texture_" + std::to_string(sheetId)));
+                assert(textureInfo);
+                textureLoadRequestEvent->addTextureInfo(textureInfo->getName(), textureInfo->getTextureId(), textureInfo->getSourcePath());
+            }
+            ke::EventManager::enqueue(textureLoadRequestEvent);
 
             ke::Log::instance()->info("Loading GM:S room: {} ... DONE", request->getRoomName());
         }

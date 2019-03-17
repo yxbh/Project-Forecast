@@ -37,7 +37,7 @@ namespace ke
         /// <param name="p_name">A type of entity to instantiate.</param>
         /// <param name="p_parameters">The parameters required to construct the named entity. This is passed to the respective builder and can be anything.</param>
         /// <returns></returns>
-        ke::Entity * createNew(const ke::String & p_name, const std::any p_parameters) const;
+        ke::Entity * createNew(const ke::String & p_name, const std::any & p_parameters) const;
 
         ke::IEntityComponentBuilder * getComponentBuilder(const ke::String & p_componentName);
 

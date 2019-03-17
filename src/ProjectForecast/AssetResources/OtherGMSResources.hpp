@@ -24,10 +24,10 @@ namespace pf
             this->sourcePath = p_sourcePath;
         };
 
-        ke::Point2DUInt32 sourcePosition; // texture sheet coordinate.
+        ke::Point2DInt32 sourcePosition; // texture sheet coordinate.
         ke::Dimension2DUInt32 sourceDimension;
 
-        ke::Point2DUInt32 destinationPosition;
+        ke::Point2DInt32 destinationPosition;
         ke::Dimension2DUInt32 destinationDimension;
 
         ke::Dimension2DUInt32 dimension;
@@ -124,22 +124,53 @@ namespace pf
         };
 
 
+        // GM:S asset info
+
         ke::Dimension2DUInt32 dimension;
         BoundingBox2D boundingBox;
 
         unsigned boundingBoxMode = 0;
 
-        ke::Point2DUInt32 origin;
+        ke::Point2DInt32 origin;
 
         bool separateMasks = true;
 
-        ke::String name;
-
         std::vector<unsigned> texpageIds;
 
+
+        // custom asset info.
+
+        std::vector<std::shared_ptr<GMSTexpageResource>> texpageResources;
 
 
         friend class GMSAssetResourceManagementSystem;
     };
 
+
+    /// <summary>
+    /// A GMS resource class that holds the Altar dump of GMS codes (i.e. lsp files in the code folder).
+    /// </summary>
+    class GMSCodeResource : public ke::IResource
+    {
+        KE_DEFINE_RESOURCE_COMMON_PROPERTIES(GMSCodeResource, "GMSCodeResource");
+
+    public:
+        GMSCodeResource(const ke::String & p_name, const ke::String & p_sourcePath)
+        {
+            this->name = p_name;
+            this->sourcePath = p_sourcePath;
+        };
+
+
+        // GM:S asset info
+
+        ke::String code;
+
+
+        // custom asset info.
+
+
+
+        friend class GMSAssetResourceManagementSystem;
+    };
 }

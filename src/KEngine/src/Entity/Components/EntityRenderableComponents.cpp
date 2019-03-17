@@ -32,11 +32,11 @@ namespace ke
 
 
     SpriteDrawableComponent::SpriteDrawableComponent(
-        ke::EntitySptr entity, const ke::Transform2D & localTransform, std::int32_t depth, size_t textureId,
-        const ke::Rect2DInt32 & textureRect, const ke::Color & color)
+        ke::EntitySptr entity, const ke::Transform2D & localTransform, const ke::Point2DInt32 & origin,
+        std::int32_t depth, size_t textureId, const ke::Rect2DInt32 & textureRect, const ke::Color & color)
         : EntityRenderableComponent(entity)
     {
-        this->sceneNode = ke::SpriteNode::create(entity->getId(), localTransform, depth, textureId, textureRect, color);
+        this->sceneNode = ke::SpriteNode::create(entity->getId(), localTransform, origin, depth, textureId, textureRect, color);
     }
 
 
@@ -54,8 +54,9 @@ namespace ke
     int32_t const TiledSpriteDrawablwComponent::MAX_TILE_Y_BOUND = 2000;
 
     TiledSpriteDrawablwComponent::TiledSpriteDrawablwComponent(
-        ke::EntitySptr entity, const ke::Transform2D & localTransform, std::int32_t depth, size_t textureId,
-        const ke::Rect2DInt32 & textureRect, const ke::Color & color, bool tileXDirection, bool tileYDirection)
+        ke::EntitySptr entity, const ke::Transform2D & localTransform, const ke::Point2DInt32 & origin,
+        std::int32_t depth, size_t textureId, const ke::Rect2DInt32 & textureRect,
+        const ke::Color & color, bool tileXDirection, bool tileYDirection)
         : EntityRenderableComponent(entity), m_tileX(tileXDirection), m_tileY(tileYDirection)
     {
         this->sceneNode = ke::InvisibleContainerNode::create(entity->getId(), localTransform);
@@ -78,7 +79,7 @@ namespace ke
             for (int32_t y = tile_y_start; y <= tile_y_end; y += textureRect.height)
             {
                 ke::Transform2D transform{ static_cast<ke::Transform2D::PointType>(x), static_cast<ke::Transform2D::PointType>(y) };
-                auto spriteNode = ke::SpriteNode::create(ISceneNode::newId(), transform, depth, textureId, textureRect, color);
+                auto spriteNode = ke::SpriteNode::create(ISceneNode::newId(), transform, origin, depth, textureId, textureRect, color);
                 this->sceneNode->addChild(spriteNode);
             }
         }

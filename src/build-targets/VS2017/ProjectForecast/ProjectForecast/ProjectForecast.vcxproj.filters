@@ -647,6 +647,9 @@
     <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\OtherGMSResources.hpp">
       <Filter>ProjectForecast\AssetResources</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Utility\StringHelper.hpp">
+      <Filter>KEngine\Header Files\Utility</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\..\KEngine\include\KEngine\Common\Queues.inl">

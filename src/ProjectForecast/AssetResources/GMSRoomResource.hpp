@@ -7,23 +7,29 @@
 #include <KEngine/Common/Color.hpp>
 #include <KEngine/Common/Dimension2D.hpp>
 
+#include <memory>
 #include <vector>
 
 namespace pf
 {
+    // forward declarations.
+
+    class GMSCodeResource;
+
 
     struct GMSRoomTileInstance
     {
         // GM:S info
 
         ke::Point2DInt32 pos;
-        ke::Point2DUInt32 sourcepos;
+        ke::Point2DInt32 sourcepos;
         ke::Size2DInt32 size;
         ke::Point2DFloat scale{ 1.0f, 1.0f };
         ke::Colour colour{ke::Colour::WHITE};
         ke::String bg;
         int32_t tiledepth;
         size_t instanceid;
+
 
         // custom info
     };
@@ -44,7 +50,7 @@ namespace pf
         
         // custom info
 
-        ke::Point2DUInt32 sourcepos;
+        ke::Point2DInt32 sourcepos;
         ke::Dimension2DUInt32 size;
     };
 
@@ -54,10 +60,16 @@ namespace pf
 
         ke::String obj;
         ke::EntityId instanceid;
+        unsigned createcodeid;
         ke::Point2DInt32 pos;
         ke::Point2DFloat scale{ 1.0f, 1.0f };
         float rotation{ 0.0f };
         ke::Colour colour;
+
+
+        // custom info
+
+        std::shared_ptr<GMSCodeResource> codeResource;
     };
 
     class GMSRoomResource : public ke::IResource
