@@ -84,12 +84,14 @@ namespace pf
                 assert(spriteResource->texpageResources.size());
                 for (const auto & texpageResource : spriteResource->texpageResources)
                 {
-                    // NOTE: not sure if this is the best way to handle non-zero dest coordinates
-                    // in a texpage file but it works for now.
+                    // NOTE:
+                    //   We take account of texpage dest.x and dest.y by adjusting the texture origin with it.
+                    //   Not sure if this is the best way to handle non-zero dest coordinates
+                    //   in a texpage file but it works for now.
                     const auto & destPos = texpageResource->destinationPosition;
                     auto origin = spriteResource->origin;
                     origin.x += destPos.x;
-                    origin.y -= destPos.y;
+                    origin.y -= destPos.y;  // convert from img coordinate system to world coordinate system.
                     frameOrigins.emplace_back(origin);
                     frameTextureIds.push_back(texpageResource->sheetid);
 
