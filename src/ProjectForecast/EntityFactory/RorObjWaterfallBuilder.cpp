@@ -40,9 +40,9 @@ namespace pf
             //
             int waterfallWidth = objectResource->spriteResource->dimension.width;
             int waterfallHeight = objectResource->spriteResource->dimension.height;
-            if (roomObjInfo.codeResource)
+            if (roomObjInfo.createcodeResource)
             {
-                std::istringstream gmlCodeStream(roomObjInfo.codeResource->code);
+                std::istringstream gmlCodeStream(roomObjInfo.createcodeResource->code);
                 std::string temp;
                 bool foundHeight = false, foundWidth = false;
                 while (std::getline(gmlCodeStream, temp, '\n'))

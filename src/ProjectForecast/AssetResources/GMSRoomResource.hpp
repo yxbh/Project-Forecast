@@ -69,7 +69,7 @@ namespace pf
 
         // custom info
 
-        std::shared_ptr<GMSCodeResource> codeResource;
+        std::shared_ptr<GMSCodeResource> createcodeResource;
     };
 
     class GMSRoomResource : public ke::IResource

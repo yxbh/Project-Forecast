@@ -420,8 +420,8 @@ namespace pf
                 if (obj.createcodeid != 4294967295) // magic number from Altar GMS room json files.
                 {
                     ke::String codeResourceName = "gml_RoomCC_" + roomResource->getName() + "_" + std::to_string(obj.createcodeid) + "_Create.gml";
-                    obj.codeResource = std::dynamic_pointer_cast<GMSCodeResource>(resourceManager->getResource(codeResourceName));
-                    assert(obj.codeResource);
+                    obj.createcodeResource = std::dynamic_pointer_cast<GMSCodeResource>(resourceManager->getResource(codeResourceName));
+                    assert(obj.createcodeResource);
                 }
 
                 roomResource->addObject(obj);
