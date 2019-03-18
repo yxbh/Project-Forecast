@@ -123,20 +123,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-UnitTest|x64'">
-    <IncludePath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\include\;..\..\..\..\lib\libs-msvc-2015\SFML-2.4.1-x64\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\lib\x64\;..\..\..\..\lib\libs-msvc-2015\SFML-2.4.1-x64\lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\include\;..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\lib\x64\;..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\include\;..\..\..\..\lib\libs-msvc-2015\SFML-2.4.1-x64\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\lib\x64\;..\..\..\..\lib\libs-msvc-2015\SFML-2.4.1-x64\lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\include\;..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\lib\x64\;..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\include\;..\..\..\..\lib\libs-msvc-2015\SFML-2.4.1-x64\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\lib\x64\;..\..\..\..\lib\libs-msvc-2015\SFML-2.4.1-x64\lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\include\;..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\lib\x64\;..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-UnitTest|x64'">
-    <IncludePath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\include\;..\..\..\..\lib\libs-msvc-2015\SFML-2.4.1-x64\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\lib\x64\;..\..\..\..\lib\libs-msvc-2015\SFML-2.4.1-x64\lib\;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\include\;..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\lib\x64\;..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-UnitTest|Win32'">
     <IncludePath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\include\;$(IncludePath)</IncludePath>
