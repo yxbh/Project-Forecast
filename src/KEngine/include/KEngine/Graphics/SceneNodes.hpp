@@ -156,7 +156,7 @@ namespace ke
         static ke::SceneNodeSptr create(
             ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform, OriginContainer && frameOrigins,
             std::int32_t depth, TextureIdContainer && frameTextureIds, TextureRectContainer && textureRects,
-            ke::Time frameDuration, ke::Color fillColor = ke::Color::WHITE);
+            const ke::Time frameDuration, const std::size_t startingFrame = 0, const ke::Color fillColor = ke::Color::WHITE);
 
         using SceneNode::SceneNode;
 

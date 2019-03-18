@@ -104,25 +104,29 @@ namespace ke
 
 
     ke::SceneNodeSptr AnimatedSpriteNode::create(
-        ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform, OriginContainer && frameOrigins, std::int32_t depth,
-        TextureIdContainer && frameTextureIds, TextureRectContainer && textureRects, ke::Time frameDuration, ke::Color color)
+        ke::SceneNodeId sceneNodeId, const ke::Transform2D & localTransform, OriginContainer && frameOrigins,
+        std::int32_t depth, TextureIdContainer && frameTextureIds, TextureRectContainer && textureRects,
+        const ke::Time frameDuration, const std::size_t startingFrame, const ke::Color color)
     {
         assert(frameOrigins.size());
         assert(frameTextureIds.size());
         assert(textureRects.size());
+        assert(frameOrigins.size() == frameTextureIds.size() && frameTextureIds.size() == textureRects.size());
+        assert(startingFrame < textureRects.size());
         auto newNode = ke::makeSceneNode<ke::AnimatedSpriteNode>(sceneNodeId);
         newNode->setLocalTransform(localTransform);
         newNode->origins         = std::forward<OriginContainer>(frameOrigins);
         newNode->frameTextureIds = std::forward<TextureIdContainer>(frameTextureIds);
         newNode->frameRects      = std::forward<TextureRectContainer>(textureRects);
         newNode->frameDuration   = frameDuration;
+        newNode->currentFrame    = startingFrame;
         auto & states = newNode->states;
         states.type                 = ke::GraphicsCommand::Types::RenderSprite;
         states.sprite.id            = newNode->getId();
-        states.sprite.origin        = { static_cast<float>(newNode->origins[0].x), static_cast<float>(newNode->origins[0].y) };  // int to float conversion.
+        states.sprite.origin        = { static_cast<float>(newNode->origins[startingFrame].x), static_cast<float>(newNode->origins[startingFrame].y) };  // int to float conversion.
         states.sprite.depth         = depth;
-        states.sprite.textureId     = newNode->frameTextureIds[0];
-        states.sprite.textureRect   = newNode->frameRects[0];
+        states.sprite.textureId     = newNode->frameTextureIds[startingFrame];
+        states.sprite.textureRect   = newNode->frameRects[startingFrame];
         states.sprite.color         = color;
         return newNode;
     }

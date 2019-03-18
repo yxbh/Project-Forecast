@@ -3,6 +3,7 @@
 #include "../AssetResources/GMSRoomResource.hpp"
 #include "../AssetResources/GMSObjectResource.hpp"
 #include "../AssetResources/OtherGMSResources.hpp"
+#include "../Utility/GraphicsHelper.hpp"
 
 #include "KEngine/App.hpp"
 #include "KEngine/Entity/Components/EntityRenderableComponents.hpp"
@@ -67,41 +68,12 @@ namespace pf
             //
             // Build the waterfall scene tree.
             //
-            const auto spriteResource = objectResource->spriteResource;
-            assert(spriteResource);
-            const auto spriteWaterfallMidResource = std::dynamic_pointer_cast<GMSSpriteResource>(resourceManager->getResource("sWaterfallMid"));
-            assert(spriteWaterfallMidResource);
-            const auto spriteWaterfallSplashResource = std::dynamic_pointer_cast<GMSSpriteResource>(resourceManager->getResource("sWaterfallSplash"));
-            assert(spriteWaterfallSplashResource);
+
             auto nodeMaker = [&](const auto & spriteResource, const ke::Point2DInt32 & pos, bool flipX = false)
             {
-                ke::AnimatedSpriteNode::OriginContainer      frameOrigins;
-                ke::AnimatedSpriteNode::TextureIdContainer   frameTextureIds;
-                ke::AnimatedSpriteNode::TextureRectContainer frameRects;
-                frameOrigins.reserve(spriteResource->texpageResources.size());
-                frameTextureIds.reserve(spriteResource->texpageResources.size());
-                frameRects.reserve(spriteResource->texpageResources.size());
-                assert(spriteResource->texpageResources.size());
-                for (const auto & texpageResource : spriteResource->texpageResources)
-                {
-                    // NOTE:
-                    //   We take account of texpage dest.x and dest.y by adjusting the texture origin with it.
-                    //   Not sure if this is the best way to handle non-zero dest coordinates
-                    //   in a texpage file but it works for now.
-                    const auto & destPos = texpageResource->destinationPosition;
-                    auto origin = spriteResource->origin;
-                    origin.x += destPos.x;
-                    origin.y -= destPos.y;  // convert from img coordinate system to world coordinate system.
-                    frameOrigins.emplace_back(origin);
-                    frameTextureIds.push_back(texpageResource->sheetid);
-
-                    ke::Rect2DInt32 rect;
-                    rect.left   = texpageResource->sourcePosition.x;
-                    rect.top    = texpageResource->sourcePosition.y;
-                    rect.width  = texpageResource->sourceDimension.width;
-                    rect.height = texpageResource->sourceDimension.height;
-                    frameRects.push_back(rect);
-                }
+                auto frameOrigins    = pf::GraphicsHelper::computeSpriteOrigins(spriteResource.get());
+                auto frameTextureIds = pf::GraphicsHelper::computeSpriteTextureIds(spriteResource.get());
+                auto frameRects      = pf::GraphicsHelper::computeSpriteFrameRects(spriteResource.get());
                 ke::Transform2D localTransform;
                 localTransform.x        = pos.x;
                 localTransform.y        = pos.y;
@@ -111,10 +83,20 @@ namespace pf
                 auto opacity = roomObjInfo.colour;
                 opacity.a = static_cast<decltype(opacity.a)>(opacity.a * 0.6);
 
+                static const auto frameDuration = ke::Time::seconds(1) / (60 * 0.2);
+                static constexpr std::size_t startingFrame = 0;
+
                 return ke::AnimatedSpriteNode::create(
                     entity->getId(), localTransform, std::move(frameOrigins), objectResource->depth,
-                    std::move(frameTextureIds), std::move(frameRects), ke::Time::milliseconds(200), opacity);
+                    std::move(frameTextureIds), std::move(frameRects), frameDuration, startingFrame, opacity);
             };
+
+            const auto spriteResource = objectResource->spriteResource;
+            assert(spriteResource);
+            const auto spriteWaterfallMidResource = std::dynamic_pointer_cast<GMSSpriteResource>(resourceManager->getResource("sWaterfallMid"));
+            assert(spriteWaterfallMidResource);
+            const auto spriteWaterfallSplashResource = std::dynamic_pointer_cast<GMSSpriteResource>(resourceManager->getResource("sWaterfallSplash"));
+            assert(spriteWaterfallSplashResource);
             auto makeWaterfallNode = [&](const ke::Point2DInt32 & posOffset, bool flipX = false) { return nodeMaker(spriteResource, posOffset, flipX); };
             auto makeWaterfallMidNode = [&](const ke::Point2DInt32 & posOffset) { return nodeMaker(spriteWaterfallMidResource, posOffset); };
             auto makeWaterfallSplashNode = [&](const ke::Point2DInt32 & posOffset) { return nodeMaker(spriteWaterfallSplashResource, posOffset); };

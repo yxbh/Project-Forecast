@@ -1,5 +1,6 @@
 #include "EntityFactorySystem.hpp"
 
+#include "../EntityFactory/RorObjGeyserBuilder.hpp"
 #include "../EntityFactory/RorObjWaterfallBuilder.hpp"
 
 #include "KEngine/App.hpp"
@@ -10,6 +11,7 @@ namespace pf
     bool EntityFactorySystem::initialise(void)
     {
         auto factory = ke::App::instance()->getLogic()->getEntityFactory();
+        factory->registerEntityBuilder("oGeyser", std::make_unique<RorObjGeyserBuilder>(factory));
         factory->registerEntityBuilder("oWaterfall", std::make_unique<RorObjWaterfallBuilder>(factory));
         
         return true;

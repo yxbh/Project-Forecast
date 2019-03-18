@@ -354,6 +354,7 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Views\HumanView.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\AssetResources\TextureInfoResource.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\EntityComponents\Components..cpp" />
+    <ClCompile Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjGeyserBuilder.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjWaterfallBuilder.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\InputControllers\InputControllers.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\main.cpp" />
@@ -366,6 +367,7 @@
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\EventFeedbackSystem.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\GMSRoomManagementSystem.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\PlayerCameraControlSystem.cpp" />
+    <ClCompile Include="..\..\..\..\ProjectForecast\Utility\GraphicsHelper.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\Views\HumanView.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -465,6 +467,7 @@
     <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\TextureInfoResource.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\CommandLineOptions.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\EntityComponents\Components..hpp" />
+    <ClInclude Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjGeyserBuilder.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjWaterfallBuilder.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Events\GMSRoomLoadRequestEvent.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Events\RequestDrawDebugDotEvent.hpp" />
@@ -478,6 +481,7 @@
     <ClInclude Include="..\..\..\..\ProjectForecast\Systems\EventFeedbackSystem.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Systems\GMSRoomManagementSystem.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Systems\PlayerCameraControlSystem.hpp" />
+    <ClInclude Include="..\..\..\..\ProjectForecast\Utility\GraphicsHelper.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Views\HumanView.hpp" />
   </ItemGroup>
   <ItemGroup>

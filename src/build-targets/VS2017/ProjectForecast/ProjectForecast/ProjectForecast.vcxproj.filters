@@ -151,6 +151,9 @@
     <Filter Include="KEngine\Header Files\Entity\ComponentBuilders">
       <UniqueIdentifier>{9c0bb24f-8421-4619-89f7-2dc5d2d9ae75}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ProjectForecast\Utility">
+      <UniqueIdentifier>{1cea270f-7aac-4bd0-b2e6-0da2a44cb40b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Events.cpp">
@@ -317,6 +320,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\ProjectForecast\Systems\EntityFactorySystem.cpp">
       <Filter>ProjectForecast\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjGeyserBuilder.cpp">
+      <Filter>ProjectForecast\EntityFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Utility\GraphicsHelper.cpp">
+      <Filter>ProjectForecast\Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -649,6 +658,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Utility\StringHelper.hpp">
       <Filter>KEngine\Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjGeyserBuilder.hpp">
+      <Filter>ProjectForecast\EntityFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Utility\GraphicsHelper.hpp">
+      <Filter>ProjectForecast\Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
