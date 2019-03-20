@@ -154,6 +154,12 @@
     <Filter Include="ProjectForecast\Utility">
       <UniqueIdentifier>{1cea270f-7aac-4bd0-b2e6-0da2a44cb40b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="libs">
+      <UniqueIdentifier>{a915aca5-4e36-4be0-b392-029c5cdd46e1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libs\dear-ImGUI-SFML">
+      <UniqueIdentifier>{05006dcb-2238-4bc0-9783-956f2b03201e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Events.cpp">
@@ -326,6 +332,21 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\ProjectForecast\Utility\GraphicsHelper.cpp">
       <Filter>ProjectForecast\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui.cpp">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui_demo.cpp">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui_draw.cpp">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui_widgets.cpp">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui-SFML.cpp">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -664,6 +685,33 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\ProjectForecast\Utility\GraphicsHelper.hpp">
       <Filter>ProjectForecast\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imconfig.h">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imconfig-SFML.h">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui.h">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui_internal.h">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui-SFML.h">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui-SFML_export.h">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imstb_rectpack.h">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imstb_textedit.h">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imstb_truetype.h">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
