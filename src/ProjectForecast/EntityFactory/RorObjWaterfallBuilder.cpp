@@ -22,7 +22,7 @@ namespace pf
 {
     ke::Entity * RorObjWaterfallBuilder::build(const std::any & p_parameters)
     {
-        static constexpr char * const OBJECT_RESOURCE_NAME = "oWaterfall";
+        static constexpr auto OBJECT_RESOURCE_NAME = "oWaterfall";
 
         const auto & roomObjInfo = std::any_cast<const pf::GMSRoomObjectInstance&>(p_parameters);
 

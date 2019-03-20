@@ -31,7 +31,7 @@ namespace pf
         virtual void update(ke::Time elapsedTime) final;
 
         void handleWindowSizeChangedRequest(ke::EventSptr event);
-        void PlayerCameraControlSystem::handleCameraViewZoomRequest(ke::EventSptr event);
+        void handleCameraViewZoomRequest(ke::EventSptr event);
 
     private:
         ke::Dimension2DUInt32 windowSizeCache;

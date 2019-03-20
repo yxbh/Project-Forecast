@@ -23,7 +23,7 @@ namespace pf
 {
     ke::Entity * RorObjGeyserBuilder::build(const std::any & p_parameters)
     {
-        static constexpr char * const OBJECT_RESOURCE_NAME = "oGeyser";
+        static constexpr auto OBJECT_RESOURCE_NAME = "oGeyser";
 
         const auto & roomObjInfo = std::any_cast<const pf::GMSRoomObjectInstance&>(p_parameters);
 
