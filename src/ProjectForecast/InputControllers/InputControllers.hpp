@@ -14,7 +14,7 @@ namespace pf
         virtual bool onButtonPressed(const ke::Mouse::ButtonInfo & buttonInfo) override;
         virtual bool onButtonReleased(const ke::Mouse::ButtonInfo & buttonInfo) override;
         virtual bool onWheelScrolled(const ke::Mouse::ScrollWheelInfo & scrollWheelInfo) override;
-        virtual bool onPointerMoved() override;
+        virtual bool onPointerMoved(const ke::Mouse::MouseInfo & mouseInfo) override;
     };
 
     class KeyboardInputController : public ke::IKeyboardInputController

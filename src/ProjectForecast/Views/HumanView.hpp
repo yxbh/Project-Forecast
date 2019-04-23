@@ -24,7 +24,6 @@ namespace pf
 
     private:
         void handleWindowEvent(ke::EventSptr event);
-        void handleSfmlEvent(const sf::Event & event);
 
 
         std::string testTextBuffer;

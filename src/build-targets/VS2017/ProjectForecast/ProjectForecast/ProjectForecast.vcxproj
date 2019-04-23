@@ -159,7 +159,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;..\..\..\..\lib\libs-other\imgui-sfml-mix;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>KE_DEBUG;USE_SFML;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
@@ -170,7 +170,7 @@
     <Link>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-UnitTest|Win32'">
@@ -178,7 +178,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;..\..\..\..\lib\libs-other\imgui-sfml-mix;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>KE_DEBUG;RUN_UNIT_TESTS;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
@@ -197,7 +197,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;..\..\..\..\lib\libs-other\imgui-sfml-mix;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>KE_DEBUG;USE_SFML;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
@@ -208,7 +208,7 @@
     <Link>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-UnitTest|x64'">
@@ -216,7 +216,7 @@
       <WarningLevel>Level4</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;..\..\..\..\lib\libs-other\imgui-sfml-mix;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>KE_DEBUG;RUN_UNIT_TESTS;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
@@ -238,7 +238,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;..\..\..\..\lib\libs-other\imgui-sfml-mix;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>USE_SFML;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
@@ -250,7 +250,7 @@
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;sfml-main.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;sfml-main.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-UnitTest|Win32'">
@@ -261,7 +261,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;..\..\..\..\lib\libs-other\imgui-sfml-mix;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>RUN_UNIT_TESTS;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
@@ -284,7 +284,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;..\..\..\..\lib\libs-other\imgui-sfml-mix;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>USE_SFML;_SILENCE_CXX17_OLD_ALLOCATOR_MEMBERS_DEPRECATION_WARNING;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
@@ -296,7 +296,7 @@
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <SubSystem>Console</SubSystem>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;sfml-main.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;sfml-main.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-UnitTest|x64'">
@@ -307,7 +307,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;..\..\..\..\lib\libs-other\imgui-sfml-mix;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>RUN_UNIT_TESTS;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
@@ -342,6 +342,7 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Entity\Components\EntityRenderableComponents.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Entity\EntityComponentLoaders\EntityRenderComponentLoader.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Events\SFML\SfmlEventTranslator.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\DearImgui\ImguiSceneNodes.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\RenderSystem.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\Scene.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SceneNodes.cpp" />
@@ -351,6 +352,8 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Resources\ImageResource.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Resources\Loaders\ImageResourceLoader.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Resources\ResourceManifestResource.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Systems\AppConsoleSystem.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Systems\ImguiSystem.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Delegate.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EntityAndComponents.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EntityFactory.cpp" />
@@ -364,6 +367,11 @@
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Time.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Utility\FileSystemHelper.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Views\HumanView.cpp" />
+    <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui-SFML.cpp" />
+    <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui.cpp" />
+    <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui_demo.cpp" />
+    <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui_draw.cpp" />
+    <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui_widgets.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\AssetResources\TextureInfoResource.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\EntityComponents\Components..cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjGeyserBuilder.cpp" />
@@ -423,6 +431,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\ComponentBuilders\EntityRenderableComponentBuilder.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\Components\EntityCameraComponent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\Components\EntityRenderableComponents.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\AppConsoleEvents.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\AppEvents.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\AppExitRequestedEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\EntityTransformControlCommandEvents.hpp" />
@@ -435,6 +444,8 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SDL2\SDL2Event.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEventTranslator.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\DearImgui\ImguiRenderer.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\DearImgui\ImguiSceneNodes.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\GraphicsCommand.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderLayer.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderSystem.hpp" />
@@ -470,9 +481,19 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\ImageResource.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\Loaders\ImageResourceLoader.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\ResourceManifestResource.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Systems\ImguiSystem.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Utility\FileSystemHelper.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Utility\StringHelper.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Views\HumanView.hpp" />
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imconfig-SFML.h" />
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imconfig.h" />
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui-SFML.h" />
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui-SFML_export.h" />
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui.h" />
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui_internal.h" />
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imstb_rectpack.h" />
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imstb_textedit.h" />
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imstb_truetype.h" />
     <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\GMSObjectResource.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\GMSRoomResource.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\OtherGMSResources.hpp" />

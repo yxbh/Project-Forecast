@@ -48,8 +48,9 @@ namespace ke
             // do culling
             for (const auto & command : this->commands)
             {
-                sf::Vector2f sfBegin{ command.line.begin.x, -command.line.begin.y };
-                sf::Vector2f sfEnd{ command.line.end.x, -command.line.end.y };
+                auto & lineInfo = std::get<ke::graphics::LineRenderInfo>(command.info);
+                sf::Vector2f sfBegin{ lineInfo.begin.x, -lineInfo.begin.y };
+                sf::Vector2f sfEnd{ lineInfo.end.x, -lineInfo.end.y };
                 sf::Vector2f topLeft{ std::min(sfBegin.x, sfEnd.x), std::min(sfBegin.y, sfEnd.y) };
                 const auto shapeWidth          = std::abs(std::max(sfBegin.x, sfEnd.x) - sfBegin.x);
                 const auto shapeHeight         = std::abs(std::max(sfBegin.y, sfEnd.y) - sfBegin.y);
@@ -58,8 +59,8 @@ namespace ke
                 //if (!viewRect.intersects(shapeMaxGlobalBound))
                 //    continue;
                 
-                this->vertexArray.emplace_back(sf::Vertex(sfBegin, SfmlHelper::convert(command.line.color)));
-                this->vertexArray.emplace_back(sf::Vertex(sfEnd, SfmlHelper::convert(command.line.color)));
+                this->vertexArray.emplace_back(sf::Vertex(sfBegin, SfmlHelper::convert(lineInfo.color)));
+                this->vertexArray.emplace_back(sf::Vertex(sfEnd, SfmlHelper::convert(lineInfo.color)));
             }
 
             // do rendering.

@@ -38,6 +38,12 @@ namespace ke
             Horizontal
         };
 
+        struct MouseInfo
+        {
+            Point2DInt32 screenPosition;
+            Point2DFloat worldPosition;
+        };
+
         struct ButtonInfo
         {
             Button button;

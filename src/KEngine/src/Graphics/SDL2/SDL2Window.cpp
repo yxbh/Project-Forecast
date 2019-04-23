@@ -1,10 +1,14 @@
 #include "KEngine/Graphics/SDL2/SDL2Window.hpp"
 
+#include "KEngine/Events/AppEvents.hpp"
+#include "KEngine/Core/EventManager.hpp"
+
 namespace ke::sdl2
 {
 
     SDL2Window::SDL2Window()
     {
+        ke::EventManager::enqueue(ke::makeEvent<ke::WindowCreatedEvent>(this));
     }
 
 
@@ -14,6 +18,8 @@ namespace ke::sdl2
         {
             SDL_GL_DeleteContext(this->glContext);
         }
+
+        ke::EventManager::enqueue(ke::makeEvent<ke::WindowDestroyedEvent>(this));
     }
 
     void SDL2Window::display()

@@ -51,9 +51,10 @@ namespace ke
             this->drawCallCount = 0;
             for (const auto & command : this->commands)
             {
+                const auto & spriteInfo = std::get<ke::graphics::SpriteRenderInfo>(command.info);
                 // do culling
-                const auto & textureRect = command.sprite.textureRect;
-                const auto & transform   = command.sprite.globalTransform;
+                const auto & textureRect = spriteInfo.textureRect;
+                const auto & transform   = spriteInfo.globalTransform;
                 const auto spriteWidth   = static_cast<float>(textureRect.width) * transform.scaleX;
                 const auto spriteHeight  = static_cast<float>(textureRect.height) * transform.scaleY;
                 const sf::Vector2f sfPosition
@@ -70,9 +71,9 @@ namespace ke
                     continue;
 
                 // setup sprite for rendering.
-                if (currentTextureId != command.sprite.textureId)
+                if (currentTextureId != spriteInfo.textureId)
                 {
-                    currentTextureId = command.sprite.textureId;
+                    currentTextureId = spriteInfo.textureId;
                     if (this->textureStore->find(currentTextureId) != this->textureStore->end())
                     {
                         currentTexture = (*this->textureStore)[currentTextureId].get();
@@ -84,7 +85,7 @@ namespace ke
                         continue;
                     }
                 }
-                sprite.setOrigin(command.sprite.origin.x, command.sprite.origin.y);
+                sprite.setOrigin(spriteInfo.origin.x, spriteInfo.origin.y);
                 sprite.setPosition(sfPosition);
                 sprite.setScale(transform.scaleX, transform.scaleY);
                 sf::IntRect sfTextureRect;
@@ -93,14 +94,14 @@ namespace ke
                 sfTextureRect.width  = textureRect.width == 0 ? currentTexture->getSize().x : textureRect.width;
                 sfTextureRect.height = textureRect.height == 0 ? currentTexture->getSize().y : textureRect.height;
                 sprite.setTextureRect(sfTextureRect);
-                sprite.setColor(ke::SfmlHelper::convert(command.sprite.color));
+                sprite.setColor(ke::SfmlHelper::convert(spriteInfo.color));
 
                 this->renderTarget->draw(sprite);
                 ++this->drawCallCount;
 
                 if (this->drawBoundingBox)
                 {
-                    this->rectangleShape.setOrigin(command.sprite.origin.x, command.sprite.origin.y);
+                    this->rectangleShape.setOrigin(spriteInfo.origin.x, spriteInfo.origin.y);
                     this->rectangleShape.setPosition(sfPosition);
                     this->rectangleShape.setScale(transform.scaleX, transform.scaleY);
                     if (const auto & size = this->rectangleShape.getSize();
@@ -129,7 +130,7 @@ namespace ke
     private:
         sf::RenderTarget * renderTarget;
 
-        bool drawBoundingBox = true;
+        bool drawBoundingBox = false;
 
         mutable size_t drawCallCount = 0;
 

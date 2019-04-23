@@ -1,5 +1,6 @@
 #include "InputControllers.hpp"
 
+#include "../Events/AppConsoleEvents.hpp"
 #include "../Events/RequestDrawDebugDotEvent.hpp"
 #include "../Events/GMSRoomLoadRequestEvent.hpp"
 #include "../Events/OtherGraphicsEvents.hpp"
@@ -45,8 +46,9 @@ namespace pf
         return false;
     }
 
-    bool MouseInputController::onPointerMoved()
+    bool MouseInputController::onPointerMoved(const ke::Mouse::MouseInfo & mouseInfo)
     {
+        KE_UNUSED(mouseInfo);
         return false;
     }
 
@@ -112,6 +114,11 @@ namespace pf
     {
         switch (keyInfo.keyCode)
         {
+        case ke::Keyboard::Tilde:
+        {
+            ke::EventManager::enqueue(ke::makeEvent<ke::RequestToggleAppConsoleDisplayEvent>());
+            return true;
+        }
         case ke::Keyboard::Add:
         {
             ke::EventManager::enqueue(ke::makeEvent<pf::GMSRoomLoadRequestEvent>("r1_1_1"));

@@ -28,9 +28,27 @@ namespace ke
         return newNode;
     }
 
+    ke::GraphicsCommand InvisibleContainerNode::getGraphicsCommand() const
+    {
+        ke::GraphicsCommand cmd;
+        cmd.type = ke::GraphicsCommand::Types::DrawInvisible;
+        return cmd;
+    }
+
     ke::CameraNode::Sptr CameraNode::create(ke::SceneNodeId newSceneNodeId)
     {
         return ke::makeSceneNode<ke::CameraNode>(newSceneNodeId);
+    }
+
+    ke::GraphicsCommand CameraNode::getGraphicsCommand() const
+    {
+        ke::GraphicsCommand cmd;
+        cmd.type = ke::GraphicsCommand::Types::SetViewContext;
+        ke::graphics::ViewContextInfo viewInfo;
+        viewInfo.transform = this->getGlobalTransform();
+        viewInfo.dimension = this->getViewDimension();
+        cmd.info = viewInfo;
+        return cmd;
     }
 
     ke::SceneNodeSptr CircleShapeNode::create(ke::SceneNodeId sceneNodeId,
@@ -40,21 +58,24 @@ namespace ke
     {
         auto newNode = ke::makeSceneNode<ke::CircleShapeNode>(sceneNodeId);
         newNode->setLocalTransform(localTransform);
-        auto & states                 = newNode->states;
-        states.type                   = ke::GraphicsCommand::Types::RenderCircleShape;
-        states.shape.id               = newNode->getId();
-        states.shape.radius           = radius;
-        states.shape.origin           = { radius, radius };
-        states.shape.outlineThickness = outlineThickness;
-        states.shape.fillColor        = fillColor;
-        states.shape.outlineColor     = outlineColor;
-        states.shape.depth            = depth;
+        auto & states   = newNode->states;
+        states.type     = ke::GraphicsCommand::Types::DrawCircleShape;
+        states.id       = newNode->getId();
+        states.depth    = depth;
+        ke::graphics::CircleShapeRenderInfo shapeInfo;
+        shapeInfo.radius           = radius;
+        shapeInfo.origin           = { radius, radius };
+        shapeInfo.outlineThickness = outlineThickness;
+        shapeInfo.fillColor        = fillColor;
+        shapeInfo.outlineColor     = outlineColor;
+        states.info = shapeInfo;
         return newNode;
     }
 
     GraphicsCommand CircleShapeNode::getGraphicsCommand() const
     {
-        this->states.shape.globalTransform = this->getGlobalTransform();
+        auto & shapeInfo = std::get<ke::graphics::CircleShapeRenderInfo>(states.info);
+        shapeInfo.globalTransform = this->getGlobalTransform();
         return this->states;
     }
 
@@ -63,13 +84,15 @@ namespace ke
         const Point2DFloat & end, std::int32_t depth, const ke::Color & color)
     {
         auto newNode = ke::makeSceneNode<ke::LineNode>(sceneNodeId);
-        auto & states     = newNode->states;
-        states.type       = ke::GraphicsCommand::Types::RenderLine;
-        states.line.id    = newNode->getId();
-        states.line.depth = depth;
-        states.line.begin = begin;
-        states.line.end   = end;
-        states.line.color = color;
+        auto & states   = newNode->states;
+        states.type     = ke::GraphicsCommand::Types::DrawLine;
+        states.id       = newNode->getId();
+        states.depth    = depth;
+        ke::graphics::LineRenderInfo lineInfo;
+        lineInfo.begin  = begin;
+        lineInfo.end    = end;
+        lineInfo.color  = color;
+        states.info     = lineInfo;
         return newNode;
     }
 
@@ -86,19 +109,22 @@ namespace ke
         auto newNode = ke::makeSceneNode<ke::SpriteNode>(sceneNodeId);
         newNode->setLocalTransform(localTransform);
         auto & states = newNode->states;
-        states.type                 = ke::GraphicsCommand::Types::RenderSprite;
-        states.sprite.id            = newNode->getId();
-        states.sprite.origin        = { static_cast<float>(origin.x), static_cast<float>(origin.y) };  // int to float conversion.
-        states.sprite.depth         = depth;
-        states.sprite.textureId     = textureId;
-        states.sprite.textureRect   = textureRect;
-        states.sprite.color         = color;
+        states.type             = ke::GraphicsCommand::Types::DrawSprite;
+        states.id               = newNode->getId();
+        states.depth            = depth;
+        ke::graphics::SpriteRenderInfo spriteInfo;
+        spriteInfo.origin       = { static_cast<float>(origin.x), static_cast<float>(origin.y) };  // int to float conversion.
+        spriteInfo.textureId    = textureId;
+        spriteInfo.textureRect  = textureRect;
+        spriteInfo.color        = color;
+        states.info = spriteInfo;
         return newNode;
     }
 
     GraphicsCommand SpriteNode::getGraphicsCommand() const
     {
-        this->states.shape.globalTransform = this->getGlobalTransform();
+        auto & spriteInfo = std::get<ke::graphics::SpriteRenderInfo>(this->states.info);
+        spriteInfo.globalTransform = this->getGlobalTransform();
         return this->states;
     }
 
@@ -120,23 +146,26 @@ namespace ke
         newNode->frameRects      = std::forward<TextureRectContainer>(textureRects);
         newNode->frameDuration   = frameDuration;
         newNode->currentFrame    = startingFrame;
-        auto & states = newNode->states;
-        states.type                 = ke::GraphicsCommand::Types::RenderSprite;
-        states.sprite.id            = newNode->getId();
-        states.sprite.origin        = { static_cast<float>(newNode->origins[startingFrame].x), static_cast<float>(newNode->origins[startingFrame].y) };  // int to float conversion.
-        states.sprite.depth         = depth;
-        states.sprite.textureId     = newNode->frameTextureIds[startingFrame];
-        states.sprite.textureRect   = newNode->frameRects[startingFrame];
-        states.sprite.color         = color;
+        auto & states           = newNode->states;
+        states.type             = ke::GraphicsCommand::Types::DrawSprite;
+        states.id               = newNode->getId();
+        states.depth            = depth;
+        ke::graphics::SpriteRenderInfo spriteInfo;
+        spriteInfo.origin       = { static_cast<float>(newNode->origins[startingFrame].x), static_cast<float>(newNode->origins[startingFrame].y) };  // int to float conversion.
+        spriteInfo.textureId    = newNode->frameTextureIds[startingFrame];
+        spriteInfo.textureRect  = newNode->frameRects[startingFrame];
+        spriteInfo.color        = color;
+        states.info = spriteInfo;
         return newNode;
     }
 
     GraphicsCommand AnimatedSpriteNode::getGraphicsCommand() const
     {
-        this->states.shape.globalTransform = this->getGlobalTransform();
-        states.sprite.origin      = { static_cast<float>(this->origins[this->currentFrame].x), static_cast<float>(this->origins[this->currentFrame].y) };  // int to float conversion.
-        states.sprite.textureId   = this->frameTextureIds[this->currentFrame];
-        states.sprite.textureRect = this->frameRects[this->currentFrame];
+        auto & spriteInfo = std::get<ke::graphics::SpriteRenderInfo>(states.info);
+        spriteInfo.globalTransform = this->getGlobalTransform();
+        spriteInfo.origin      = { static_cast<float>(this->origins[this->currentFrame].x), static_cast<float>(this->origins[this->currentFrame].y) };  // int to float conversion.
+        spriteInfo.textureId   = this->frameTextureIds[this->currentFrame];
+        spriteInfo.textureRect = this->frameRects[this->currentFrame];
         return this->states;
     }
 

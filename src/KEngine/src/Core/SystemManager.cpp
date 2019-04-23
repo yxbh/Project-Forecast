@@ -61,7 +61,9 @@ namespace ke
 
         ke::Log::instance()->info("Shutting down {} ...", system->getName());
         system->shutdown();
-        std::remove(this->systems.begin(), this->systems.end(), system);
+        auto systemsNewEnd = std::remove(this->systems.begin(), this->systems.end(), system);
+        assert(systemsNewEnd != this->systems.end());
+        this->systems.erase(systemsNewEnd, this->systems.end());
         this->systemsMap.erase(systemIt);
     }
 
