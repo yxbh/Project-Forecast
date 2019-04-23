@@ -54,7 +54,7 @@ namespace ke
         /// <returns>number of draw calls issued.</returns>
         size_t render();
 
-        void setWindow(ke::WindowSptr p_window) { this->window = p_window; }
+        void setWindow(ke::WindowSptr p_window);
 
         void receiveEvent(ke::EventSptr event);
         void processEvents();
@@ -76,6 +76,7 @@ namespace ke
         GraphicsCommandRendererUptr m_lineRenderer;
         GraphicsCommandRendererUptr m_circleShapeRenderer;
         GraphicsCommandRendererUptr m_spriteRenderer;
+        GraphicsCommandRendererUptr m_imguiRenderer;
 
         ke::Colour clearColour;
         bool clearFinalRenderTarget = true;

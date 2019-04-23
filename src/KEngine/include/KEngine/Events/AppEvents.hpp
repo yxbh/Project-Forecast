@@ -1,6 +1,7 @@
 #pragma once
 
 #include "KEngine/Interfaces/IEvent.hpp"
+#include "KEngine/Interfaces/IWindow.hpp"
 #include "KEngine/Interfaces/IInputController.hpp"
 
 #include "KEngine/Common/Dimension2D.hpp"
@@ -118,16 +119,13 @@ namespace ke
         KE_DEFINE_EVENT_COMMON_PROPERTIES(MouseWheelScrolledEvent, 0x5b2703ac)
 
     public:
-        using ScreenPositionType = Point2DInt32;
-        using WorldPositionType = Point2DFloat;
-
         MouseWheelScrolledEvent(const ke::Mouse::ScrollWheelInfo & eventInfo) : detail(eventInfo) {}
 
         inline void setDetail(const ke::Mouse::ScrollWheelInfo & eventInfo) { this->detail = eventInfo; }
         inline const ke::Mouse::ScrollWheelInfo & getDetail() const { return this->detail; }
 
-        inline const ScreenPositionType & getScreenPosition() const { return this->detail.screenPosition; }
-        inline const WorldPositionType & getWorldnPosition() const { return this->detail.worldPosition; }
+        inline const decltype(ke::Mouse::ScrollWheelInfo::screenPosition) & getScreenPosition() const { return this->detail.screenPosition; }
+        inline const decltype(ke::Mouse::ScrollWheelInfo::worldPosition) & getWorldnPosition() const { return this->detail.worldPosition; }
 
         virtual ke::EventSptr makeCopy() const final
         {
@@ -136,7 +134,67 @@ namespace ke
 
     protected:
         ke::Mouse::ScrollWheelInfo detail;
+    };
 
+
+    class MouseMovedEvent : public IEvent
+    {
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(MouseMovedEvent, 0x99A78BB9)
+
+    public:
+        MouseMovedEvent(const ke::Mouse::MouseInfo & eventInfo) : detail(eventInfo) {}
+
+        inline void setDetail(const ke::Mouse::MouseInfo & eventInfo) { this->detail = eventInfo; }
+        inline const ke::Mouse::MouseInfo & getDetail() const { return this->detail; }
+
+        inline const decltype(ke::Mouse::MouseInfo::screenPosition) & getScreenPosition() const { return this->detail.screenPosition; }
+        inline const decltype(ke::Mouse::MouseInfo::worldPosition) & getWorldnPosition() const { return this->detail.worldPosition; }
+
+        virtual ke::EventSptr makeCopy() const final
+        {
+            return ke::makeEvent<MouseMovedEvent>(this->detail);
+        }
+
+    protected:
+        ke::Mouse::MouseInfo detail;
+    };
+
+
+    class WindowCreatedEvent : public ke::IEvent
+    {
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(WindowCreatedEvent, 0xD48FCEDF)
+
+    public:
+        WindowCreatedEvent(ke::IWindow * newWindow) : window(newWindow) {}
+
+        inline ke::IWindow * get() const { return this->window; }
+
+        virtual ke::EventSptr makeCopy() const final
+        {
+            return ke::makeEvent<WindowCreatedEvent>(this->window);
+        }
+
+    private:
+        ke::IWindow * window;
+    };
+
+
+    class WindowDestroyedEvent : public ke::IEvent
+    {
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(WindowDestroyedEvent, 0xAC768EC4)
+
+    public:
+        WindowDestroyedEvent(ke::IWindow * p_window) : window(p_window) {}
+
+        inline ke::IWindow * get() const { return this->window; }
+
+        virtual ke::EventSptr makeCopy() const final
+        {
+            return ke::makeEvent<WindowDestroyedEvent>(this->window);
+        }
+
+    private:
+        ke::IWindow * window;
     };
 
 

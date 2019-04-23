@@ -3,12 +3,21 @@
 #include "KEngine/Entity/Components/EntityRenderableComponents.hpp"
 #include "KEngine/Entity/ComponentBuilders/EntityRenderableComponentBuilder.hpp"
 
+#include "KEngine/Systems/ImguiSystem.hpp"
+
+#include <cassert>
+
 namespace ke
 {
 
     BaseAppLogic::BaseAppLogic()
     {
         this->entityFactory.registerComponentBuilder<ke::EntityRenderableComponentBuilder>(ke::EntityRenderableComponent::NAME);
+
+        auto ret = this->systemManager.addSystem(std::make_unique<AppConsoleSystem>());
+        assert(ret);
+        ret = this->systemManager.addSystem(std::make_unique<ImguiSystem>());
+        assert(ret);
     }
 
     void BaseAppLogic::onUpdate(ke::Time elapsedTime)

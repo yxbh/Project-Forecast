@@ -170,7 +170,7 @@ namespace ke
             fpsCounter.push(frameTime);
             ::eventLoopFps.store((float)fpsCounter.getAverageFps(), std::memory_order_relaxed);
 
-            ke::EventManager::enqueue(ke::makeEvent<EventLoopFrameEvent>(frameTime));
+            ke::EventManager::dispatchNow(ke::makeEvent<EventLoopFrameEvent>(frameTime));
 
 #if defined(USE_SDL)
             SDL_Event event;
@@ -192,30 +192,19 @@ namespace ke
                 ke::EventManager::enqueue(ke::makeEvent<ke::SfmlEvent>(event));
                 switch (event.type)
                 {
-                case sf::Event::EventType::MouseButtonPressed:
-                case sf::Event::EventType::MouseButtonReleased:
-                case sf::Event::EventType::MouseWheelScrolled:
-                case sf::Event::EventType::KeyPressed:
-                case sf::Event::EventType::KeyReleased:
-                case sf::Event::EventType::TextEntered:
-                case sf::Event::EventType::Resized:
-                case sf::Event::EventType::GainedFocus:
-                case sf::Event::EventType::LostFocus:
-                {
-                    auto keEvent = SfmlEventTranslator::translate(event, sfWindow);
-                    if (keEvent)
-                    {
-                        ke::EventManager::enqueue(std::move(keEvent));
-                    }
-                    break;
-                }
-
                 case sf::Event::EventType::Closed:
                     Log::instance()->info("Normal exit requested.");
                     ke::EventManager::enqueue(ke::makeEvent<AppExitRequestedEvent>());
                     break;
 
-                default: break;
+                default:
+                {
+                    if (auto keEvent = SfmlEventTranslator::translate(event, sfWindow); keEvent)
+                    {
+                        ke::EventManager::enqueue(std::move(keEvent));
+                    }
+                    break;
+                }
                 }
             }
 #endif
@@ -330,16 +319,15 @@ namespace ke
                 {
                     cumulativeLoopTime -= ::LOGIC_UPDATE_FIXED_TIMESPAN;
 
-                    ke::EventManager::enqueue(ke::makeEvent<LogicLoopFrameEvent>(::LOGIC_UPDATE_FIXED_TIMESPAN));
-                    ke::EventManager::update();
+                    ke::EventManager::dispatchNow(ke::makeEvent<LogicLoopFrameEvent>(::LOGIC_UPDATE_FIXED_TIMESPAN));
 
                     //
                     this->resourceManager->update();
-                    
                     ke::EventManager::update();
 
                     // update logic.
                     this->appLogic->update(::LOGIC_UPDATE_FIXED_TIMESPAN);
+                    ke::EventManager::update();
                 }
 
                 //
@@ -348,7 +336,7 @@ namespace ke
                 renderFpsCounter.push(frameTime);
                 ::graphicsLoopFps.store((float)renderFpsCounter.getAverageFps(), std::memory_order_relaxed);
                 ::renderLoopFrameTimeMs.store(frameTime.asMicroseconds() / 1000.0, std::memory_order_relaxed);
-                ke::EventManager::enqueue(ke::makeEvent<GraphicsLoopFrameEvent>(frameTime));
+                ke::EventManager::dispatchNow(ke::makeEvent<GraphicsLoopFrameEvent>(frameTime));
 
                 //
                 // prepare and dispatch render commands

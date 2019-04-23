@@ -1,5 +1,6 @@
 #include <algorithm> 
 #include <cctype>
+#include <cstring>
 #include <locale>
 #include <string>
 #include <string_view>
@@ -42,6 +43,20 @@ namespace ke
     // trim from both ends (copying)
     static inline std::string trim_copy(std::string s) {
         trim(s);
+        return s;
+    }
+
+    // return copy of string with all alpha characters converted to uppercase.
+    static inline std::string upper_copy(std::string s)
+    {
+        std::transform(s.begin(), s.end(), s.begin(), [](char c) { return static_cast<char>(std::toupper(c)); });
+        return s;
+    }
+
+    // return copy of string with all alpha characters converted to lowercase.
+    static inline std::string lower_copy(std::string s)
+    {
+        std::transform(s.begin(), s.end(), s.begin(), [](char c) { return static_cast<char>(std::tolower(c)); });
         return s;
     }
 

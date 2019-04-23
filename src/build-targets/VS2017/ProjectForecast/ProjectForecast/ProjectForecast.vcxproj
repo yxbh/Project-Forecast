@@ -342,6 +342,7 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Entity\Components\EntityRenderableComponents.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Entity\EntityComponentLoaders\EntityRenderComponentLoader.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Events\SFML\SfmlEventTranslator.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\DearImgui\ImguiSceneNodes.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\RenderSystem.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\Scene.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SceneNodes.cpp" />
@@ -351,6 +352,8 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Resources\ImageResource.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Resources\Loaders\ImageResourceLoader.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Resources\ResourceManifestResource.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Systems\AppConsoleSystem.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Systems\ImguiSystem.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Delegate.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EntityAndComponents.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EntityFactory.cpp" />
@@ -428,6 +431,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\ComponentBuilders\EntityRenderableComponentBuilder.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\Components\EntityCameraComponent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\Components\EntityRenderableComponents.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\AppConsoleEvents.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\AppEvents.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\AppExitRequestedEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\EntityTransformControlCommandEvents.hpp" />
@@ -440,6 +444,8 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SDL2\SDL2Event.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEventTranslator.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\DearImgui\ImguiRenderer.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\DearImgui\ImguiSceneNodes.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\GraphicsCommand.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderLayer.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderSystem.hpp" />
@@ -475,6 +481,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\ImageResource.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\Loaders\ImageResourceLoader.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\ResourceManifestResource.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Systems\ImguiSystem.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Utility\FileSystemHelper.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Utility\StringHelper.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Views\HumanView.hpp" />

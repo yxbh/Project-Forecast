@@ -34,7 +34,7 @@ namespace ke
         virtual ke::GraphicsCommand getGraphicsCommand() const override
         {
             ke::GraphicsCommand cmd;
-            cmd.type = ke::GraphicsCommand::Types::RenderInvisible;
+            cmd.type = ke::GraphicsCommand::Types::DrawInvisible;
             return cmd;
         }
 
@@ -53,12 +53,7 @@ namespace ke
 
         using SceneNode::SceneNode;
 
-        virtual ke::GraphicsCommand getGraphicsCommand() const override
-        {
-            ke::GraphicsCommand cmd;
-            cmd.type = ke::GraphicsCommand::Types::RenderInvisible;
-            return cmd;
-        }
+        virtual ke::GraphicsCommand getGraphicsCommand() const override;
     };
 
 
@@ -72,18 +67,11 @@ namespace ke
         using Sptr = std::shared_ptr<CameraNode>;
         using Wptr = std::weak_ptr<CameraNode>;
 
-        static ke::CameraNode::Sptr create(ke::SceneNodeId newSceneNodeId = ke::ISceneNode::newId());
-
         using SceneNode::SceneNode;
 
-        virtual ke::GraphicsCommand getGraphicsCommand() const override
-        {
-            ke::GraphicsCommand cmd;
-            cmd.type = ke::GraphicsCommand::Types::SetViewContext;
-            cmd.view.transform = this->getGlobalTransform();
-            cmd.view.dimension = this->getViewDimension();
-            return cmd;
-        }
+        static ke::CameraNode::Sptr create(ke::SceneNodeId newSceneNodeId = ke::ISceneNode::newId());
+
+        virtual ke::GraphicsCommand getGraphicsCommand() const override;
 
         /// <summary>
         /// Get the view size of the camera.

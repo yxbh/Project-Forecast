@@ -160,6 +160,12 @@
     <Filter Include="libs\dear-ImGUI-SFML">
       <UniqueIdentifier>{05006dcb-2238-4bc0-9783-956f2b03201e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="KEngine\Header Files\Graphics\DearImgui">
+      <UniqueIdentifier>{e32227c0-69b6-4b81-b75e-00206eb73dd6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Graphics\DearImgui">
+      <UniqueIdentifier>{0ab149ef-0370-4d55-9de1-34cb79aeb351}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Events.cpp">
@@ -347,6 +353,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui-SFML.cpp">
       <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Systems\ImguiSystem.cpp">
+      <Filter>KEngine\Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\DearImgui\ImguiSceneNodes.cpp">
+      <Filter>KEngine\Source Files\Graphics\DearImgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Systems\AppConsoleSystem.cpp">
+      <Filter>KEngine\Source Files\Systems</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -712,6 +727,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imstb_truetype.h">
       <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\DearImgui\ImguiRenderer.hpp">
+      <Filter>KEngine\Header Files\Graphics\DearImgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Systems\ImguiSystem.hpp">
+      <Filter>KEngine\Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\DearImgui\ImguiSceneNodes.hpp">
+      <Filter>KEngine\Header Files\Graphics\DearImgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\AppConsoleEvents.hpp">
+      <Filter>KEngine\Header Files\Events</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

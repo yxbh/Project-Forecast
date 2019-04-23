@@ -38,13 +38,15 @@ namespace ke
             this->drawCallCount = 0;
             for (const auto & command : this->commands)
             {
+                const auto & shapeInfo = std::get<ke::graphics::CircleShapeRenderInfo>(command.info);
+
                 // do culling
                 sf::Vector2f topLeft
                 {
-                    static_cast<float>(command.shape.globalTransform.x),
-                    static_cast<float>(-command.shape.globalTransform.y)
+                    static_cast<float>(shapeInfo.globalTransform.x),
+                    static_cast<float>(-shapeInfo.globalTransform.y)
                 };
-                const auto shapeWidth = command.shape.radius * 2;
+                const auto shapeWidth = shapeInfo.radius * 2;
                 topLeft.x -= shapeWidth;
                 topLeft.y -= shapeWidth;
                 auto shapeMaxGlobalBound = sf::FloatRect(topLeft, { shapeWidth * 2 , shapeWidth * 2 });
@@ -54,26 +56,26 @@ namespace ke
 
                 const sf::Vector2f sfPosition
                 {
-                    static_cast<float>(command.shape.globalTransform.x),
-                    static_cast<float>(-command.shape.globalTransform.y)
+                    static_cast<float>(shapeInfo.globalTransform.x),
+                    static_cast<float>(-shapeInfo.globalTransform.y)
                 };
-                const auto sfOrigin = ke::SfmlHelper::convert(command.shape.origin);
-                const auto sfFillColor = ke::SfmlHelper::convert(command.shape.fillColor);
-                const auto sfOutlineColor = ke::SfmlHelper::convert(command.shape.outlineColor);
+                const auto sfOrigin = ke::SfmlHelper::convert(shapeInfo.origin);
+                const auto sfFillColor = ke::SfmlHelper::convert(shapeInfo.fillColor);
+                const auto sfOutlineColor = ke::SfmlHelper::convert(shapeInfo.outlineColor);
 
                 // get the shape from cache.
-                auto it = shapeMap.find(command.shape.id);
+                auto it = shapeMap.find(command.id);
                 sf::CircleShape * shapePtr = nullptr;
                 if (it == shapeMap.end())
                 {
                     shape.setPosition(sfPosition);
                     shape.setFillColor(sfFillColor);
-                    shape.setRadius(command.shape.radius);
+                    shape.setRadius(shapeInfo.radius);
                     shape.setOrigin(sfOrigin);
                     shape.setOutlineColor(sfOutlineColor);
-                    shape.setOutlineThickness(command.shape.outlineThickness);
+                    shape.setOutlineThickness(shapeInfo.outlineThickness);
 
-                    shapeMap[command.shape.id] = shape;
+                    shapeMap[command.id] = shape;
                     shapePtr = &shape;
                 }
                 else
@@ -90,13 +92,13 @@ namespace ke
                 {
                     shapePtr->setOrigin(sfOrigin);
                 }
-                if (command.shape.radius != shapePtr->getRadius())
+                if (shapeInfo.radius != shapePtr->getRadius())
                 {
-                    shapePtr->setRadius(command.shape.radius);
+                    shapePtr->setRadius(shapeInfo.radius);
                 }
-                if (command.shape.outlineThickness != shapePtr->getOutlineThickness())
+                if (shapeInfo.outlineThickness != shapePtr->getOutlineThickness())
                 {
-                    shapePtr->setOutlineThickness(command.shape.outlineThickness);
+                    shapePtr->setOutlineThickness(shapeInfo.outlineThickness);
                 }
                 if (sfFillColor != shapePtr->getFillColor())
                 {

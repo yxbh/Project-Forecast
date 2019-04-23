@@ -1,6 +1,7 @@
 #include "KEngine/Graphics/RenderSystem.hpp"
 
 #include "KEngine/Graphics/RenderLayer.hpp"
+#include "KEngine/Graphics/DearImgui/ImguiRenderer.hpp"
 #include "KEngine/Graphics/SFML/LineRenderer.hpp"
 #include "KEngine/Graphics/SFML/CircleShapeRenderer.hpp"
 #include "KEngine/Graphics/SFML/SpriteRenderer.hpp"
@@ -50,7 +51,7 @@ namespace
     static bool graphicsRenderCommandRenderTypeComparer(const ke::GraphicsCommand & lhs, const ke::GraphicsCommand & rhs)
     {
         return
-            lhs.render.depth < rhs.render.depth;
+            lhs.depth < rhs.depth;
     }
 }
 
@@ -67,6 +68,7 @@ namespace ke
         this->m_lineRenderer        = std::make_unique<ke::LineRenderer>();
         this->m_circleShapeRenderer = std::make_unique<ke::CircleShapeRenderer>();
         this->m_spriteRenderer      = std::make_unique<ke::SpriteRenderer>(&TextureStore);
+        this->m_imguiRenderer       = std::make_unique<ke::DearImguiRenderer>();
     }
 
     RenderSystem::~RenderSystem()
@@ -192,17 +194,19 @@ namespace ke
             {
                 using SfFloatType = float;
                 auto view = renderTarget->getView();
-                view.setCenter(static_cast<SfFloatType>(command.view.transform.x), static_cast<SfFloatType>(-command.view.transform.y));
-                view.setSize(static_cast<SfFloatType>(command.view.dimension.width), static_cast<SfFloatType>(command.view.dimension.height));
+                auto & newViewInfo = std::get<ke::graphics::ViewContextInfo>(command.info);
+                view.setCenter(static_cast<SfFloatType>(newViewInfo.transform.x), static_cast<SfFloatType>(-newViewInfo.transform.y));
+                view.setSize(static_cast<SfFloatType>(newViewInfo.dimension.width), static_cast<SfFloatType>(newViewInfo.dimension.height));
                 renderTarget->setView(view);
                 break;
             }
 
-            case GraphicsCommand::Types::RenderLine:
-            case GraphicsCommand::Types::RenderCircleShape:
-            case GraphicsCommand::Types::RenderSquareShape:
-            case GraphicsCommand::Types::RenderConvexShape:
-            case GraphicsCommand::Types::RenderSprite:
+            case GraphicsCommand::Types::DrawLine:
+            case GraphicsCommand::Types::DrawCircleShape:
+            case GraphicsCommand::Types::DrawRectangleShape:
+            case GraphicsCommand::Types::DrawConvexShape:
+            case GraphicsCommand::Types::DrawSprite:
+            case GraphicsCommand::Types::DrawImgui:
             {
                 this->orderedRenderCommandList.push_back(command);
                 break;
@@ -246,50 +250,77 @@ namespace ke
         };
 
 
-        unsigned long currentDepthValue = this->orderedRenderCommandList[0].render.depth;
+        unsigned long currentDepthValue = this->orderedRenderCommandList[0].depth;
         auto lastDepthValue = currentDepthValue;
         for (const ke::GraphicsCommand & cmd : this->orderedRenderCommandList)
         {
-            switch (cmd.type)
-            {
-            case ke::GraphicsCommand::Types::RenderLine:
-            {
-                this->m_lineRenderer->queueCommand(cmd);
-                break;
-            }
-
-            case ke::GraphicsCommand::Types::RenderCircleShape:
-            {
-                this->m_circleShapeRenderer->queueCommand(cmd);
-                break;
-            }
-
-            case ke::GraphicsCommand::Types::RenderSprite:
-            {
-                this->m_spriteRenderer->queueCommand(cmd);
-                break;
-            }
-
-            default:
-            {
-                ke::Log::instance()->critical("Unsupported graphics command type: {0:#x}", cmd.type);
-                assert(!cmd.type);
-            }
-            }
-
-            currentDepthValue = cmd.render.depth;
+            currentDepthValue = cmd.depth;
             if (lastDepthValue != currentDepthValue)
             {
                 renderAndFlushAll();
                 lastDepthValue = currentDepthValue;
             }
+
+            switch (cmd.type)
+            {
+            case ke::GraphicsCommand::Types::DrawLine:
+            {
+                this->m_lineRenderer->queueCommand(cmd);
+                break;
+            }
+
+            case ke::GraphicsCommand::Types::DrawCircleShape:
+            {
+                this->m_circleShapeRenderer->queueCommand(cmd);
+                break;
+            }
+
+            case ke::GraphicsCommand::Types::DrawSprite:
+            {
+                this->m_spriteRenderer->queueCommand(cmd);
+                break;
+            }
+
+            case ke::GraphicsCommand::Types::DrawImgui:
+            {
+                this->m_imguiRenderer->queueCommand(cmd);
+                break;
+            }
+
+            default:
+            {
+                ke::Log::instance()->critical("Unsupported graphics command type: {0:#x}", static_cast<std::uint16_t>(cmd.type));
+                assert(false);
+            }
+            }
         }
         renderAndFlushAll();
+
+        // Only draw the GUI once and always last.
+        this->m_imguiRenderer->render();
+        drawCallCount += this->m_imguiRenderer->getLastDrawCallCount();
+        this->m_imguiRenderer->flush();
 
         renderTarget->display();
         ::commandGenThreadCmdListQueue.enqueue(std::move(::currentRenderThreadCmdList));
 
         return drawCallCount;
+    }
+
+    void RenderSystem::setWindow(ke::WindowSptr p_window)
+    {
+        this->window = p_window;
+
+        auto imguiRenderer = static_cast<ke::DearImguiRenderer*>(this->m_imguiRenderer.get());
+        if (this->window)
+        {
+            auto renderTarget = static_cast<sf::RenderWindow*>(this->window.get()->get());
+            imguiRenderer->setSfRenderWindow(renderTarget);
+        }
+        else
+        {
+            imguiRenderer->setSfRenderWindow(nullptr);
+        }
     }
 
     void RenderSystem::updateOnRenderLoop(ke::Time elapsedTime)

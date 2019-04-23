@@ -74,6 +74,7 @@ namespace ke
     {
 #if defined(USE_SFML)
         auto window = std::shared_ptr<ke::sfml::SfmlWindow>(new ke::sfml::SfmlWindow);
+        assert(window);
         window->window = ke::sfml::SfWindowUptr(
             new sf::RenderWindow(
                 sf::VideoMode(p_width, p_height),

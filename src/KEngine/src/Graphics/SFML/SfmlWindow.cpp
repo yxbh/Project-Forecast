@@ -1,5 +1,8 @@
 #include "KEngine/Graphics/SFML/SfmlWindow.hpp"
 
+#include "KEngine/Events/AppEvents.hpp"
+#include "KEngine/Core/EventManager.hpp"
+
 #include <cassert>
 
 namespace ke::sfml
@@ -7,11 +10,13 @@ namespace ke::sfml
 
     SfmlWindow::SfmlWindow()
     {
+        ke::EventManager::enqueue(ke::makeEvent<ke::WindowCreatedEvent>(this));
     }
 
 
     SfmlWindow::~SfmlWindow()
     {
+        ke::EventManager::enqueue(ke::makeEvent<ke::WindowDestroyedEvent>(this));
     }
 
     void SfmlWindow::display()

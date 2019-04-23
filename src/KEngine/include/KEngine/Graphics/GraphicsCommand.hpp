@@ -6,37 +6,28 @@
 #include "KEngine/Common/Rect2D.hpp"
 #include "KEngine/Common/Transform2D.hpp"
 
+#include <cassert>
 #include <cstdint>
+#include <functional>
+#include <variant>
 
 namespace ke::graphics
 {
+    using DepthType = int32_t;
 
-    struct ViewContextCommandProperty
+    struct ViewContextInfo
     {
         ke::Transform2D transform;
         ke::Dimension2DUInt32 dimension;
     };
 
-    struct TextureLoadCommandProperty
+    struct TextureLoadInfo
     {
         void * data = nullptr; // pointer to CPU image data.
         size_t textureId = 0;
     };
 
-    using IdType = size_t;
-    using DepthType = int32_t;
-
-    /// <summary>
-    /// A header struct that maps the common properties of all *RenderCommandProperty classes.
-    /// </summary>
-    struct RenderCommandPropertyHeader
-    {
-        IdType id = 0;
-
-        DepthType depth = 0;
-    };
-
-    struct ShapeRenderCommandProperty : public RenderCommandPropertyHeader
+    struct CircleShapeRenderInfo
     {
         Point2DFloat origin;
         Transform2D globalTransform;
@@ -47,7 +38,23 @@ namespace ke::graphics
         float radius;
     };
 
-    struct LineRenderCommandProperty : public RenderCommandPropertyHeader
+    struct RectangleShapeRenderInfo
+    {
+        Point2DFloat origin;
+        Transform2D globalTransform;
+
+        // incomplete
+    };
+
+    struct ConvexShapeRenderInfo
+    {
+        Point2DFloat origin;
+        Transform2D globalTransform;
+
+        // incomplete
+    };
+
+    struct LineRenderInfo
     {
         Point2DFloat begin;
         Point2DFloat end;
@@ -55,7 +62,7 @@ namespace ke::graphics
         ke::Color color;
     };
 
-    struct SpriteRenderCommandProperty : public RenderCommandPropertyHeader
+    struct SpriteRenderInfo
     {
         Point2DFloat origin;
         Transform2D globalTransform;
@@ -65,6 +72,12 @@ namespace ke::graphics
         ke::Color color;
     };
 
+    struct ImguiRenderInfo
+    {
+        using FunctorType = std::function<void(void)>;
+        FunctorType imguiDrawer;
+    };
+
 }
 
 namespace ke
@@ -72,33 +85,42 @@ namespace ke
 
     struct GraphicsCommand
     {
-
-        enum Types : std::uint8_t
+        enum class Types : std::uint8_t
         {
-            Invalid = 0,
-            SetViewContext,
-            GenerateTexture,
-            RenderInvisible,
-            RenderLine,
-            RenderCircleShape,
-            RenderSquareShape,
-            RenderConvexShape,
-            RenderSprite
+            // NOTE: each value below does not have to match the index of what's in the `info` variant below.
+            Invalid             = 0,
+            SetViewContext      = 1,
+            GenerateTexture     = 2,
+            DrawLine            = 3,
+            DrawCircleShape     = 4,
+            DrawRectangleShape  = 5,
+            DrawConvexShape     = 6,
+            DrawSprite          = 7,
+            DrawImgui           = 8,
+            DrawInvisible       = std::numeric_limits<std::uint8_t>::max() - 1,
+            Count
         };
 
         Types type = Types::Invalid;
 
-        union
-        {
-            ke::graphics::LineRenderCommandProperty   render;
-            ke::graphics::LineRenderCommandProperty   line;
-            ke::graphics::ShapeRenderCommandProperty  shape;
-            ke::graphics::SpriteRenderCommandProperty sprite;
-            ke::graphics::ViewContextCommandProperty  view;
-            ke::graphics::TextureLoadCommandProperty  texture;
-        };
+        using IdType    = size_t;
+        using DepthType = ke::graphics::DepthType;
+        IdType      id      = 0;
+        DepthType   depth   = 0;
 
-        GraphicsCommand() {}
+        using CommandInfo = std::variant
+            <
+            std::monostate,
+            ke::graphics::ViewContextInfo,
+            ke::graphics::TextureLoadInfo,
+            ke::graphics::LineRenderInfo,
+            ke::graphics::CircleShapeRenderInfo,
+            ke::graphics::RectangleShapeRenderInfo,
+            ke::graphics::ConvexShapeRenderInfo,
+            ke::graphics::SpriteRenderInfo,
+            ke::graphics::ImguiRenderInfo
+            >;
+        CommandInfo info;
     };
 
 }

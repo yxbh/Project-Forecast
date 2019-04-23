@@ -5,10 +5,8 @@
 #include "KEngine/Graphics/Scene.hpp"
 #include "KEngine/Core/EventManager.hpp"
 #include "KEngine/Events/AppEvents.hpp"
-#include "KEngine/Events/SFML/SfmlEvent.hpp"
 #include "KEngine/Log/Log.hpp"
 
-#include <SFML/Window/Event.hpp>
 
 namespace pf
 {
@@ -20,10 +18,10 @@ namespace pf
 
         scene = std::make_unique<ke::Scene>();
 
-        ke::EventManager::registerListener<ke::SfmlEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::registerListener<ke::MouseButtonPressedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::registerListener<ke::MouseButtonReleasedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::registerListener<ke::MouseWheelScrolledEvent>(this, &HumanView::handleWindowEvent);
+        ke::EventManager::registerListener<ke::MouseMovedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::registerListener<ke::KeyboardKeyPressedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::registerListener<ke::KeyboardKeyReleasedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::registerListener<ke::KeyboardTextEvent>(this, &HumanView::handleWindowEvent);
@@ -32,10 +30,10 @@ namespace pf
 
     HumanView::~HumanView()
     {
-        ke::EventManager::deregisterListener<ke::SfmlEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::deregisterListener<ke::MouseButtonPressedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::deregisterListener<ke::MouseButtonReleasedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::deregisterListener<ke::MouseWheelScrolledEvent>(this, &HumanView::handleWindowEvent);
+        ke::EventManager::deregisterListener<ke::MouseMovedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::deregisterListener<ke::KeyboardKeyPressedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::deregisterListener<ke::KeyboardKeyReleasedEvent>(this, &HumanView::handleWindowEvent);
         ke::EventManager::deregisterListener<ke::KeyboardTextEvent>(this, &HumanView::handleWindowEvent);
@@ -61,13 +59,6 @@ namespace pf
     {
         switch (event->getType())
         {
-            case ke::SfmlEvent::TYPE:
-            {
-                auto sfEvent = std::static_pointer_cast<ke::SfmlEvent>(event);
-                this->handleSfmlEvent(sfEvent->getSfmlEvent());
-                break;
-            }
-
             case ke::MouseButtonPressedEvent::TYPE:
             {
                 auto mouseEvent = std::static_pointer_cast<ke::MouseButtonPressedEvent>(event);
@@ -86,6 +77,13 @@ namespace pf
             {
                 auto mouseWheelEvent = std::static_pointer_cast<ke::MouseWheelScrolledEvent>(event);
                 mouseController->onWheelScrolled(mouseWheelEvent->getDetail());
+                break;
+            }
+
+            case ke::MouseMovedEvent::TYPE:
+            {
+                auto mouseEvent = std::static_pointer_cast<ke::MouseMovedEvent>(event);
+                mouseController->onPointerMoved(mouseEvent->getDetail());
                 break;
             }
 
@@ -131,15 +129,5 @@ namespace pf
             }
         }
         
-    }
-
-    void HumanView::handleSfmlEvent(const sf::Event & event)
-    {
-        switch (event.type)
-        {
-
-        default:
-            break;
-        }
     }
 }
