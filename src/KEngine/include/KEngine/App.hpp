@@ -7,7 +7,11 @@
 #include "KEngine/Graphics/RenderSystem.hpp"
 #include "KEngine/BaseAppLogic.hpp"
 
+#pragma warning(push)
+#pragma warning(disable:26444)  // Avoid unnamed objects with custom construction and destruction (es.84).
+#pragma warning(disable:26451)  // Arithmetic overflow
 #include "Common/Libs/cxxopts.hpp"
+#pragma warning(pop)
 
 #include <atomic>
 #include <functional>
