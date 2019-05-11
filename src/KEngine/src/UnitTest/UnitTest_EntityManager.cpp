@@ -13,17 +13,17 @@ TEST_CASE("ke::EntityManager Unit Tests")
     {
         ke::EntityManager em;
 
-        auto entity = ke::makeEntity(ke::Entity::newId());
+        auto entity = ke::makeEntity();
 
-        CHECK(em.findEntityById(entity->getId()).expired());
+        REQUIRE(em.findEntityById(entity->getId()).expired());
 
         em.addEntity(entity);
 
-        CHECK(!em.findEntityById(entity->getId()).expired());
+        REQUIRE(!em.findEntityById(entity->getId()).expired());
 
         auto entitySearchRetSptr = em.findEntityById(entity->getId()).lock();
-        CHECK(entitySearchRetSptr != nullptr);
-        CHECK(entity->getId() == entitySearchRetSptr->getId());
+        REQUIRE(entitySearchRetSptr != nullptr);
+        REQUIRE(entity->getId() == entitySearchRetSptr->getId());
     }
 
 }

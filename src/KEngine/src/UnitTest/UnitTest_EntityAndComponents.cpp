@@ -1,6 +1,7 @@
 #if defined(RUN_UNIT_TESTS)
 
 #include "KEngine/Interfaces/IEntityComponent.hpp"
+#include "KEngine/Core/EntityManager.hpp"
 #include "KEngine/Core/Entity.hpp"
 
 #include "KEngine/UnitTest/catch.hpp"
@@ -36,10 +37,10 @@ TEST_CASE("ke::Entity Unit Tests")
     CHECK(entity.hasTag(KE_TEXT("TestTag2")));
     CHECK(entity.getTags().size() == 2);
 
-    CHECK(ke::Entity::newId() != ke::INVALID_ENTITY_ID);
-
-    ke::Entity entity2(ke::Entity::newId());
-    CHECK(entity2.getId() != ke::INVALID_ENTITY_ID);
+	ke::EntityManager entityManager;
+    auto entity2 = entityManager.newEntity(entityManager.newId()).lock();
+	CHECK(entity2 != nullptr);
+    CHECK(entity2->getId() != ke::INVALID_ENTITY_ID);
 }
 
 TEST_CASE("ke::IEntityComponent Unit Tests")

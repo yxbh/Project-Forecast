@@ -2,13 +2,16 @@
 
 #include "KEngine/Core/Entity.hpp"
 #include "KEngine/Core/EntityFactory.hpp"
+#include "KEngine/Core/EntityManager.hpp"
 #include "KEngine/Log/Log.hpp"
+#include "KEngine/Common/Json.hpp"
 
 #include "KEngine/UnitTest/catch.hpp"
 
+#include <memory>
+
 namespace
 {
-
     class TestComponent1 : public ke::IEntityComponent
     {
         KE_DEFINE_ENTITY_COMPONENT_COMMON_PROPERTIES(TestComponent1, 0x5C099729)
@@ -43,33 +46,62 @@ namespace
         virtual void update(const ke::Time) override {}
     };
 
-    class TestComponent1Loader1 : public ke::IEntityComponentJsonLoader
+    class TestComponent1Loader1 : public ke::IEntityComponentBuilder
     {
     public:
-        virtual ke::EntityComponentSptr loadComponent(const ke::json & jsonObject) override
+        virtual ke::EntityComponentSptr build(const std::any &) override
         {
             return std::make_shared<TestComponent1>(nullptr);
         }
     };
 
-    class TestComponent1Loader2 : public ke::IEntityComponentJsonLoader
+    class TestComponent1Loader2 : public ke::IEntityComponentBuilder
     {
     public:
-        virtual ke::EntityComponentSptr loadComponent(const ke::json & jsonObject) override
+        virtual ke::EntityComponentSptr build(const std::any &) override
         {
             return std::make_shared<TestComponent1>(nullptr);
         }
     };
 
-    class TestComponent2Loader1 : public ke::IEntityComponentJsonLoader
+    class TestComponent2Loader1 : public ke::IEntityComponentBuilder
     {
     public:
-        virtual ke::EntityComponentSptr loadComponent(const ke::json & jsonObject) override
+        virtual ke::EntityComponentSptr build(const std::any &) override
         {
             return std::make_shared<TestComponent2>(nullptr);
         }
     };
 
+    ke::EntityManager em;
+
+    class TestEntityBuilder : public ke::IEntityBuilder
+    {
+    public:
+        using IEntityBuilder::IEntityBuilder;
+
+        virtual ke::Entity* build(const std::any& p_parameters) final
+        {
+            auto jsonParms = std::any_cast<const ke::Json&>(p_parameters);
+            auto entity = em.newEntity(em.newId()).lock();
+
+            for (auto& componentJson : jsonParms["components"])
+            {
+                if (componentJson["component_name"] == "TestComponent1")
+                {
+                    auto component = ke::makeEntityComponent<TestComponent1>(entity);
+                    entity->addComponent(component);
+                }
+                else if (componentJson["component_name"] == "TestComponent2")
+                {
+                    auto component = ke::makeEntityComponent<TestComponent2>(entity);
+                    entity->addComponent(component);
+                }
+            }
+
+            return entity.get();
+        }
+    };
 }
 
 TEST_CASE("ke::EntityFactory Component JSON Loader Unit Tests")
@@ -78,16 +110,16 @@ TEST_CASE("ke::EntityFactory Component JSON Loader Unit Tests")
     SECTION("Test adding component loader for the same component multiple times.")
     {
         ke::EntityFactory factory;
-        CHECK(factory.registerComponentJsonLoader<TestComponent1Loader1>(TestComponent1::NAME));
+        REQUIRE(factory.registerComponentBuilder<TestComponent1Loader1>(TestComponent1::NAME));
 
         SECTION("Adding the same loader again for the same component name")
         {
-            CHECK(!factory.registerComponentJsonLoader<TestComponent1Loader1>(TestComponent1::NAME));
+            CHECK(!factory.registerComponentBuilder<TestComponent1Loader1>(TestComponent1::NAME));
         }
         
         SECTION("Adding a different loader for the same component name")
         {
-            CHECK(!factory.registerComponentJsonLoader<TestComponent1Loader2>(TestComponent1::NAME));
+            CHECK(!factory.registerComponentBuilder<TestComponent1Loader2>(TestComponent1::NAME));
         }
 
         factory.clear();
@@ -96,8 +128,8 @@ TEST_CASE("ke::EntityFactory Component JSON Loader Unit Tests")
     SECTION("Test adding multiple loaders for different components")
     {
         ke::EntityFactory factory;
-        CHECK(factory.registerComponentJsonLoader<TestComponent1Loader1>(TestComponent1::NAME));
-        CHECK(factory.registerComponentJsonLoader<TestComponent2Loader1>(TestComponent2::NAME));
+        REQUIRE(factory.registerComponentBuilder<TestComponent1Loader1>(TestComponent1::NAME));
+        REQUIRE(factory.registerComponentBuilder<TestComponent2Loader1>(TestComponent2::NAME));
     }
 
 }
@@ -105,8 +137,9 @@ TEST_CASE("ke::EntityFactory Component JSON Loader Unit Tests")
 TEST_CASE("ke::EntityFactory Entity Creation Unit Tests")
 {
     ke::EntityFactory factory;
-    CHECK(factory.registerComponentJsonLoader<TestComponent1Loader1>(TestComponent1::NAME));
-    CHECK(factory.registerComponentJsonLoader<TestComponent2Loader1>(TestComponent2::NAME));
+    REQUIRE(factory.registerEntityBuilder("TestEntity", std::make_unique<TestEntityBuilder>(&factory)));
+    REQUIRE(factory.registerComponentBuilder<TestComponent1Loader1>(TestComponent1::NAME));
+    REQUIRE(factory.registerComponentBuilder<TestComponent2Loader1>(TestComponent2::NAME));
 
     SECTION("Test creating ke::Entity from Entity JSON")
     {
@@ -136,10 +169,10 @@ TEST_CASE("ke::EntityFactory Entity Creation Unit Tests")
 
         auto jsonObj = ke::Json::parse(validEntityJson);
 
-        auto entity = factory.createNew(jsonObj);
+        auto entity = factory.createNew("TestEntity", jsonObj);
 
-        CHECK(entity);
-        CHECK(entity->getComponentCount() == 2);
+        REQUIRE(entity);
+        REQUIRE(entity->getComponentCount() == 2);
 
         entity->destory();
     }
