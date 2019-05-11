@@ -166,6 +166,9 @@
     <Filter Include="KEngine\Source Files\Graphics\DearImgui">
       <UniqueIdentifier>{0ab149ef-0370-4d55-9de1-34cb79aeb351}</UniqueIdentifier>
     </Filter>
+    <Filter Include="KEngine\Header Files\UnitTest">
+      <UniqueIdentifier>{8227e171-901a-4d72-9b8e-7190d563030c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Events.cpp">
@@ -739,6 +742,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\AppConsoleEvents.hpp">
       <Filter>KEngine\Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\UnitTest\catch.hpp">
+      <Filter>KEngine\Header Files\UnitTest</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
