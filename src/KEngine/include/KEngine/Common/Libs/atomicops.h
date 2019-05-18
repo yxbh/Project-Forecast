@@ -42,6 +42,17 @@
 // AE_UNUSED
 #define AE_UNUSED(x) ((void)x)
 
+// AE_NO_TSAN
+#if defined(__has_feature)
+#if __has_feature(thread_sanitizer)
+#define AE_NO_TSAN __attribute__((no_sanitize("thread")))
+#else
+#define AE_NO_TSAN
+#endif
+#else
+#define AE_NO_TSAN
+#endif
+
 
 // AE_FORCEINLINE
 #if defined(AE_VCPP) || defined(AE_ICC)
@@ -69,21 +80,21 @@
 
 namespace moodycamel {
 
-enum memory_order {
-	memory_order_relaxed,
-	memory_order_acquire,
-	memory_order_release,
-	memory_order_acq_rel,
-	memory_order_seq_cst,
+    enum memory_order {
+        memory_order_relaxed,
+        memory_order_acquire,
+        memory_order_release,
+        memory_order_acq_rel,
+        memory_order_seq_cst,
 
-	// memory_order_sync: Forces a full sync:
-	// #LoadLoad, #LoadStore, #StoreStore, and most significantly, #StoreLoad
-	memory_order_sync = memory_order_seq_cst
-};
+        // memory_order_sync: Forces a full sync:
+        // #LoadLoad, #LoadStore, #StoreStore, and most significantly, #StoreLoad
+        memory_order_sync = memory_order_seq_cst
+    };
 
 }    // end namespace moodycamel
 
-#if (defined(AE_VCPP) && (_MSC_VER < 1700 || defined(__cplusplus_cli))) || defined(AE_ICC)
+#if (defined(AE_VCPP) && (_MSC_VER < 1700 || defined(__cplusplus_cli))) || (defined(AE_ICC) && __INTEL_COMPILER < 1600)
 // VS2010 and ICC13 don't support std::atomic_*_fence, implement our own fences
 
 #include <intrin.h>
@@ -111,67 +122,67 @@ enum memory_order {
 
 namespace moodycamel {
 
-AE_FORCEINLINE void compiler_fence(memory_order order)
-{
-	switch (order) {
-		case memory_order_relaxed: break;
-		case memory_order_acquire: _ReadBarrier(); break;
-		case memory_order_release: _WriteBarrier(); break;
-		case memory_order_acq_rel: _ReadWriteBarrier(); break;
-		case memory_order_seq_cst: _ReadWriteBarrier(); break;
-		default: assert(false);
-	}
-}
+    AE_FORCEINLINE void compiler_fence(memory_order order) AE_NO_TSAN
+    {
+        switch (order) {
+        case memory_order_relaxed: break;
+        case memory_order_acquire: _ReadBarrier(); break;
+        case memory_order_release: _WriteBarrier(); break;
+        case memory_order_acq_rel: _ReadWriteBarrier(); break;
+        case memory_order_seq_cst: _ReadWriteBarrier(); break;
+        default: assert(false);
+        }
+    }
 
-// x86/x64 have a strong memory model -- all loads and stores have
-// acquire and release semantics automatically (so only need compiler
-// barriers for those).
+    // x86/x64 have a strong memory model -- all loads and stores have
+    // acquire and release semantics automatically (so only need compiler
+    // barriers for those).
 #if defined(AE_ARCH_X86) || defined(AE_ARCH_X64)
-AE_FORCEINLINE void fence(memory_order order)
-{
-	switch (order) {
-		case memory_order_relaxed: break;
-		case memory_order_acquire: _ReadBarrier(); break;
-		case memory_order_release: _WriteBarrier(); break;
-		case memory_order_acq_rel: _ReadWriteBarrier(); break;
-		case memory_order_seq_cst:
-			_ReadWriteBarrier();
-			AeFullSync();
-			_ReadWriteBarrier();
-			break;
-		default: assert(false);
-	}
-}
+    AE_FORCEINLINE void fence(memory_order order) AE_NO_TSAN
+    {
+        switch (order) {
+        case memory_order_relaxed: break;
+        case memory_order_acquire: _ReadBarrier(); break;
+        case memory_order_release: _WriteBarrier(); break;
+        case memory_order_acq_rel: _ReadWriteBarrier(); break;
+        case memory_order_seq_cst:
+            _ReadWriteBarrier();
+            AeFullSync();
+            _ReadWriteBarrier();
+            break;
+        default: assert(false);
+        }
+    }
 #else
-AE_FORCEINLINE void fence(memory_order order)
-{
-	// Non-specialized arch, use heavier memory barriers everywhere just in case :-(
-	switch (order) {
-		case memory_order_relaxed:
-			break;
-		case memory_order_acquire:
-			_ReadBarrier();
-			AeLiteSync();
-			_ReadBarrier();
-			break;
-		case memory_order_release:
-			_WriteBarrier();
-			AeLiteSync();
-			_WriteBarrier();
-			break;
-		case memory_order_acq_rel:
-			_ReadWriteBarrier();
-			AeLiteSync();
-			_ReadWriteBarrier();
-			break;
-		case memory_order_seq_cst:
-			_ReadWriteBarrier();
-			AeFullSync();
-			_ReadWriteBarrier();
-			break;
-		default: assert(false);
-	}
-}
+    AE_FORCEINLINE void fence(memory_order order) AE_NO_TSAN
+    {
+        // Non-specialized arch, use heavier memory barriers everywhere just in case :-(
+        switch (order) {
+        case memory_order_relaxed:
+            break;
+        case memory_order_acquire:
+            _ReadBarrier();
+            AeLiteSync();
+            _ReadBarrier();
+            break;
+        case memory_order_release:
+            _WriteBarrier();
+            AeLiteSync();
+            _WriteBarrier();
+            break;
+        case memory_order_acq_rel:
+            _ReadWriteBarrier();
+            AeLiteSync();
+            _ReadWriteBarrier();
+            break;
+        case memory_order_seq_cst:
+            _ReadWriteBarrier();
+            AeFullSync();
+            _ReadWriteBarrier();
+            break;
+        default: assert(false);
+        }
+    }
 #endif
 }    // end namespace moodycamel
 #else
@@ -180,29 +191,29 @@ AE_FORCEINLINE void fence(memory_order order)
 
 namespace moodycamel {
 
-AE_FORCEINLINE void compiler_fence(memory_order order)
-{
-	switch (order) {
-		case memory_order_relaxed: break;
-		case memory_order_acquire: std::atomic_signal_fence(std::memory_order_acquire); break;
-		case memory_order_release: std::atomic_signal_fence(std::memory_order_release); break;
-		case memory_order_acq_rel: std::atomic_signal_fence(std::memory_order_acq_rel); break;
-		case memory_order_seq_cst: std::atomic_signal_fence(std::memory_order_seq_cst); break;
-		default: assert(false);
-	}
-}
+    AE_FORCEINLINE void compiler_fence(memory_order order) AE_NO_TSAN
+    {
+        switch (order) {
+        case memory_order_relaxed: break;
+        case memory_order_acquire: std::atomic_signal_fence(std::memory_order_acquire); break;
+        case memory_order_release: std::atomic_signal_fence(std::memory_order_release); break;
+        case memory_order_acq_rel: std::atomic_signal_fence(std::memory_order_acq_rel); break;
+        case memory_order_seq_cst: std::atomic_signal_fence(std::memory_order_seq_cst); break;
+        default: assert(false);
+        }
+    }
 
-AE_FORCEINLINE void fence(memory_order order)
-{
-	switch (order) {
-		case memory_order_relaxed: break;
-		case memory_order_acquire: std::atomic_thread_fence(std::memory_order_acquire); break;
-		case memory_order_release: std::atomic_thread_fence(std::memory_order_release); break;
-		case memory_order_acq_rel: std::atomic_thread_fence(std::memory_order_acq_rel); break;
-		case memory_order_seq_cst: std::atomic_thread_fence(std::memory_order_seq_cst); break;
-		default: assert(false);
-	}
-}
+    AE_FORCEINLINE void fence(memory_order order) AE_NO_TSAN
+    {
+        switch (order) {
+        case memory_order_relaxed: break;
+        case memory_order_acquire: std::atomic_thread_fence(std::memory_order_acquire); break;
+        case memory_order_release: std::atomic_thread_fence(std::memory_order_release); break;
+        case memory_order_acq_rel: std::atomic_thread_fence(std::memory_order_acq_rel); break;
+        case memory_order_seq_cst: std::atomic_thread_fence(std::memory_order_seq_cst); break;
+        default: assert(false);
+        }
+    }
 
 }    // end namespace moodycamel
 
@@ -223,98 +234,99 @@ AE_FORCEINLINE void fence(memory_order order)
 // The guarantee of atomicity is only made for types that already have atomic load and store guarantees
 // at the hardware level -- on most platforms this generally means aligned pointers and integers (only).
 namespace moodycamel {
-template<typename T>
-class weak_atomic
-{
-public:
-	weak_atomic() { }
+    template<typename T>
+    class weak_atomic
+    {
+    public:
+        AE_NO_TSAN weak_atomic() { }
 #ifdef AE_VCPP
+#pragma warning(push)
 #pragma warning(disable: 4100)		// Get rid of (erroneous) 'unreferenced formal parameter' warning
 #endif
-	template<typename U> weak_atomic(U&& x) : value(std::forward<U>(x)) {  }
+        template<typename U> AE_NO_TSAN weak_atomic(U&& x) : value(std::forward<U>(x)) {  }
 #ifdef __cplusplus_cli
-	// Work around bug with universal reference/nullptr combination that only appears when /clr is on
-	weak_atomic(nullptr_t) : value(nullptr) {  }
+        // Work around bug with universal reference/nullptr combination that only appears when /clr is on
+        AE_NO_TSAN weak_atomic(nullptr_t) : value(nullptr) {  }
 #endif
-	weak_atomic(weak_atomic const& other) : value(other.value) {  }
-	weak_atomic(weak_atomic&& other) : value(std::move(other.value)) {  }
+        AE_NO_TSAN weak_atomic(weak_atomic const& other) : value(other.load()) {  }
+        AE_NO_TSAN weak_atomic(weak_atomic&& other) : value(std::move(other.load())) {  }
 #ifdef AE_VCPP
-#pragma warning(default: 4100)
+#pragma warning(pop)
 #endif
 
-	AE_FORCEINLINE operator T() const { return load(); }
+        AE_FORCEINLINE operator T() const AE_NO_TSAN { return load(); }
 
-	
+
 #ifndef AE_USE_STD_ATOMIC_FOR_WEAK_ATOMIC
-	template<typename U> AE_FORCEINLINE weak_atomic const& operator=(U&& x) { value = std::forward<U>(x); return *this; }
-	AE_FORCEINLINE weak_atomic const& operator=(weak_atomic const& other) { value = other.value; return *this; }
-	
-	AE_FORCEINLINE T load() const { return value; }
-	
-	AE_FORCEINLINE T fetch_add_acquire(T increment)
-	{
+        template<typename U> AE_FORCEINLINE weak_atomic const& operator=(U&& x) AE_NO_TSAN { value = std::forward<U>(x); return *this; }
+        AE_FORCEINLINE weak_atomic const& operator=(weak_atomic const& other) AE_NO_TSAN { value = other.value; return *this; }
+
+        AE_FORCEINLINE T load() const AE_NO_TSAN { return value; }
+
+        AE_FORCEINLINE T fetch_add_acquire(T increment) AE_NO_TSAN
+        {
 #if defined(AE_ARCH_X64) || defined(AE_ARCH_X86)
-		if (sizeof(T) == 4) return _InterlockedExchangeAdd((long volatile*)&value, (long)increment);
+            if (sizeof(T) == 4) return _InterlockedExchangeAdd((long volatile*)& value, (long)increment);
 #if defined(_M_AMD64)
-		else if (sizeof(T) == 8) return _InterlockedExchangeAdd64((long long volatile*)&value, (long long)increment);
+            else if (sizeof(T) == 8) return _InterlockedExchangeAdd64((long long volatile*)& value, (long long)increment);
 #endif
 #else
 #error Unsupported platform
 #endif
-		assert(false && "T must be either a 32 or 64 bit type");
-		return value;
-	}
-	
-	AE_FORCEINLINE T fetch_add_release(T increment)
-	{
+            assert(false && "T must be either a 32 or 64 bit type");
+            return value;
+        }
+
+        AE_FORCEINLINE T fetch_add_release(T increment) AE_NO_TSAN
+        {
 #if defined(AE_ARCH_X64) || defined(AE_ARCH_X86)
-		if (sizeof(T) == 4) return _InterlockedExchangeAdd((long volatile*)&value, (long)increment);
+            if (sizeof(T) == 4) return _InterlockedExchangeAdd((long volatile*)& value, (long)increment);
 #if defined(_M_AMD64)
-		else if (sizeof(T) == 8) return _InterlockedExchangeAdd64((long long volatile*)&value, (long long)increment);
+            else if (sizeof(T) == 8) return _InterlockedExchangeAdd64((long long volatile*)& value, (long long)increment);
 #endif
 #else
 #error Unsupported platform
 #endif
-		assert(false && "T must be either a 32 or 64 bit type");
-		return value;
-	}
+            assert(false && "T must be either a 32 or 64 bit type");
+            return value;
+        }
 #else
-	template<typename U>
-	AE_FORCEINLINE weak_atomic const& operator=(U&& x)
-	{
-		value.store(std::forward<U>(x), std::memory_order_relaxed);
-		return *this;
-	}
-	
-	AE_FORCEINLINE weak_atomic const& operator=(weak_atomic const& other)
-	{
-		value.store(other.value.load(std::memory_order_relaxed), std::memory_order_relaxed);
-		return *this;
-	}
+        template<typename U>
+        AE_FORCEINLINE weak_atomic const& operator=(U && x) AE_NO_TSAN
+        {
+            value.store(std::forward<U>(x), std::memory_order_relaxed);
+            return *this;
+        }
 
-	AE_FORCEINLINE T load() const { return value.load(std::memory_order_relaxed); }
-	
-	AE_FORCEINLINE T fetch_add_acquire(T increment)
-	{
-		return value.fetch_add(increment, std::memory_order_acquire);
-	}
-	
-	AE_FORCEINLINE T fetch_add_release(T increment)
-	{
-		return value.fetch_add(increment, std::memory_order_release);
-	}
+        AE_FORCEINLINE weak_atomic const& operator=(weak_atomic const& other) AE_NO_TSAN
+        {
+            value.store(other.value.load(std::memory_order_relaxed), std::memory_order_relaxed);
+            return *this;
+        }
+
+        AE_FORCEINLINE T load() const AE_NO_TSAN { return value.load(std::memory_order_relaxed); }
+
+        AE_FORCEINLINE T fetch_add_acquire(T increment) AE_NO_TSAN
+        {
+            return value.fetch_add(increment, std::memory_order_acquire);
+        }
+
+        AE_FORCEINLINE T fetch_add_release(T increment) AE_NO_TSAN
+        {
+            return value.fetch_add(increment, std::memory_order_release);
+        }
 #endif
-	
 
-private:
+
+    private:
 #ifndef AE_USE_STD_ATOMIC_FOR_WEAK_ATOMIC
-	// No std::atomic support, but still need to circumvent compiler optimizations.
-	// `volatile` will make memory access slow, but is guaranteed to be reliable.
-	volatile T value;
+        // No std::atomic support, but still need to circumvent compiler optimizations.
+        // `volatile` will make memory access slow, but is guaranteed to be reliable.
+        volatile T value;
 #else
-	std::atomic<T> value;
+        std::atomic<T> value;
 #endif
-};
+    };
 
 }	// end namespace moodycamel
 
@@ -329,11 +341,11 @@ private:
 // I know this is an ugly hack but it still beats polluting the global
 // namespace with thousands of generic names or adding a .cpp for nothing.
 extern "C" {
-	struct _SECURITY_ATTRIBUTES;
-	__declspec(dllimport) void* __stdcall CreateSemaphoreW(_SECURITY_ATTRIBUTES* lpSemaphoreAttributes, long lInitialCount, long lMaximumCount, const wchar_t* lpName);
-	__declspec(dllimport) int __stdcall CloseHandle(void* hObject);
-	__declspec(dllimport) unsigned long __stdcall WaitForSingleObject(void* hHandle, unsigned long dwMilliseconds);
-	__declspec(dllimport) int __stdcall ReleaseSemaphore(void* hSemaphore, long lReleaseCount, long* lpPreviousCount);
+    struct _SECURITY_ATTRIBUTES;
+    __declspec(dllimport) void* __stdcall CreateSemaphoreW(_SECURITY_ATTRIBUTES* lpSemaphoreAttributes, long lInitialCount, long lMaximumCount, const wchar_t* lpName);
+    __declspec(dllimport) int __stdcall CloseHandle(void* hObject);
+    __declspec(dllimport) unsigned long __stdcall WaitForSingleObject(void* hHandle, unsigned long dwMilliseconds);
+    __declspec(dllimport) int __stdcall ReleaseSemaphore(void* hSemaphore, long lReleaseCount, long* lpPreviousCount);
 }
 #elif defined(__MACH__)
 #include <mach/mach.h>
@@ -343,317 +355,316 @@ extern "C" {
 
 namespace moodycamel
 {
-	// Code in the spsc_sema namespace below is an adaptation of Jeff Preshing's
-	// portable + lightweight semaphore implementations, originally from
-	// https://github.com/preshing/cpp11-on-multicore/blob/master/common/sema.h
-	// LICENSE:
-	// Copyright (c) 2015 Jeff Preshing
-	//
-	// This software is provided 'as-is', without any express or implied
-	// warranty. In no event will the authors be held liable for any damages
-	// arising from the use of this software.
-	//
-	// Permission is granted to anyone to use this software for any purpose,
-	// including commercial applications, and to alter it and redistribute it
-	// freely, subject to the following restrictions:
-	//
-	// 1. The origin of this software must not be misrepresented; you must not
-	//    claim that you wrote the original software. If you use this software
-	//    in a product, an acknowledgement in the product documentation would be
-	//    appreciated but is not required.
-	// 2. Altered source versions must be plainly marked as such, and must not be
-	//    misrepresented as being the original software.
-	// 3. This notice may not be removed or altered from any source distribution.
-	namespace spsc_sema
-	{
+    // Code in the spsc_sema namespace below is an adaptation of Jeff Preshing's
+    // portable + lightweight semaphore implementations, originally from
+    // https://github.com/preshing/cpp11-on-multicore/blob/master/common/sema.h
+    // LICENSE:
+    // Copyright (c) 2015 Jeff Preshing
+    //
+    // This software is provided 'as-is', without any express or implied
+    // warranty. In no event will the authors be held liable for any damages
+    // arising from the use of this software.
+    //
+    // Permission is granted to anyone to use this software for any purpose,
+    // including commercial applications, and to alter it and redistribute it
+    // freely, subject to the following restrictions:
+    //
+    // 1. The origin of this software must not be misrepresented; you must not
+    //    claim that you wrote the original software. If you use this software
+    //    in a product, an acknowledgement in the product documentation would be
+    //    appreciated but is not required.
+    // 2. Altered source versions must be plainly marked as such, and must not be
+    //    misrepresented as being the original software.
+    // 3. This notice may not be removed or altered from any source distribution.
+    namespace spsc_sema
+    {
 #if defined(_WIN32)
-		class Semaphore
-		{
-		private:
-		    void* m_hSema;
-		    
-		    Semaphore(const Semaphore& other);
-		    Semaphore& operator=(const Semaphore& other);
+        class Semaphore
+        {
+        private:
+            void* m_hSema;
 
-		public:
-		    Semaphore(int initialCount = 0)
-		    {
-		        assert(initialCount >= 0);
-		        const long maxLong = 0x7fffffff;
-		        m_hSema = CreateSemaphoreW(nullptr, initialCount, maxLong, nullptr);
-		    }
+            Semaphore(const Semaphore& other);
+            Semaphore& operator=(const Semaphore& other);
 
-		    ~Semaphore()
-		    {
-		        CloseHandle(m_hSema);
-		    }
+        public:
+            AE_NO_TSAN Semaphore(int initialCount = 0)
+            {
+                assert(initialCount >= 0);
+                const long maxLong = 0x7fffffff;
+                m_hSema = CreateSemaphoreW(nullptr, initialCount, maxLong, nullptr);
+            }
 
-		    void wait()
-		    {
-		    	const unsigned long infinite = 0xffffffff;
-		        WaitForSingleObject(m_hSema, infinite);
-		    }
+            AE_NO_TSAN ~Semaphore()
+            {
+                CloseHandle(m_hSema);
+            }
 
-			bool try_wait()
-			{
-				const unsigned long RC_WAIT_TIMEOUT = 0x00000102;
-				return WaitForSingleObject(m_hSema, 0) != RC_WAIT_TIMEOUT;
-			}
+            void wait() AE_NO_TSAN
+            {
+                const unsigned long infinite = 0xffffffff;
+                WaitForSingleObject(m_hSema, infinite);
+            }
 
-			bool timed_wait(std::uint64_t usecs)
-			{
-				const unsigned long RC_WAIT_TIMEOUT = 0x00000102;
-				return WaitForSingleObject(m_hSema, (unsigned long)(usecs / 1000)) != RC_WAIT_TIMEOUT;
-			}
+            bool try_wait() AE_NO_TSAN
+            {
+                const unsigned long RC_WAIT_TIMEOUT = 0x00000102;
+                return WaitForSingleObject(m_hSema, 0) != RC_WAIT_TIMEOUT;
+            }
 
-		    void signal(int count = 1)
-		    {
-		        ReleaseSemaphore(m_hSema, count, nullptr);
-		    }
-		};
+            bool timed_wait(std::uint64_t usecs) AE_NO_TSAN
+            {
+                const unsigned long RC_WAIT_TIMEOUT = 0x00000102;
+                return WaitForSingleObject(m_hSema, (unsigned long)(usecs / 1000)) != RC_WAIT_TIMEOUT;
+            }
+
+            void signal(int count = 1) AE_NO_TSAN
+            {
+                ReleaseSemaphore(m_hSema, count, nullptr);
+            }
+        };
 #elif defined(__MACH__)
-		//---------------------------------------------------------
-		// Semaphore (Apple iOS and OSX)
-		// Can't use POSIX semaphores due to http://lists.apple.com/archives/darwin-kernel/2009/Apr/msg00010.html
-		//---------------------------------------------------------
-		class Semaphore
-		{
-		private:
-		    semaphore_t m_sema;
+        //---------------------------------------------------------
+        // Semaphore (Apple iOS and OSX)
+        // Can't use POSIX semaphores due to http://lists.apple.com/archives/darwin-kernel/2009/Apr/msg00010.html
+        //---------------------------------------------------------
+        class Semaphore
+        {
+        private:
+            semaphore_t m_sema;
 
-		    Semaphore(const Semaphore& other);
-		    Semaphore& operator=(const Semaphore& other);
+            Semaphore(const Semaphore& other);
+            Semaphore& operator=(const Semaphore& other);
 
-		public:
-		    Semaphore(int initialCount = 0)
-		    {
-		        assert(initialCount >= 0);
-		        semaphore_create(mach_task_self(), &m_sema, SYNC_POLICY_FIFO, initialCount);
-		    }
+        public:
+            AE_NO_TSAN Semaphore(int initialCount = 0)
+            {
+                assert(initialCount >= 0);
+                semaphore_create(mach_task_self(), &m_sema, SYNC_POLICY_FIFO, initialCount);
+            }
 
-		    ~Semaphore()
-		    {
-		        semaphore_destroy(mach_task_self(), m_sema);
-		    }
+            AE_NO_TSAN ~Semaphore()
+            {
+                semaphore_destroy(mach_task_self(), m_sema);
+            }
 
-		    void wait()
-		    {
-		        semaphore_wait(m_sema);
-		    }
+            void wait() AE_NO_TSAN
+            {
+                semaphore_wait(m_sema);
+            }
 
-			bool try_wait()
-			{
-				return timed_wait(0);
-			}
+            bool try_wait() AE_NO_TSAN
+            {
+                return timed_wait(0);
+            }
 
-			bool timed_wait(std::int64_t timeout_usecs)
-			{
-				mach_timespec_t ts;
-				ts.tv_sec = timeout_usecs / 1000000;
-				ts.tv_nsec = (timeout_usecs % 1000000) * 1000;
+            bool timed_wait(std::int64_t timeout_usecs) AE_NO_TSAN
+            {
+                mach_timespec_t ts;
+                ts.tv_sec = static_cast<unsigned int>(timeout_usecs / 1000000);
+                ts.tv_nsec = (timeout_usecs % 1000000) * 1000;
 
-				// added in OSX 10.10: https://developer.apple.com/library/prerelease/mac/documentation/General/Reference/APIDiffsMacOSX10_10SeedDiff/modules/Darwin.html
-				kern_return_t rc = semaphore_timedwait(m_sema, ts);
+                // added in OSX 10.10: https://developer.apple.com/library/prerelease/mac/documentation/General/Reference/APIDiffsMacOSX10_10SeedDiff/modules/Darwin.html
+                kern_return_t rc = semaphore_timedwait(m_sema, ts);
 
-				return rc != KERN_OPERATION_TIMED_OUT;
-			}
+                return rc != KERN_OPERATION_TIMED_OUT && rc != KERN_ABORTED;
+            }
 
-		    void signal()
-		    {
-		        semaphore_signal(m_sema);
-		    }
+            void signal() AE_NO_TSAN
+            {
+                semaphore_signal(m_sema);
+            }
 
-		    void signal(int count)
-		    {
-		        while (count-- > 0)
-		        {
-		            semaphore_signal(m_sema);
-		        }
-		    }
-		};
+            void signal(int count) AE_NO_TSAN
+            {
+                while (count-- > 0)
+                {
+                    semaphore_signal(m_sema);
+                }
+            }
+        };
 #elif defined(__unix__)
-		//---------------------------------------------------------
-		// Semaphore (POSIX, Linux)
-		//---------------------------------------------------------
-		class Semaphore
-		{
-		private:
-		    sem_t m_sema;
+        //---------------------------------------------------------
+        // Semaphore (POSIX, Linux)
+        //---------------------------------------------------------
+        class Semaphore
+        {
+        private:
+            sem_t m_sema;
 
-		    Semaphore(const Semaphore& other);
-		    Semaphore& operator=(const Semaphore& other);
+            Semaphore(const Semaphore& other);
+            Semaphore& operator=(const Semaphore& other);
 
-		public:
-		    Semaphore(int initialCount = 0)
-		    {
-		        assert(initialCount >= 0);
-		        sem_init(&m_sema, 0, initialCount);
-		    }
+        public:
+            AE_NO_TSAN Semaphore(int initialCount = 0)
+            {
+                assert(initialCount >= 0);
+                sem_init(&m_sema, 0, initialCount);
+            }
 
-		    ~Semaphore()
-		    {
-		        sem_destroy(&m_sema);
-		    }
+            AE_NO_TSAN ~Semaphore()
+            {
+                sem_destroy(&m_sema);
+            }
 
-		    void wait()
-		    {
-		        // http://stackoverflow.com/questions/2013181/gdb-causes-sem-wait-to-fail-with-eintr-error
-		        int rc;
-		        do
-		        {
-		            rc = sem_wait(&m_sema);
-		        }
-		        while (rc == -1 && errno == EINTR);
-		    }
+            void wait() AE_NO_TSAN
+            {
+                // http://stackoverflow.com/questions/2013181/gdb-causes-sem-wait-to-fail-with-eintr-error
+                int rc;
+                do
+                {
+                    rc = sem_wait(&m_sema);
+                } while (rc == -1 && errno == EINTR);
+            }
 
-			bool try_wait()
-			{
-				int rc;
-				do {
-					rc = sem_trywait(&m_sema);
-				} while (rc == -1 && errno == EINTR);
-				return !(rc == -1 && errno == EAGAIN);
-			}
+            bool try_wait() AE_NO_TSAN
+            {
+                int rc;
+                do {
+                    rc = sem_trywait(&m_sema);
+                } while (rc == -1 && errno == EINTR);
+                return !(rc == -1 && errno == EAGAIN);
+            }
 
-			bool timed_wait(std::uint64_t usecs)
-			{
-				struct timespec ts;
-				const int usecs_in_1_sec = 1000000;
-				const int nsecs_in_1_sec = 1000000000;
-				clock_gettime(CLOCK_REALTIME, &ts);
-				ts.tv_sec += usecs / usecs_in_1_sec;
-				ts.tv_nsec += (usecs % usecs_in_1_sec) * 1000;
-				// sem_timedwait bombs if you have more than 1e9 in tv_nsec
-				// so we have to clean things up before passing it in
-				if (ts.tv_nsec > nsecs_in_1_sec) {
-					ts.tv_nsec -= nsecs_in_1_sec;
-					++ts.tv_sec;
-				}
+            bool timed_wait(std::uint64_t usecs) AE_NO_TSAN
+            {
+                struct timespec ts;
+                const int usecs_in_1_sec = 1000000;
+                const int nsecs_in_1_sec = 1000000000;
+                clock_gettime(CLOCK_REALTIME, &ts);
+                ts.tv_sec += usecs / usecs_in_1_sec;
+                ts.tv_nsec += (usecs % usecs_in_1_sec) * 1000;
+                // sem_timedwait bombs if you have more than 1e9 in tv_nsec
+                // so we have to clean things up before passing it in
+                if (ts.tv_nsec >= nsecs_in_1_sec) {
+                    ts.tv_nsec -= nsecs_in_1_sec;
+                    ++ts.tv_sec;
+                }
 
-				int rc;
-				do {
-					rc = sem_timedwait(&m_sema, &ts);
-				} while (rc == -1 && errno == EINTR);
-				return !(rc == -1 && errno == ETIMEDOUT);
-			}
+                int rc;
+                do {
+                    rc = sem_timedwait(&m_sema, &ts);
+                } while (rc == -1 && errno == EINTR);
+                return !(rc == -1 && errno == ETIMEDOUT);
+            }
 
-		    void signal()
-		    {
-		        sem_post(&m_sema);
-		    }
+            void signal() AE_NO_TSAN
+            {
+                sem_post(&m_sema);
+            }
 
-		    void signal(int count)
-		    {
-		        while (count-- > 0)
-		        {
-		            sem_post(&m_sema);
-		        }
-		    }
-		};
+            void signal(int count) AE_NO_TSAN
+            {
+                while (count-- > 0)
+                {
+                    sem_post(&m_sema);
+                }
+            }
+        };
 #else
 #error Unsupported platform! (No semaphore wrapper available)
 #endif
 
-		//---------------------------------------------------------
-		// LightweightSemaphore
-		//---------------------------------------------------------
-		class LightweightSemaphore
-		{
-		public:
-			typedef std::make_signed<std::size_t>::type ssize_t;
-			
-		private:
-		    weak_atomic<ssize_t> m_count;
-		    Semaphore m_sema;
+        //---------------------------------------------------------
+        // LightweightSemaphore
+        //---------------------------------------------------------
+        class LightweightSemaphore
+        {
+        public:
+            typedef std::make_signed<std::size_t>::type ssize_t;
 
-		    bool waitWithPartialSpinning(std::int64_t timeout_usecs = -1)
-		    {
-		        ssize_t oldCount;
-		        // Is there a better way to set the initial spin count?
-		        // If we lower it to 1000, testBenaphore becomes 15x slower on my Core i7-5930K Windows PC,
-		        // as threads start hitting the kernel semaphore.
-		        int spin = 10000;
-		        while (--spin >= 0)
-		        {
-		            if (m_count.load() > 0)
-		            {
-		                m_count.fetch_add_acquire(-1);
-		                return true;
-		            }
-		            compiler_fence(memory_order_acquire);     // Prevent the compiler from collapsing the loop.
-		        }
-		        oldCount = m_count.fetch_add_acquire(-1);
-				if (oldCount > 0)
-					return true;
-		        if (timeout_usecs < 0)
-				{
-					m_sema.wait();
-					return true;
-				}
-				if (m_sema.timed_wait(timeout_usecs))
-					return true;
-				// At this point, we've timed out waiting for the semaphore, but the
-				// count is still decremented indicating we may still be waiting on
-				// it. So we have to re-adjust the count, but only if the semaphore
-				// wasn't signaled enough times for us too since then. If it was, we
-				// need to release the semaphore too.
-				while (true)
-				{
-					oldCount = m_count.fetch_add_release(1);
-					if (oldCount < 0)
-						return false;    // successfully restored things to the way they were
-					// Oh, the producer thread just signaled the semaphore after all. Try again:
-					oldCount = m_count.fetch_add_acquire(-1);
-					if (oldCount > 0 && m_sema.try_wait())
-						return true;
-				}
-		    }
+        private:
+            weak_atomic<ssize_t> m_count;
+            Semaphore m_sema;
 
-		public:
-		    LightweightSemaphore(ssize_t initialCount = 0) : m_count(initialCount)
-		    {
-		        assert(initialCount >= 0);
-		    }
+            bool waitWithPartialSpinning(std::int64_t timeout_usecs = -1) AE_NO_TSAN
+            {
+                ssize_t oldCount;
+                // Is there a better way to set the initial spin count?
+                // If we lower it to 1000, testBenaphore becomes 15x slower on my Core i7-5930K Windows PC,
+                // as threads start hitting the kernel semaphore.
+                int spin = 10000;
+                while (--spin >= 0)
+                {
+                    if (m_count.load() > 0)
+                    {
+                        m_count.fetch_add_acquire(-1);
+                        return true;
+                    }
+                    compiler_fence(memory_order_acquire);     // Prevent the compiler from collapsing the loop.
+                }
+                oldCount = m_count.fetch_add_acquire(-1);
+                if (oldCount > 0)
+                    return true;
+                if (timeout_usecs < 0)
+                {
+                    m_sema.wait();
+                    return true;
+                }
+                if (m_sema.timed_wait(timeout_usecs))
+                    return true;
+                // At this point, we've timed out waiting for the semaphore, but the
+                // count is still decremented indicating we may still be waiting on
+                // it. So we have to re-adjust the count, but only if the semaphore
+                // wasn't signaled enough times for us too since then. If it was, we
+                // need to release the semaphore too.
+                while (true)
+                {
+                    oldCount = m_count.fetch_add_release(1);
+                    if (oldCount < 0)
+                        return false;    // successfully restored things to the way they were
+                    // Oh, the producer thread just signaled the semaphore after all. Try again:
+                    oldCount = m_count.fetch_add_acquire(-1);
+                    if (oldCount > 0 && m_sema.try_wait())
+                        return true;
+                }
+            }
 
-		    bool tryWait()
-		    {
-		        if (m_count.load() > 0)
-		        {
-		        	m_count.fetch_add_acquire(-1);
-		        	return true;
-		        }
-		        return false;
-		    }
+        public:
+            AE_NO_TSAN LightweightSemaphore(ssize_t initialCount = 0) : m_count(initialCount)
+            {
+                assert(initialCount >= 0);
+            }
 
-		    void wait()
-		    {
-		        if (!tryWait())
-		            waitWithPartialSpinning();
-		    }
+            bool tryWait() AE_NO_TSAN
+            {
+                if (m_count.load() > 0)
+                {
+                    m_count.fetch_add_acquire(-1);
+                    return true;
+                }
+                return false;
+            }
 
-			bool wait(std::int64_t timeout_usecs)
-			{
-				return tryWait() || waitWithPartialSpinning(timeout_usecs);
-			}
+            void wait() AE_NO_TSAN
+            {
+                if (!tryWait())
+                    waitWithPartialSpinning();
+            }
 
-		    void signal(ssize_t count = 1)
-		    {
-		    	assert(count >= 0);
-		        ssize_t oldCount = m_count.fetch_add_release(count);
-		        assert(oldCount >= -1);
-		        if (oldCount < 0)
-		        {
-		            m_sema.signal(1);
-		        }
-		    }
-		    
-		    ssize_t availableApprox() const
-		    {
-		    	ssize_t count = m_count.load();
-		    	return count > 0 ? count : 0;
-		    }
-		};
-	}	// end namespace spsc_sema
+            bool wait(std::int64_t timeout_usecs) AE_NO_TSAN
+            {
+                return tryWait() || waitWithPartialSpinning(timeout_usecs);
+            }
+
+            void signal(ssize_t count = 1) AE_NO_TSAN
+            {
+                assert(count >= 0);
+                ssize_t oldCount = m_count.fetch_add_release(count);
+                assert(oldCount >= -1);
+                if (oldCount < 0)
+                {
+                    m_sema.signal(1);
+                }
+            }
+
+            ssize_t availableApprox() const AE_NO_TSAN
+            {
+                ssize_t count = m_count.load();
+                return count > 0 ? count : 0;
+            }
+        };
+    }	// end namespace spsc_sema
 }	// end namespace moodycamel
 
 #if defined(AE_VCPP) && (_MSC_VER < 1700 || defined(__cplusplus_cli))
