@@ -8,7 +8,7 @@
 #include "KEngine/Core/EventManager.hpp"
 #include "KEngine/Log/Log.hpp"
 
-#include "imgui.h"
+#include "KEngine/Graphics/Imgui.hpp"
 
 #if defined(USE_SFML)
 #include <SFML/Graphics/RenderWindow.hpp>

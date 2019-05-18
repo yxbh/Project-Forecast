@@ -4,7 +4,7 @@
 
 #include "KEngine/Graphics/SFML/SfmlHelper.hpp"
 
-#include "imgui.h"
+#include "KEngine/Graphics/Imgui.hpp"
 #if defined(USE_SFML)
 #include "imgui-SFML.h"
 #include <SFML/Graphics/RenderWindow.hpp>

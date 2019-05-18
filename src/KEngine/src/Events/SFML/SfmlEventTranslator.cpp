@@ -3,7 +3,7 @@
 #include "KEngine/Events/AppEvents.hpp"
 #include "KEngine/Log/Log.hpp"
 
-#include "imgui.h"
+#include "KEngine/Graphics/Imgui.hpp"
 
 #include <SFML/Graphics/RenderWindow.hpp>
 

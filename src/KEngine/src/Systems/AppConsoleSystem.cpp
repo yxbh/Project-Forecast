@@ -12,7 +12,7 @@
 #include "KEngine/Log/Log.hpp"
 #include "KEngine/Utility/StringHelper.hpp"
 
-#include "imgui.h"
+#include "KEngine/Graphics/Imgui.hpp"
 
 #if defined(USE_SFML)
 #include <SFML/Graphics/RenderWindow.hpp>
