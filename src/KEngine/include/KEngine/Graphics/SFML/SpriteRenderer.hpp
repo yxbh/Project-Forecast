@@ -79,12 +79,13 @@ namespace ke
                         currentTexture = (*this->textureStore)[currentTextureId].get();
                         sprite.setTexture(*currentTexture);
                     }
-                    else
-                    {
-                        // if texture doesn't exist we don't draw it obviously.
-                        continue;
-                    }
                 }
+                if (!currentTexture)
+                {
+                    // if texture doesn't exist we don't draw it obviously.
+                    continue;
+                }
+
                 sprite.setOrigin(spriteInfo.origin.x, spriteInfo.origin.y);
                 sprite.setPosition(sfPosition);
                 sprite.setScale(transform.scaleX, transform.scaleY);
@@ -128,7 +129,7 @@ namespace ke
         }
 
     private:
-        sf::RenderTarget * renderTarget;
+        sf::RenderTarget * renderTarget = nullptr;
 
         bool drawBoundingBox = false;
 
@@ -136,7 +137,7 @@ namespace ke
 
         std::vector<GraphicsCommand> commands;
 
-        TextureMapType * textureStore;
+        TextureMapType * textureStore = nullptr;
         sf::Sprite sprite;
         sf::RectangleShape rectangleShape;
     };

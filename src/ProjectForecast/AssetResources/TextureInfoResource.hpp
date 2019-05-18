@@ -20,7 +20,7 @@ namespace pf
         inline const DimensionType & getTextureSize() const { return this->textureSize; }
     
     private:
-        size_t textureId;
+        size_t textureId = std::numeric_limits<size_t>::max();  // max value as invalid value.
         DimensionType textureSize;
 
     };

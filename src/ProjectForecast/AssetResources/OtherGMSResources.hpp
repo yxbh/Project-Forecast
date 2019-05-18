@@ -32,8 +32,8 @@ namespace pf
 
         ke::Dimension2DUInt32 dimension;
 
-        unsigned sheetid; // the GM:S texture sheet name (i.e. "textures" folder content).
-        unsigned id;
+        unsigned sheetid = std::numeric_limits<unsigned>::max(); // the GM:S texture sheet name (i.e. "textures" folder content).
+        unsigned id = std::numeric_limits<unsigned>::max();
 
 
         friend class GMSAssetResourceManagementSystem;
@@ -74,7 +74,7 @@ namespace pf
         };
 
 
-        unsigned id;
+        unsigned id = std::numeric_limits<unsigned>::max();
 
         friend class GMSAssetResourceManagementSystem;
     };
@@ -94,7 +94,7 @@ namespace pf
             this->sourcePath = p_sourcePath;
         };
 
-        unsigned texture; // it is really the texpage name/id.
+        unsigned texture = std::numeric_limits<unsigned>::max(); // it is really the texpage name/id.
 
         std::weak_ptr<GMSTexpageResource> texpageResource;
     };

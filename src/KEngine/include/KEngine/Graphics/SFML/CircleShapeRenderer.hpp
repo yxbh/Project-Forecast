@@ -129,7 +129,7 @@ namespace ke
     private:
         static constexpr const unsigned NUM_POINTS = 25;
 
-        sf::RenderTarget * renderTarget;
+        sf::RenderTarget * renderTarget = nullptr;
         sf::VertexArray vertexArray;
         sf::CircleShape shape;
 

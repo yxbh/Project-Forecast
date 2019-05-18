@@ -27,11 +27,11 @@ namespace pf
         // GMS:S asset info
 
         ke::String sprite;
-        bool visible;
-        bool solid;
-        int depth;
-        bool persist;
-        bool sensor;
+        bool visible = true;
+        bool solid = false;
+        int depth = 0;
+        bool persist = false;
+        bool sensor = false;
         ke::String colshape;
 
 

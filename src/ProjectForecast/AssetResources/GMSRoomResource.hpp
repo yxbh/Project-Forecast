@@ -27,8 +27,8 @@ namespace pf
         ke::Point2DFloat scale{ 1.0f, 1.0f };
         ke::Colour colour{ke::Colour::WHITE};
         ke::String bg;
-        int32_t tiledepth;
-        size_t instanceid;
+        int32_t tiledepth = 0;
+        size_t instanceid = 0;
 
 
         // custom info
@@ -38,11 +38,11 @@ namespace pf
     {
         // GM:S info
 
-        bool enabled;
-        bool foreground;
+        bool enabled = true;
+        bool foreground = false;
         ke::Point2DInt32 pos{ 0,0 };
-        bool tilex;
-        bool tiley;
+        bool tilex = false;
+        bool tiley = false;
         ke::Point2DInt32 speed{ 0,0 };
         bool stretch{ false };
         ke::String bg;
@@ -59,8 +59,8 @@ namespace pf
         // GM:S info
 
         ke::String obj;
-        ke::EntityId instanceid;
-        unsigned createcodeid;
+        ke::EntityId instanceid = ke::INVALID_ENTITY_ID;
+        unsigned createcodeid = 0;  // 0 for invalid.
         ke::Point2DInt32 pos;
         ke::Point2DFloat scale{ 1.0f, 1.0f };
         float rotation{ 0.0f };

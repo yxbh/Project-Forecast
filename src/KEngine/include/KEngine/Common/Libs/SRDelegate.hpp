@@ -21,6 +21,8 @@
 */
 
 #pragma once
+#pragma warning(push)
+#pragma warning(disable:26495)
 #ifndef DELEGATE_HPP
 # define DELEGATE_HPP
 
@@ -398,3 +400,5 @@ namespace std
 }
 
 #endif // DELEGATE_HPP
+
+#pragma warning(pop)

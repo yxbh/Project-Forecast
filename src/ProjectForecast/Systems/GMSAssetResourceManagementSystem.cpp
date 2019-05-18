@@ -124,7 +124,6 @@ namespace pf
             return;
         }
         sf::Image tempImage;
-        std::hash<ke::String> hasher;
         static constexpr auto RSRC_PREFIX = "texture_";
         for (const auto & path : ke::FileSystemHelper::getChildPaths(texturesRootDirPath))
         {

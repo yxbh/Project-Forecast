@@ -70,7 +70,7 @@ namespace ke
 
     private:
 #if defined(USE_SFML)
-        sf::RenderWindow * renderTarget;
+        sf::RenderWindow * renderTarget = nullptr;
 #endif
 
         mutable size_t drawCallCount = 0;

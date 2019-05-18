@@ -35,7 +35,7 @@ namespace pf
 
     private:
         ke::Dimension2DUInt32 windowSizeCache;
-        int currentZoomFactorIdx;
+        int currentZoomFactorIdx = 0;
 
     };
 

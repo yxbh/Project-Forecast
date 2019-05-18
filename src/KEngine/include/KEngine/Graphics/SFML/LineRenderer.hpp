@@ -85,7 +85,7 @@ namespace ke
     private:
         static constexpr const unsigned NUM_POINTS = 25;
 
-        sf::RenderTarget * renderTarget;
+        sf::RenderTarget * renderTarget = nullptr;
         std::vector<sf::Vertex> vertexArray;
         //sf::VertexArray vertexArray;
 
