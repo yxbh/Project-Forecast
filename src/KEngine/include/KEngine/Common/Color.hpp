@@ -8,10 +8,11 @@ namespace ke
     struct Color
     {
     public:
-        std::uint8_t r;
-        std::uint8_t g;
-        std::uint8_t b;
-        std::uint8_t a;
+        static constexpr uint8_t DEFAULT_VALUE = 255u;
+        std::uint8_t r = DEFAULT_VALUE;
+        std::uint8_t g = DEFAULT_VALUE;
+        std::uint8_t b = DEFAULT_VALUE;
+        std::uint8_t a = DEFAULT_VALUE;
 
 
         static const Color WHITE;

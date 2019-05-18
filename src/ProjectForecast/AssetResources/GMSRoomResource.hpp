@@ -64,7 +64,7 @@ namespace pf
         ke::Point2DInt32 pos;
         ke::Point2DFloat scale{ 1.0f, 1.0f };
         float rotation{ 0.0f };
-        ke::Colour colour;
+        ke::Colour colour = ke::Colour::WHITE;
 
 
         // custom info
@@ -107,7 +107,7 @@ namespace pf
         ObjectInstanceContainer objects;
         SizeType size;
         SpeedType speed = 60; // RoR default seems to be 60.
-        ke::Colour colour;
+        ke::Colour colour = ke::Colour::WHITE;
 
         friend class GMSAssetResourceManagementSystem;
     };
