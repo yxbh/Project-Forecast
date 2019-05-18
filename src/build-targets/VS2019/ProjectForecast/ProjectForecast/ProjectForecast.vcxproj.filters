@@ -1,0 +1,761 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="KEngine">
+      <UniqueIdentifier>{f46ebe8d-c5c9-4c8f-9e76-e5a826490b8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="KEngine\Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="libs">
+      <UniqueIdentifier>{f5442167-f26f-4ecb-a5d4-1641afcce01b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectForecast">
+      <UniqueIdentifier>{6770b0f0-a966-4a5a-b6cc-0ed8cff22f45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Common">
+      <UniqueIdentifier>{0cc2133c-43e7-4209-bf7b-68adba4d6295}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Core">
+      <UniqueIdentifier>{79d9d3cf-6432-4597-a631-c888da5541ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Entity">
+      <UniqueIdentifier>{0a72a878-08e3-40eb-a37d-3497ec806624}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Common\Libs">
+      <UniqueIdentifier>{5d809fcf-ce35-4ff0-8a7d-3b10bf8d6073}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Events">
+      <UniqueIdentifier>{873f5f3f-ffef-4282-929b-8465d608764e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Graphics">
+      <UniqueIdentifier>{be223909-1598-4532-a581-c2798088462a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Interfaces">
+      <UniqueIdentifier>{4d463534-5435-4377-85e1-35127ca8e99c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Log">
+      <UniqueIdentifier>{f42a2100-a9f1-441d-b4be-dca9fcbca588}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Resources">
+      <UniqueIdentifier>{508fe954-485a-4887-9c5f-261020c178fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Systems">
+      <UniqueIdentifier>{3a49c6bb-c703-4874-a926-321c3e3ea18f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Utility">
+      <UniqueIdentifier>{822a8b67-5548-4fec-a0ea-d0d5dbd30c33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Views">
+      <UniqueIdentifier>{8e5fefa2-1cee-4ec6-b2ab-f66b26407a39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Common">
+      <UniqueIdentifier>{c3d571ae-3baa-4340-a138-8a4a417eab49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Core">
+      <UniqueIdentifier>{828192e3-93a9-4aa3-a7ca-f32e5a1f6ab5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Entity">
+      <UniqueIdentifier>{c7a8c972-e80c-4e8e-ae06-7c55ddb07b6c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Events">
+      <UniqueIdentifier>{c0f9ca0e-0705-4961-9b64-1b0e3c9d60e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Graphics">
+      <UniqueIdentifier>{6bcea108-ff57-41a0-9199-12526b557316}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Resources">
+      <UniqueIdentifier>{b9782a87-ac14-41fc-a348-9859ddf9d76b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Systems">
+      <UniqueIdentifier>{5ced9a66-06e2-44ca-a74d-326576ac16cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\UnitTest">
+      <UniqueIdentifier>{0f9cbc11-844e-4a98-9dde-29e3970c719f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Utility">
+      <UniqueIdentifier>{23ad27a6-2b8d-4a7f-8ddc-ae43559fd9f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Views">
+      <UniqueIdentifier>{acc39b02-0e37-4da3-9b3e-fdf7fbd156f4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectForecast\AssetResources">
+      <UniqueIdentifier>{2cc72984-b439-4082-a360-b130ad712f32}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectForecast\EntityComponents">
+      <UniqueIdentifier>{fd647274-9403-4c07-918d-6be931d40d80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectForecast\EntityFactory">
+      <UniqueIdentifier>{cd6831a4-bb9a-48d9-a6db-2cc97e533be4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectForecast\Events">
+      <UniqueIdentifier>{24bd6c4e-b806-4bbc-8323-6e8f3b55f134}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectForecast\InputControllers">
+      <UniqueIdentifier>{f68437ab-49e2-4681-92f3-b29ab1105734}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectForecast\Systems">
+      <UniqueIdentifier>{a8ecb627-3d18-41b8-8e32-bdbaf2014b11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectForecast\Utility">
+      <UniqueIdentifier>{72bca2e4-b04b-4461-806d-b836c852c2d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ProjectForecast\Views">
+      <UniqueIdentifier>{58af10f1-08fa-41d1-9242-64f7832f5d2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libs\dear-ImGUI-SFML">
+      <UniqueIdentifier>{14f8fc22-dcea-432d-9345-8a545d83cb39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Entity\Builders">
+      <UniqueIdentifier>{f4b4fee9-6a88-41a7-b879-8e0249ff60fe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Entity\ComponentBuilders">
+      <UniqueIdentifier>{17a40917-0af8-4c55-b646-834c31e2cf98}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Entity\Components">
+      <UniqueIdentifier>{f083482f-769b-4760-b484-98c62e381a78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Events\SDL2">
+      <UniqueIdentifier>{c59a7de7-6519-4516-94d0-628076c5d26f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Events\SFML">
+      <UniqueIdentifier>{120418f5-3153-4c13-8933-a5e9a0f4fc75}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Graphics\DearImgui">
+      <UniqueIdentifier>{ef236a95-bb52-45fb-913f-7e894660d20e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Graphics\SDL2">
+      <UniqueIdentifier>{a1cdd7dc-c6df-4ce6-b232-db91a6df3168}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Graphics\SFML">
+      <UniqueIdentifier>{30f5c3c0-c0a3-415c-a01b-ed29a2036d11}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\Resources\Loaders">
+      <UniqueIdentifier>{de213a3d-f9e1-4d0a-90bd-9b2561b4a61b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Entity\Builders">
+      <UniqueIdentifier>{3fde87ef-3ce7-4c74-bd10-5c50ee10e06b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Entity\Components">
+      <UniqueIdentifier>{b3ced2f5-16f6-410b-8449-c28d530f9e95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Entity\EntityComponentLoaders">
+      <UniqueIdentifier>{e679c029-55b3-4063-a02c-80ae81a0c04b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Events\SFML">
+      <UniqueIdentifier>{2ccba80e-e17b-4300-978f-41f31899ca7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Graphics\DearImgui">
+      <UniqueIdentifier>{acbee218-5848-4809-9707-f2693f831995}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Graphics\SDL2">
+      <UniqueIdentifier>{bd96019c-aab2-4f9d-bb2f-31a1385c8b33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Graphics\SFML">
+      <UniqueIdentifier>{6cde3830-747a-48f9-b2af-4cba5b234752}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Source Files\Resources\Loaders">
+      <UniqueIdentifier>{2006375c-661d-4ac2-9146-f504ee8d6398}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="KEngine\Header Files\UnitTest">
+      <UniqueIdentifier>{fbb3cf04-b08a-4131-a7f2-c0aa5cb0288b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Color.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Delegate.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Dimension2D.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\HeartBeatGenerator.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Json.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\macros.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Point2D.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Queues.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Rect2D.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\ScopeFunc.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Size2D.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\StopWatch.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\String.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\ThreadPool.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Time.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Transform2D.hpp">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\atomicops.h">
+      <Filter>KEngine\Header Files\Common\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\concurrentqueue.h">
+      <Filter>KEngine\Header Files\Common\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\cxxopts.hpp">
+      <Filter>KEngine\Header Files\Common\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\json.hpp">
+      <Filter>KEngine\Header Files\Common\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\readerwriterqueue.h">
+      <Filter>KEngine\Header Files\Common\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Libs\SRDelegate.hpp">
+      <Filter>KEngine\Header Files\Common\Libs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\Entity.hpp">
+      <Filter>KEngine\Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EntityFactory.hpp">
+      <Filter>KEngine\Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EntityManager.hpp">
+      <Filter>KEngine\Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManager.hpp">
+      <Filter>KEngine\Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\EventManagerImpl.hpp">
+      <Filter>KEngine\Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\FrameRateCounter.hpp">
+      <Filter>KEngine\Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\Keyboard.hpp">
+      <Filter>KEngine\Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\Mouse.hpp">
+      <Filter>KEngine\Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\ResourceManager.hpp">
+      <Filter>KEngine\Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\StateMachine.hpp">
+      <Filter>KEngine\Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Core\SystemManager.hpp">
+      <Filter>KEngine\Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\Builders\JsonEntityBuilder.hpp">
+      <Filter>KEngine\Header Files\Entity\Builders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\ComponentBuilders\EntityRenderableComponentBuilder.hpp">
+      <Filter>KEngine\Header Files\Entity\ComponentBuilders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\Components\EntityCameraComponent.hpp">
+      <Filter>KEngine\Header Files\Entity\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Entity\Components\EntityRenderableComponents.hpp">
+      <Filter>KEngine\Header Files\Entity\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\AppConsoleEvents.hpp">
+      <Filter>KEngine\Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\AppEvents.hpp">
+      <Filter>KEngine\Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\AppExitRequestedEvent.hpp">
+      <Filter>KEngine\Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\EntityTransformControlCommandEvents.hpp">
+      <Filter>KEngine\Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\EventLoopFrameEvent.hpp">
+      <Filter>KEngine\Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\GraphicsLoopFrameEvent.hpp">
+      <Filter>KEngine\Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\GraphicsLoopSetupFailureEvent.hpp">
+      <Filter>KEngine\Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\LogicLoopFrameEvent.hpp">
+      <Filter>KEngine\Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\LoopFrameEvent.hpp">
+      <Filter>KEngine\Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\OtherGraphicsEvents.hpp">
+      <Filter>KEngine\Header Files\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEvent.hpp">
+      <Filter>KEngine\Header Files\Events\SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEventTranslator.hpp">
+      <Filter>KEngine\Header Files\Events\SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SDL2\SDL2Event.hpp">
+      <Filter>KEngine\Header Files\Events\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\GraphicsCommand.hpp">
+      <Filter>KEngine\Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderLayer.hpp">
+      <Filter>KEngine\Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderSystem.hpp">
+      <Filter>KEngine\Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\Scene.hpp">
+      <Filter>KEngine\Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SceneNodes.hpp">
+      <Filter>KEngine\Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\Window.hpp">
+      <Filter>KEngine\Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\WindowFactory.hpp">
+      <Filter>KEngine\Header Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\DearImgui\ImguiRenderer.hpp">
+      <Filter>KEngine\Header Files\Graphics\DearImgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\DearImgui\ImguiSceneNodes.hpp">
+      <Filter>KEngine\Header Files\Graphics\DearImgui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\CircleShapeRenderer.hpp">
+      <Filter>KEngine\Header Files\Graphics\SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\LineRenderer.hpp">
+      <Filter>KEngine\Header Files\Graphics\SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\SfmlHelper.hpp">
+      <Filter>KEngine\Header Files\Graphics\SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\SfmlWindow.hpp">
+      <Filter>KEngine\Header Files\Graphics\SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\SpriteRenderer.hpp">
+      <Filter>KEngine\Header Files\Graphics\SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SDL2\SDL2Window.hpp">
+      <Filter>KEngine\Header Files\Graphics\SDL2</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IApp.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IAppView.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IEntity.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IEntityBuilder.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IEntityComponent.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IEntityComponentBuilder.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IEvent.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IEventManagerImpl.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IGraphicsCommandRenderer.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IInputController.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IRenderCommand.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IResource.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IResourceLoader.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IScene.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\ISceneNode.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IStateMachine.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\ISystem.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IWindow.hpp">
+      <Filter>KEngine\Header Files\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Log\Log.hpp">
+      <Filter>KEngine\Header Files\Log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Views\HumanView.hpp">
+      <Filter>KEngine\Header Files\Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Utility\FileSystemHelper.hpp">
+      <Filter>KEngine\Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Utility\StringHelper.hpp">
+      <Filter>KEngine\Header Files\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Systems\ImguiSystem.hpp">
+      <Filter>KEngine\Header Files\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\ImageResource.hpp">
+      <Filter>KEngine\Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\ResourceManifestResource.hpp">
+      <Filter>KEngine\Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\Loaders\ImageResourceLoader.hpp">
+      <Filter>KEngine\Header Files\Resources\Loaders</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\CommandLineOptions.hpp">
+      <Filter>ProjectForecast</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\ProjectForecastApp.hpp">
+      <Filter>ProjectForecast</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\GMSObjectResource.hpp">
+      <Filter>ProjectForecast\AssetResources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\GMSRoomResource.hpp">
+      <Filter>ProjectForecast\AssetResources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\OtherGMSResources.hpp">
+      <Filter>ProjectForecast\AssetResources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\TextureInfoResource.hpp">
+      <Filter>ProjectForecast\AssetResources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\EntityComponents\Components..hpp">
+      <Filter>ProjectForecast\EntityComponents</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjGeyserBuilder.hpp">
+      <Filter>ProjectForecast\EntityFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjWaterfallBuilder.hpp">
+      <Filter>ProjectForecast\EntityFactory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Events\GMSRoomLoadRequestEvent.hpp">
+      <Filter>ProjectForecast\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Events\RequestDrawDebugDotEvent.hpp">
+      <Filter>ProjectForecast\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\InputControllers\InputControllers.hpp">
+      <Filter>ProjectForecast\InputControllers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Views\HumanView.hpp">
+      <Filter>ProjectForecast\Views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Utility\GraphicsHelper.hpp">
+      <Filter>ProjectForecast\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\DebugDrawSystem.hpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\DebugSceneGridSystem.hpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\EntityFactorySystem.hpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\EntityTransformControlSystem.hpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\EventFeedbackSystem.hpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\GMSAssetResourceManagementSystem.hpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\GMSRoomManagementSystem.hpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\ProjectForecast\Systems\PlayerCameraControlSystem.hpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imconfig.h">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imconfig-SFML.h">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui.h">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui_internal.h">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui-SFML.h">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui-SFML_export.h">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imstb_rectpack.h">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imstb_textedit.h">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imstb_truetype.h">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\UnitTest\catch.hpp">
+      <Filter>KEngine\Header Files\UnitTest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\App.hpp">
+      <Filter>KEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\BaseAppLogic.hpp">
+      <Filter>KEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\CommandLineOptions.hpp">
+      <Filter>KEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\Imgui.hpp">
+      <Filter>KEngine\Header Files\Graphics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\KEngine\include\KEngine\Common\Queues.inl">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </None>
+    <None Include="..\..\..\..\KEngine\include\KEngine\Common\Time.inl">
+      <Filter>KEngine\Header Files\Common</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\KEngine\src\Common\Color.cpp">
+      <Filter>KEngine\Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Common\Time.cpp">
+      <Filter>KEngine\Source Files\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\App.cpp">
+      <Filter>KEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\BaseAppLogic.cpp">
+      <Filter>KEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\dump.cpp">
+      <Filter>KEngine\Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\Entity.cpp">
+      <Filter>KEngine\Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\EntityFactory.cpp">
+      <Filter>KEngine\Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\EntityManager.cpp">
+      <Filter>KEngine\Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\EventManagerImpl.cpp">
+      <Filter>KEngine\Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\Keyboard.cpp">
+      <Filter>KEngine\Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\Mouse.cpp">
+      <Filter>KEngine\Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\ResourceManager.cpp">
+      <Filter>KEngine\Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\StateMachine.cpp">
+      <Filter>KEngine\Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Core\SystemManager.cpp">
+      <Filter>KEngine\Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Entity\Builders\JsonEntityBuilder.cpp">
+      <Filter>KEngine\Source Files\Entity\Builders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Entity\Components\EntityRenderableComponents.cpp">
+      <Filter>KEngine\Source Files\Entity\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Entity\EntityComponentLoaders\EntityRenderComponentLoader.cpp">
+      <Filter>KEngine\Source Files\Entity\EntityComponentLoaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Events\SFML\SfmlEventTranslator.cpp">
+      <Filter>KEngine\Source Files\Events\SFML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\RenderSystem.cpp">
+      <Filter>KEngine\Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\Scene.cpp">
+      <Filter>KEngine\Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SceneNodes.cpp">
+      <Filter>KEngine\Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\WindowFactory.cpp">
+      <Filter>KEngine\Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\DearImgui\ImguiSceneNodes.cpp">
+      <Filter>KEngine\Source Files\Graphics\DearImgui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SFML\SfmlWindow.cpp">
+      <Filter>KEngine\Source Files\Graphics\SFML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SDL2\SDL2Window.cpp">
+      <Filter>KEngine\Source Files\Graphics\SDL2</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Views\HumanView.cpp">
+      <Filter>KEngine\Source Files\Views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Utility\FileSystemHelper.cpp">
+      <Filter>KEngine\Source Files\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Delegate.cpp">
+      <Filter>KEngine\Source Files\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EntityAndComponents.cpp">
+      <Filter>KEngine\Source Files\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EntityFactory.cpp">
+      <Filter>KEngine\Source Files\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EntityManager.cpp">
+      <Filter>KEngine\Source Files\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EventDelegates.cpp">
+      <Filter>KEngine\Source Files\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_EventManager.cpp">
+      <Filter>KEngine\Source Files\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Events.cpp">
+      <Filter>KEngine\Source Files\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_FrameRateCounter.cpp">
+      <Filter>KEngine\Source Files\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_StateMachine.cpp">
+      <Filter>KEngine\Source Files\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_SystemManager.cpp">
+      <Filter>KEngine\Source Files\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\UnitTest\UnitTest_Time.cpp">
+      <Filter>KEngine\Source Files\UnitTest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Systems\AppConsoleSystem.cpp">
+      <Filter>KEngine\Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Systems\ImguiSystem.cpp">
+      <Filter>KEngine\Source Files\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Resources\ImageResource.cpp">
+      <Filter>KEngine\Source Files\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Resources\ResourceManifestResource.cpp">
+      <Filter>KEngine\Source Files\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Resources\Loaders\ImageResourceLoader.cpp">
+      <Filter>KEngine\Source Files\Resources\Loaders</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\main.cpp">
+      <Filter>ProjectForecast</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\ProjectForecastApp.cpp">
+      <Filter>ProjectForecast</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\AssetResources\TextureInfoResource.cpp">
+      <Filter>ProjectForecast\AssetResources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\EntityComponents\Components..cpp">
+      <Filter>ProjectForecast\EntityComponents</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjGeyserBuilder.cpp">
+      <Filter>ProjectForecast\EntityFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjWaterfallBuilder.cpp">
+      <Filter>ProjectForecast\EntityFactory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\InputControllers\InputControllers.cpp">
+      <Filter>ProjectForecast\InputControllers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Views\HumanView.cpp">
+      <Filter>ProjectForecast\Views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Utility\GraphicsHelper.cpp">
+      <Filter>ProjectForecast\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\DebugDrawSystem.cpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\DebugSceneGridSystem.cpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\EntityFactorySystem.cpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\EntityTransformControlSystem.cpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\EventFeedbackSystem.cpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\GMSAssetResourceManagementSystem.cpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\GMSRoomManagementSystem.cpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\ProjectForecast\Systems\PlayerCameraControlSystem.cpp">
+      <Filter>ProjectForecast\Systems</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui.cpp">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui_draw.cpp">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui_widgets.cpp">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui-SFML.cpp">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui_demo.cpp">
+      <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
