@@ -117,7 +117,7 @@ namespace pf
     {
         ke::Log::instance()->info("Scanning texture assets...");
         const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
-        const auto texturesRootDirPath = fs::path{ assetDirPath } / "textures";
+        const auto texturesRootDirPath = fs::path{ assetDirPath } / "texture";
         if (!fs::exists(texturesRootDirPath))
         {
             ke::Log::instance()->error("Cannot find asset path: {}", texturesRootDirPath.string());
@@ -299,7 +299,7 @@ namespace pf
     {
         ke::Log::instance()->info("Scanning GM:S room assets...");
         const auto assetDirPath         = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
-        const auto gmsRoomsRootDirPath  = fs::path{ assetDirPath } / "rooms";
+        const auto gmsRoomsRootDirPath  = fs::path{ assetDirPath } / "room";
         if (!fs::exists(gmsRoomsRootDirPath))
         {
             ke::Log::instance()->error("Cannot find asset path: {}", gmsRoomsRootDirPath.string());
