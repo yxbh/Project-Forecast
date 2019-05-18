@@ -106,7 +106,7 @@ namespace pf
         TileInstanceContainer tiles;
         ObjectInstanceContainer objects;
         SizeType size;
-        SpeedType speed;
+        SpeedType speed = 60; // RoR default seems to be 60.
         ke::Colour colour;
 
         friend class GMSAssetResourceManagementSystem;
