@@ -56,7 +56,7 @@ namespace ke
         ke::SystemManager systemManager;
 
         AppViewList appViews;
-        ke::IAppView * currentHumanView;
+        ke::IAppView * currentHumanView = nullptr;
     };
 
     inline BaseAppLogic::~BaseAppLogic() {}
