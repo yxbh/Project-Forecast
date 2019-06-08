@@ -40,6 +40,14 @@ namespace ke
             return;
         }
         m_Components.push_back(p_spEntityComponent);
+        if (m_Initialised)
+        {
+            if (!this->initialise())
+            {
+                ke::Log::instance()->error("Failed to initialised entity component of type {0:#x} after adding it to entity '{}'({})",
+                    p_spEntityComponent->getType(), this->getName(), this->getId());
+            }
+        }
     }
 
     bool Entity::initialise(void)
