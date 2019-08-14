@@ -26,6 +26,13 @@ namespace ke
         /// <returns>true if registration was successful.</returns>
         bool registerEntityBuilder(const ke::String & p_entityTypeName, ke::EntityBuilderUptr && p_builder);
 
+        /// <summary>
+        /// Check if a builder for the given entity type name has been registered.
+        /// </summary>
+        /// <param name="p_entityTypeName"></param>
+        /// <returns>true if a builder for the given entity type name has been registered.</returns>
+        bool hasEntityBuilder(const ke::String& p_entityTypeName) const;
+
         bool registerComponentBuilder(const ke::String & p_entityComponentName, EntityComponentLoaderUptr && loader);
 
         template<typename EntityComponentLoader_T>

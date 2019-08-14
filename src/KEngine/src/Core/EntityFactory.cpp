@@ -27,6 +27,11 @@ namespace ke
         return !alreadyExists;
     }
 
+    bool EntityFactory::hasEntityBuilder(const ke::String& p_entityTypeName) const
+    {
+        return this->entityBuilders.contains(p_entityTypeName);
+    }
+
     bool EntityFactory::registerComponentBuilder(const ke::String & p_entityComponentName, EntityComponentLoaderUptr && loader)
     {
         bool isLoaderForNameAlreadyExists = this->entityComponentBuilders.find(p_entityComponentName) != this->entityComponentBuilders.end();

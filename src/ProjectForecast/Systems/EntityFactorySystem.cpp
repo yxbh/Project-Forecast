@@ -1,5 +1,6 @@
 #include "EntityFactorySystem.hpp"
 
+#include "../EntityFactory/RorObjEfRayBuilder.hpp"
 #include "../EntityFactory/RorObjGeyserBuilder.hpp"
 #include "../EntityFactory/RorObjWaterfallBuilder.hpp"
 
@@ -11,6 +12,7 @@ namespace pf
     bool EntityFactorySystem::initialise(void)
     {
         auto factory = ke::App::instance()->getLogic()->getEntityFactory();
+        factory->registerEntityBuilder("oEfRay", std::make_unique<RorObjEfRayBuilder>(factory));
         factory->registerEntityBuilder("oGeyser", std::make_unique<RorObjGeyserBuilder>(factory));
         factory->registerEntityBuilder("oWaterfall", std::make_unique<RorObjWaterfallBuilder>(factory));
         

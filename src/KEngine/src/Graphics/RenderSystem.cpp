@@ -78,7 +78,6 @@ namespace
         virtual bool initialise() override
         {
             this->orderedRenderCommandList.reserve(10240);
-            //ke::EventManager::registerListener<ke::WindowResizedEvent>(this, &RenderSystem::receiveEvent);
             ke::EventManager::registerListener<ke::TextureLoadViaFileRequestEvent>(this, &RenderSystemImpl::receiveEvent);
             ke::EventManager::registerListener<ke::TexturesBulkLoadViaFilesRequestEvent>(this, &RenderSystemImpl::receiveEvent);
             ke::EventManager::registerListener<ke::SetClearColourRequestEvent>(this, &RenderSystemImpl::receiveEvent);
@@ -91,7 +90,6 @@ namespace
 
         virtual void shutdown() override
         {
-            //ke::EventManager::deregisterListener<ke::WindowResizedEvent>(this, &RenderSystem::receiveEvent);
             ke::EventManager::deregisterListener<ke::TextureLoadViaFileRequestEvent>(this, &RenderSystemImpl::receiveEvent);
             ke::EventManager::deregisterListener<ke::TexturesBulkLoadViaFilesRequestEvent>(this, &RenderSystemImpl::receiveEvent);
             ke::EventManager::deregisterListener<ke::SetClearColourRequestEvent>(this, &RenderSystemImpl::receiveEvent);

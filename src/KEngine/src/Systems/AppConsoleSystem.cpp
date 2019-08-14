@@ -1,4 +1,4 @@
-#include "KEngine/Systems/ImguiSystem.hpp"
+#include "KEngine/Systems/AppConsoleSystem.hpp"
 
 #if defined(USE_SFML)
 #include "KEngine/Events/SFML/SfmlEvent.hpp"
@@ -19,12 +19,24 @@
 #include "imgui-SFML.h"
 #endif
 
+#include <algorithm>
 #include <array>
 #include <vector>
 
 namespace ke::priv
 {
-    class AppConsoleSystem : public ke::ISystem
+    class NullCommandLineProcessor final : public ke::IAppConsoleCommandProcessor
+    {
+    public:
+        static constexpr auto DELIMITER = " ";
+
+        inline virtual std::pair<bool, ke::String> processCommandLine(const ke::String& p_commandLine) final
+        {
+            return { true, "Unknown command: " + p_commandLine.substr(0, p_commandLine.find(DELIMITER)) };
+        }
+    };
+
+    class AppConsoleSystem : public ke::IAppConsoleSystem
     {
         KE_DEFINE_SYSTEM_COMMON_PROPERTIES(AppConsoleSystem, 0xE97C2771)
         
@@ -33,6 +45,9 @@ namespace ke::priv
         virtual void shutdown(void) final;
 
         virtual void update(ke::Time elapsedTime) final;
+
+        virtual bool registerCommandProcessor(AppConsoleCommandProcessorSptr p_processor) final;
+        virtual void deregisterCommandProcessor(AppConsoleCommandProcessorSptr p_processor) final;
 
         void handleEvent(ke::EventSptr event);
 
@@ -45,6 +60,9 @@ namespace ke::priv
         void addConsoleLog(const char* fmt, ...) IM_FMTARGS(2);
         void clearConsoleLog(void);
 
+
+        std::vector<ke::AppConsoleCommandProcessorSptr> commandLineProcessors;
+        NullCommandLineProcessor nullCommandLineProcessor;
 
         ke::EntityWptr consoleEntity;
 
@@ -68,11 +86,14 @@ namespace ke::priv
         ke::EventManager::registerListener<ke::RequestShowAppConsoleEvent>(this, &AppConsoleSystem::handleEvent);
         ke::EventManager::registerListener<ke::RequestHideAppConsoleEvent>(this, &AppConsoleSystem::handleEvent);
         ke::EventManager::registerListener<ke::RequestToggleAppConsoleDisplayEvent>(this, &AppConsoleSystem::handleEvent);
+        ke::EventManager::registerListener<ke::AppConsoleCommandLineResponseEvent>(this, &AppConsoleSystem::handleEvent);
         return true;
     }
 
     void AppConsoleSystem::shutdown(void)
     {
+        this->commandLineProcessors.clear();
+
         auto consoleEntitySptr = this->consoleEntity.lock();
         if (consoleEntitySptr)
         {
@@ -83,12 +104,29 @@ namespace ke::priv
         ke::EventManager::deregisterListener<ke::RequestShowAppConsoleEvent>(this, &AppConsoleSystem::handleEvent);
         ke::EventManager::deregisterListener<ke::RequestHideAppConsoleEvent>(this, &AppConsoleSystem::handleEvent);
         ke::EventManager::deregisterListener<ke::RequestToggleAppConsoleDisplayEvent>(this, &AppConsoleSystem::handleEvent);
+        ke::EventManager::deregisterListener<ke::AppConsoleCommandLineResponseEvent>(this, &AppConsoleSystem::handleEvent);
     }
 
     void AppConsoleSystem::update(ke::Time elapsedTime)
     {
         KE_UNUSED(elapsedTime);
         this->setupConsoleIfUninitialised();
+    }
+
+    bool AppConsoleSystem::registerCommandProcessor(AppConsoleCommandProcessorSptr p_processor)
+    {
+        auto itr = std::find(std::begin(this->commandLineProcessors), std::end(this->commandLineProcessors), p_processor);
+        if (itr == std::end(this->commandLineProcessors))
+        {
+            this->commandLineProcessors.push_back(p_processor);
+            return true;
+        }
+        return false;
+    }
+
+    void AppConsoleSystem::deregisterCommandProcessor(AppConsoleCommandProcessorSptr p_processor)
+    {
+        auto itr = std::remove(std::begin(this->commandLineProcessors), std::end(this->commandLineProcessors), p_processor);
     }
 
     void AppConsoleSystem::handleEvent(ke::EventSptr event)
@@ -105,6 +143,13 @@ namespace ke::priv
         case ke::RequestToggleAppConsoleDisplayEvent::TYPE:
             this->isConsoleOpen = !this->isConsoleOpen;
             break;
+        case ke::AppConsoleCommandLineResponseEvent::TYPE:
+        {
+            auto response = std::dynamic_pointer_cast<ke::AppConsoleCommandLineResponseEvent>(event);
+            assert(response);
+            this->addConsoleLog(response->getResponse().c_str());
+            break;
+        }
         default:
             ke::Log::instance()->warn("AppConsoleSystem: Unhandled event: {}", event->getName());
             break;
@@ -422,6 +467,16 @@ namespace ke::priv
         {
             this->consoleHistory.emplace_back(command);
         }
+
+        for (auto& processor : this->commandLineProcessors)
+        {
+            const auto[doNotContinue, output] = processor->processCommandLine(command);
+            this->addConsoleLog(output.c_str());
+            if (doNotContinue)
+            {
+                break;
+            }
+        }
     }
 
     void AppConsoleSystem::addConsoleLog(const char* fmt, ...)
@@ -469,6 +524,16 @@ namespace ke
     void AppConsoleSystem::update(ke::Time elapsedTime)
     {
         this->systemImpl->update(elapsedTime);
+    }
+
+    bool AppConsoleSystem::registerCommandProcessor(AppConsoleCommandProcessorSptr p_processor)
+    {
+        return this->systemImpl->registerCommandProcessor(p_processor);
+    }
+
+    void AppConsoleSystem::deregisterCommandProcessor(AppConsoleCommandProcessorSptr p_processor)
+    {
+        this->systemImpl->deregisterCommandProcessor(p_processor);
     }
 
 } // namespace ke

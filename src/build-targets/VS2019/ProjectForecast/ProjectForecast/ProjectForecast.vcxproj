@@ -399,6 +399,7 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\ImageResource.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\Loaders\ImageResourceLoader.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Resources\ResourceManifestResource.hpp" />
+    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Systems\AppConsoleSystem.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Systems\ImguiSystem.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\UnitTest\catch.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Utility\FileSystemHelper.hpp" />
@@ -419,6 +420,7 @@
     <ClInclude Include="..\..\..\..\ProjectForecast\AssetResources\TextureInfoResource.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\CommandLineOptions.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\EntityComponents\Components..hpp" />
+    <ClInclude Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjEfRayBuilder.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjGeyserBuilder.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjWaterfallBuilder.hpp" />
     <ClInclude Include="..\..\..\..\ProjectForecast\Events\GMSRoomLoadRequestEvent.hpp" />
@@ -515,14 +517,22 @@
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">26451;26495;%(DisableSpecificWarnings)</DisableSpecificWarnings>
     </ClCompile>
     <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui_draw.cpp">
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">26451;26495;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug-UnitTest|Win32'">26451;26495;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release-UnitTest|Win32'">26451;26495;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">26451;26495;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">26451;26495;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug-UnitTest|x64'">26451;26495;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release-UnitTest|x64'">26451;26495;%(DisableSpecificWarnings)</DisableSpecificWarnings>
-      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">26451;26495;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug-UnitTest|Win32'">%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release-UnitTest|Win32'">%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">6255;6385;%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug-UnitTest|x64'">%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release-UnitTest|x64'">%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(DisableSpecificWarnings)</DisableSpecificWarnings>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">/wd26451 /wd26495 /wd6255 /wd6255</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug-UnitTest|Win32'">/wd26451 /wd26495 /wd6255 /wd6255</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release-UnitTest|Win32'">/wd26451 /wd26495 /wd6255 /wd6255</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">/wd26451 /wd26495 /wd6255 /wd6255</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">/wd26451 /wd26495 /wd6255 /wd6255</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Debug-UnitTest|x64'">/wd26451 /wd26495 /wd6255 /wd6255</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release-UnitTest|x64'">/wd26451 /wd26495 /wd6255 /wd6255</AdditionalOptions>
+      <AdditionalOptions Condition="'$(Configuration)|$(Platform)'=='Release|x64'">/wd26451 /wd26495 /wd6255 /wd6255</AdditionalOptions>
     </ClCompile>
     <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui_widgets.cpp">
       <DisableSpecificWarnings Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">26451;26495;%(DisableSpecificWarnings)</DisableSpecificWarnings>
@@ -536,6 +546,7 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\ProjectForecast\AssetResources\TextureInfoResource.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\EntityComponents\Components..cpp" />
+    <ClCompile Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjEfRayBuilder.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjGeyserBuilder.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\EntityFactory\RorObjWaterfallBuilder.cpp" />
     <ClCompile Include="..\..\..\..\ProjectForecast\InputControllers\InputControllers.cpp" />

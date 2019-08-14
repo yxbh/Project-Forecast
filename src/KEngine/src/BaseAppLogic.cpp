@@ -3,6 +3,7 @@
 #include "KEngine/Entity/Components/EntityRenderableComponents.hpp"
 #include "KEngine/Entity/ComponentBuilders/EntityRenderableComponentBuilder.hpp"
 
+#include "KEngine/Systems/AppConsoleSystem.hpp"
 #include "KEngine/Systems/ImguiSystem.hpp"
 
 #include <cassert>

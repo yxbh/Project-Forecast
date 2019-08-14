@@ -197,22 +197,29 @@ namespace pf
             auto entityFactory = ke::App::instance()->getLogic()->getEntityFactory();
             for (const auto & objInfo : this->currentRoomResource->getObjects())
             {
-                auto e = entityFactory->createNew(objInfo.obj, objInfo);
-                if (e)
+                if (entityFactory->hasEntityBuilder(objInfo.obj))
                 {
-                    this->currentRoomEntities.push_back(e);
-
-                    // Compute texture to load.
-                    const auto objectResource = std::static_pointer_cast<GMSObjectResource>(resourceManager->getResource(objInfo.obj));
-                    const auto spriteResource = objectResource->spriteResource;
-                    for (const auto texpageResource : spriteResource->texpageResources)
+                    auto e = entityFactory->createNew(objInfo.obj, objInfo);
+                    if (e)
                     {
-                        sheetIds.insert(texpageResource->sheetid);
+                        this->currentRoomEntities.push_back(e);
+
+                        // Compute texture to load.
+                        const auto objectResource = std::static_pointer_cast<GMSObjectResource>(resourceManager->getResource(objInfo.obj));
+                        const auto spriteResource = objectResource->spriteResource;
+                        for (const auto texpageResource : spriteResource->texpageResources)
+                        {
+                            sheetIds.insert(texpageResource->sheetid);
+                        }
+                    }
+                    else
+                    {
+                        ke::Log::instance()->error("Failed to create instance of: {}", objInfo.obj);
                     }
                 }
                 else
                 {
-                    ke::Log::instance()->error("Failed to create instance of: {}", objInfo.obj);
+                    ke::Log::instance()->warn("No entity builder for \"{}\"", objInfo.obj);
                 }
             }
 
