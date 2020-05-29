@@ -18,6 +18,8 @@ namespace ke
     class IMouseInputController
     {
     public:
+        virtual ~IMouseInputController(void) {}
+
         virtual void update(ke::Time) {};
         /// <summary>
         /// 
@@ -46,6 +48,8 @@ namespace ke
     class IKeyboardInputController
     {
     public:
+        virtual ~IKeyboardInputController(void) {}
+
         virtual void update(ke::Time elapsedTime) { KE_UNUSED(elapsedTime); };
         /// <summary>
         /// 

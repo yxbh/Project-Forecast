@@ -14,6 +14,8 @@ namespace ke
         using Uptr = std::unique_ptr<IGraphicsCommandRenderer>;
         using Wptr = std::weak_ptr<IGraphicsCommandRenderer>;
 
+        virtual ~IGraphicsCommandRenderer(void) {}
+
         virtual void queueCommand(const GraphicsCommand & command) = 0;
         virtual void render() = 0;
         virtual void flush() = 0;
