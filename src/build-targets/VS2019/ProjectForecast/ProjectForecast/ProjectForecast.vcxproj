@@ -308,7 +308,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;..\..\..\..\lib\libs-other\imgui-sfml-mix;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>NOMINMAX;RUN_UNIT_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;RUN_UNIT_TESTS;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
     </ClCompile>
