@@ -204,6 +204,10 @@
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <AdditionalDependencies>sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(SolutionDir)..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\bin\*" "$(OutputPath)" /S /Y</Command>
+      <Message>Copy SFML binaries to executable folder.</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-UnitTest|x64'">
     <ClCompile>
@@ -222,6 +226,10 @@
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <AdditionalDependencies>sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(SolutionDir)..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\bin\*" "$(OutputPath)" /S /Y</Command>
+      <Message>Copy SFML binaries to executable folder.</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -285,6 +293,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>sfml-main.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(SolutionDir)..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\bin\*" "$(OutputPath)" /S /Y</Command>
+      <Message>Copy SFML binaries to executable folder.</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-UnitTest|x64'">
     <ClCompile>
@@ -306,6 +318,10 @@
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>sfml-main.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
+    <PostBuildEvent>
+      <Command>XCOPY "$(SolutionDir)..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\bin\*" "$(OutputPath)" /S /Y</Command>
+      <Message>Copy SFML binaries to executable folder.</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\App.hpp" />
