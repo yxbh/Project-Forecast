@@ -13,7 +13,6 @@
 #include "KEngine/Events/LogicLoopFrameEvent.hpp"
 #include "KEngine/Events/GraphicsLoopFrameEvent.hpp"
 #include "KEngine/Events/GraphicsLoopSetupFailureEvent.hpp"
-#include "KEngine/Events/SDL2/SDL2Event.hpp"
 #include "KEngine/Events/SFML/SfmlEvent.hpp"
 #include "KEngine/Events/SFML/SfmlEventTranslator.hpp"
 
@@ -23,9 +22,6 @@
 
 #include "KEngine/CommandLineOptions.hpp"
 
-#ifdef USE_SDL
-#include <SDL.h>
-#endif // USE_SDL
 #ifdef USE_SFML
 #include <SFML/Graphics/RenderWindow.hpp>
 #endif // USE_SFML
@@ -97,16 +93,6 @@ namespace ke
 
         this->onPostInitialisation();
 
-#if defined(USE_SDL)
-        auto sdlInitResult = SDL_Init(SDL_INIT_VIDEO);
-        if (sdlInitResult < 0)
-        {
-            Log::instance()->critical("SDL could not initialize! SDL_Error: {}", SDL_GetError());
-            return sdlInitResult;
-        }
-        ke::Log::instance()->info("SDL initialisation successful.");
-#endif
-
         Log::instance()->info("Creating application main window ...");
         auto configs = this->getCommandLineArguments();
         this->mainWindow = ke::WindowFactory::newWindow(
@@ -118,11 +104,7 @@ namespace ke
         );
         if (nullptr == mainWindow)
         {
-#if defined(USE_SDL)
-            Log::instance()->critical("SDL window could not be created. Error: {}", SDL_GetError());
-#elif defined(USE_SFML)
             Log::instance()->critical("SFML window could not be created.");
-#endif
             return ke::ExitCodes::FAILURE_WINDOW_CREATION;
         }
         this->mainWindow->setThreadCurrent(false);// disable window on this thread so can be made thread current on render thread.
@@ -142,11 +124,6 @@ namespace ke
 
         ke::Log::instance()->info("Destroying main window ...");
         this->mainWindow.reset();
-
-#if defined(USE_SDL)
-        ke::Log::instance()->info("Shutting down SDL ...");
-        SDL_Quit();
-#endif
 
         this->onPostShutdown();
         
@@ -172,18 +149,6 @@ namespace ke
 
             ke::EventManager::dispatchNow(ke::makeEvent<EventLoopFrameEvent>(frameTime));
 
-#if defined(USE_SDL)
-            SDL_Event event;
-            while (SDL_PollEvent(&event) != 0)
-            {
-                ke::EventManager::queue(ke::makeEvent<SDL2Event>(event));
-                if (event.type == SDL_QUIT || event.type == SDL_WINDOWEVENT_CLOSE)
-                {
-                    Log::instance()->info("Normal exit requested.");
-                    ke::EventManager::queue(ke::makeEvent<AppExitRequestedEvent>());
-                }
-            }
-#elif defined(USE_SFML)
             sf::Event event;
             auto sfWindow = static_cast<sf::RenderWindow*>(this->mainWindow->get());
             assert(sfWindow);
@@ -207,7 +172,6 @@ namespace ke
                 }
                 }
             }
-#endif
 
             // set title with stats.
             const auto memO = std::memory_order_relaxed;
@@ -262,14 +226,8 @@ namespace ke
             // 
             if (!this->mainWindow->setThreadCurrent(true))
             {
-#if defined(USE_SDL)
-                Log::instance()->critical("Failure enabling SDL2 window on thread {}. Cannot start graphics loop. SDL2 error: {}",
-                    std::hash<std::thread::id>()(std::this_thread::get_id()),
-                    SDL_GetError());
-#elif defined(USE_SFML)
                 Log::instance()->critical("Failure enabling SFML window on thread {}. Cannot start graphics loop.",
                     std::hash<std::thread::id>()(std::this_thread::get_id()));
-#endif
                 ke::EventManager::dispatchNow(ke::makeEvent<ke::GraphicsLoopSetupFailureEvent>());
                 return;
             }

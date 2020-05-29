@@ -24,10 +24,6 @@ namespace ke
             const ke::String & p_title);
 
     private:
-        static ke::WindowSptr createNewSdl2Window(
-            unsigned p_width, unsigned p_height,
-            int p_posX, int p_posY,
-            const ke::String & p_title);
         static ke::WindowSptr createNewSfmlWindow(
             unsigned p_width, unsigned p_height,
             int p_posX, int p_posY,

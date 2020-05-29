@@ -124,17 +124,11 @@
     <Filter Include="KEngine\Header Files\Entity\Components">
       <UniqueIdentifier>{f083482f-769b-4760-b484-98c62e381a78}</UniqueIdentifier>
     </Filter>
-    <Filter Include="KEngine\Header Files\Events\SDL2">
-      <UniqueIdentifier>{c59a7de7-6519-4516-94d0-628076c5d26f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="KEngine\Header Files\Events\SFML">
       <UniqueIdentifier>{120418f5-3153-4c13-8933-a5e9a0f4fc75}</UniqueIdentifier>
     </Filter>
     <Filter Include="KEngine\Header Files\Graphics\DearImgui">
       <UniqueIdentifier>{ef236a95-bb52-45fb-913f-7e894660d20e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="KEngine\Header Files\Graphics\SDL2">
-      <UniqueIdentifier>{a1cdd7dc-c6df-4ce6-b232-db91a6df3168}</UniqueIdentifier>
     </Filter>
     <Filter Include="KEngine\Header Files\Graphics\SFML">
       <UniqueIdentifier>{30f5c3c0-c0a3-415c-a01b-ed29a2036d11}</UniqueIdentifier>
@@ -156,9 +150,6 @@
     </Filter>
     <Filter Include="KEngine\Source Files\Graphics\DearImgui">
       <UniqueIdentifier>{acbee218-5848-4809-9707-f2693f831995}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="KEngine\Source Files\Graphics\SDL2">
-      <UniqueIdentifier>{bd96019c-aab2-4f9d-bb2f-31a1385c8b33}</UniqueIdentifier>
     </Filter>
     <Filter Include="KEngine\Source Files\Graphics\SFML">
       <UniqueIdentifier>{6cde3830-747a-48f9-b2af-4cba5b234752}</UniqueIdentifier>
@@ -318,9 +309,6 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEventTranslator.hpp">
       <Filter>KEngine\Header Files\Events\SFML</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SDL2\SDL2Event.hpp">
-      <Filter>KEngine\Header Files\Events\SDL2</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\GraphicsCommand.hpp">
       <Filter>KEngine\Header Files\Graphics</Filter>
     </ClInclude>
@@ -362,9 +350,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\SpriteRenderer.hpp">
       <Filter>KEngine\Header Files\Graphics\SFML</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SDL2\SDL2Window.hpp">
-      <Filter>KEngine\Header Files\Graphics\SDL2</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Interfaces\IApp.hpp">
       <Filter>KEngine\Header Files\Interfaces</Filter>
@@ -633,9 +618,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SFML\SfmlWindow.cpp">
       <Filter>KEngine\Source Files\Graphics\SFML</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SDL2\SDL2Window.cpp">
-      <Filter>KEngine\Source Files\Graphics\SDL2</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\KEngine\src\Views\HumanView.cpp">
       <Filter>KEngine\Source Files\Views</Filter>

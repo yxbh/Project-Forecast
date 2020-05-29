@@ -124,32 +124,32 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-UnitTest|Win32'">
-    <IncludePath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IncludePath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-UnitTest|Win32'">
-    <IncludePath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\include\;$(IncludePath)</IncludePath>
+    <IncludePath>$(IncludePath)</IncludePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <IncludePath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\include\;..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\lib\x64\;..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-UnitTest|x64'">
-    <IncludePath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\include\;..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\lib\x64\;..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <IncludePath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\include\;..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\lib\x64\;..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release-UnitTest|x64'">
-    <IncludePath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\include\;..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\..\lib\libs-msvc-2015\SDL2-2.0.5\lib\x64\;..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\lib\libs-msvc-2017\SFML-2.5.1-windows-vc15-64-bit\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -159,14 +159,14 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;..\..\..\..\lib\libs-other\imgui-sfml-mix;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>KE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;KE_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-UnitTest|Win32'">
@@ -177,14 +177,14 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;..\..\..\..\lib\libs-other\imgui-sfml-mix;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>KE_DEBUG;RUN_UNIT_TESTS;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;KE_DEBUG;RUN_UNIT_TESTS;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -195,14 +195,14 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;..\..\..\..\lib\libs-other\imgui-sfml-mix;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>KE_DEBUG;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;KE_DEBUG;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug-UnitTest|x64'">
@@ -213,14 +213,14 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;..\..\..\..\lib\libs-other\imgui-sfml-mix;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>KE_DEBUG;RUN_UNIT_TESTS;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;KE_DEBUG;RUN_UNIT_TESTS;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main-d.lib;sfml-system-d.lib;sfml-window-d.lib;sfml-graphics-d.lib;sfml-audio-d.lib;sfml-network-d.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -233,7 +233,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;..\..\..\..\lib\libs-other\imgui-sfml-mix;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
     </ClCompile>
@@ -241,7 +241,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;sfml-main.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-UnitTest|Win32'">
@@ -254,7 +254,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;..\..\..\..\lib\libs-other\imgui-sfml-mix;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>RUN_UNIT_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;RUN_UNIT_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
     </ClCompile>
@@ -262,7 +262,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;sfml-main.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -275,7 +275,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;..\..\..\..\lib\libs-other\imgui-sfml-mix;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
     </ClCompile>
@@ -283,7 +283,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;sfml-main.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release-UnitTest|x64'">
@@ -296,7 +296,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>..\..\..\..\KEngine\include;..\..\..\..\KEngine\include\KEngine\Log;..\..\..\..\lib\libs-other\imgui-sfml-mix;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
-      <PreprocessorDefinitions>RUN_UNIT_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NOMINMAX;RUN_UNIT_TESTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
     </ClCompile>
@@ -304,7 +304,7 @@
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>false</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <AdditionalDependencies>SDL2.lib;SDL2main.lib;SDL2test.lib;sfml-main.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>sfml-main.lib;sfml-system.lib;sfml-window.lib;sfml-graphics.lib;sfml-audio.lib;opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -358,7 +358,6 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\LogicLoopFrameEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\LoopFrameEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\OtherGraphicsEvents.hpp" />
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SDL2\SDL2Event.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEvent.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Events\SFML\SfmlEventTranslator.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\DearImgui\ImguiRenderer.hpp" />
@@ -369,7 +368,6 @@
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\RenderSystem.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\Scene.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SceneNodes.hpp" />
-    <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SDL2\SDL2Window.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\CircleShapeRenderer.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\LineRenderer.hpp" />
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Graphics\SFML\SfmlHelper.hpp" />
@@ -463,7 +461,6 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\RenderSystem.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\Scene.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SceneNodes.cpp" />
-    <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SDL2\SDL2Window.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SFML\SfmlWindow.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\WindowFactory.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Resources\ImageResource.cpp" />
