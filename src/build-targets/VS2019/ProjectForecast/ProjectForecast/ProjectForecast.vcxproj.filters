@@ -736,8 +736,5 @@
     <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui-SFML.cpp">
       <Filter>libs\dear-ImGUI-SFML</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui_demo.cpp">
-      <Filter>libs\dear-ImGUI-SFML</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
