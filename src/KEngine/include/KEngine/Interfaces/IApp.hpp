@@ -20,9 +20,25 @@ namespace ke::priv
             virtual int exec() = 0;
 
     protected:
+            /// <summary>
+            /// Event function called before engine initialisation begins.
+            /// Override this to do any work before engine initialises.
+            /// </summary>
             virtual void onBeforeInitialisation() {};
+            /// <summary>
+            /// Event function called after engine initialisation.
+            /// Override this to do any work after engine is initialised.
+            /// </summary>
             virtual void onPostInitialisation() {};
+            /// <summary>
+            /// Event function called before engine shutdown begins.
+            /// OVerride this to do any work before engine begins shutdown.
+            /// </summary>
             virtual void onBeforeShutdown() {};
+            /// <summary>
+            /// Event function called after engine shutdown.
+            /// OVerride this to do any work after engine has performed shutdown.
+            /// </summary>
             virtual void onPostShutdown() {};
     };
 
