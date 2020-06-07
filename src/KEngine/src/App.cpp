@@ -8,6 +8,7 @@
 #include "KEngine/Core/EventManager.hpp"
 #include "KEngine/Core/FrameRateCounter.hpp"
 
+#include "KEngine/Events/AppEvents.hpp"
 #include "KEngine/Events/AppExitRequestedEvent.hpp"
 #include "KEngine/Events/EventLoopFrameEvent.hpp"
 #include "KEngine/Events/LogicLoopFrameEvent.hpp"
@@ -29,6 +30,8 @@
 
 #include <atomic>
 #include <cstdio>
+#include <fstream>
+#include <iomanip>
 #include <memory>
 
 namespace
@@ -70,6 +73,7 @@ namespace ke
 
         this->cmdOptions.add_options("KEngine")
             (ke::cli::DummyPath, "Set dummy path.", cxxopts::value<std::string>()->default_value(".///////////////////////////////"))
+            (ke::cli::ConfigPath, "Set the config file path.", cxxopts::value<std::string>()->default_value("./config.json"))
             (ke::cli::MainWindowWidth, "Set width of main window.", cxxopts::value<unsigned>()->default_value("1600"))
             (ke::cli::MainWindowHeight, "Set height of main window.", cxxopts::value<unsigned>()->default_value("900"))
             (ke::cli::MainWindowPosX, "Set X coordinate of main window.", cxxopts::value<int>()->default_value("0"))
@@ -84,6 +88,8 @@ namespace ke
 
     int App::exec()
     {
+        this->reloadConfigsFromDisk();
+
         this->onBeforeInitialisation();
 
         this->initExec();
@@ -94,12 +100,11 @@ namespace ke
         this->onPostInitialisation();
 
         Log::instance()->info("Creating application main window ...");
-        auto configs = this->getCommandLineArguments();
         this->mainWindow = ke::WindowFactory::newWindow(
-            configs[ke::cli::MainWindowWidth].as<unsigned>(),
-            configs[ke::cli::MainWindowHeight].as<unsigned>(),
-            configs[ke::cli::MainWindowPosX].as<int>(),
-            configs[ke::cli::MainWindowPosY].as<int>(),
+            this->getConfigs()["/engine/mainwindow/size/x"_json_pointer].get<unsigned>(),
+            this->getConfigs()["/engine/mainwindow/size/y"_json_pointer].get<unsigned>(),
+            this->getConfigs()["engine"]["mainwindow"]["position"]["x"].get<int>(),
+            this->getConfigs()["engine"]["mainwindow"]["position"]["y"].get<int>(),
             "KEngine"
         );
         if (nullptr == mainWindow)
@@ -126,6 +131,8 @@ namespace ke
         this->mainWindow.reset();
 
         this->onPostShutdown();
+
+        this->flushConfigsToDisk();
         
         return ke::ExitCodes::SUCCESS;
     }
@@ -149,13 +156,13 @@ namespace ke
 
             ke::EventManager::dispatchNow(ke::makeEvent<EventLoopFrameEvent>(frameTime));
 
-            sf::Event event;
+            sf::Event sfEvent;
             auto sfWindow = static_cast<sf::RenderWindow*>(this->mainWindow->get());
             assert(sfWindow);
-            while (sfWindow->pollEvent(event))
+            while (sfWindow->pollEvent(sfEvent))
             {
-                ke::EventManager::enqueue(ke::makeEvent<ke::SfmlEvent>(event));
-                switch (event.type)
+                ke::EventManager::enqueue(ke::makeEvent<ke::SfmlEvent>(sfEvent));
+                switch (sfEvent.type)
                 {
                 case sf::Event::EventType::Closed:
                     Log::instance()->info("Normal exit requested.");
@@ -164,7 +171,7 @@ namespace ke
 
                 default:
                 {
-                    if (auto keEvent = SfmlEventTranslator::translate(event, sfWindow); keEvent)
+                    if (auto keEvent = SfmlEventTranslator::translate(sfEvent, sfWindow); keEvent)
                     {
                         ke::EventManager::enqueue(std::move(keEvent));
                     }
@@ -220,6 +227,8 @@ namespace ke
 
             ke::EventManager::registerListener<ke::AppExitRequestedEvent>(this, &ke::App::handleAppExitRequest);
             ke::EventManager::registerListener<ke::GraphicsLoopSetupFailureEvent>(this, &ke::App::handleGraphicsLoopSetupFailure);
+            ke::EventManager::registerListener<ke::WindowResizedEvent>(this, &ke::App::handleMainWindowResized);
+            ke::EventManager::registerListener<ke::MouseLeftEvent>(this, &ke::App::handleMainWindowMouseExit);
 
             // 
             // Setup window and render system.
@@ -330,6 +339,11 @@ namespace ke
             // we only flag event loop for termination here as some logics may still require the event loop to be alive.
             this->isEventLoopRunning = false;
 
+            ke::EventManager::deregisterListener<ke::MouseLeftEvent>(this, &ke::App::handleMainWindowMouseExit);
+            ke::EventManager::deregisterListener<ke::WindowResizedEvent>(this, &ke::App::handleMainWindowResized);
+            ke::EventManager::deregisterListener<ke::GraphicsLoopSetupFailureEvent>(this, &ke::App::handleGraphicsLoopSetupFailure);
+            ke::EventManager::deregisterListener<ke::AppExitRequestedEvent>(this, &ke::App::handleAppExitRequest);
+
             ke::Log::instance()->info("KEngine logic loop exited.");
 
             //
@@ -386,6 +400,44 @@ namespace ke
         this->isEventLoopRunning = false;
     }
 
+    void App::handleMainWindowResized(ke::EventSptr p_event)
+    {
+        if (ke::WindowResizedEvent::TYPE == p_event->getType())
+        {
+            auto event = std::static_pointer_cast<ke::WindowResizedEvent>(p_event);
+            this->getConfigs()["/engine/mainwindow/size/x"_json_pointer] = event->getNewSize().width;
+            this->getConfigs()["/engine/mainwindow/size/y"_json_pointer] = event->getNewSize().height;
+        }
+    }
+
+    void ke::App::handleMainWindowMouseExit(ke::EventSptr)
+    {
+        this->getConfigs()["/engine/mainwindow/position/x"_json_pointer] = this->mainWindow->getPositionX();
+        this->getConfigs()["/engine/mainwindow/position/y"_json_pointer] = this->mainWindow->getPositionY();
+    }
+
+    void App::reloadConfigsFromDisk()
+    {
+        const auto configFilePath = this->getCommandLineArgValue(ke::cli::ConfigPath).as<std::string>();
+        std::ifstream configFileStream{ configFilePath };
+        configFileStream >> this->configs;
+        const auto& cliArgs = this->getCommandLineArguments();
+        if (cliArgs.count(ke::cli::MainWindowWidth))
+            this->configs["engine"]["mainwindow"]["size"]["x"] = cliArgs[ke::cli::MainWindowWidth].as<unsigned>();
+        if (cliArgs.count(ke::cli::MainWindowHeight))
+            this->configs["engine"]["mainwindow"]["size"]["y"] = cliArgs[ke::cli::MainWindowWidth].as<unsigned>();
+        if (cliArgs.count(ke::cli::MainWindowPosX))
+            this->configs["engine"]["mainwindow"]["position"]["x"] = cliArgs[ke::cli::MainWindowPosX].as<int>();
+        if (cliArgs.count(ke::cli::MainWindowPosY))
+            this->configs["engine"]["mainwindow"]["position"]["y"] = cliArgs[ke::cli::MainWindowPosY].as<int>();
+    }
+
+    void App::flushConfigsToDisk()
+    {
+        const auto configFilePath = this->getCommandLineArgValue(ke::cli::ConfigPath).as<std::string>();
+        std::ofstream configFileStream{ configFilePath };
+        configFileStream << std::setw(4) << this->configs;
+    }
 
     cxxopts::ParseResult & App::getCommandLineArguments(void)
     {

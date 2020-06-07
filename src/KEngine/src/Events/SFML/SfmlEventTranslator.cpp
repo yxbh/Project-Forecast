@@ -78,13 +78,11 @@ namespace ke
 
             case sf::Event::EventType::MouseEntered:
             {
-                ke::Log::instance()->warn("Untranslated SFML event: sf::Event::EventType::MouseEntered");
-                return nullptr;
+                return ke::makeEvent<ke::MouseEnteredEvent>();
             }
             case sf::Event::EventType::MouseLeft:
             {
-                ke::Log::instance()->warn("Untranslated SFML event: sf::Event::EventType::MouseLeft");
-                return nullptr;
+                return ke::makeEvent<ke::MouseLeftEvent>();
             }
             case sf::Event::EventType::MouseWheelMoved:
             {
@@ -140,7 +138,7 @@ namespace ke
 
         switch (event.type)
         {
-        case sf::Event::Resized:
+        case sf::Event::EventType::Resized:
         {
             ke::Dimension2DUInt32 newSize{ event.size.width, event.size.height };
             return ke::makeEvent<ke::WindowResizedEvent>(newSize);
@@ -162,7 +160,11 @@ namespace ke
             return nullptr;
         }
 
-        default: return nullptr;
+        default:
+        {
+            //ke::Log::instance()->warn("Untranslated SFML event: {}", event.type);
+            return nullptr;
+        }
         } // switch sf::Event type.
     }
 

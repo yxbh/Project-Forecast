@@ -69,7 +69,7 @@ namespace pf
     void GMSAssetResourceManagementSystem::loadTexpageAssets(void)
     {
         ke::Log::instance()->info("Scanning GM:S texpage assets...");
-        const auto assetDirPath         = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto assetDirPath = ke::App::instance()->getConfigs()["/pf/exec/assets/path"_json_pointer].get<ke::String>();
         const auto texpageRootDirPath   = fs::path{ assetDirPath } / "texpage";
         if (!fs::exists(texpageRootDirPath))
         {
@@ -116,7 +116,7 @@ namespace pf
     void GMSAssetResourceManagementSystem::loadTextureAssets(void)
     {
         ke::Log::instance()->info("Scanning texture assets...");
-        const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto assetDirPath = ke::App::instance()->getConfigs()["/pf/exec/assets/path"_json_pointer].get<ke::String>();
         const auto texturesRootDirPath = fs::path{ assetDirPath } / "texture";
         if (!fs::exists(texturesRootDirPath))
         {
@@ -184,7 +184,7 @@ namespace pf
     void GMSAssetResourceManagementSystem::loadBgAssets(void)
     {
         ke::Log::instance()->info("Scanning GM:S bg assets...");
-        const auto assetDirPath     = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto assetDirPath = ke::App::instance()->getConfigs()["/pf/exec/assets/path"_json_pointer].get<ke::String>();
         const auto bgRootDirPath    = fs::path{ assetDirPath } / "bg";
         if (!fs::exists(bgRootDirPath))
         {
@@ -217,7 +217,7 @@ namespace pf
     void GMSAssetResourceManagementSystem::loadCodeAssets(void)
     {
         ke::Log::instance()->info("Scanning GM:S bg assets...");
-        const auto assetDirPath = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto assetDirPath = ke::App::instance()->getConfigs()["/pf/exec/assets/path"_json_pointer].get<ke::String>();
         const auto codeRootDirPath = fs::path{ assetDirPath } / "code";
         if (!fs::exists(codeRootDirPath))
         {
@@ -250,7 +250,7 @@ namespace pf
     void GMSAssetResourceManagementSystem::loadSpriteAssets(void)
     {
         ke::Log::instance()->info("Scanning GM:S sprite assets...");
-        const auto assetDirPath         = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto assetDirPath = ke::App::instance()->getConfigs()["/pf/exec/assets/path"_json_pointer].get<ke::String>();
         const auto spriteRootDirPath    = fs::path{ assetDirPath } / "sprite";
         if (!fs::exists(spriteRootDirPath))
         {
@@ -297,7 +297,7 @@ namespace pf
     void GMSAssetResourceManagementSystem::loadRoomAssets(void)
     {
         ke::Log::instance()->info("Scanning GM:S room assets...");
-        const auto assetDirPath         = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto assetDirPath = ke::App::instance()->getConfigs()["/pf/exec/assets/path"_json_pointer].get<ke::String>();
         const auto gmsRoomsRootDirPath  = fs::path{ assetDirPath } / "room";
         if (!fs::exists(gmsRoomsRootDirPath))
         {
@@ -433,7 +433,7 @@ namespace pf
     void GMSAssetResourceManagementSystem::loadObjectAssets(void)
     {
         ke::Log::instance()->info("Scanning GM:S object assets...");
-        const auto assetDirPath         = ke::App::getCommandLineArgValue(pf::cli::ExecAssetsPath).as<ke::String>();
+        const auto assetDirPath = ke::App::instance()->getConfigs()["/pf/exec/assets/path"_json_pointer].get<ke::String>();
         const auto gmsObjectRootDirPath = fs::path{ assetDirPath } / "object";
         if (!fs::exists(gmsObjectRootDirPath))
         {

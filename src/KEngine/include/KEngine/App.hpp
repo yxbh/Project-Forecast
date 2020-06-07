@@ -6,6 +6,7 @@
 #include "KEngine/Core/ResourceManager.hpp"
 #include "KEngine/Graphics/RenderSystem.hpp"
 #include "KEngine/BaseAppLogic.hpp"
+#include "Common/Json.hpp"
 
 #pragma warning(push)
 #pragma warning(disable:26444)  // Avoid unnamed objects with custom construction and destruction (es.84).
@@ -46,6 +47,11 @@ namespace ke
 
         inline ke::ResourceManager * getResourceManager() const { return this->resourceManager.get(); }
 
+        inline const ke::Json& getConfigs() const { return this->configs; }
+        inline ke::Json& getConfigs() { return this->configs; }
+        virtual void reloadConfigsFromDisk();
+        virtual void flushConfigsToDisk();
+
         inline static ke::App * instance() { return App::sGlobalAppInstance; }
 
         static cxxopts::ParseResult & getCommandLineArguments(void);
@@ -54,6 +60,8 @@ namespace ke
 
     protected:
         static ke::App * sGlobalAppInstance;
+
+        ke::Json configs;
 
         // CLI stuff.
         cxxopts::Options  cmdOptions;
@@ -76,6 +84,8 @@ namespace ke
 
         void handleAppExitRequest(ke::EventSptr);
         void handleGraphicsLoopSetupFailure(ke::EventSptr);
+        void handleMainWindowResized(ke::EventSptr);
+        void handleMainWindowMouseExit(ke::EventSptr);
 
         ke::AppLogicUptr appLogic;
         ke::RenderSystemUptr renderSystem;

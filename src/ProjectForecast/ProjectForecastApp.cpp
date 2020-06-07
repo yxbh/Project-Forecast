@@ -24,9 +24,20 @@ namespace pf
 {
     ProjectForecastApp::ProjectForecastApp(const int p_argc, char ** const p_argv)
         : ke::App(p_argc, p_argv)
+    {}
+
+    void ProjectForecastApp::reloadConfigsFromDisk()
     {
-        this->cmdOptions.add_options("ProjectForecast")
-            (pf::cli::ExecAssetsPath, "Set asset folder path.", cxxopts::value<ke::String>()->default_value("./assets/"));
+        this->ke::App::reloadConfigsFromDisk();
+
+        auto asset_path_json_ptr = "/pf/exec/assets/path"_json_pointer;
+        if (!this->getConfigs().contains(asset_path_json_ptr))
+        {
+            auto default_val = "./assets/";
+            auto path = "/pf/exec/assets/path";
+            ke::Log::instance()->warn("Config file missing \"{}\". Setting to default value \"{}\"", path, default_val);
+            this->getConfigs()[asset_path_json_ptr] = default_val;
+        }
     }
 
     void ProjectForecastApp::createLogicAndViews()

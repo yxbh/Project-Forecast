@@ -13,6 +13,9 @@ namespace pf
     {
     public:
         ProjectForecastApp(const int p_argc, char ** const p_argv);
+
+        virtual void reloadConfigsFromDisk() override;
+
     protected:
         virtual void createLogicAndViews() final;
     };

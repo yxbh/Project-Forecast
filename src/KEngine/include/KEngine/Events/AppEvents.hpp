@@ -160,6 +160,34 @@ namespace ke
     };
 
 
+    class MouseEnteredEvent : public IEvent
+    {
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(MouseEnteredEvent, 0xC854B15A)
+
+    public:
+        MouseEnteredEvent() {}
+
+        virtual ke::EventSptr makeCopy() const final
+        {
+            return ke::makeEvent<MouseEnteredEvent>();
+        }
+    };
+
+
+    class MouseLeftEvent : public IEvent
+    {
+        KE_DEFINE_EVENT_COMMON_PROPERTIES(MouseLeftEvent, 0x839746FF)
+
+    public:
+        MouseLeftEvent() {}
+
+        virtual ke::EventSptr makeCopy() const final
+        {
+            return ke::makeEvent<MouseLeftEvent>();
+        }
+    };
+
+
     class WindowCreatedEvent : public ke::IEvent
     {
         KE_DEFINE_EVENT_COMMON_PROPERTIES(WindowCreatedEvent, 0xD48FCEDF)
