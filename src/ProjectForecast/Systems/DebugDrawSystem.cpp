@@ -93,7 +93,11 @@ R"(
                 roomObject.rotation = 0.0f;
                 roomObject.colour = ke::Color::WHITE;
                 auto entity = ke::App::instance()->getLogic()->getEntityFactory()->createNew("oWaterfall", roomObject);
-                assert(entity);
+                //assert(entity);
+                if (!entity)
+                {
+                    ke::Log::instance()->error("Failed to create debug object.");
+                }
             }
             
 

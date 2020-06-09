@@ -9,6 +9,7 @@
 #include "KEngine/Core/EventManager.hpp"
 #include "KEngine/Events/EntityTransformControlCommandEvents.hpp"
 #include "KEngine/Events/AppEvents.hpp"
+#include "KEngine/Log/Log.hpp"
 
 
 namespace pf
@@ -17,10 +18,12 @@ namespace pf
     void MouseInputController::update(ke::Time elapsedTime)
     {
         KE_UNUSED(elapsedTime);
+        if (this->isAppWantCaptureMouse()) return;
     }
 
     bool MouseInputController::onButtonPressed(const ke::Mouse::ButtonInfo & buttonInfo)
     {
+        if (this->isAppWantCaptureMouse()) return false;
         switch (buttonInfo.button)
         {
         case ke::Mouse::Button::Left:
@@ -33,11 +36,13 @@ namespace pf
     bool MouseInputController::onButtonReleased(const ke::Mouse::ButtonInfo & buttonInfo)
     {
         KE_UNUSED(buttonInfo);
+        if (this->isAppWantCaptureMouse()) return false;
         return false;
     }
 
     bool MouseInputController::onWheelScrolled(const ke::Mouse::ScrollWheelInfo & scrollWheelInfo)
     {
+        if (this->isAppWantCaptureMouse()) return false;
         if (scrollWheelInfo.scrollWhell == ke::Mouse::ScrollWheel::Vertical)
         {
             ke::EventManager::enqueue(ke::makeEvent<ke::CameraViewZoomDeltaRequestEvent>(scrollWheelInfo.delta));
@@ -49,6 +54,7 @@ namespace pf
     bool MouseInputController::onPointerMoved(const ke::Mouse::MouseInfo & mouseInfo)
     {
         KE_UNUSED(mouseInfo);
+        if (this->isAppWantCaptureMouse()) return false;
         return false;
     }
 
@@ -69,6 +75,7 @@ namespace pf
     void KeyboardInputController::update(ke::Time elapsedTime)
     {
         KE_UNUSED(elapsedTime);
+        if (this->isAppWantCaptureKeyboard()) return;
 
         ke::Transform2D deltaTransform;
         bool moveRequested = false;
@@ -107,6 +114,7 @@ namespace pf
     bool KeyboardInputController::onKeyPressed(const ke::Keyboard::KeyInfo & keyInfo)
     {
         KE_UNUSED(keyInfo);
+        if (this->isAppWantCaptureKeyboard()) return false;
         return false;
     }
 
@@ -116,8 +124,12 @@ namespace pf
         {
         case ke::Keyboard::Tilde:
         {
-            ke::EventManager::enqueue(ke::makeEvent<ke::RequestToggleAppConsoleDisplayEvent>());
-            return true;
+            if (!this->isAppWantCaptureTextInput())
+            {
+                ke::EventManager::enqueue(ke::makeEvent<ke::RequestToggleAppConsoleDisplayEvent>());
+                return true;
+            }
+            break;
         }
         case ke::Keyboard::Add:
         {

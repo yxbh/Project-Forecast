@@ -160,6 +160,9 @@
     <Filter Include="KEngine\Header Files\UnitTest">
       <UniqueIdentifier>{fbb3cf04-b08a-4131-a7f2-c0aa5cb0288b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="KEngine\Source Files\Interface">
+      <UniqueIdentifier>{86003cd9-0b19-4d08-9a17-b016d49c0691}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\KEngine\include\KEngine\Common\Color.hpp">
@@ -735,6 +738,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\lib\libs-other\imgui-sfml-mix\imgui-SFML.cpp">
       <Filter>libs\dear-ImGUI-SFML</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\KEngine\src\Interface\IInputController.cpp">
+      <Filter>KEngine\Source Files\Interface</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

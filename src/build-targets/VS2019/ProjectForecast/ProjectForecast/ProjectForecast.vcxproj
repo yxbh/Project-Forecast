@@ -479,6 +479,7 @@
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SceneNodes.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\SFML\SfmlWindow.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Graphics\WindowFactory.cpp" />
+    <ClCompile Include="..\..\..\..\KEngine\src\Interface\IInputController.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Resources\ImageResource.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Resources\Loaders\ImageResourceLoader.cpp" />
     <ClCompile Include="..\..\..\..\KEngine\src\Resources\ResourceManifestResource.cpp" />

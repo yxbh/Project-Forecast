@@ -17,7 +17,7 @@ namespace ke
 
         virtual void attachEntity(ke::EntityId entityId) override;
 
-        virtual ke::Scene * getScene() const override { return this->scene.get(); }
+        virtual ke::Scene* getScene() const override { return this->scene.get(); }
 
         virtual bool isHumanView() const final { return true; };
 

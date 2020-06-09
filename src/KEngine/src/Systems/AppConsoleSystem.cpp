@@ -8,6 +8,7 @@
 #include "KEngine/Entity/Components/EntityRenderableComponents.hpp"
 #include "KEngine/Events/AppConsoleEvents.hpp"
 #include "KEngine/Core/EventManager.hpp"
+#include "KEngine/Core/Keyboard.hpp"
 #include "KEngine/App.hpp"
 #include "KEngine/Log/Log.hpp"
 #include "KEngine/Utility/StringHelper.hpp"
@@ -143,8 +144,10 @@ namespace ke::priv
     void AppConsoleSystem::drawConsole(void)
     {
         ImGui::SetNextWindowSize(ImVec2(540, 600), ImGuiCond_FirstUseEver);
+
         if (!ImGui::Begin("KENGINE CONSOLE", &this->isConsoleOpen))
         {
+            ke::Log::instance()->debug("!ImGui::Begin(\"KENGINE CONSOLE\", &this->isConsoleOpen)");
             ImGui::End();
             return;
         }

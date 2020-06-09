@@ -28,7 +28,7 @@ namespace pf
 
         auto resourceManager = ke::App::instance()->getResourceManager();
         const auto objectResource = std::static_pointer_cast<pf::GMSObjectResource>(resourceManager->getResource(OBJECT_RESOURCE_NAME));
-        assert(objectResource);
+        //assert(objectResource);
         if (objectResource)
         {
             auto entityManager = ke::App::instance()->getLogic()->getEntityManager();

@@ -14,6 +14,7 @@
 #include <vector>
 #include <cassert>
 
+
 namespace ke
 {
 
@@ -26,7 +27,7 @@ namespace ke
         {
             assert(p_renderTarget);
             this->renderTarget = p_renderTarget;
-            ImGui::SFML::Init(*this->renderTarget);
+            ImGui::SFML::Init(*this->renderTarget);  // this calls `ImGui::CreateContext()` which we may be calling elsewhere but it should be fine.
         }
 #endif
 

@@ -19,9 +19,9 @@ namespace ke
         /// Translate the given sf::Event to a matching KEngine event if there is one.
         /// Otherwise nullptr is returned.
         /// </summary>
-        /// <param name="event"></param>
+        /// <param name="sfEvent">SFML event object.</param>
         /// <returns>nullptr if there is no matching KEngine.</returns>
-        static ke::EventSptr translate(const sf::Event & event, sf::RenderWindow * const renderWindow);
+        static ke::EventSptr translate(const sf::Event & sfEvent, sf::RenderWindow * const renderWindow);
 
         SfmlEventTranslator() = delete;
     };

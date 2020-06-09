@@ -41,12 +41,18 @@ namespace ke::priv
         ke::EventManager::registerListener<ke::WindowDestroyedEvent>(this, &ImguiSystem::handleEvent);
         ke::EventManager::registerListener<ke::SfmlEvent>(this, &ImguiSystem::processSfEvent);
         ke::EventManager::registerListener<ke::GraphicsLoopFrameEvent>(this, &ImguiSystem::updateImgui);
+        
+        ImGui::CreateContext();  // create the ImGui context here so we can start manipulating it.
+
+        ImGuiIO& io = ImGui::GetIO();
+        io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // enable keyboard navigation.
+
         return true;
     }
 
     void ImguiSystem::shutdown(void)
     {
-        ImGui::SFML::Shutdown();
+        ImGui::SFML::Shutdown();  // this internally should call `ImGui::DestroyContext()`.
 
         ke::EventManager::deregisterListener<ke::WindowCreatedEvent>(this, &ImguiSystem::handleEvent);
         ke::EventManager::deregisterListener<ke::WindowDestroyedEvent>(this, &ImguiSystem::handleEvent);

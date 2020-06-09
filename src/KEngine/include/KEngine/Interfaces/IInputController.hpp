@@ -20,7 +20,7 @@ namespace ke
     public:
         virtual ~IMouseInputController(void) {}
 
-        virtual void update(ke::Time) {};
+        virtual void update(ke::Time);
         /// <summary>
         /// 
         /// </summary>
@@ -35,6 +35,13 @@ namespace ke
         virtual bool onButtonReleased(const ke::Mouse::ButtonInfo & buttonInfo) = 0;
         virtual bool onWheelScrolled(const ke::Mouse::ScrollWheelInfo & scrollWheelInfo) = 0;
         virtual bool onPointerMoved(const ke::Mouse::MouseInfo & mouseInfo) = 0;
+
+        /// <summary>
+        /// Indicates if the Engine GUI system want to capture mouse input.
+        /// You probably shouldn't use any mouse input when this function is returning true.
+        /// </summary>
+        /// <returns>true if the engine wants to capture mouse input. false otherwise.</returns>
+        virtual bool isAppWantCaptureMouse() const;
     };
 
     using MouseInputControllerUptr = std::unique_ptr<IMouseInputController>;
@@ -50,7 +57,7 @@ namespace ke
     public:
         virtual ~IKeyboardInputController(void) {}
 
-        virtual void update(ke::Time elapsedTime) { KE_UNUSED(elapsedTime); };
+        virtual void update(ke::Time);
         /// <summary>
         /// 
         /// </summary>
@@ -61,6 +68,19 @@ namespace ke
         /// </summary>
         /// <returns>true if key release was handled.</returns>
         virtual bool onKeyReleased(const ke::Keyboard::KeyInfo & keyInfo) = 0;
+
+        /// <summary>
+        /// Indicates if the Engine GUI system want to capture keyboard input.
+        /// You probably shouldn't use any keyboard input when this function is returning true.
+        /// </summary>
+        /// <returns>true if the engine wants to capture keyboard input. false otherwise.</returns>
+        virtual bool isAppWantCaptureKeyboard() const;
+        /// <summary>
+        /// Indicates if the Engine GUI system want to capture keyboard text input.
+        /// You probably shouldn ignore text input events when this function is returning true.
+        /// </summary>
+        /// <returns>true if the engine wants to capture text input. false otherwise.</returns>
+        virtual bool isAppWantCaptureTextInput() const;
     };
 
     using KeyboardInputControllerUptr = std::unique_ptr<IKeyboardInputController>;
@@ -74,7 +94,7 @@ namespace ke
     class IGamepadInputController
     {
     public:
-        virtual void update(ke::Time) {};
+        virtual void update(ke::Time);
     };
 
     using GamepadInputControllerUptr = std::unique_ptr<IGamepadInputController>;
