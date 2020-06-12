@@ -8,6 +8,8 @@
 
 namespace pf
 {
+    //static auto logger = ke::Log::createDefaultLogger("pf::EntityFactorySystem");
+
     bool EntityFactorySystem::initialise(void)
     {
         auto factory = ke::App::instance()->getLogic()->getEntityFactory();

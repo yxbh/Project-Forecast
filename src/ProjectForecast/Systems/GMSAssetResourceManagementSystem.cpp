@@ -42,10 +42,11 @@ namespace
 
 namespace pf
 {
+    static auto logger = ke::Log::createDefaultLogger("pf::GMSAssetResourceManagementSystem");
 
     bool GMSAssetResourceManagementSystem::initialise()
     {
-        ke::Log::instance()->info("Scanning assets...");
+        logger->info("Scanning assets...");
         this->loadTexpageAssets();
         this->loadTextureAssets();
         this->loadBgAssets();
@@ -53,7 +54,7 @@ namespace pf
         this->loadSpriteAssets();
         this->loadObjectAssets();
         this->loadRoomAssets();
-        ke::Log::instance()->info("Scanning assets... DONE");
+        logger->info("Scanning assets... DONE");
         return true;
     }
 
@@ -68,12 +69,12 @@ namespace pf
 
     void GMSAssetResourceManagementSystem::loadTexpageAssets(void)
     {
-        ke::Log::instance()->info("Scanning GM:S texpage assets...");
+        logger->info("Scanning GM:S texpage assets...");
         const auto assetDirPath = ke::App::instance()->getConfigs()["/pf/exec/assets/path"_json_pointer].get<ke::String>();
         const auto texpageRootDirPath   = fs::path{ assetDirPath } / "texpage";
         if (!fs::exists(texpageRootDirPath))
         {
-            ke::Log::instance()->error("Cannot find asset path: {}", texpageRootDirPath.string());
+            logger->error("Cannot find asset path: {}", texpageRootDirPath.string());
             return;
         }
         auto texpageMapResource         = std::make_shared<pf::TexpageMapResource>("texpages", __FILE__);
@@ -84,7 +85,7 @@ namespace pf
         {
             if (!path.has_extension() || path.extension() != ".json") return;
 
-            ke::Log::instance()->debug("Loading GM:S texpage asset: {}", path.string());
+            logger->debug("Loading GM:S texpage asset: {}", path.string());
 
             std::ifstream texpageFileStream{ path };
             ke::json texpageJson;
@@ -115,12 +116,12 @@ namespace pf
 
     void GMSAssetResourceManagementSystem::loadTextureAssets(void)
     {
-        ke::Log::instance()->info("Scanning texture assets...");
+        logger->info("Scanning texture assets...");
         const auto assetDirPath = ke::App::instance()->getConfigs()["/pf/exec/assets/path"_json_pointer].get<ke::String>();
         const auto texturesRootDirPath = fs::path{ assetDirPath } / "texture";
         if (!fs::exists(texturesRootDirPath))
         {
-            ke::Log::instance()->error("Cannot find asset path: {}", texturesRootDirPath.string());
+            logger->error("Cannot find asset path: {}", texturesRootDirPath.string());
             return;
         }
         sf::Image tempImage;
@@ -135,7 +136,7 @@ namespace pf
                     // This loads the unpacked textures.
 
                     //const auto & texPath = textureFilePaths[0];
-                    //ke::Log::instance()->debug("Loading texture asset: {}", texPath.string());
+                    //logger->debug("Loading texture asset: {}", texPath.string());
 
                     //auto textureResource = std::make_shared<TextureInfoResource>();
                     //textureResource->setName(RSRC_PREFIX + texPath.stem().string());
@@ -161,7 +162,7 @@ namespace pf
             {
                 // This loads the GM:S packed texture sheets.
 
-                ke::Log::instance()->debug("Loading texture asset: {}", path.string());
+                logger->debug("Loading texture asset: {}", path.string());
 
                 auto textureResource = std::make_shared<TextureInfoResource>();
                 textureResource->setName(RSRC_PREFIX + path.stem().string());
@@ -183,12 +184,12 @@ namespace pf
 
     void GMSAssetResourceManagementSystem::loadBgAssets(void)
     {
-        ke::Log::instance()->info("Scanning GM:S bg assets...");
+        logger->info("Scanning GM:S bg assets...");
         const auto assetDirPath = ke::App::instance()->getConfigs()["/pf/exec/assets/path"_json_pointer].get<ke::String>();
         const auto bgRootDirPath    = fs::path{ assetDirPath } / "bg";
         if (!fs::exists(bgRootDirPath))
         {
-            ke::Log::instance()->error("Cannot find asset path: {}", bgRootDirPath.string());
+            logger->error("Cannot find asset path: {}", bgRootDirPath.string());
             return;
         }
         const auto bgPaths          = ke::FileSystemHelper::getChildPaths(bgRootDirPath);
@@ -199,7 +200,7 @@ namespace pf
         {
             if (!path.has_extension() || path.extension() != ".json") return;
 
-            ke::Log::instance()->debug("Loading GM:S bg asset: {}", path.string());
+            logger->debug("Loading GM:S bg asset: {}", path.string());
             std::ifstream bgFileStream{ path };
             ke::json bgJson;
             bgFileStream >> bgJson;
@@ -216,12 +217,12 @@ namespace pf
 
     void GMSAssetResourceManagementSystem::loadCodeAssets(void)
     {
-        ke::Log::instance()->info("Scanning GM:S bg assets...");
+        logger->info("Scanning GM:S bg assets...");
         const auto assetDirPath = ke::App::instance()->getConfigs()["/pf/exec/assets/path"_json_pointer].get<ke::String>();
         const auto codeRootDirPath = fs::path{ assetDirPath } / "code";
         if (!fs::exists(codeRootDirPath))
         {
-            ke::Log::instance()->error("Cannot find asset path: {}", codeRootDirPath.string());
+            logger->error("Cannot find asset path: {}", codeRootDirPath.string());
             return;
         }
         const auto codePaths = ke::FileSystemHelper::getChildPaths(codeRootDirPath);
@@ -230,7 +231,7 @@ namespace pf
         {
             if (!path.has_extension() || path.extension() != ".lsp") return;
 
-            ke::Log::instance()->debug("Loading GM:S code asset: {}", path.string());
+            logger->debug("Loading GM:S code asset: {}", path.string());
             std::ifstream codeFileStream{ path };
             ke::String codeContent;
 
@@ -249,12 +250,12 @@ namespace pf
 
     void GMSAssetResourceManagementSystem::loadSpriteAssets(void)
     {
-        ke::Log::instance()->info("Scanning GM:S sprite assets...");
+        logger->info("Scanning GM:S sprite assets...");
         const auto assetDirPath = ke::App::instance()->getConfigs()["/pf/exec/assets/path"_json_pointer].get<ke::String>();
         const auto spriteRootDirPath    = fs::path{ assetDirPath } / "sprite";
         if (!fs::exists(spriteRootDirPath))
         {
-            ke::Log::instance()->error("Cannot find asset path: {}", spriteRootDirPath.string());
+            logger->error("Cannot find asset path: {}", spriteRootDirPath.string());
             return;
         }
         const auto spritePaths          = ke::FileSystemHelper::getChildPaths(spriteRootDirPath);
@@ -263,7 +264,7 @@ namespace pf
         {
             if (!path.has_extension() || path.extension() != ".json") return;
 
-            ke::Log::instance()->debug("Loading GM:S sprite asset: {}", path.string());
+            logger->debug("Loading GM:S sprite asset: {}", path.string());
             std::ifstream spriteFileStream{ path };
             ke::json spriteJson;
             spriteFileStream >> spriteJson;
@@ -296,12 +297,12 @@ namespace pf
 
     void GMSAssetResourceManagementSystem::loadRoomAssets(void)
     {
-        ke::Log::instance()->info("Scanning GM:S room assets...");
+        logger->info("Scanning GM:S room assets...");
         const auto assetDirPath = ke::App::instance()->getConfigs()["/pf/exec/assets/path"_json_pointer].get<ke::String>();
         const auto gmsRoomsRootDirPath  = fs::path{ assetDirPath } / "room";
         if (!fs::exists(gmsRoomsRootDirPath))
         {
-            ke::Log::instance()->error("Cannot find asset path: {}", gmsRoomsRootDirPath.string());
+            logger->error("Cannot find asset path: {}", gmsRoomsRootDirPath.string());
             return;
         }
         const auto gmsRoomPaths         = ke::FileSystemHelper::getFilePaths(gmsRoomsRootDirPath);
@@ -309,7 +310,7 @@ namespace pf
         {
             if (!gmsRoomPath.has_extension() || gmsRoomPath.extension() != ".json") return;
 
-            ke::Log::instance()->debug("Loading GM:S room asset: {}", gmsRoomPath.string());
+            logger->debug("Loading GM:S room asset: {}", gmsRoomPath.string());
 
             auto roomResource = std::make_shared<GMSRoomResource>();
             roomResource->setName(gmsRoomPath.stem().string());
@@ -432,12 +433,12 @@ namespace pf
 
     void GMSAssetResourceManagementSystem::loadObjectAssets(void)
     {
-        ke::Log::instance()->info("Scanning GM:S object assets...");
+        logger->info("Scanning GM:S object assets...");
         const auto assetDirPath = ke::App::instance()->getConfigs()["/pf/exec/assets/path"_json_pointer].get<ke::String>();
         const auto gmsObjectRootDirPath = fs::path{ assetDirPath } / "object";
         if (!fs::exists(gmsObjectRootDirPath))
         {
-            ke::Log::instance()->error("Cannot find asset path: {}", gmsObjectRootDirPath.string());
+            logger->error("Cannot find asset path: {}", gmsObjectRootDirPath.string());
             return;
         }
         const auto gmsObjectPaths       = ke::FileSystemHelper::getFilePaths(gmsObjectRootDirPath);
@@ -446,7 +447,7 @@ namespace pf
         {
             if (!gmsObjectPath.has_extension() || gmsObjectPath.extension() != ".json") return;
 
-            ke::Log::instance()->debug("Loading GM:S object asset: {}", gmsObjectPath.string());
+            logger->debug("Loading GM:S object asset: {}", gmsObjectPath.string());
 
             std::ifstream objectFileStream{ gmsObjectPath };
             ke::json objectJson;

@@ -24,6 +24,7 @@ namespace
 
 namespace pf
 {
+    static auto logger = ke::Log::createDefaultLogger("pf::GMSRoomManagementSystem");
 
     bool GMSRoomManagementSystem::initialise()
     {
@@ -63,13 +64,13 @@ namespace pf
         auto request = std::dynamic_pointer_cast<pf::GMSRoomLoadRequestEvent>(event);
         if (nullptr == request)
         {
-            ke::Log::instance()->error("GMSRoomManagementSystem received unexpected event: {}", event->getName());
+            logger->error("GMSRoomManagementSystem received unexpected event: {}", event->getName());
             return;
         }
 
         if (this->isLoadingRoom)
         {
-            ke::Log::instance()->warn("GMSRoomManagementSystem is alreadying loading a room. Ignoring new load request.");
+            logger->warn("GMSRoomManagementSystem is alreadying loading a room. Ignoring new load request.");
             return;
         }
         this->isLoadingRoom = true;
@@ -78,7 +79,7 @@ namespace pf
         this->unloadCurrentEntities();
         if (this->currentRoomResource)
         {
-            ke::Log::instance()->info("Unloading GM:S room: {} ...", this->currentRoomResource->getName());
+            logger->info("Unloading GM:S room: {} ...", this->currentRoomResource->getName());
             auto entityManager = ke::App::instance()->getLogic()->getEntityManager();
             for (auto entity : this->currentRoomEntities)
             {
@@ -102,7 +103,7 @@ namespace pf
         this->currentRoomResource = std::dynamic_pointer_cast<GMSRoomResource>(resourceManager->getResource(request->getRoomName()));
         if (this->currentRoomResource != nullptr)
         {
-            ke::Log::instance()->info("Loading GM:S room: {} ...", request->getRoomName());
+            logger->info("Loading GM:S room: {} ...", request->getRoomName());
 
             auto textureLoadRequestEvent = ke::makeEvent<ke::TexturesBulkLoadViaFilesRequestEvent>();
             const auto texpagesResource = std::dynamic_pointer_cast<pf::TexpageMapResource>(resourceManager->getResource("texpages"));
@@ -212,7 +213,7 @@ namespace pf
                 }
                 else
                 {
-                    ke::Log::instance()->error("Failed to create instance of: {}", objInfo.obj);
+                    logger->error("Failed to create instance of: {}", objInfo.obj);
                 }
             }
 
@@ -225,11 +226,11 @@ namespace pf
             }
             ke::EventManager::enqueue(textureLoadRequestEvent);
 
-            ke::Log::instance()->info("Loading GM:S room: {} ... DONE", request->getRoomName());
+            logger->info("Loading GM:S room: {} ... DONE", request->getRoomName());
         }
         else
         {
-            ke::Log::instance()->error("Cannot load GM:S room: {}. Room resource is missing.", request->getRoomName());
+            logger->error("Cannot load GM:S room: {}. Room resource is missing.", request->getRoomName());
         }
     }
 

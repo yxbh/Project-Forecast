@@ -65,6 +65,8 @@ namespace ke
 {
     ke::App * App::sGlobalAppInstance = nullptr;
 
+    auto logger = ke::Log::createDefaultLogger("App");
+
     App::App(const int p_argc, char ** const p_argv)
         : cmdOptions("KEngine", "A 2D game engine."), argc(p_argc), argv(p_argv)
     {
@@ -99,7 +101,7 @@ namespace ke
 
         this->onPostInitialisation();
 
-        Log::instance()->info("Creating application main window ...");
+        logger->info("Creating application main window ...");
         this->mainWindow = ke::WindowFactory::newWindow(
             this->getConfigs()["/engine/mainwindow/size/x"_json_pointer].get<unsigned>(),
             this->getConfigs()["/engine/mainwindow/size/y"_json_pointer].get<unsigned>(),
@@ -109,12 +111,12 @@ namespace ke
         );
         if (nullptr == mainWindow)
         {
-            Log::instance()->critical("SFML window could not be created.");
+            logger->critical("SFML window could not be created.");
             return ke::ExitCodes::FAILURE_WINDOW_CREATION;
         }
         this->mainWindow->setThreadCurrent(false);// disable window on this thread so can be made thread current on render thread.
         this->mainWindow->requestFocus();
-        Log::instance()->info("Created window(w:{}, h:{}) at ({}, {})",
+        logger->info("Created window(w:{}, h:{}) at ({}, {})",
             this->mainWindow->getWidth(), this->mainWindow->getHeight(),
             this->mainWindow->getPositionX(), this->mainWindow->getPositionY());
 
@@ -127,7 +129,7 @@ namespace ke
 
         this->onBeforeShutdown();
 
-        ke::Log::instance()->info("Destroying main window ...");
+        logger->info("Destroying main window ...");
         this->mainWindow.reset();
 
         this->onPostShutdown();
@@ -139,7 +141,7 @@ namespace ke
 
     void App::enterEventLoop()
     {
-        ke::Log::instance()->info("Entering KEngine event loop ...");
+        logger->info("Entering KEngine event loop ...");
 
         this->isEventLoopRunning = true;
         ke::StopWatch stopwatch;
@@ -165,7 +167,7 @@ namespace ke
                 switch (sfEvent.type)
                 {
                 case sf::Event::EventType::Closed:
-                    Log::instance()->info("Normal exit requested.");
+                    logger->info("Normal exit requested.");
                     ke::EventManager::enqueue(ke::makeEvent<AppExitRequestedEvent>());
                     break;
 
@@ -196,24 +198,24 @@ namespace ke
 
             if (heartBeat)
             {
-                ke::Log::instance()->info("Event loop heart beat");
+                logger->info("Event loop heart beat");
             }
 
             std::this_thread::sleep_for(EVENT_THREAD_SLEEP_DURATION);
         }
 
-        ke::Log::instance()->info("KEngine event loop exited.");
+        logger->info("KEngine event loop exited.");
 
         // join logic loop thread.
         if (this->logicLoopThread.joinable())
         {
-            ke::Log::instance()->info("KEngine logic loop thread joining ...");
+            logger->info("KEngine logic loop thread joining ...");
             this->logicLoopThread.join();
-            ke::Log::instance()->info("KEngine logic loop thread joined");
+            logger->info("KEngine logic loop thread joined");
         }
         else
         {
-            ke::Log::instance()->warn("KEngine logic loop thread not joinable.");
+            logger->warn("KEngine logic loop thread not joinable.");
         }
 
         this->mainWindow->setThreadCurrent(true);
@@ -235,7 +237,7 @@ namespace ke
             // 
             if (!this->mainWindow->setThreadCurrent(true))
             {
-                Log::instance()->critical("Failure enabling SFML window on thread {}. Cannot start graphics loop.",
+                logger->critical("Failure enabling SFML window on thread {}. Cannot start graphics loop.",
                     std::hash<std::thread::id>()(std::this_thread::get_id()));
                 ke::EventManager::dispatchNow(ke::makeEvent<ke::GraphicsLoopSetupFailureEvent>());
                 return;
@@ -243,7 +245,7 @@ namespace ke
 
             if (!this->renderSystem->initialise())
             {
-                Log::instance()->critical("Failuring initialising render system on thread {}.",
+                logger->critical("Failuring initialising render system on thread {}.",
                     std::hash<std::thread::id>()(std::this_thread::get_id()));
                 return;
             }
@@ -251,7 +253,7 @@ namespace ke
             mainWindow->display();
 
 
-            ke::Log::instance()->info("Entering KEngine logic loop ...");
+            logger->info("Entering KEngine logic loop ...");
 
             ke::StopWatch stopwatch;
             ke::Time cumulativeLoopTime;
@@ -326,7 +328,7 @@ namespace ke
                 //
                 if (heartBeat)
                 {
-                    ke::Log::instance()->info("Logic loop heart beat");
+                    logger->info("Logic loop heart beat");
                 }
 
                 if (frameTime < ke::Time::milliseconds(1))
@@ -344,7 +346,7 @@ namespace ke
             ke::EventManager::deregisterListener<ke::GraphicsLoopSetupFailureEvent>(this, &ke::App::handleGraphicsLoopSetupFailure);
             ke::EventManager::deregisterListener<ke::AppExitRequestedEvent>(this, &ke::App::handleAppExitRequest);
 
-            ke::Log::instance()->info("KEngine logic loop exited.");
+            logger->info("KEngine logic loop exited.");
 
             //
             // clean up.
@@ -360,13 +362,13 @@ namespace ke
 
     void App::initExec()
     {
-        ke::Log::instance()->info("Creating resource manager ...");
+        logger->info("Creating resource manager ...");
         this->resourceManager = std::make_unique<ResourceManager>();
-        ke::Log::instance()->info("Creating resource manager ... DONE");
+        logger->info("Creating resource manager ... DONE");
 
-        ke::Log::instance()->info("Creating logic and views ...");
+        logger->info("Creating logic and views ...");
         this->createLogicAndViews();
-        ke::Log::instance()->info("Creating logic and views ... DONE");
+        logger->info("Creating logic and views ... DONE");
 
         assert(this->getLogic());
         assert(this->getLogic()->getCurrentHumanView());
@@ -381,11 +383,11 @@ namespace ke
     {
         if (isNormalExitRequested)
         {
-            ke::Log::instance()->info("Already handling app exit request.");
+            logger->info("Already handling app exit request.");
             return;
         }
         isNormalExitRequested = true;
-        ke::Log::instance()->info("Handling app exit request.");
+        logger->info("Handling app exit request.");
         
         //this->isEventLoopRunning = false;
         this->isLogicLoopRunning = false;
@@ -394,7 +396,7 @@ namespace ke
 
     void App::handleGraphicsLoopSetupFailure(ke::EventSptr)
     {
-        ke::Log::instance()->critical("Graphics loop setup failure encountered. Shuting down ...");
+        logger->critical("Graphics loop setup failure encountered. Shuting down ...");
         this->isLogicLoopRunning = false;
         this->isGraphicsLoopRunning = false;
         this->isEventLoopRunning = false;

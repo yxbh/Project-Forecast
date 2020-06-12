@@ -9,6 +9,7 @@
 
 namespace pf
 {
+    static auto logger = ke::Log::createDefaultLogger("pf::EntityTransformControlSystem");
 
     bool EntityTransformControlSystem::initialise()
     {
@@ -44,7 +45,7 @@ namespace pf
         auto entity = entityWptr.lock();
         if (!entity)
         {
-            ke::Log::instance()->error("Could not find entity({}) to execute transform control command on.", entityId);
+            logger->error("Could not find entity({}) to execute transform control command on.", entityId);
             return;
         }
 
@@ -65,7 +66,7 @@ namespace pf
         auto entity = entityWptr.lock();
         if (!entity)
         {
-            ke::Log::instance()->error("Could not find entity({}) to execute transform delta control command on.", entityId);
+            logger->error("Could not find entity({}) to execute transform delta control command on.", entityId);
             return;
         }
 

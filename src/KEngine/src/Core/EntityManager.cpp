@@ -17,6 +17,8 @@ namespace ke::priv
 
 namespace ke
 {
+    static auto logger = ke::Log::createDefaultLogger("EntityManager");
+
     void EntityManager::update(ke::Time elapsedTime)
     {
         for (auto & entityIdPair : this->entityMap)
@@ -31,7 +33,7 @@ namespace ke
         {
             if (auto entity = this->findEntityById(newEntityId); !entity.expired())
             {
-                ke::Log::instance()->critical("The specified entity ID({}) for a new entity already exists in an existing entity.", newEntityId);
+                logger->critical("The specified entity ID({}) for a new entity already exists in an existing entity.", newEntityId);
                 assert(entity.expired());
             }
         }
@@ -57,7 +59,7 @@ namespace ke
         else
         {
 #if defined(KE_DEBUG)
-            ke::Log::instance()->warn("Entity with ID({}) not found.", entityId);
+            logger->warn("Entity with ID({}) not found.", entityId);
 #endif
         }
     }

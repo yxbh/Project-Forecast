@@ -198,6 +198,7 @@
       <PreprocessorDefinitions>NOMINMAX;KE_DEBUG;USE_SFML;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <ObjectFileName>$(IntDir)/$(Platform)/$(Configuration)/%(RelativeDir)/$(IntDir)/$(Platform)/</ObjectFileName>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

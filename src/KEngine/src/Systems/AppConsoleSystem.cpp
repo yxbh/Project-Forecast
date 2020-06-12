@@ -25,6 +25,8 @@
 
 namespace ke::priv
 {
+    static auto logger = ke::Log::createDefaultLogger("AppConsoleSystem");
+
     class AppConsoleSystem : public ke::ISystem
     {
         KE_DEFINE_SYSTEM_COMMON_PROPERTIES(AppConsoleSystem, 0xE97C2771)
@@ -107,7 +109,7 @@ namespace ke::priv
             this->isConsoleOpen = !this->isConsoleOpen;
             break;
         default:
-            ke::Log::instance()->warn("AppConsoleSystem: Unhandled event: {}", event->getName());
+            logger->warn("AppConsoleSystem: Unhandled event: {}", event->getName());
             break;
         }
     }
@@ -147,7 +149,7 @@ namespace ke::priv
 
         if (!ImGui::Begin("KENGINE CONSOLE", &this->isConsoleOpen))
         {
-            ke::Log::instance()->debug("!ImGui::Begin(\"KENGINE CONSOLE\", &this->isConsoleOpen)");
+            logger->debug("!ImGui::Begin(\"KENGINE CONSOLE\", &this->isConsoleOpen)");
             ImGui::End();
             return;
         }
@@ -401,7 +403,7 @@ namespace ke::priv
             {
                 if (this->consoleHistoryPos != std::numeric_limits<ConsoleHistoryContainer::size_type>::max())
                     if (++this->consoleHistoryPos >= this->consoleHistory.size())
-                        this->consoleHistoryPos = std::numeric_limits<ConsoleHistoryContainer::size_type>::max();
+                        this->consoleHistoryPos--;
             }
 
             // A better implementation would preserve the data on the current input line along with cursor position.

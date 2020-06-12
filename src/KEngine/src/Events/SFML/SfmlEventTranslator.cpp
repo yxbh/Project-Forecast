@@ -7,6 +7,7 @@
 
 namespace ke
 {
+    static auto logger = ke::Log::createDefaultLogger("KEngine");
 
     ke::EventSptr SfmlEventTranslator::translate(const sf::Event & sfEvent, sf::RenderWindow * const renderWindow)
     {
@@ -90,7 +91,7 @@ namespace ke
         }
         case sf::Event::EventType::MouseWheelMoved:
         {
-            ke::Log::instance()->warn("Untranslated SFML event: sf::Event::EventType::MouseWheelMoved");
+            logger->warn("Untranslated SFML event: sf::Event::EventType::MouseWheelMoved");
             return nullptr;
         }
 
@@ -148,13 +149,13 @@ namespace ke
 
         case sf::Event::EventType::Closed:
         {
-            ke::Log::instance()->warn("Untranslated SFML event: sf::Event::EventType::Closed");
+            logger->warn("Untranslated SFML event: sf::Event::EventType::Closed");
             return nullptr;
         }
 
         default:
         {
-            ke::Log::instance()->warn("Untranslated SFML event: {}", sfEvent.type);
+            logger->warn("Untranslated SFML event: {}", sfEvent.type);
             return nullptr;
         }
         }  // switch sf::Event type.

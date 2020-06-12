@@ -10,6 +10,7 @@
 
 namespace pf
 {
+    //static auto logger = ke::Log::createDefaultLogger("pf::DebugSceneGridSystem");
 
     bool DebugSceneGridSystem::initialise()
     {

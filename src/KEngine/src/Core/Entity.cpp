@@ -6,6 +6,8 @@
 
 namespace ke
 {
+    static auto logger = ke::Log::createDefaultLogger("Entity");
+
     Entity::Entity(const ke::EntityId p_ID)
         : m_EntityID(p_ID)
     {}
@@ -36,7 +38,7 @@ namespace ke
         assert(result.second); // fails if insertion failed.
         if (!result.second)
         {
-            ke::Log::instance()->error("Attempted to add entity component of duplicate type: {0:#x}", p_spEntityComponent->getType());
+            logger->error("Attempted to add entity component of duplicate type: {0:#x}", p_spEntityComponent->getType());
             return;
         }
         m_Components.push_back(p_spEntityComponent);
@@ -44,7 +46,7 @@ namespace ke
         {
             if (!this->initialise())
             {
-                ke::Log::instance()->error("Failed to initialised entity component of type {0:#x} after adding it to entity '{}'({})",
+                logger->error("Failed to initialised entity component of type {0:#x} after adding it to entity '{}'({})",
                     p_spEntityComponent->getType(), this->getName(), this->getId());
             }
         }
@@ -62,7 +64,7 @@ namespace ke
                 }
                 else
                 {
-                    ke::Log::instance()->error("Entity named '{}'({}) failed to initialise its component: '{}'",
+                    logger->error("Entity named '{}'({}) failed to initialise its component: '{}'",
                         this->getName(), this->getId(), it.second->getName());
                     result = false;
                 }

@@ -10,6 +10,7 @@
 
 namespace pf
 {
+    static auto logger = ke::Log::createDefaultLogger("pf::HumanView");
 
     HumanView::HumanView()
     {
@@ -93,7 +94,7 @@ namespace pf
                 keyboardController->onKeyPressed(keyboardEvent->getDetail());
                 //if (keyboardEvent->getDetail().keyCode == ke::Keyboard::Return)
                 //{
-                //    ke::Log::instance()->info("echo({}): {}", testTextBuffer.length(), testTextBuffer);
+                //    logger->info("echo({}): {}", testTextBuffer.length(), testTextBuffer);
                 //    testTextBuffer.clear();
                 //}
                 //else
@@ -124,7 +125,7 @@ namespace pf
 
             case ke::WindowResizedEvent::TYPE:
             {
-                ke::Log::instance()->info("Window resized.");
+                logger->info("Window resized.");
                 break;
             }
         }

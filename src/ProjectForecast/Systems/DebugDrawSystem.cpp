@@ -15,6 +15,7 @@
 
 namespace pf
 {
+    static auto logger = ke::Log::createDefaultLogger("pf::DebugDrawSystem");
 
     bool DebugDrawSystem::initialise()
     {
@@ -63,7 +64,7 @@ R"(
 )";
 
             auto & position = actualEvent->getPosition();
-            ke::Log::instance()->debug("creating dot at ({}, {})", position.x, position.y);
+            logger->debug("creating dot at ({}, {})", position.x, position.y);
             for (auto i = 0; i < 1; ++i)
             {
                 //auto entity = ke::App::instance()->getLogic()->getEntityManager()->newEntity().lock();
@@ -96,7 +97,7 @@ R"(
                 //assert(entity);
                 if (!entity)
                 {
-                    ke::Log::instance()->error("Failed to create debug object.");
+                    logger->error("Failed to create debug object.");
                 }
             }
             
@@ -105,7 +106,7 @@ R"(
         }
 
         default:
-            ke::Log::instance()->warn("Unexpected event {} received by {}.", event->getName(), this->getName());
+            logger->warn("Unexpected event {} received by {}.", event->getName(), this->getName());
             break;
         }
     }

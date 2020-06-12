@@ -6,6 +6,7 @@
 
 namespace ke::priv
 {
+    auto logger = ke::Log::createDefaultLogger("EventManager");
 
     EventManagerImpl::~EventManagerImpl(void)
     {
@@ -19,7 +20,7 @@ namespace ke::priv
         for (const DelegateType & listener : listeners)
             if (listener == p_Delegate) // check if already in the list for specified EventType.
             {
-                Log::instance()->error("Listener already registered to event type: {0:#x}", p_EventType);
+                logger->error("Listener already registered to event type: {0:#x}", p_EventType);
                 return false;
             }
 
@@ -31,7 +32,7 @@ namespace ke::priv
     {
         if (m_Listeners.find(p_EventType) == m_Listeners.end())
         {
-            Log::instance()->warn("No listeners are registered to listen to event type: {0:#x}", p_EventType);
+            logger->warn("No listeners are registered to listen to event type: {0:#x}", p_EventType);
             return false;
         }
         ListenerList & listeners(m_Listeners[p_EventType]);
@@ -43,7 +44,7 @@ namespace ke::priv
                 return true;
             }
         }
-        Log::instance()->warn("The listener is not registered to listen to event type: {0:#x}", p_EventType);
+        logger->warn("The listener is not registered to listen to event type: {0:#x}", p_EventType);
         return false;
     }
 
@@ -51,7 +52,7 @@ namespace ke::priv
     {
         if (m_Listeners.find(p_EventType) == m_Listeners.end())
         {
-            Log::instance()->warn("No listeners are registered to listen to event type: {0:#x}", p_EventType);
+            logger->warn("No listeners are registered to listen to event type: {0:#x}", p_EventType);
             return false;
         }
         m_Listeners[p_EventType].clear();
@@ -121,7 +122,7 @@ namespace ke::priv
 
         if (eventCount >= 5000)
         {
-            ke::Log::instance()->warn("There are too many events!");
+            logger->warn("There are too many events!");
         }
 
         ke::EventSptr event_ptr;

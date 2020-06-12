@@ -13,6 +13,8 @@
 
 namespace pf
 {
+    static auto logger = ke::Log::createDefaultLogger("pf::PlayerCameraControlSystem");
+
     static constexpr float g_zoomFactors[] = { 0.3f, 0.4f, 0.5f, 0.6f, 0.7f, 0.8f, 0.9f, 1.0f, 2.0f, 3.0f, 4.0f, 5.f, 6.f };
     static constexpr std::size_t g_zoomFactorsCount = sizeof(g_zoomFactors) / sizeof(g_zoomFactors[0]);
 
@@ -22,12 +24,13 @@ namespace pf
         ke::EventManager::registerListener<ke::WindowResizedEvent>(this, &PlayerCameraControlSystem::handleWindowSizeChangedRequest);
         ke::EventManager::registerListener<ke::CameraViewZoomDeltaRequestEvent>(this, &PlayerCameraControlSystem::handleCameraViewZoomRequest);
 
-        auto entity = ke::App::instance()->getLogic()->getEntityManager()->newEntity().lock();
+        auto appLogic = ke::App::instance()->getLogic();
+        auto entity = appLogic->getEntityManager()->newEntity().lock();
         auto cameraComponent = ke::makeEntityComponent<ke::EntityCameraComponent>(entity);
         cameraComponent->setCameraNode(ke::CameraNode::create(entity->getId()));
         entity->addComponent(cameraComponent);
-        ke::App::instance()->getLogic()->getCurrentHumanView()->getScene()->setCameraNode(cameraComponent->getCameraNode());
-        ke::App::instance()->getLogic()->getCurrentHumanView()->attachEntity(entity->getId());
+        appLogic->getCurrentHumanView()->getScene()->setCameraNode(cameraComponent->getCameraNode());
+        appLogic->getCurrentHumanView()->attachEntity(entity->getId());
 
         this->currentZoomFactorIdx = 7;
 
@@ -77,17 +80,17 @@ namespace pf
         const auto delta = zoomEvent->getDeltaZoom();
         if (delta < 0.0f) // zoom out
         {
-            ke::Log::instance()->debug("Player camera zooming out!");
+            logger->debug("Player camera zooming out!");
             --this->currentZoomFactorIdx;
         }
         else if (delta > 0.0f) // zoom in
         {
-            ke::Log::instance()->debug("Player camera zooming in!");
+            logger->debug("Player camera zooming in!");
             ++this->currentZoomFactorIdx;
         }
         else
         {
-            ke::Log::instance()->warn("Unexpected 0 zoom delta.");
+            logger->warn("Unexpected 0 zoom delta.");
         }
         this->currentZoomFactorIdx = std::clamp(this->currentZoomFactorIdx, 0, static_cast<int>(g_zoomFactorsCount - 1));
 
@@ -106,7 +109,7 @@ namespace pf
                         static_cast<std::uint32_t>(this->windowSizeCache.height * newZoomVal)
                     }
                 );
-                ke::Log::instance()->info("New camera zoom: {}, Zoom factor: {}", newZoomVal, zoomFactor);
+                logger->info("New camera zoom: {}, Zoom factor: {}", newZoomVal, zoomFactor);
             }
         }
     }

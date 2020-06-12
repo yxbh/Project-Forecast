@@ -17,6 +17,8 @@
 
 namespace ke::priv
 {
+    static auto logger = ke::Log::createDefaultLogger("ImguiSystem");
+
     class ImguiSystem : public ke::ISystem
     {
         KE_DEFINE_SYSTEM_COMMON_PROPERTIES(ImguiSystem, 0x341D9615)
@@ -84,7 +86,7 @@ namespace ke::priv
             break;
         }
         default:
-            ke::Log::instance()->warn("ImguiSystem::updateImgui(): Unhandled event: {}", event->getName());
+            logger->warn("ImguiSystem::updateImgui(): Unhandled event: {}", event->getName());
             break;
         }
     }
@@ -104,7 +106,7 @@ namespace ke::priv
         }
 #endif
         default:
-            ke::Log::instance()->warn("ImguiSystem::processSfEvent(): Unhandled event: {}", event->getName());
+            logger->warn("ImguiSystem::processSfEvent(): Unhandled event: {}", event->getName());
             break;
         }
     }
@@ -125,7 +127,7 @@ namespace ke::priv
             break;
         }
         default:
-            ke::Log::instance()->warn("ImguiSystem: Unhandled event: {}", event->getName());
+            logger->warn("ImguiSystem: Unhandled event: {}", event->getName());
             break;
         }
     }

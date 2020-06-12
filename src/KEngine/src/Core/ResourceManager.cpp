@@ -11,6 +11,7 @@
 
 namespace ke
 {
+    static auto logger = ke::Log::createDefaultLogger("ResourceManager");
 
     ResourceManager::ResourceManager()
         : threadPool(2)
@@ -53,11 +54,11 @@ namespace ke
             auto oldResource = this->allResources[resource->getName()];
             if (oldResource->getSourcePath() == resource->getSourcePath())
             {
-                ke::Log::instance()->warn("Replacing resource with matching name \"{}\" from same source path: {}", resource->getSourcePath());
+                logger->warn("Replacing resource with matching name \"{}\" from same source path: {}", resource->getSourcePath());
             }
             else
             {
-                ke::Log::instance()->warn("Resource with name \"{}\" already exists. It will be replaced.\nOld source path: {}\nNew source path: {}",
+                logger->warn("Resource with name \"{}\" already exists. It will be replaced.\nOld source path: {}\nNew source path: {}",
                     resource->getName(), oldResource->getSourcePath(), resource->getSourcePath());
             }
         }
@@ -72,7 +73,7 @@ namespace ke
         {
             return itr->second;
         }
-        ke::Log::instance()->error("Requesting non-existing resource: {}", name);
+        logger->error("Requesting non-existing resource: {}", name);
         return nullptr;
     }
 
@@ -82,12 +83,12 @@ namespace ke
         namespace fs = std::filesystem;
         if (!fs::exists(manifestPath))
         {
-            ke::Log::instance()->error("Manifest path does not exist at: '{}'.", manifestPath);
+            logger->error("Manifest path does not exist at: '{}'.", manifestPath);
             return;
         }
         if (!fs::is_regular_file(manifestPath))
         {
-            ke::Log::instance()->error("Manifest path is not a file. Path: '{}'.", manifestPath);
+            logger->error("Manifest path is not a file. Path: '{}'.", manifestPath);
             return;
         }
 
@@ -106,7 +107,7 @@ namespace ke
         auto resourcesItr = manifestJson.find("resources");
         if (resourcesItr == manifestJson.end())
         {
-            ke::Log::instance()->warn("Resource manifest at {} does not have a 'resources' object.");
+            logger->warn("Resource manifest at {} does not have a 'resources' object.");
             return;
         }
 
@@ -122,7 +123,7 @@ namespace ke
             auto resourceLoaderItr = this->resourceLoaders.find(resourceType);
             if (resourceLoaderItr == this->resourceLoaders.end())
             {
-                ke::Log::instance()->error("No resource loader available for resource of type '{}'.", resourceType);
+                logger->error("No resource loader available for resource of type '{}'.", resourceType);
                 continue;
             }
 
@@ -130,14 +131,14 @@ namespace ke
             auto newResource = resourceLoaderItr->second->load(resourceJson);
             if (nullptr == newResource)
             {
-                ke::Log::instance()->error("Resource loader failed to load resource named '{}'. JSON content: {}",
+                logger->error("Resource loader failed to load resource named '{}'. JSON content: {}",
                     resourceName, resourceJson.dump(2));
                 continue;
             }
             
             if (this->allResources.find(resourceName) != this->allResources.end())
             {
-                ke::Log::instance()->warn("Overwriting resource named '{}'.", resourceName);
+                logger->warn("Overwriting resource named '{}'.", resourceName);
             }
 
             std::unique_lock lock(this->allResourcesMutex);
@@ -150,12 +151,12 @@ namespace ke
         auto manifestTypeItr = manifestJson.find("type");
         if (manifestTypeItr == manifestJson.end())
         {
-            ke::Log::instance()->error("Manifest JSON missing 'type' object.");
+            logger->error("Manifest JSON missing 'type' object.");
             return false;
         }
         if (manifestTypeItr->get<std::string>() != "manifest")
         {
-            ke::Log::instance()->error("The JSON at '{}' is not an engine resource manifest.", manifestPath);
+            logger->error("The JSON at '{}' is not an engine resource manifest.", manifestPath);
             return false;
         }
 
@@ -167,20 +168,20 @@ namespace ke
         auto typeItr = resourceJson.find("type");
         if (typeItr == resourceJson.end())
         {
-            ke::Log::instance()->error("Engine resource JSON missing 'type'. Content: {}", resourceJson.dump(2));
+            logger->error("Engine resource JSON missing 'type'. Content: {}", resourceJson.dump(2));
             return false;
         }
         auto typeValue = typeItr->get<std::string>();
         if (typeValue != "resource")
         {
-            ke::Log::instance()->error("Engine resource JSON containts unexpected 'type' value: {}", typeValue);
+            logger->error("Engine resource JSON containts unexpected 'type' value: {}", typeValue);
             return false;
         }
 
         auto resourceTypeItr = resourceJson.find("resource_type");
         if (resourceTypeItr == resourceJson.end())
         {
-            ke::Log::instance()->error("Engine resource JSON missing 'resource_type'. Content: {}", resourceJson.dump(2));
+            logger->error("Engine resource JSON missing 'resource_type'. Content: {}", resourceJson.dump(2));
             return false;
         }
         auto resourceType = resourceTypeItr->get<std::string>();
@@ -188,7 +189,7 @@ namespace ke
         auto resourceNameItr = resourceJson.find("resource_name");
         if (resourceNameItr == resourceJson.end())
         {
-            ke::Log::instance()->error("Engine resource JSON missing 'resource_name'. Content: {}", resourceJson.dump(2));
+            logger->error("Engine resource JSON missing 'resource_name'. Content: {}", resourceJson.dump(2));
             return false;
         }
         auto resourceName = resourceNameItr->get<std::string>();
@@ -204,7 +205,7 @@ namespace ke
         if (resourceLoaderItr != this->resourceLoaders.end() &&
             resourceLoaderItr->second != loader)
         {
-            ke::Log::instance()->info("Current resource loader for type '{}' resources is being replaced.", resourceType);
+            logger->info("Current resource loader for type '{}' resources is being replaced.", resourceType);
         }
         this->resourceLoaders[resourceType] = loader;
     }

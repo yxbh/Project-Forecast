@@ -7,6 +7,7 @@
 
 namespace ke
 {
+    static auto logger = ke::Log::createDefaultLogger("EntityFactory");
 
     EntityFactory::EntityFactory()
     {
@@ -19,7 +20,7 @@ namespace ke
 
         if (alreadyExists)
         {
-            ke::Log::instance()->warn("Loader for component named {} already registered. It will be overrided.", p_entityTypeName);
+            logger->warn("Loader for component named {} already registered. It will be overrided.", p_entityTypeName);
         }
 
         this->entityBuilders[p_entityTypeName] = std::move(p_builder);
@@ -33,7 +34,7 @@ namespace ke
         
         if (isLoaderForNameAlreadyExists)
         {
-            ke::Log::instance()->warn("Loader for component named {} already registered. It will be overrided.", p_entityComponentName);
+            logger->warn("Loader for component named {} already registered. It will be overrided.", p_entityComponentName);
         }
 
         this->entityComponentBuilders[p_entityComponentName] = std::move(loader);
@@ -48,7 +49,7 @@ namespace ke
             auto builder = itr->second.get();
             return builder->build(p_parameters);
         }
-        ke::Log::instance()->error("EntityFactory does not have an entity builder for {}", p_name);
+        logger->error("EntityFactory does not have an entity builder for {}", p_name);
         return nullptr;
     }
 
@@ -58,7 +59,7 @@ namespace ke
         {
             return itr->second.get();
         }
-        ke::Log::instance()->error("EntityFactory does not have an entity component builder for {}", p_componentName);
+        logger->error("EntityFactory does not have an entity component builder for {}", p_componentName);
         return nullptr;
     }
 
